@@ -133,7 +133,7 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 
 	if (empty($width) ) $width  = $flag_options['flashWidth'];
 	if (empty($height)) $height = (int) $flag_options['flashHeight'];
-
+	if($name == '') $name = 'Gallery';
 	// init the flash output
 	$swfobject = new swfobject( FLAG_URLPATH.'skins/'.$flag_options['flashSkin'].'/gallery.swf' , 'so' . $galleryID, $width, $height, '9.0.45', 'false');
 
