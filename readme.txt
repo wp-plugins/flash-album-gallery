@@ -1,7 +1,7 @@
 === Flash Album Gallery ===
 Contributors: Sergey Pasyuk
 Donate link: 
-Tags: photos, flash, slideshow, images, gallery, media, admin, post, photo-albums, pictures, photo, picture, image
+Tags: photos, flash, slideshow, images, gallery, media, admin, post, photo-albums, pictures, photo, picture, image, image gallery, flash gallery, flash image gallery, media gallery, photo gallery, skinable gallery, skin
 Requires at least: 2.7
 Tested up to: 2.8.*
 Stable tag: trunk
