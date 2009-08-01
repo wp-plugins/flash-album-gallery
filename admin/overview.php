@@ -130,12 +130,12 @@ function flag_overview_setup(){
 							<a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag#comments" style="text-decoration: none;"><?php _e('Plugin Comments','flag'); ?></a>
 						</span>
 					</div>
-					<!-- <div class="misc-pub-section">
+					<div class="misc-pub-section">
 						<span id="rate-plugin" class="icon">
-							<a href="#" style="text-decoration: none;"><?php _e('Rate Plugin','flag'); ?></a>
+							<a href="http://wordpress.org/extend/plugins/flash-album-gallery" style="text-decoration: none;"><?php _e('Rate Plugin','flag'); ?></a>
 						</span>
 					</div>
-					<div class="misc-pub-section">
+					<!-- <div class="misc-pub-section">
 						<span id="my-plugins" class="icon">
 							<a href="http://codeasily.com/category/wordpress-plugins" style="text-decoration: none;"><?php _e('My Plugins','flag'); ?></a>
 						</span>
