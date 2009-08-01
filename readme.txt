@@ -77,23 +77,23 @@ That's it ... Have fun
 
 == Frequently Asked Questions ==
 
-1. The slideshow didn’t work. I only see the message “The Flash Player and a browser with Javascript  needed..”, but everything is installed and activated.
-Make sure you have the following in your template. (It’s in the original WP index.php template, but if you’re creating your own, you may have forgotten to include it) :
+1. The slideshow didn't work. I only see the message "The Flash Player and a browser with Javascript  needed..", but everything is installed and activated.
+Make sure you have the following in your template. (It's in the original WP index.php template, but if you're creating your own, you may have forgotten to include it) :
 <?php wp_head(); ?>
 That line would go in between your <HEAD> </HEAD> tags
 
-2. When I try to activate the plugin I get the message : “Plugin could not be activated because it triggered a fatal error.”
+2. When I try to activate the plugin I get the message : "Plugin could not be activated because it triggered a fatal error."
 This problem could happened if you have a low memory_limit in your php environment and a lot of plugins installed. For a simple test deactivate all other plugins and try then to activate Flash Album Gallery again. Please check also if you have a minimum memory_limit of 16Mbyte (as much as possible).
 
-3. I get the message “Fatal error: Allowed memory size of xxx bytes exhausted” or get the “Error: Exceed Memory limit.”. What does this means ?
-This problem could happened if you have a low memory_limit in your php environment or you have a very large image (resolution, not size). The memory limit sets the maximum amount of memory in bytes that a script is allowed to allocate. You can either lower the resolution of your images or increase the PHP Memory limit (via ini_set, php.ini or htaccess). If you didn’t know how to do that, please contact your web hoster.
+3. I get the message "Fatal error: Allowed memory size of xxx bytes exhausted" or get the "Error: Exceed Memory limit.". What does this means ?
+This problem could happened if you have a low memory_limit in your php environment or you have a very large image (resolution, not size). The memory limit sets the maximum amount of memory in bytes that a script is allowed to allocate. You can either lower the resolution of your images or increase the PHP Memory limit (via ini_set, php.ini or htaccess). If you didn't know how to do that, please contact your web hoster.
 
 
 **Read as startup :** http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review/
 
 When writing a page/post, you can use the follow tag:
 
-[album gid=x name="Album_Name" w=width h=height]    -   (e.g.: [album gid=1,3,5,6 name="New Year 2009" w=100% h=400] )
+[album gid=x name="Album_Name" w=width h=height]    -   (example: [album gid=1,3,5,6 name="New Year 2009" w=100% h=400] )
 
 Example : http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 
