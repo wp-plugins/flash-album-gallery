@@ -12,6 +12,10 @@ GRAND Flash Album Gallery is a full integrated (flash skin based) Image Gallery 
 
 Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin.  It provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional. You can display galleries with a beautiful flash skins integrated with GRAND Flash Album Gallery.
 
+IMPORTANT!!! 
+Before upgrade from version 0.24 BACKUP your skins folder, please!!!
+If FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings' 
+
 Important Links:
 
 * <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/" title="Demonstration page">Demonstration</a>
@@ -19,10 +23,6 @@ Important Links:
 * <a href="http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/" title="Additional skins">Additional skins</a>
 * <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq/" title="GRAND Flash Album Gallery FAQ">GRAND FlAGallery FAQ</a>
 * <a href="http://wordpress.org/tags/flash-album-gallery" title="Wordpress Support Forum">Support Forum</a>
-
-IMPORTANT!!! 
-Before upgrade from version 0.24 BACKUP your skins folder, please!!!
-If FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings' 
 
 
 = Features =
