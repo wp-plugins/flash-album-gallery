@@ -26,9 +26,9 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 	    var $js;
 		/* the replacemnt message */
 	    var $message = 'The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed..';
-	    var $devlink = '<h1 style="font-size:14px;"><a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" title="GRAND Flash Album Gallery">GRAND Flash Album Gallery</a></h1>
-						<h1 style="font-size:14px;"><a href="http://photogallerycreator.com" title="Skins for GRAND FlAGallery">Skins for GRAND FlAGallery</a></h1>
-						<h2 style="font-size:12px;"><a href="http://codeasily.com" title="Flash Templates, WordPress Themes and WordPress plugins">developed by CodEasily.com - Flash Templates, WordPress Themes and WordPress plugins</a></h2>';
+	    var $devlink = '<h1 style="font-size:14px; margin:0; pading:0; background:none; border:none;"><a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" title="GRAND Flash Album Gallery">GRAND Flash Album Gallery</a></h1>
+						<h1 style="font-size:14px; margin:0; pading:0; background:none; border:none;"><a href="http://photogallerycreator.com" title="Skins for GRAND FlAGallery">Skins for GRAND FlAGallery</a></h1>
+						<h2 style="font-size:12px; margin:0; pading:0; background:none; border:none;"><a href="http://codeasily.com" title="Flash Templates, WordPress Themes and WordPress plugins">developed by CodEasily.com - Flash Templates, WordPress Themes and WordPress plugins</a></h2>';
 		/* the classname for the div element */
 	    var $classname = 'swfobject';			
 		/* array of flashvars */
