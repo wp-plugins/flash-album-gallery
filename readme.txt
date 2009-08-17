@@ -42,15 +42,15 @@ Important Links:
 
 == Changelog ==
 
-V0.2.9 - 17.08.2009
-- NEW : Import images from folder
-- Added : Button "FlAGallery" on HTML Editor panel, even if Visual Editor is disabled
-- Added : International Skin to display any language in the flash
-- Added : Loader for News Box on Overview page
-- Added : To display all galleries in the album, added parameter value "all", e.g.: gid=all
-- Changed : Shortcode 'album' replaced with 'flagallery', becouse of conflict with NextGEN Gallery 
-- Bugfix : Fix for Upload Images button on Overview page
-- Bugfix : Fixed conflict with NextGEN Gallery (creating thumbnails cause error)
+=V0.2.9 - 17.08.2009=
+* NEW : Import images from folder
+* Added : Button "FlAGallery" on HTML Editor panel, even if Visual Editor is disabled
+* Added : International Skin to display any language in the flash
+* Added : Loader for News Box on Overview page
+* Added : To display all galleries in the album, added parameter value "all", e.g.: gid=all
+* Changed : Shortcode 'album' replaced with 'flagallery', becouse of conflict with NextGEN Gallery 
+* Bugfix : Fix for Upload Images button on Overview page
+* Bugfix : Fixed conflict with NextGEN Gallery (creating thumbnails cause error)
 
 
 == Credits ==
