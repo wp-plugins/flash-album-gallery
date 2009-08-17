@@ -20,6 +20,11 @@ Important Links:
 * <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq/" title="GRAND Flash Album Gallery FAQ">GRAND FlAGallery FAQ</a>
 * <a href="http://wordpress.org/tags/flash-album-gallery" title="Wordpress Support Forum">Support Forum</a>
 
+=IMPORTANT=
+
+Before upgrade from version 0.24 BACKUP your skins folder, please!!!
+If FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings' 
+
 
 = Features =
 
