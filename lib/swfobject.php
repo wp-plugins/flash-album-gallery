@@ -79,7 +79,7 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 			// count up if we have more than one swfobject
 			$swfCounter++;
 			$dim = (substr($this->width, -1) == '%')? '' : 'px';
-			$out  = "\n" . '<div class="'. $this->classname .'" id="'. $this->id  .'" style="width:'.$this->width .$dim.'; height:'. $this->height .'px;">';
+			$out  = "\n" . '<div class="'. $this->classname .'" id="'. $this->id  .'" style="width:'.$this->width .$dim.';">';
 			$out .= "\n" . $this->devlink;
 			$out .= "\n" . $this->message;
 			$out .= "\n" . '</div>';
