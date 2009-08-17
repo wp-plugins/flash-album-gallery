@@ -74,10 +74,6 @@
 
 /* SETTINGS FOR MANAGE TABLE */
 
-div#poststuff #gallerydiv {
-	cursor:pointer;
-}
-
 p#flag-inlinebutton {
 	float:right;
 	margin:0pt;

@@ -51,22 +51,7 @@ function flag_picturelist() {
 ?>
 
 <script type="text/javascript"> 
-//<!--
 //<![CDATA[
-jQuery(document).ready( function() {
-	jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-	// postboxes
-	<?php
-	global $wp_version;
-	if(version_compare($wp_version,"2.7-alpha", "<")){
-		echo "add_postbox_toggles('flag-manage-gallery');"; //For WP2.6 and below
-	} else {
-		echo "postboxes.add_postbox_toggles('flag-manage-gallery');"; //For WP2.7 and above
-	}
-	?>
-});
-//]]>
-
 function showDialog( windowId ) {
 	var form = document.getElementById('updategallery');
 	var elementlist = "";
@@ -136,7 +121,17 @@ function checkSelected() {
 	return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 }
 
-//-->
+jQuery(document).ready( function() {
+	// close postboxes that should be closed
+	jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
+
+	if (typeof postboxes != "undefined")
+		postboxes.add_postbox_toggles('flag-manage-gallery'); // WP 2.7
+	else
+		add_postbox_toggles('flag-manage-gallery'); 	// WP 2.6
+
+});
+//]]>
 </script>
 
 <div class="wrap">
@@ -158,14 +153,10 @@ function checkSelected() {
 <form id="updategallery" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $act_gid . '&amp;paged=' . $_GET['paged']; ?>" accept-charset="utf-8">
 <?php wp_nonce_field('flag_updategallery') ?>
 
-<?php
-wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
-wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
-?>
-
 <div id="poststuff" class="metabox-holder">
+	<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 <div id="post-body"><div id="post-body-content"><div id="normal-sortables" class="meta-box-sortables ui-sortable" style="position: relative;">
-	<div id="gallerydiv" class="postbox <?php echo postbox_classes('gallerydiv', 'flag-manage-gallery'); ?>" >
+	<div id="flagalleryset" class="postbox <?php echo postbox_classes('flagalleryset', 'flag-manage-gallery'); ?>" >
 		<div class="handlediv" title="Click to toggle"><br/></div>
 		<h3 class="hndle"><span><?php _e('Gallery settings', 'flag') ?></span></h3>
 		<div class="inside">
@@ -290,7 +281,9 @@ if($picturelist) {
 								<?php echo ( empty($picture->alttext) ) ? $picture->filename : stripslashes(flagGallery::i18n($picture->alttext)); ?>
 							</a></strong>
 							<br /><?php echo $date ?>
-							<?php $img = @getimagesize($picture->imageURL);	if($img) echo '<br />Size: '.$img[0].'x'.$img[1].' px'; ?>
+							<?php  $imgpath = WINABSPATH.$picture->path."/".$picture->filename; 
+								$img = @getimagesize($imgpath); if($img) echo '<br />Size: '.$img[0].'x'.$img[1].' px'; 
+							?>
 							<p>
 							<?php
 							$actions = array();

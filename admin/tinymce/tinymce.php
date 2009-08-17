@@ -52,6 +52,7 @@ class add_flag_button {
 			add_filter("mce_external_plugins", array (&$this, 'add_tinymce_plugin' ), 5);
 			add_filter('mce_buttons', array (&$this, 'register_button' ), 5);
 		}
+		add_filter('admin_head', array (&$this, 'wp_flag_ins_button' ), 5);
 	}
 	
 	/**
@@ -91,9 +92,42 @@ class add_flag_button {
 		return $version;
 	}
 	
+
+	/*
+	* INSERT BUTTON ON POST SCREEN
+	*/
+
+	function wp_flag_ins_button() {
+		
+		if( strpos($_SERVER['REQUEST_URI'], 'post.php')
+		|| strstr($_SERVER['PHP_SELF'], 'page-new.php')
+		|| strstr($_SERVER['PHP_SELF'], 'page.php')
+		|| strstr($_SERVER['PHP_SELF'], 'post-new.php') )
+		{      	
+		?>
+		<script type="text/javascript">
+			<!--
+			jQuery(function() {
+				jQuery("#ed_toolbar").append('<input type=\"button\" style=\"margin:3px 2px 2px;\" class=\"ed_button\" id=\"FlAGallery_button\" onClick=\"wpflagins();\" value=\"FlAGallery\" />');
+			});
+			function wpflagins() {
+				tb_show("<?php _e('Insert Flash Album with one or more galleries', 'flag'); ?>","<?php echo FLAG_URLPATH ?>admin/tinymce/window.php?riched=false&TB_iframe=true&width=360&height=210",false);
+				jQuery("#TB_window").css({width:"360px", height:"210px", marginTop:"-120px", marginLeft:"-180px", top:"50%"});
+				jQuery("#TB_iframeContent").css({width:"360px", height:"210px"});
+				jQuery(window).unbind("resize");
+			}
+			function bind_resize() {
+				jQuery(window).bind("resize", tb_position);
+			}
+			//-->
+		</script>
+		<?php
+		}
+	}	
 }
 
 // Call it now
 $tinymce_button = new add_flag_button ();
+
 
 ?>

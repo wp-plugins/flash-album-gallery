@@ -48,7 +48,7 @@ function flag_install () {
 			$charset_collate .= " COLLATE $wpdb->collate";
 	}
 		
-  $flagpictures					= $wpdb->prefix . 'flag_pictures';
+    $flagpictures					= $wpdb->prefix . 'flag_pictures';
 	$flaggallery					= $wpdb->prefix . 'flag_gallery';
    
 	if($wpdb->get_var("show tables like '$flagpictures'") != $flagpictures) {

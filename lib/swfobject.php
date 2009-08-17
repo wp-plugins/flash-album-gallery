@@ -1,6 +1,6 @@
 <?php
 /**
- * Return a script for the flash slideshow. Can be used in any tmeplate with <?php echo flagShowFlashAlbum($galleryID, $width, $height) ?>
+ * Return a script for the flash slideshow. Can be used in any tmeplate with <?php echo flagShowFlashAlbum($galleryID, $width, $height) ? >
  * Require the script swfobject.js in the header or footer
  * 
  * @access public 
@@ -25,7 +25,10 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 		/* the javascript output */
 	    var $js;
 		/* the replacemnt message */
-	    var $message = 'The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..';			
+	    var $message = 'The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed..';
+	    var $devlink = '<h1 style="font-size:14px;"><a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" title="GRAND Flash Album Gallery">GRAND Flash Album Gallery</a></h1>
+						<h1 style="font-size:14px;"><a href="http://photogallerycreator.com" title="Skins for GRAND FlAGallery">Skins for GRAND FlAGallery</a></h1>
+						<h2 style="font-size:12px;"><a href="http://codeasily.com" title="Flash Templates, WordPress Themes and WordPress plugins">developed by CodEasily.com - Flash Templates, WordPress Themes and WordPress plugins</a></h2>';
 		/* the classname for the div element */
 	    var $classname = 'swfobject';			
 		/* array of flashvars */
@@ -66,7 +69,7 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 			$this->attributes = ( is_array($attributes) ) ? $attributes : array();
 
 			$this->embedSWF = 'swfobject.embedSWF("'. $swfUrl .'", "'. $this->id .'", "'. $width .'", "'. $height .'", "'. $version .'", '. $expressInstallSwfurl .', this.flashvars, this.params , this.attr );' . "\n";
-			$this->embedSWF .= 'swfobject.createCSS("#'. $id .'","outline:none");' . "\n";
+			$this->embedSWF .= 'swfobject.createCSS("#'. $id . '_f' . $swfCounter .'","outline:none");' . "\n";
 		}
 		
 		function output () {
@@ -75,8 +78,9 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 			
 			// count up if we have more than one swfobject
 			$swfCounter++;
-			
-			$out  = "\n" . '<div class="'. $this->classname .'" id="'. $this->id  .'" style="width:'.$this->width .'px; height:'. $this->height .'px;">';
+			$dim = (substr($this->width, -1) == '%')? '' : 'px';
+			$out  = "\n" . '<div class="'. $this->classname .'" id="'. $this->id  .'" style="width:'.$this->width .$dim.'; height:'. $this->height .'px;">';
+			$out .= "\n" . $this->devlink;
 			$out .= "\n" . $this->message;
 			$out .= "\n" . '</div>';
 			
@@ -136,6 +140,7 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 	if($name == '') $name = 'Gallery';
 	// init the flash output
 	$swfobject = new swfobject( FLAG_URLPATH.'skins/'.$flag_options['flashSkin'].'/gallery.swf' , 'so' . $galleryID, $width, $height, '9.0.45', 'false');
+	global $swfCounter;
 
 	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..', 'flag').'</p>';
 	$swfobject->add_params('wmode', 'transparent');
@@ -143,8 +148,8 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 	$swfobject->add_params('menu', 'false');
 	$swfobject->add_params('bgcolor', $flag_options['flashBackcolor'] );
 	$swfobject->add_attributes('styleclass', 'flashalbum');
-	$swfobject->add_attributes('id', 'so' . $galleryID);
-	$swfobject->add_attributes('name', 'so' . $galleryID);
+	$swfobject->add_attributes('id', 'so' . $galleryID . '_f' . $swfCounter);
+	$swfobject->add_attributes('name', 'so' . $galleryID . '_f' . $swfCounter);
 
 	// adding the flash parameter	
 	$swfobject->add_flashvars( 'path', FLAG_URLPATH.'skins/'.$flag_options['flashSkin'].'/' );

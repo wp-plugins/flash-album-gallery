@@ -1,4 +1,4 @@
-<?php  
+<?php
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
 /**
@@ -182,7 +182,15 @@ jQuery("#photogallerycreator img").css({display:"block", margin:"0 auto 5px auto
 /*]]>*/
 </script>
 		<p><?php _e("What's new at PhotoGalleryCreator.com","flag"); ?></p>
-		<div id="photogallerycreator" style="text-align:center; overflow:auto; max-height:480px;"></div>
+		<div id="photogallerycreator" style="text-align:center; overflow:auto; max-height:480px;">
+			<script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/swfobject.js"></script>
+			<script type="text/javascript">
+			/*<![CDATA[*/
+			swfobject.embedSWF("<?php echo FLAG_URLPATH; ?>admin/js/loader.swf", "loader", "100", "100", "9.0.45", false );
+			/*]]>*/
+			</script>
+			<div class="swfobject" id="loader" style="text-align:center"><p>Loading...</p></div>
+		</div>
 <?php
 }
 
@@ -218,7 +226,7 @@ function flag_overview_right_now() {
 </div>
 <div class="versions">
     <p>
-			<?php if(current_user_can('FlAG Upload images')): ?><a class="button rbutton" href="admin.php?page=manage-gallery&tabs=1"><strong><?php _e('Upload pictures', 'flag') ?></strong></a><?php endif; ?>
+			<?php if(current_user_can('FlAG Upload images')): ?><a class="button rbutton" href="admin.php?page=flag-manage-gallery&tabs=1"><strong><?php _e('Upload pictures', 'flag') ?></strong></a><?php endif; ?>
 			<?php _e('Here you can control your images and galleries.', 'flag') ?></p>
 		<span><?php
 			$userlevel = '<span class="b">' . (current_user_can('manage_options') ? __('Gallery Administrator', 'flag') : __('Gallery Editor', 'flag')) . '</span>';

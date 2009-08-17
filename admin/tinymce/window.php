@@ -3,24 +3,36 @@
 // look up for the path
 require_once( dirname( dirname( dirname(__FILE__) ) ) . '/flag-config.php');
 
+global $wpdb;
+
 // check for rights
 if ( !is_user_logged_in() || !current_user_can('edit_posts') ) 
 	wp_die(__("You are not allowed to be here"));
 
-global $wpdb;
-
+if($_REQUEST['riched'] == "false") {
 ?>
-
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title><?php _e("Insert Flash Album with one or more galleries", 'flag'); ?></title>
+	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php echo get_option('blog_charset'); ?>" />
+	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo FLAG_URLPATH ?>admin/tinymce/popup.css" />
+<base target="_self" />
+</head>
+<body id="link" onload="document.getElementById('galleries').focus();">
+<?php } else { ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title><?php _e("Insert Flash Album with one or more galleries", 'flag'); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</title>
 	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php echo get_option('blog_charset'); ?>" />
+	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
 		<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/tinymce/utils/form_utils.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo FLAG_URLPATH ?>admin/tinymce/tinymce.js"></script>
 	<base target="_self" />
 </head>
 <body id="link" onload="tinyMCEPopup.executeOnLoad('init();');document.body.style.display='';document.getElementById('galleries').focus();" style="display: none">
+<?php } ?>
 <form name="FlAG" action="#">
 	<div class="panel_wrapper" style="border:1px solid #919B9C; height:150px;">
 		<!-- gallery panel -->
@@ -33,6 +45,7 @@ global $wpdb;
          <tr>
             <td nowrap="nowrap" valign="top"><label for="gallerytag"><?php _e("Select galleries", 'flag'); ?>:<span style="color:red;"> *</span></label><br /><small><?php _e("(album categories)", 'flag'); ?></small></td>
             <td><select id="galleries" name="galleries" style="width: 200px" size="7" multiple="multiple">
+                    <option value="all" style="font-weight:bold">* - all galleries</option>
 				<?php
 					$gallerylist = $flagdb->find_all_galleries('gid', 'ASC');
 					if(is_array($gallerylist)) {
@@ -51,6 +64,11 @@ global $wpdb;
 function setVisibility(){
   document.getElementById('gallerysize').style.visibility = (document.getElementById('gallerycustomsize').checked) ? 'visible':'hidden';
 }
+jQuery('#galleries').change(function(){
+    if(jQuery('#galleries option[value=all]:selected')) {
+        jQuery('#galleries option[value=all]:selected').siblings().removeAttr('selected');
+    }
+});
 /* ]]> */
 </script>
 				<input id="gallerycustomsize" name="gallerycustomsize" type="checkbox" style="vertical-align:middle;" onclick="setVisibility()" /> <label for="gallerycustomsize" onclick="setVisibility()"><?php _e("custom size", 'flag'); ?></label></td>
@@ -61,15 +79,60 @@ function setVisibility(){
 		<!-- gallery panel -->
 	</div>
 
+<?php if($_REQUEST['riched'] == "false") { ?>
+	<div class="mceActionPanel">
+		<div style="float: right">
+			<input type="button" id="insert" name="insert" value="<?php _e("Insert", 'flag'); ?>" />
+		</div>
+	</div>
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		var win = window.dialogArguments || opener || parent || top;
+		jQuery('#insert').click(function(){
+			var tagtext;
+			var galleryname = document.getElementById('galleryname').value;
+			var gallerywidth = document.getElementById('gallerywidth').value;
+			var galleryheight = document.getElementById('galleryheight').value;
+			var gallery = document.getElementById('galleries');
+			var len = gallery.length;
+			var galleryid="";
+			for(i=0;i<len;i++)
+			{
+				if(gallery.options[i].selected) {
+					if(galleryid=="") {
+						galleryid = galleryid + gallery.options[i].value;
+					} else {
+						galleryid = galleryid + "," + gallery.options[i].value;
+					}
+				}
+			}
+			if (gallerywidth && galleryheight)
+				gallerysize = " w=" + gallerywidth + " h=" + galleryheight;
+			else
+				gallerysize="";
+
+			if (galleryid != 0 ) {
+				tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + ']'+"\n";
+				win.send_to_editor(tagtext);
+				win.bind_resize();
+			} else alert('Choose at least one gallery!');
+		});
+		jQuery(window).unload(function(){
+			win.bind_resize();
+		});
+		/* ]]> */
+	</script>
+<?php } else { ?>
 	<div class="mceActionPanel">
 		<div style="float: left">
-			<input type="button" id="cancel" name="cancel" value="<?php _e("Cancel", 'flag'); ?>" onclick="tinyMCEPopup.close();" />
+			<input type="button" id="cancel" name="cancel" value="<?php _e("Cancel", 'flag'); ?>" onclick="tinyMCEPopup." />
 		</div>
 
 		<div style="float: right">
 			<input type="submit" id="insert" name="insert" value="<?php _e("Insert", 'flag'); ?>" onclick="insertFLAGLink();" />
 		</div>
 	</div>
+<?php } ?>
 </form>
 </body>
 </html>

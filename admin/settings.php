@@ -320,8 +320,7 @@ if($flag->options['itemDescription']) { ?>
 			<?php wp_nonce_field('flag_addroles') ?>
 			<input type="hidden" name="page_options" value="flashBackcolor,buttonsMouseOver,buttonsMouseOut,catButtonsMouseOver,catButtonsMouseOut,catButtonsTextMouseOver,catButtonsTextMouseOut,thumbMouseOver,thumbMouseOut,mainTitle,categoryTitle,itemTitle,itemDescription" />
 			<h2><?php _e('Roles / capabilities','flag'); ?></h2>
-			<p><?php _e('Select the lowest role which should be able to access the follow capabilities. Flash Album Gallery supports the standard roles from WordPress.', 'flag') ?> <br />
-	   	<?php _e('For a more flexible user management you can use the', 'flag') ?> <a href="http://www.im-web-gefunden.de/wordpress-plugins/role-manager/" target="_blank">Role Manager</a>.</p>
+			<p><?php _e('Select the lowest role which should be able to access the follow capabilities. Flash Album Gallery supports the standard roles from WordPress.', 'flag') ?></p>
 			<table class="form-table"> 
 			<tr valign="top"> 
 				<th scope="row"><?php _e('Main Flash Album Gallery overview', 'flag') ;?>:</th> 

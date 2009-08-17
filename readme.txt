@@ -1,23 +1,23 @@
-=== Flash Album Gallery ===
+=== GRAND Flash Album Gallery ===
 Contributors: Sergey Pasyuk
 Donate link: 
-Tags: photos, flash, slideshow, images, gallery, media, admin, post, photo-albums, pictures, photo, picture, image, image gallery, flash gallery, flash image gallery, media gallery, photo gallery, skinable gallery, skin
+Tags: photos, flash, slideshow, images, gallery, media, admin, post, photo-albums, pictures, photo, picture, image, multi-categories gallery, skinable gallery, skin
 Requires at least: 2.7
 Tested up to: 2.8.*
 Stable tag: trunk
 
-Flash Album Gallery is a full integrated (flash skin based) Image Gallery plugin with a powerfull administration back end.
+GRAND Flash Album Gallery is a full integrated (flash skin based) Image Gallery plugin with a powerfull administration back end.
 
 == Description ==
 
-Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic Flash Album Gallery plugin.  It provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional. You can display galleries with a beautiful flash skins integrated with Flash Album Gallery.
+Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin.  It provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional. You can display galleries with a beautiful flash skins integrated with GRAND Flash Album Gallery.
 
 Important Links:
 
 * <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/" title="Demonstration page">Demonstration</a>
 * <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/languages/" title="Translation and Language files">Language files</a>
 * <a href="http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/" title="Additional skins">Additional skins</a>
-* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq/" title="Flash Album Gallery FAQ">FlAGallery FAQ</a>
+* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq/" title="GRAND Flash Album Gallery FAQ">GRAND FlAGallery FAQ</a>
 * <a href="http://wordpress.org/tags/flash-album-gallery" title="Wordpress Support Forum">Support Forum</a>
 
 
@@ -29,8 +29,10 @@ Important Links:
 * AJAX based thumbnail generator: No more server limitation during the batch process
 * Copy/Move: Copy or move images between galleries 
 * TinyMCE: Button integration for easy adding the gallery tag with options
+* HTML Editor: Button integration for easy adding the gallery tag with options
 * Language support
 * Upload tab integration: You have access to all pictures via the upload tab
+* Import folder with images tab integration: You have access to all server directories via the import tab
 * Sort images feature
 
 
@@ -55,11 +57,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 == Installation ==
 
-1.	Upload the files to wp-content/plugins/flash-album-gallery
-2.	Activate the plugin
-3.	Add a gallery and upload some images (the main gallery folder must have write permission)
-4.	Go to your post/page an enter the tag '[album gid=x name="album_name"]'.
-5.	If you would like to use additional Flash Skins (only a option), go to <a href="http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/" title="Flash Skins">Flash Skins</a>, download the skin and upload the file through Skins page in Wordpress admin panel
+1.	Upload the files to wp-content/plugins/flash-album-gallery.
+2.	Activate the plugin.
+3.	Add a gallery and upload some images (the main gallery folder must have write permission).
+4.	Go to your post/page an enter the tag '[flagallery gid=X name="ALBUM_TITLE"]', where X - gallery IDs separated by comma;  ALBUM_TITLE - title of your album (default 'Gallery'). Easy way is click FlAGallery button on the Editor panel.
+5.	If you would like to use additional Flash Skins (only a option), go to <a href="http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/" title="Flash Skins">Flash Skins</a>, download the skin and upload the file through Skins page in Wordpress admin panel.
 
 	See more tags in the FAQ section
 
@@ -83,7 +85,7 @@ Make sure you have the following in your template. (It's in the original WP inde
 That line would go in between your <HEAD> </HEAD> tags
 
 2. When I try to activate the plugin I get the message : "Plugin could not be activated because it triggered a fatal error."
-This problem could happened if you have a low memory_limit in your php environment and a lot of plugins installed. For a simple test deactivate all other plugins and try then to activate Flash Album Gallery again. Please check also if you have a minimum memory_limit of 16Mbyte (as much as possible).
+This problem could happened if you have a low memory_limit in your php environment and a lot of plugins installed. For a simple test deactivate all other plugins and try then to activate GRAND Flash Album Gallery again. Please check also if you have a minimum memory_limit of 16Mbyte (as much as possible).
 
 3. I get the message "Fatal error: Allowed memory size of xxx bytes exhausted" or get the "Error: Exceed Memory limit.". What does this means ?
 This problem could happened if you have a low memory_limit in your php environment or you have a very large image (resolution, not size). The memory limit sets the maximum amount of memory in bytes that a script is allowed to allocate. You can either lower the resolution of your images or increase the PHP Memory limit (via ini_set, php.ini or htaccess). If you didn't know how to do that, please contact your web hoster.
@@ -93,8 +95,9 @@ This problem could happened if you have a low memory_limit in your php environme
 
 When writing a page/post, you can use the follow tag:
 
-[album gid=x name="Album_Name" w=width h=height]    -   (example: [album gid=1,3,5,6 name="New Year 2009" w=100% h=400] )
+[flagallery gid=x name="ALBUM_TITLE" w=width h=height]    -   (e.g.: [flagallery gid=1,3,5,6 name="New Year 2009" w=100% h=400] )
+Use 'gid=all' for including all galleries in the album   -   (e.g.: [flagallery gid=all name="ALBUM_TITLE"] )
 
-Example : http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
+Live Demo : http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 
 **A further FAQ you can found here :** http://codeasily.com/wordpress-plugins/flash-album-gallery/faq/

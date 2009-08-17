@@ -118,7 +118,7 @@ if ( (!$flag_options['thumbFix']) and (!$flag_options['thumbCrop']) ) {
 		jQuery.ajax({
 		  url: "admin-ajax.php",
 		  type : "POST",
-		  data:  {x: xT, y: yT, w: wT, h: hT, action: 'createNewThumb', id: <?php echo $id ?>, rr: <?php echo $rr ?>},
+		  data:  {x: xT, y: yT, w: wT, h: hT, action: 'flagCreateNewThumb', id: <?php echo $id ?>, rr: <?php echo $rr ?>},
 		  cache: false,
 		  success: function(data){
 					var d = new Date();

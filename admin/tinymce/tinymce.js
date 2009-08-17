@@ -28,7 +28,7 @@ function insertFLAGLink() {
 		gallerysize="";
 
 	if (galleryid != 0 )
-		tagtext = '[album gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + ']';
+		tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + ']';
 	else
 		tinyMCEPopup.close();
 	

@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Flash Album Gallery (FlAGallery)
+Plugin Name: GRAND Flash Alabum Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
-Description: The Flash Album Gallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 0.24
+Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
+Version: 0.29
 Author: Sergey Pasyuk
 Author URI: http://codeasily.com/
 
@@ -37,7 +37,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 	
-	var $version     = '0.24';
+	var $version     = '0.29';
 	var $dbversion   = '0.31';
 	var $minium_WP   = '2.7';
 	var $options     = '';
@@ -79,6 +79,7 @@ class flagLoad {
 		// Load the admin panel or the frontend functions
 		if ( is_admin() ) {	
 			
+		add_action( 'after_plugin_row', array(&$this, 'flag_check_message_version') );
 			// Pass the init check or show a message
 			if (get_option( "flag_init_check" ) != false )
 				add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="error"><p><strong>' . get_option( "flag_init_check" ) . '</strong></p></div>\';') );
@@ -209,7 +210,42 @@ class flagLoad {
   	include_once (dirname (__FILE__) . '/admin/flag_install.php');
     flag_uninstall();
 	}
+
 	
+	### PLUGIN MESSAGE ON PLUGINS PAGE
+	function flag_check_message_version($file)
+	{
+		static $this_plugin;
+		global $wp_version;
+		if (!$this_plugin) $this_plugin = plugin_basename(__FILE__);
+
+		if ($file == $this_plugin ){
+			$checkfile = "http://codeasily.com/flagallery.chk";
+
+			$icheck = wp_remote_fopen($checkfile);
+
+			if($icheck)
+			{
+				$icheck = explode('@', $icheck);
+				$RemoteInfo = $icheck[1];
+				$theMessage = $icheck[3];
+				
+				$columns = substr($wp_version, 0, 3) == "2.8" ? 3 : 5;
+
+				if( strval($RemoteInfo) == 1 )
+				{
+					echo '<td colspan="'.$columns.'" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div id="flag-update-msg" style="padding-bottom:10px;" >'.$theMessage.'</div></td>';
+				} else {
+					return;
+				}
+			}
+		}
+	}
+
+
+
+
+
 }
 	// Let's start the holy plugin
 	global $flag;

@@ -33,9 +33,6 @@ function flag_ajax_operation() {
 				case 'resize_image' :
 					$result = flagAdmin::resize_image($picture);
 				break;
-				case 'set_watermark' :
-					$result = flagAdmin::set_watermark($picture);
-				break;
 				default :
 					die('-1');	
 				break;		
@@ -48,9 +45,9 @@ function flag_ajax_operation() {
 		die('0');
 }
 
-add_action('wp_ajax_createNewThumb', 'createNewThumb');
+add_action('wp_ajax_flagCreateNewThumb', 'flagCreateNewThumb');
 	
-	function createNewThumb() {
+	function flagCreateNewThumb() {
 		
 		global $wpdb;
 		
@@ -84,16 +81,16 @@ add_action('wp_ajax_createNewThumb', 'createNewThumb');
 			if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
 				$thumb->resize($flag_options['thumbWidth'], 0);
 			} else {
-				$thumb->resize(0,$flag_options['thumbHeight']);	
+				$thumb->resize(0,$flag_options['thumbHeight']);
 			}
 		} else {
-			$thumb->resize($flag_options['thumbWidth'],$flag_options['thumbHeight'],$flag_options['thumbResampleMode']);	
+			$thumb->resize($flag_options['thumbWidth'],$flag_options['thumbHeight'],$flag_options['thumbResampleMode']);
 		}
-		
+
 		if ( $thumb->save($thumb_filename,100)) {
 			echo "OK";
 		} else {
-			header('HTTP/1.1 500 Internal Server Error');			
+			header('HTTP/1.1 500 Internal Server Error');
 			echo "KO";
 		}
 		

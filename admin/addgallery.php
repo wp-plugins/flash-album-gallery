@@ -1,4 +1,4 @@
-<?php  
+<?php
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 	
 	// sometimes a error feedback is better than a white screen
@@ -20,8 +20,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	//flash doesn't seem to like encoded ampersands, so convert them back here
 	$swf_upload_link = str_replace('&#038;', '&', $swf_upload_link);
 
-	$defaultpath = $flag->options['galleryPath'];	
-	
+	$defaultpath = $flag->options['galleryPath'];
+
 	if ($_POST['addgallery']){
 		check_admin_referer('flag_addgallery');
 		$newgallery = attribute_escape( $_POST['galleryname']);
@@ -34,9 +34,16 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			$messagetext = flagAdmin::upload_images();
 		}
 		else
-			flagGallery::show_error( __('Upload failed!','flag') );	
+			flagGallery::show_error( __('Upload failed!','flag') );
 	}
-	
+	if ($_POST['importfolder']){
+		check_admin_referer('flag_addgallery');
+		$galleryfolder = $_POST['galleryfolder'];
+		if ( ( !empty($galleryfolder) ) AND ($defaultpath != $galleryfolder) )
+			flagAdmin::import_gallery($galleryfolder);
+	}
+
+
 	if (isset($_POST['swf_callback'])){
 		if ($_POST['galleryselect'] == "0" )
 			flagGallery::show_error(__('No gallery selected !','flag'));
@@ -65,9 +72,30 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	?>
 	
+	<link rel="stylesheet" type="text/css" href="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.css" />
+	<script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.js"></script>
+	<script type="text/javascript">
+	/* <![CDATA[ */
+		  jQuery(function() {								 
+		    jQuery("#file_browser").fileTree({
+		      root: "<?php echo WINABSPATH; ?>",
+		      script: "<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/connectors/jqueryFileTree.php",
+		    }, function(file) {
+		        var path = file.replace("<?php echo WINABSPATH; ?>", "");
+		        jQuery("#galleryfolder").val(path);
+		    });
+		    
+		    jQuery("span.browsefiles").show().click(function(){
+		    	jQuery("#file_browser").slideToggle();
+		    });	
+		  });
+	/* ]]> */
+	</script>
+
 	<?php if($flag->options['swfUpload']) { ?>
 	<!-- SWFUpload script -->
 	<script type="text/javascript">
+	/* <![CDATA[ */
 		var flag_swf_upload;
 			
 		window.onload = function () {
@@ -119,6 +147,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			initSWFUpload();
 			
 		};
+	/* ]]> */
 	</script>
 	<div class="wrap" id="progressbar-wrap" style="display:none;">
 		<div class="progressborder">
@@ -147,6 +176,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<ul id="tabs" class="tabs">
 			<li class="selected"><a href="#" rel="addgallery"><?php _e('Add new gallery', 'flag') ;?></a></li>
 			<li><a href="#" rel="uploadimage"><?php _e('Upload Images', 'flag') ;?></a></li>
+			<li><a href="#" rel="importfolder"><?php _e('Import image folder', 'flag') ;?></a></li>
 		</ul>
 
 		<!-- create gallery -->
@@ -221,6 +251,23 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<span id="choosegalfirst"><input class="button-primary" type="submit" name="uploadimage" id="uploadimage_btn" value="<?php _e('Upload images', 'flag') ;?>" /><span class="disabledbut"></span></span>
 					<div class="clear"></div>
 				</div>
+			</form>
+		</div>
+		<!-- import folder -->
+		<div id="importfolder" class="cptab">
+		<h2><?php _e('Import image folder', 'flag') ;?></h2>
+			<form name="importfolder" id="importfolder_form" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
+			<?php wp_nonce_field('flag_addgallery') ?>
+				<table class="form-table"> 
+				<tr valign="top"> 
+					<th scope="row"><?php _e('Import from Server path:', 'flag') ;?></th> 
+					<td><input type="text" size="35" id="galleryfolder" name="galleryfolder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Toggle DIR Browser',"flag"); ?></span>
+					<div id="file_browser"></div>
+					<div><?php echo $maxsize; ?>
+					<?php if (SAFE_MODE) {?><br /><?php _e(' Please note : For safe-mode = ON you need to add the subfolder thumbs manually', 'flag') ;?><?php }; ?></div></td> 
+				</tr>
+				</table>
+				<div class="submit"><input class="button-primary" type="submit" name= "importfolder" value="<?php _e('Import folder', 'flag') ;?>"/></div>
 			</form>
 		</div>
 

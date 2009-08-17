@@ -1,7 +1,13 @@
 <?php
 
 // look up for the path
-require_once( dirname(__FILE__) . '/../../flag-config.php');
+if(file_exists(dirname(__FILE__) . "/../../flag-config.php")) {
+	require_once(dirname(__FILE__) . "/../../flag-config.php");
+} else if(file_exists(dirname(__FILE__) . "/../../../flag-config.php")) {
+	require_once(dirname(__FILE__) . "/../../../flag-config.php");
+} else if(file_exists(dirname(__FILE__) . "/../flag-config.php")) {
+	require_once(dirname(__FILE__) . "/../flag-config.php");
+}
 
 global $wpdb;
 

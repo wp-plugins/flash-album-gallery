@@ -2,9 +2,14 @@
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
+/**
+ * flagAdmin - Class for admin operation
+ */
 class flagAdmin{
 
-	// **************************************************************
+	/**
+	 * create a new gallery & folder
+	 */
 	function create_gallery($gallerytitle, $defaultpath) {
 		// create a new gallery & folder
 		global $wpdb, $user_ID;
@@ -85,7 +90,7 @@ class flagAdmin{
 			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flaggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $flagpath, $gallerytitle , $user_ID) );
 			if ($result) {
 				$message  = __('Gallery \'%1$s\' successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','flag');
-				$message  = sprintf($message, $gallerytitle, '[album gid=' . $wpdb->insert_id . ']');
+				$message  = sprintf($message, $gallerytitle, '[flagallery gid=' . $wpdb->insert_id . ' name="' . $gallerytitle . '"]');
 				$message .= '<a href="' . admin_url() . 'admin.php?page=flag-manage-gallery&mode=edit&gid=' . $wpdb->insert_id . '" >';
 				$message .= __('Edit gallery','flag');
 				$message .= '</a>';
@@ -114,7 +119,7 @@ class flagAdmin{
 		$created_msg = '';
 		
 		// remove trailing slash at the end, if somebody use it
-		if (substr($galleryfolder, -1) == '/') $galleryfolder = substr($galleryfolder, 0, -1);
+		$galleryfolder = rtrim($galleryfolder, '/');
 		$gallerypath = WINABSPATH . $galleryfolder;
 		
 		if (!is_dir($gallerypath)) {
@@ -205,7 +210,6 @@ class flagAdmin{
 	 * 
 	 * @param object | int $image contain all information about the image or the id
 	 * @return string result code
-	 * @since v1.0.0
 	 */
 	function create_thumbnail($image) {
 		
@@ -566,6 +570,13 @@ class flagAdmin{
 	
 	}
 	
+	/**
+	 * Move images from one folder to another
+	 *
+	 * @param array|int $pic_ids ID's of the images
+	 * @param int $dest_gid destination gallery
+	 * @return void
+	 */
 	function move_images($pic_ids, $dest_gid) {
 
 		$errors = '';
@@ -773,10 +784,4 @@ class flagAdmin{
 
 } // END class flagAdmin
 
-// **************************************************************
-function flag_getOnlyImages($p_event, $p_header)	{
-	
-	return flagAdmin::getOnlyImages($p_event, $p_header);
-	
-}
 ?>
