@@ -64,7 +64,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 1.	Upload the files to wp-content/plugins/flash-album-gallery.
 2.	Activate the plugin.
 3.	Add a gallery and upload some images (the main gallery folder must have write permission).
-4.	Go to your post/page an enter the tag '[flagallery gid=X name="ALBUM_TITLE"]', where X - gallery IDs separated by comma;  ALBUM_TITLE - title of your album (default 'Gallery'). Easy way is click FlAGallery button on the Editor panel.
+4.	Go to your post/page an enter the tag '[flagallery gid=X name="ALBUM TITLE"]', where X - gallery IDs separated by comma;  ALBUM TITLE - title of your album (default 'Gallery'). Easy way is click FlAGallery button on the Editor panel.
 5.	If you would like to use additional Flash Skins (only a option), go to <a href="http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/" title="Flash Skins">Flash Skins</a>, download the skin and upload the file through Skins page in Wordpress admin panel.
 
 	See more tags in the FAQ section
@@ -106,8 +106,8 @@ If FlAGallery get an error after upgrade, go to FlAGallery Overview page and pre
 
 When writing a page/post, you can use the follow tag:
 
-[flagallery gid=x name="ALBUM_TITLE" w=width h=height]    -   (e.g.: [flagallery gid=1,3,5,6 name="New Year 2009" w=100% h=400] )
-Use 'gid=all' for including all galleries in the album   -   (e.g.: [flagallery gid=all name="ALBUM_TITLE"] )
+[flagallery gid=x name="ALBUM TITLE" w=width h=height]    -   (e.g.: [flagallery gid=1,3,5,6 name="New Year 2009" w=100% h=400] )
+Use 'gid=all' for including all galleries in the album   -   (e.g.: [flagallery gid=all name="ALBUM TITLE"] )
 
 Live Demo : http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 
