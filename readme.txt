@@ -12,10 +12,10 @@ GRAND Flash Album Gallery is a full integrated (flash skin based) Image Gallery 
 
 Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin.  It provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional. You can display galleries with a beautiful flash skins integrated with GRAND Flash Album Gallery.
 
-=IMPORTANT!!!
+IMPORTANT!!!
  
 Before upgrade from version 0.24 BACKUP your skins folder, please!!!
-If FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings'= 
+If FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings' 
 
 Important Links:
 
@@ -72,10 +72,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 That's it ... Have fun
 
-=IMPORTANT!!!
+IMPORTANT!!!
  
 Before upgrade from version 0.24 BACKUP your skins folder, please!!!
-If FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings'= 
+If FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings' 
 
 == Screenshots ==
 
@@ -99,10 +99,10 @@ This problem could happened if you have a low memory_limit in your php environme
 3. I get the message "Fatal error: Allowed memory size of xxx bytes exhausted" or get the "Error: Exceed Memory limit.". What does this means ?
 This problem could happened if you have a low memory_limit in your php environment or you have a very large image (resolution, not size). The memory limit sets the maximum amount of memory in bytes that a script is allowed to allocate. You can either lower the resolution of your images or increase the PHP Memory limit (via ini_set, php.ini or htaccess). If you didn't know how to do that, please contact your web hoster.
 
-=IMPORTANT!!!
+IMPORTANT!!!
  
 Before upgrade from version 0.24 BACKUP your skins folder, please!!!
-If FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings'= 
+If FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings' 
 
 
 **Read as startup :** http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review/
