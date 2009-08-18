@@ -12,9 +12,9 @@ GRAND Flash Album Gallery is a full integrated (flash skin based) Image Gallery 
 
 Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin.  It provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional. You can display galleries with a beautiful flash skins integrated with GRAND Flash Album Gallery.
 
-=IMPORTANT!!!=
-Before upgrade from version 0.24 BACKUP your skins folder, please!!!
-If FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings' 
+= IMPORTANT!!! =
+*	Before upgrade from version 0.24 BACKUP your skins folder, please!!!
+*	If FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings' 
 
 Important Links:
 
@@ -42,15 +42,15 @@ Important Links:
 
 == Changelog ==
 
-=V0.2.9 - 17.08.2009=
-* NEW : Import images from folder
-* Added : Button "FlAGallery" on HTML Editor panel, even if Visual Editor is disabled
-* Added : International Skin to display any language in the flash
-* Added : Loader for News Box on Overview page
-* Added : To display all galleries in the album, added parameter value "all", e.g.: gid=all
-* Changed : Shortcode 'album' replaced with 'flagallery', becouse of conflict with NextGEN Gallery 
-* Bugfix : Fix for Upload Images button on Overview page
-* Bugfix : Fixed conflict with NextGEN Gallery (creating thumbnails cause error)
+= V0.2.9 - 17.08.2009 =
+*	NEW : Import images from folder
+*	Added : Button "FlAGallery" on HTML Editor panel, even if Visual Editor is disabled
+*	Added : International Skin to display any language in the flash
+*	Added : Loader for News Box on Overview page
+*	Added : To display all galleries in the album, added parameter value "all", e.g.: gid=all
+*	Changed : Shortcode 'album' replaced with 'flagallery', becouse of conflict with NextGEN Gallery 
+*	Bugfix : Fix for Upload Images button on Overview page
+* 	Bugfix : Fixed conflict with NextGEN Gallery (creating thumbnails cause error)
 
 
 == Credits ==
