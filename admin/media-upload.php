@@ -26,17 +26,16 @@ function media_upload_flag() {
 		// here is no new line allowed
 		$clean_description = preg_replace("/\n|\r\n|\r$/", " ", $description);
 		$img = flagdb::find_image($send_id);
-		$thumbcode = $img->get_thumbcode();
 		$class="flag-singlepic flag-{$image['align']}";
 		
 		// Build output
 		if ($image['size'] == "thumbnail") 
-			$html = "<img src='{$image['thumb']}' alt='$alttext' class='$class' />";
+			$html = "<img src='{$image['thumb']}' alt='$alttext' class='$class' align='{$image['align']}' />";
 		// Wrap the link to the fullsize image around	
 		$html = "<a $thumbcode href='{$image['url']}' title='$clean_description'>$html</a>";
 
 		if ($image['size'] == "full") 
-			$html = "<img src='{$image['url']}' alt='$alttext' class='$class' />";
+			$html = "<img src='{$image['url']}' alt='$alttext' class='$class' align='{$image['align']}' />";
 		
 		media_upload_flag_save_image();
 		
