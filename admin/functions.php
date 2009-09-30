@@ -19,6 +19,7 @@ class flagAdmin{
 
 		//cleanup pathname
 		$galleryname = apply_filters('flag_gallery_name', $gallerytitle);
+		$gallerytitle = attribute_escape($gallerytitle);
 		$flagpath = $defaultpath . $galleryname;
 		$flagRoot = WINABSPATH . $defaultpath;
 		$txt = '';
@@ -90,7 +91,7 @@ class flagAdmin{
 			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flaggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $flagpath, $gallerytitle , $user_ID) );
 			if ($result) {
 				$message  = __('Gallery \'%1$s\' successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','flag');
-				$message  = sprintf($message, $gallerytitle, '[flagallery gid=' . $wpdb->insert_id . ' name="' . $gallerytitle . '"]');
+				$message  = sprintf($message, stripcslashes($gallerytitle), '[flagallery gid=' . $wpdb->insert_id . ' name="' . stripcslashes($gallerytitle) . '"]');
 				$message .= '<a href="' . admin_url() . 'admin.php?page=flag-manage-gallery&mode=edit&gid=' . $wpdb->insert_id . '" >';
 				$message .= __('Edit gallery','flag');
 				$message .= '</a>';
@@ -340,6 +341,9 @@ class flagAdmin{
 				if ($result) 
 					$image_ids[] = $pic_id;
 
+				// add the metadata
+				flagAdmin::import_MetaData($pic_id);
+
 				// action hook for post process after the image is added to the database
 				$image = array( 'id' => $pic_id, 'filename' => $picture, 'galleryID' => $galleryID);
 				do_action('flag_added_new_image', $image);
@@ -350,6 +354,69 @@ class flagAdmin{
 		return $image_ids;
 		
 	}
+
+	/**
+	 * Import some metadata into the database (if avialable)
+	 * 
+	 * @class flagAdmin
+	 * @param array|int $imagesIds
+	 * @return bool
+	 */
+	function import_MetaData($imagesIds) {
+			
+		global $wpdb;
+		
+		require_once(FLAG_ABSPATH . '/lib/image.php');
+		
+		if (!is_array($imagesIds))
+			$imagesIds = array($imagesIds);
+		
+		foreach($imagesIds as $pic_id) {
+			$picture = flagdb::find_image($pic_id);
+			if (!$picture->error) {
+
+				$meta = flagAdmin::get_MetaData($picture->imagePath);
+				
+				// get the title
+				if (!$alttext = $meta['title'])
+					$alttext = $picture->alttext;
+				// get the caption / description field
+				if (!$description = $meta['caption'])
+					$description = $picture->description;
+				// get the file date/time from exif
+				$timestamp = $meta['timestamp'];
+				// update database
+				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", attribute_escape($alttext), attribute_escape($description), $timestamp, $pic_id) );
+			}// error check
+		}
+		
+		return true;
+		
+	}
+
+	/**
+	 * flagAdmin::get_MetaData()
+	 * 
+	 * @class flagAdmin
+	 * @require Meta class
+	 * @param string $picPath must be Gallery absPath + filename
+	 * @return array metadata
+	 */
+	function get_MetaData($picPath) {
+		
+		require_once(FLAG_ABSPATH . '/lib/meta.php');
+		
+		$meta = array();
+
+		$pdata = new flagMeta($picPath);
+		$meta['title'] = $pdata->get_META('title');		
+		$meta['caption'] = $pdata->get_META('caption');	
+		$meta['timestamp'] = $pdata->get_date_time();	
+		
+		return $meta;
+		
+	}
+
 
 	// **************************************************************
 	function getOnlyImages($p_event, $p_header)	{

@@ -232,7 +232,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<option value="0" ><?php _e('Choose gallery', 'flag') ?></option>
 					<?php
 						foreach($gallerylist as $gallery) {
-							$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
+							if( empty($gallery->title) ) { $name = $gallery->name; } else { $name = attribute_escape(stripslashes($gallery->title)); }
 							echo '<option value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
 						}					?>
 					</select>

@@ -158,6 +158,11 @@ class flagManageGallery {
 						flagGallery::show_message(__('Pictures deleted successfully ',"flag"));
 					}
 					break;
+				case 'import_meta':
+				// Import Metadata
+					flagAdmin::import_MetaData($_POST['doaction']);
+					flagGallery::show_message(__('Import metadata finished',"flag"));
+					break;
 			}
 		}
 		

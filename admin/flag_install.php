@@ -50,6 +50,7 @@ function flag_install () {
 		
     $flagpictures					= $wpdb->prefix . 'flag_pictures';
 	$flaggallery					= $wpdb->prefix . 'flag_gallery';
+	$flagcomments					= $wpdb->prefix . 'flag_comments';
    
 	if($wpdb->get_var("show tables like '$flagpictures'") != $flagpictures) {
 
@@ -60,12 +61,25 @@ function flag_install () {
 		description MEDIUMTEXT NULL ,
 		alttext MEDIUMTEXT NULL ,
 		imagedate DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+		location TEXT,
+		city TINYTEXT,
+		state TINYTEXT,
+		country TINYTEXT,
+		credit TEXT,
+		copyright TEXT,
 		sortorder BIGINT(20) DEFAULT '0' NOT NULL ,
+		commentson INT(1) UNSIGNED NOT NULL DEFAULT '1',
+		exclude TINYINT NULL DEFAULT '0',
+		hitcounter INT(11) UNSIGNED DEFAULT '0',
+		total_value INT(11) UNSIGNED DEFAULT '0',
+		total_votes INT(11) UNSIGNED DEFAULT '0',
+		used_ips LONGTEXT,
 		PRIMARY KEY pid (pid)
 		) $charset_collate;";
 	
       dbDelta($sql);
     }
+
 
 	if($wpdb->get_var("show tables like '$flagallery'") != $flaggallery) {
       
@@ -82,7 +96,25 @@ function flag_install () {
 		) $charset_collate;";
 	
       dbDelta($sql);
+    }
+
+	if($wpdb->get_var("show tables like '$flagcomments'") != $flagcomments) {
+		$sql = "CREATE TABLE " . $flagcomments . " (
+		cid int(11) unsigned NOT NULL auto_increment,
+		ownerid int(11) unsigned NOT NULL default '0',
+		name varchar(255) NOT NULL default '',
+		email varchar(255) NOT NULL default '',
+		website varchar(255) default NULL,
+		date datetime default NULL,
+		comment text,
+		inmoderation int(1) unsigned NOT NULL default '0',
+		PRIMARY KEY  (cid),
+		KEY ownerid (ownerid)
+		) $charset_collate;";
+	
+      dbDelta($sql);
    }
+
 
 	// check one table again, to be sure
 	if($wpdb->get_var("show tables like '$flagpictures'")!= $flagpictures) {
@@ -95,6 +127,10 @@ function flag_install () {
 	if ( empty( $options ) )	
  		flag_default_options();
  	
+	
+	// upgrade plugin
+	//require_once(FLAG_ABSPATH . 'admin/tuning.php');
+
 	// if all is passed , save the DBVERSION
 	add_option("flag_db_version", FLAG_DBVERSION);
 
@@ -121,6 +157,8 @@ function flag_default_options() {
 	$flag_options['galSortDir']				= 'ASC';							// Sort direction
 
 	// Flash settings
+	$flag_options['skinsDirABS']			= FLAG_ABSPATH . 'skins/'; 
+	$flag_options['skinsDirURL']			= FLAG_URLPATH . 'skins/'; 
 	$flag_options['flashSkin']				= 'default'; 
 	$flag_options['flashWidth']				= '100%'; 
 	$flag_options['flashHeight']			= '500';
@@ -196,6 +234,7 @@ function flag_uninstall() {
 	// first remove all tables
 	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}flag_pictures");
 	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}flag_gallery");
+	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}flag_comments");
 	
 	// then remove all options
 	delete_option( 'flag_options' );

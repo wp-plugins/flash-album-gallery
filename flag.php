@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 0.29
+Version: 0.32
 Author: Sergey Pasyuk
 Author URI: http://codeasily.com/
 
@@ -37,8 +37,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 	
-	var $version     = '0.29';
-	var $dbversion   = '0.31';
+	var $version     = '0.32';
+	var $dbversion   = '0.32';
 	var $minium_WP   = '2.7';
 	var $options     = '';
 	var $manage_page;
@@ -75,7 +75,7 @@ class flagLoad {
 
 		// Content Filters
 		add_filter('flag_gallery_name', 'sanitize_title');
-		
+
 		// Load the admin panel or the frontend functions
 		if ( is_admin() ) {	
 			
@@ -158,6 +158,7 @@ class flagLoad {
 		if ( defined('DOING_AJAX') )
 			require_once (dirname (__FILE__) . '/admin/ajax.php');
 		else {
+			require_once (dirname (__FILE__) . '/lib/meta.php');
 			require_once (dirname (__FILE__) . '/lib/media-rss.php');
 			include_once (dirname (__FILE__) . '/admin/tinymce/tinymce.php');
 
@@ -234,17 +235,13 @@ class flagLoad {
 
 				if( strval($RemoteInfo) == 1 )
 				{
-					echo '<td colspan="'.$columns.'" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div id="flag-update-msg" style="padding-bottom:10px;" >'.$theMessage.'</div></td>';
+					echo '<td colspan="'.$columns.'" class="plugin-update" style="line-height:1.2em; font-size:11px; padding:1px;"><div id="flag-update-msg" style="padding-bottom:1px;" >'.$theMessage.'</div></td>';
 				} else {
 					return;
 				}
 			}
 		}
 	}
-
-
-
-
 
 }
 	// Let's start the holy plugin

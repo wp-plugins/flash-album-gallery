@@ -30,7 +30,7 @@ echo "<gallery title='".attribute_escape(stripslashes($_GET['albumname']))."'>\n
 // get the pictures
 foreach ( $gID as $galleryID ) {
 	$galleryID = (int) $galleryID;
-	if ( $galleryID == 0) {
+	if ($galleryID == 0) {
 		$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid ORDER BY tt.{$flag_options['galSort']} {$flag_options['galSortDir']} ");
 	} else {
 		$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '$galleryID' ORDER BY tt.{$flag_options['galSort']} {$flag_options['galSortDir']} ");
@@ -41,7 +41,7 @@ foreach ( $gID as $galleryID ) {
 
 	if (is_array ($thepictures)){
 		foreach ($thepictures as $picture) {
-			echo "      <item image_icon='".$siteurl."/".$picture->path."/thumbs/thumbs_".$picture->filename."' image='".$siteurl."/".$picture->path."/".$picture->filename."' title ='".attribute_escape(flagGallery::i18n(strip_tags(stripslashes($picture->alttext))))."'><![CDATA[".htmlspecialchars_decode(attribute_escape(flagGallery::i18n(stripslashes($picture->description))))."]]></item>\n";
+			echo "      <item thumb='".$siteurl."/".$picture->path."/thumbs/thumbs_".$picture->filename."' image='".$siteurl."/".$picture->path."/".$picture->filename."' title ='".attribute_escape(flagGallery::i18n(strip_tags(stripslashes($picture->alttext))))."'><![CDATA[".htmlspecialchars_decode(attribute_escape(flagGallery::i18n(stripslashes($picture->description))))."]]></item>\n";
 		}
 	}
 	 

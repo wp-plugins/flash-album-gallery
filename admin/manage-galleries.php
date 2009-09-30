@@ -54,7 +54,11 @@ if($gallerylist) {
 	foreach($gallerylist as $gallery) {
 		$alt = ( $alt == 'class="alternate"' ) ? '' : 'class="alternate"';
 		$gid = $gallery->gid;
-		$name = (empty($gallery->title) ) ? $gallery->name : $gallery->title;
+		if( empty($gallery->title) ) {
+			$name = $gallery->name;
+		} else {
+			$name = attribute_escape(stripslashes($gallery->title));
+		}
 		$author_user = get_userdata( (int) $gallery->author );
 		?>
 		<tr id="gallery-<?php echo $gid ?>" <?php echo $alt; ?> >

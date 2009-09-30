@@ -168,7 +168,6 @@ class flagGallery {
 	/**
 	 * Check the memory_limit and calculate a recommended memory size
 	 * 
-	 * @since V1.2.0
 	 * @return string message about recommended image size
 	 */
 	function check_memory_limit() {

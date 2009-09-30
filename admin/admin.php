@@ -33,7 +33,15 @@ class flagAdminPanel{
 		
 		global $flag;
 		
-  	switch ($_GET['page']){
+		// check for upgrade
+		if( get_option( 'flag_db_version' ) != FLAG_DBVERSION ) {
+			include_once ( dirname (__FILE__) . '/functions.php' );
+			include_once ( dirname (__FILE__) . '/upgrade.php' );
+			flag_upgrade_page();
+			return;			
+		}
+		
+  		switch ($_GET['page']){
 			case "flag-manage-gallery" :
 				include_once ( dirname (__FILE__) . '/functions.php' );	// admin functions
 				include_once ( dirname (__FILE__) . '/manage.php' );		// flag_admin_manage_gallery

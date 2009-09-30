@@ -139,10 +139,10 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 	if (empty($height)) $height = (int) $flag_options['flashHeight'];
 	if($name == '') $name = 'Gallery';
 	// init the flash output
-	$swfobject = new swfobject( FLAG_URLPATH.'skins/'.$flag_options['flashSkin'].'/gallery.swf' , 'so' . $galleryID, $width, $height, '9.0.45', 'false');
+	$swfobject = new swfobject( $flag_options['skinsDirURL'].$flag_options['flashSkin'].'/gallery.swf' , 'so' . $galleryID, $width, $height, '9.0.45', 'false');
 	global $swfCounter;
 
-	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and <a href="http://www.mozilla.com/firefox/">a browser with Javascript support</a> are needed..', 'flag').'</p>';
+	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed..', 'flag').'</p>';
 	$swfobject->add_params('wmode', 'transparent');
 	$swfobject->add_params('allowfullscreen', 'true');
 	$swfobject->add_params('menu', 'false');
@@ -152,7 +152,7 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 	$swfobject->add_attributes('name', 'so' . $galleryID . '_f' . $swfCounter);
 
 	// adding the flash parameter	
-	$swfobject->add_flashvars( 'path', FLAG_URLPATH.'skins/'.$flag_options['flashSkin'].'/' );
+	$swfobject->add_flashvars( 'path', $flag_options['skinsDirURL'].$flag_options['flashSkin'].'/' );
 	$swfobject->add_flashvars( 'gID', $galleryID );
 	$swfobject->add_flashvars( 'galName', $name );
 	$swfobject->add_flashvars( 'width', $width );

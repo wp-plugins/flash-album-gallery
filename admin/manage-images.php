@@ -136,14 +136,14 @@ jQuery(document).ready( function() {
 
 <div class="wrap">
 
-<h2><?php echo __ngettext( 'Gallery', 'Galleries', 1, 'flag' ); ?> : <?php echo flagGallery::i18n($gallery->title); ?></h2>
+<h2><?php echo __ngettext( 'Gallery', 'Galleries', 1, 'flag' ); ?> : <?php echo attribute_escape(flagGallery::i18n(stripslashes($gallery->title))); ?></h2>
 <select name="select_gid" style="width:180px; float: right; margin: -20px 3px 0 0;" onchange="window.location.href=this.options[this.selectedIndex].value">
 	<option selected="selected"><?php _e('Choose another gallery', 'flag') ?></option>
 <?php 
 	foreach ($gallerylist as $gal) { 
 		if ($gal->gid != $act_gid) { 
 ?>
-	<option value="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gal->gid, 'flag_editgallery')?>" ><?php echo $gal->gid; ?> - <?php echo stripslashes($gal->title); ?></option>
+	<option value="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gal->gid, 'flag_editgallery')?>" ><?php echo $gal->gid; ?> - <?php echo attribute_escape(stripslashes($gal->title)); ?></option>
 <?php 
 		} 
 	}
@@ -163,11 +163,11 @@ jQuery(document).ready( function() {
 			<table class="form-table" >
 				<tr>
 					<th align="left" scope="row"><?php _e('Title') ?>:</th>
-					<td align="left"><input type="text" size="50" name="title" value="<?php echo $gallery->title; ?>"  /></td>
+					<td align="left"><input type="text" size="50" name="title" value="<?php echo attribute_escape(stripslashes($gallery->title)); ?>"  /></td>
 				</tr>
 				<tr>
 					<th align="left" scope="row"><?php _e('Description') ?>:</th> 
-					<td align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo $gallery->galdesc; ?></textarea></td>
+					<td align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo attribute_escape(stripslashes($gallery->galdesc)); ?></textarea></td>
 				</tr>
 				<tr>
 					<th align="left" scope="row"><?php _e('Path', 'flag') ?>:</th> 
@@ -212,6 +212,7 @@ jQuery(document).ready( function() {
 		<option value="new_thumbnail" ><?php _e("Create new thumbnails",'flag')?></option>
 		<option value="resize_images" ><?php _e("Resize images",'flag')?></option>
 		<option value="delete_images" ><?php _e("Delete images",'flag')?></option>
+		<option value="import_meta" ><?php _e("Import metadata",'flag')?></option>
 		<option value="copy_to" ><?php _e("Copy to...",'flag')?></option>
 		<option value="move_to"><?php _e("Move to...",'flag')?></option>
 	</select>
@@ -278,7 +279,7 @@ if($picturelist) {
 						</td>
 						<td class="column-filename">
 							<strong><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
-								<?php echo ( empty($picture->alttext) ) ? $picture->filename : stripslashes(flagGallery::i18n($picture->alttext)); ?>
+								<?php echo $picture->filename; ?>
 							</a></strong>
 							<br /><?php echo $date ?>
 							<?php  $imgpath = WINABSPATH.$picture->path."/".$picture->filename; 
@@ -302,8 +303,8 @@ if($picturelist) {
 							?></p>
 						</td>
 						<td class="column-alt_title_desc">
-							<input name="alttext[<?php echo $pid ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext) ?>" /><br/>
-							<textarea name="description[<?php echo $pid ?>]" style="width:95%; margin-top: 2px;" rows="2" ><?php echo stripslashes($picture->description) ?></textarea>
+							<input name="alttext[<?php echo $pid ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo attribute_escape(stripslashes($picture->alttext)) ?>" /><br/>
+							<textarea name="description[<?php echo $pid ?>]" style="width:95%; margin-top: 2px;" rows="2" ><?php echo attribute_escape(stripslashes($picture->description)) ?></textarea>
 						</td>
 		</tr>
 		<?php
@@ -335,7 +336,7 @@ if($picturelist) {
 		    				foreach ($gallerylist as $gallery) { 
 		    					if ($gallery->gid != $act_gid) { 
 		    			?>
-						<option value="<?php echo $gallery->gid; ?>" ><?php echo $gallery->gid; ?> - <?php echo stripslashes($gallery->title); ?></option>
+						<option value="<?php echo $gallery->gid; ?>" ><?php echo $gallery->gid; ?> - <?php echo attribute_escape(stripslashes($gallery->title)); ?></option>
 						<?php 
 		    					} 
 		    				}

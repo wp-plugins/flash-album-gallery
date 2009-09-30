@@ -215,6 +215,9 @@ class flagdb {
 	function insert_image($gid, $filename, $alttext, $desc) {
 		global $wpdb;
 		
+		$alttext = attribute_escape($alttext);
+		$desc = attribute_escape($desc);
+		
 		$result = $wpdb->query(
 			  "INSERT INTO $wpdb->flagpictures (galleryid, filename, description, alttext) VALUES "
 			. "('$gid', '$filename', '$desc', '$alttext');");
@@ -251,7 +254,7 @@ class flagdb {
 		// create the sql parameter "name = value"
 		foreach ($update as $key => $value)
 			if ($value)
-				$sql[] = $key . " = '" . $value . "'";
+				$sql[] = $key . " = '" . attribute_escape($value) . "'";
 		
 		// create the final string
 		$sql = implode(', ', $sql);

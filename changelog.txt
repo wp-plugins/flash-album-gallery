@@ -1,7 +1,13 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
-V0.2.9 - 17.08.2009
+V0.32 - 30.09.2009
+- Added : Skin "PhotoGallery PRO 1.0 DEMO"
+- Bugfix : Fix for image date & time
+- Bugfix : Fixed html special chars in description of image
+- Changed : Database structure
+
+V0.29 - 17.08.2009
 - NEW : Import images from folder
 - Added : Button "FlAGallery" on HTML Editor panel, even if Visual Editor is disabled
 - Added : International Skin to display any language in the flash

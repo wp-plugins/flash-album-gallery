@@ -11,138 +11,7 @@ if ( !is_user_logged_in() )
 if ( !current_user_can('FlAG Change skin') ) 
 	die('-1');	
 
-/**
- * Parse the skin contents to retrieve skin's metadata.
- *
- * <code>
- * /*
- * Skin Name: Name of Skin
- * Skin URI: Link to skin information
- * Description: Skin Description
- * Author: Skin author's name
- * Author URI: Link to the author's web site
- * Version: Version of Skin
- *  * / # Remove the space to close comment
- * </code>
- *
- * Skin data returned array contains the following:
- *		'Name' - Name of the skin, must be unique.
- *		'Title' - Title of the skin and the link to the skin's web site.
- *		'Description' - Description of what the skin does and/or notes
- *		from the author.
- *		'Author' - The author's name
- *		'AuthorURI' - The authors web site address.
- *		'Version' - The skin version number.
- *		'SkinURI' - Skin web site address.
- *
- */
-
-function get_skin_data( $skin_file ) {
-	// We don't need to write to the file, so just open for reading.
-	$fp = fopen($skin_file, 'r');
-
-	// Pull only the first 8kiB of the file in.
-	$skin_data = fread( $fp, 8192 );
-
-	// PHP will close file handle, but we are good citizens.
-	fclose($fp);
-
-	preg_match( '|Skin Name:(.*)$|mi', $skin_data, $name );
-	preg_match( '|Skin URI:(.*)$|mi', $skin_data, $uri );
-	preg_match( '|Version:(.*)|i', $skin_data, $version );
-	preg_match( '|Description:(.*)$|mi', $skin_data, $description );
-	preg_match( '|Author:(.*)$|mi', $skin_data, $author_name );
-	preg_match( '|Author URI:(.*)$|mi', $skin_data, $author_uri );
-
-	foreach ( array( 'name', 'uri', 'version', 'description', 'author_name', 'author_uri' ) as $field ) {
-		if ( !empty( ${$field} ) )
-			${$field} = trim(${$field}[1]);
-		else
-			${$field} = '';
-	}
-
-	$skin_data = array(
-				'Name' => $name, 'Title' => $name, 'SkinURI' => $uri, 'Description' => $description,
-				'Author' => $author_name, 'AuthorURI' => $author_uri, 'Version' => $version 
-				);
-	return $skin_data;
-}
-
-/**
- * Gets the basename of a skin.
- *
- * This method extracts the name of a skin from its filename.
- *
- */
-function skin_basename($file) {
-	$file = str_replace('\\','/',$file); // sanitize for Win32 installs
-	$file = preg_replace('|/+|','/', $file); // remove any duplicate slash
-	$skin_dir = str_replace('\\','/',FLAG_ABSPATH . 'skins/'); // sanitize for Win32 installs
-	$skin_dir = preg_replace('|/+|','/', $skin_dir); // remove any duplicate slash
-	$mu_skin_dir = str_replace('\\','/',FLAG_ABSPATH . 'skins/'); // sanitize for Win32 installs
-	$mu_skin_dir = preg_replace('|/+|','/', $mu_skin_dir); // remove any duplicate slash
-	$file = preg_replace('#^' . preg_quote($skin_dir, '#') . '/|^' . preg_quote($mu_skin_dir, '#') . '/#','',$file); // get relative path from skins dir
-	$file = trim($file, '/');
-	return $file;
-}
-
-/**
- * Check the skins directory and retrieve all skin files with skin data.
- *
- */
-function get_skins($skin_folder = '') {
-
-	$flag_skins = array ();
-	$skin_root = FLAG_ABSPATH . 'skins/';
-	if( !empty($skin_folder) )
-		$skin_root .= $skin_folder;
-
-	// Files in flash-album-gallery/skins directory
-	$skins_dir = @ opendir( $skin_root);
-	$skin_files = array();
-	if ( $skins_dir ) {
-		while (($file = readdir( $skins_dir ) ) !== false ) {
-			if ( substr($file, 0, 1) == '.' )
-				continue;
-			if ( is_dir( $skin_root.'/'.$file ) ) {
-				$skins_subdir = @ opendir( $skin_root.'/'.$file );
-				if ( $skins_subdir ) {
-					while (($subfile = readdir( $skins_subdir ) ) !== false ) {
-						if ( substr($subfile, 0, 1) == '.' )
-							continue;
-						if ( substr($subfile, -4) == '.php' )
-							$skin_files[] = "$file/$subfile";
-					}
-				}
-			} else {
-				if ( substr($file, -4) == '.php' )
-					$skin_files[] = $file;
-			}
-		}
-	}
-	@closedir( $skins_dir );
-	@closedir( $skins_subdir );
-
-	if ( !$skins_dir || empty($skin_files) )
-		return $flag_skins;
-
-	foreach ( $skin_files as $skin_file ) {
-		if ( !is_readable( "$skin_root/$skin_file" ) )
-			continue;
-
-		$skin_data = get_skin_data( "$skin_root/$skin_file" );
-
-		if ( empty ( $skin_data['Name'] ) )
-			continue;
-
-		$flag_skins[skin_basename( $skin_file )] = $skin_data;
-	}
-
-	uasort( $flag_skins, create_function( '$a, $b', 'return strnatcasecmp( $a["Name"], $b["Name"] );' ));
-
-	return $flag_skins;
-}
-
+require_once (dirname (__FILE__) . '/get_skin.php');
 
 add_action('install_skins_dashboard', 'install_skins_dashboard');
 function install_skins_dashboard() {
@@ -189,7 +58,7 @@ function upload_skin() {
 			echo "<p>".__('No skin Specified', 'flag')."</p>\n";
 		} else {
 			check_admin_referer('skin-upload');
-			echo '<h2>', sprintf( __('Installing Skin from file: %s', 'flag'), basename($filename) ), '</h2>';
+			echo '<h4>', sprintf( __('Installing Skin from file: %s', 'flag'), basename($filename) ), '</h4>';
 
 			//Handle a newly uploaded file, Else assume it was
 			if ( !empty($_FILES) ) {
@@ -247,11 +116,11 @@ function do_skin_install_local_package($package, $filename = '') {
 		show_message($result);
 		show_message( __('Installation Failed', 'flag') );
 	} else {
-		show_message( __('Successfully installed the skin.', 'flag') );
+		show_message( __('The skin installed successfully.', 'flag') );
 		$skin_file = $result;
 		$install_actions = apply_filters('install_skin_complete_actions', array(
-							'activate_skin' => '<a href="'.FLAG_URLPATH.'skins/'.$skin_file.'" title="' . __('Activate this skin', 'flag') . '" target="_parent">' . __('Activate Skin', 'flag') . '</a>',
-							'skins_page' => '<a href="#'.dirname($skin_file).'" title="' . __('Goto skin overview', 'flag') . '" target="_parent">' . __('Skin overview', 'flag') . '</a>'
+							'activate_skin' => '<a href="'.admin_url('admin.php?page=flag-skins&skin='.$skin_file).'" title="' . __('Activate this skin', 'flag') . '" target="_parent">' . __('Activate Skin', 'flag') . '</a>',
+							'skins_page' => '<a href="#'.basename($skin_file, '.php').'" title="' . __('Goto skin overview', 'flag') . '" target="_parent">' . __('Skin overview', 'flag') . '</a>'
 							), array(), $skin_file);
 		if ( ! empty($install_actions) )
 			show_message('<strong>' . __('Actions:', 'flag') . '</strong> ' . implode(' | ', (array)$install_actions));
@@ -279,9 +148,9 @@ function wp_install_skin_local_package($package, $feedback = '') {
 		return new WP_Error('fs_error', __('Filesystem error', 'flag'), $wp_filesystem->errors);
 
 	//Get the base skin folder
-	$skins_dir = FLAG_ABSPATH . 'skins/';
+	$skins_dir = $flag_options['skinsDirABS'];
 	if ( empty($skins_dir) )
-		return new WP_Error('fs_no_skins_dir', __('Unable to locate FlAG Skin directory.', 'flag'));
+		return new WP_Error('fs_no_skins_dir', __('Unable to locate FlAGallery Skin directory.', 'flag'));
 
 	//And the same for the Content directory.
 	$content_dir = $wp_filesystem->wp_content_dir();
@@ -353,7 +222,7 @@ if( isset($_GET['skin']) ) {
 	// Flash settings
 	$flag_options['flashSkin'] = $set_skin; 
 
-	include_once ( FLAG_ABSPATH . 'skins/'.$_GET['skin'] );	// activate skin
+	include_once ( $flag_options['skinsDirABS'].$_GET['skin'] );	// activate skin
 
 	update_option('flag_options', $flag_options);
 }
@@ -424,7 +293,7 @@ $flag_options = get_option ('flag_options');
 		$is_active = false /*is_skin_active($skin_file)*/;
 		$class = ( dirname($skin_file) == $flag_options['flashSkin'] ) ? 'active' : 'inactive';
 		echo "
-	<tr id='".ereg_replace("[^a-zA-Z0-9_/-]", "", str_replace(" ", "-", $skin_data['Name']))."' class='$class first'>
+	<tr id='".basename($skin_file, '.php')."' class='$class first'>
 		<td class='skin-title'><strong>{$skin_data['Name']}</strong></td>
 		<td class='desc'>";
 		$skin_meta = array();
@@ -457,7 +326,7 @@ $flag_options = get_option ('flag_options');
 */
 	echo "</tr>
 	<tr class='$class second'>
-		<td class='skin-title'><img src='".FLAG_URLPATH."skins/".dirname($skin_file)."/".basename($skin_file, '.php').".png' alt='{$skin_data['Name']}' title='{$skin_data['Name']}' /></td>
+		<td class='skin-title'><img src='".$flag_options['skinsDirURL'].dirname($skin_file)."/".basename($skin_file, '.php').".png' alt='{$skin_data['Name']}' title='{$skin_data['Name']}' /></td>
 		<td class='desc' colspan='2'><p>{$skin_data['Description']}</p></td>";
 	echo "</tr>\n";
 	}
