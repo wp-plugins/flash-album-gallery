@@ -1,9 +1,9 @@
 === GRAND Flash Album Gallery ===
 Contributors: Sergey Pasyuk
 Donate link: 
-Tags: photos, flash, slideshow, images, gallery, media, admin, post, photo-albums, pictures, photo, picture, image, multi-categories gallery, skinable gallery, skin
+Tags: photos, flash, slideshow, images, gallery, media, admin, post, posts, page, rss, plugin, photo-albums, pictures, photo, picture, image, multi-categories gallery, skinable gallery, skin, widget, sidebar
 Requires at least: 2.7
-Tested up to: 2.8.*
+Tested up to: 2.8.4
 Stable tag: trunk
 
 GRAND Flash Album Gallery is a full integrated (flash skin based) Image Gallery plugin with a powerfull administration back end.
