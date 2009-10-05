@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+V0.33 - 5.10.2009
+- Bugfix : Fix for skins upload
+- Bugfix : Fix editor buttons in IE
+
 V0.32 - 30.09.2009
 - Added : Skin "PhotoGallery PRO 1.0 DEMO"
 - Bugfix : Fix for image date & time

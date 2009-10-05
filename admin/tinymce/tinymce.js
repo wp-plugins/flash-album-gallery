@@ -23,9 +23,9 @@ function insertFLAGLink() {
 		}
 	}
 	if (gallerywidth && galleryheight)
-		gallerysize = " w=" + gallerywidth + " h=" + galleryheight;
+		var gallerysize = " w=" + gallerywidth + " h=" + galleryheight;
 	else
-		gallerysize="";
+		var gallerysize="";
 
 	if (galleryid != 0 )
 		tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + ']';

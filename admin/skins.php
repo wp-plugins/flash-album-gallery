@@ -148,6 +148,7 @@ function wp_install_skin_local_package($package, $feedback = '') {
 		return new WP_Error('fs_error', __('Filesystem error', 'flag'), $wp_filesystem->errors);
 
 	//Get the base skin folder
+	$flag_options = get_option('flag_options');
 	$skins_dir = $flag_options['skinsDirABS'];
 	if ( empty($skins_dir) )
 		return new WP_Error('fs_no_skins_dir', __('Unable to locate FlAGallery Skin directory.', 'flag'));

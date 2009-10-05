@@ -3,11 +3,11 @@
 // look up for the path
 require_once( dirname( dirname( dirname(__FILE__) ) ) . '/flag-config.php');
 
-global $wpdb;
-
 // check for rights
 if ( !is_user_logged_in() || !current_user_can('edit_posts') ) 
 	wp_die(__("You are not allowed to be here"));
+
+global $wpdb;
 
 if($_REQUEST['riched'] == "false") {
 ?>
@@ -19,7 +19,7 @@ if($_REQUEST['riched'] == "false") {
 	<link rel="stylesheet" type="text/css" href="<?php echo FLAG_URLPATH ?>admin/tinymce/popup.css" />
 <base target="_self" />
 </head>
-<body id="link" onload="document.getElementById('galleries').focus();">
+<body id="link">
 <?php } else { ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -27,7 +27,7 @@ if($_REQUEST['riched'] == "false") {
 	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php echo get_option('blog_charset'); ?>" />
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
-		<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/tinymce/utils/form_utils.js"></script>
+	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-includes/js/tinymce/utils/form_utils.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo FLAG_URLPATH ?>admin/tinymce/tinymce.js"></script>
 	<base target="_self" />
 </head>
@@ -45,7 +45,7 @@ if($_REQUEST['riched'] == "false") {
          <tr>
             <td nowrap="nowrap" valign="top"><label for="gallerytag"><?php _e("Select galleries", 'flag'); ?>:<span style="color:red;"> *</span></label><br /><small><?php _e("(album categories)", 'flag'); ?></small></td>
             <td><select id="galleries" name="galleries" style="width: 200px" size="7" multiple="multiple">
-                    <option value="all" style="font-weight:bold">* - all galleries</option>
+                    <option value="all" selected="selected" style="font-weight:bold">* - all galleries</option>
 				<?php
 					$gallerylist = $flagdb->find_all_galleries('gid', 'ASC');
 					if(is_array($gallerylist)) {
@@ -107,12 +107,12 @@ jQuery('#galleries').change(function(){
 				}
 			}
 			if (gallerywidth && galleryheight)
-				gallerysize = " w=" + gallerywidth + " h=" + galleryheight;
+				var gallerysize = " w=" + gallerywidth + " h=" + galleryheight;
 			else
-				gallerysize="";
+				var gallerysize="";
 
 			if (galleryid != 0 ) {
-				tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + ']'+"\n";
+				tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + ']';
 				win.send_to_editor(tagtext);
 				win.bind_resize();
 			} else alert('Choose at least one gallery!');
@@ -124,10 +124,6 @@ jQuery('#galleries').change(function(){
 	</script>
 <?php } else { ?>
 	<div class="mceActionPanel">
-		<div style="float: left">
-			<input type="button" id="cancel" name="cancel" value="<?php _e("Cancel", 'flag'); ?>" onclick="tinyMCEPopup." />
-		</div>
-
 		<div style="float: right">
 			<input type="submit" id="insert" name="insert" value="<?php _e("Insert", 'flag'); ?>" onclick="insertFLAGLink();" />
 		</div>
