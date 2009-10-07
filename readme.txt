@@ -1,16 +1,18 @@
 === GRAND Flash Album Gallery ===
 Contributors: Sergey Pasyuk
 Donate link: 
-Tags: photos, flash, slideshow, images, gallery, media, admin, post, posts, page, rss, plugin, photo-albums, pictures, photo, picture, image, multi-categories gallery, skinable gallery, skin, widget, sidebar
+Tags: flash, slideshow, gallery, embed, admin, post, posts, page, rss, plugin, photo album, picture, pictures, photo, photos, image, images, multi-categories gallery, skinable gallery, skin, widget, sidebar, photo gallery, image gallery, picture gallery, manage, manage photos, thumbnail, category, categories, automatic
 Requires at least: 2.7
 Tested up to: 2.8.4
 Stable tag: trunk
 
-GRAND Flash Album Gallery is a full integrated (flash skin based) Image Gallery plugin with a powerfull administration back end.
+GRAND Flash Album Gallery is a full integrated (flash skin based, slideshow) Image Gallery plugin with a powerfull admin back end.
 
 == Description ==
 
 Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin.  It provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional. You can display galleries with a beautiful flash skins integrated with GRAND Flash Album Gallery.
+With GRAND FlAGallery you can: upload unlimited number of pictures for your slideshow galleries and albums; customize color of all the user controls and background for embeded flash skin to fit your blog colors; change width and height of flash or leave width 100% to fit your blog; view photo gallery in full screen mode for dramatic presentations; turn on/off image gallery media RSS feed; change role settings for each gallery; copy or move images between galleries; import images from folder and create gallery; easily insert shortcode in post with special button integrated in post editor; create custom thumbnails for image; sort pictures in drag-and-drop way.
+Make your blog nicer and your life easier!!! Code easily with <a href="http://codeasily.com/" title="CodEasily.com">codeasily.com</a>
 
 =IMPORTANT!!!=
 Before upgrade from old version BACKUP your skins folder, please!!!
@@ -27,7 +29,12 @@ Important Links:
 
 = Features =
 
+* Unlimited number of pictures in slideshow
 * Flash skins: You can add and change flash skins for displaying galleries.
+* Ability to automatically play slideshow
+* Customize the color of all the user controls and backgrounds
+* Full screen mode for dramatic presentations
+* Adjustable width to fit your blog
 * Media RSS feed 
 * Role settings: Each gallery has a author
 * AJAX based thumbnail generator: No more server limitation during the batch process
