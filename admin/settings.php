@@ -44,7 +44,7 @@ function flag_admin_options()  {
 		flag_set_capability($_POST['manage_others'],"FlAG Manage others gallery");
 		flag_set_capability($_POST['change_skin'],"FlAG Change skin");
 		flag_set_capability($_POST['add_skins'],"FlAG Add skins");
-//		flag_set_capability($_POST['delete_skins'],"FlAG Delete skins");
+		flag_set_capability($_POST['delete_skins'],"FlAG Delete skins");
 		flag_set_capability($_POST['change_options'],"FlAG Change options");
 		
 		flagGallery::show_message(__('Updated capabilities',"flag"));
@@ -350,12 +350,10 @@ if($flag->options['itemDescription']) { ?>
 				<th scope="row"><?php _e('Add skins', 'flag') ;?>:</th> 
 				<td><label for="add_skins"><select name="add_skins" id="add_skins"><?php wp_dropdown_roles( flag_get_role('FlAG Add skins') ); ?></select></label></td>
 			</tr>
-<?php /*
 			<tr valign="top"> 
 				<th scope="row"><?php _e('Delete skins', 'flag') ;?>:</th> 
 				<td><label for="delete_skins"><select name="delete_skins" id="delete_skins"><?php wp_dropdown_roles( flag_get_role('FlAG Delete skins') ); ?></select></label></td>
 			</tr>
-*/ ?>
 			<tr valign="top"> 
 				<th scope="row"><?php _e('Change options', 'flag') ;?>:</th> 
 				<td><label for="change_options"><select name="change_options" id="change_options"><?php wp_dropdown_roles( flag_get_role('FlAG Change options') ); ?></select></label></td>

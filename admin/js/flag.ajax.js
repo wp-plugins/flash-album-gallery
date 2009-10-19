@@ -14,8 +14,7 @@ flagAjax = {
 			permission: flagAjaxSetup.permission,
 			error: flagAjaxSetup.error,
 			failure: flagAjaxSetup.failure,
-			timeout: 10000,
-			//wait: false
+			timeout: 10000
 		},
 	
 		run: function( index ) {

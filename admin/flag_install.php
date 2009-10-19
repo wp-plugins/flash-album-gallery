@@ -32,7 +32,7 @@ function flag_install () {
 	$role->add_cap('FlAG Manage others gallery');
 	$role->add_cap('FlAG Change skin');
 	$role->add_cap('FlAG Add skins');
-//	$role->add_cap('FlAG Delete skins');
+	$role->add_cap('FlAG Delete skins');
 	$role->add_cap('FlAG Change options');
 
 	// upgrade function changed in WordPress 2.3	
@@ -248,7 +248,7 @@ function flag_uninstall() {
 	flag_remove_capability('FlAG Manage others gallery');
 	flag_remove_capability("FlAG Change skin");
 	flag_remove_capability('FlAG Add skins');
-//	flag_remove_capability('FlAG Delete skins');
+	flag_remove_capability('FlAG Delete skins');
 	flag_remove_capability("FlAG Change options");
 }
 

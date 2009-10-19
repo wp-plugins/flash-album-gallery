@@ -49,6 +49,11 @@ Important Links:
 
 == Changelog ==
 
+V0.34 - 19.10.2009
+- Added : Delete skin option
+- Added : Capability for 'delete skin'
+- Bugfix : Fix for flag.ajax.js (conflict with wp-security-scan plugin)
+
 V0.33 - 5.10.2009
 - Bugfix : Fix for skins upload
 - Bugfix : Fix editor buttons in IE

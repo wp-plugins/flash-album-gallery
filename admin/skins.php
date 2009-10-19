@@ -215,6 +215,58 @@ function wp_install_skin_local_package($package, $feedback = '') {
 	return  $folder . '/' . $skinfiles[0];
 }
 
+if ( isset($_GET['delete']) ) {
+	$delskin = $_GET['delete'];
+	if ( current_user_can('FlAG Delete skins') ) {
+		$flag_options = get_option('flag_options');
+		if ( $flag_options['flashSkin'] != $delskin ) {
+			$skins_dir = trailingslashit( $flag_options['skinsDirABS'] );
+			$skin = $skins_dir.$delskin.'/';
+			if( folderDelete($skin) ) {
+				flagGallery::show_message( __('Skin','flag').' \''.$delskin.'\' '.__('deleted successfully','flag') );
+			} else {
+				flagGallery::show_message( __('Can\'t find skin directory ','flag').' \''.$delskin.'\' '.__('. Try delete it manualy via ftp','flag') );
+			}
+		} else {
+			flagGallery::show_message( __('You need activate another skin before delete it','flag') );
+		}
+	} else {
+		wp_die(__('You do not have sufficient permissions to delete skins of GRAND FlAGallery.'));
+	}
+}
+
+/**
+ * Function used to delete a folder.
+ * @param $path full-path to folder
+ * @return bool result of deletion
+ */
+function folderDelete($path) {
+  if (is_dir($path)) {
+	  if (version_compare(PHP_VERSION, '5.0.0') < 0) {
+		$entries = array();
+		if ($handle = opendir($path)) {
+		  while (false !== ($file = readdir($handle))) $entries[] = $file;
+		  closedir($handle);
+		}
+	  }else{
+		$entries = scandir($path);
+		if ($entries === false) $entries = array();
+	  }
+
+	foreach ($entries as $entry) {
+	  if ($entry != '.' && $entry != '..') {
+		folderDelete($path.'/'.$entry);
+	  }
+	}
+
+	return rmdir($path);
+  } elseif (file_exists($path)){
+	return unlink($path);
+  } else {
+  	return false;
+  }
+}
+
 if( isset($_GET['skin']) ) {
 	global $blog_id, $flag;
 
@@ -226,6 +278,7 @@ if( isset($_GET['skin']) ) {
 	include_once ( $flag_options['skinsDirABS'].$_GET['skin'] );	// activate skin
 
 	update_option('flag_options', $flag_options);
+	flagGallery::show_message( __('Skin','flag').' \''.$set_skin.'\' '.__('activated successfully','flag') );
 }
 
 if( current_user_can('FlAG Add skins') ) {
@@ -318,17 +371,19 @@ $flag_options = get_option ('flag_options');
  			echo "<strong>".__('Activated', 'flag' )."</strong>";
  		}
 		echo "</td>";
-/* // delete link
-		echo "<td class='skin-delete action-links'>";
-		if ( current_user_can('FlAG Delete skins') ) {
-			echo '<a class="delete" href="'.wp_nonce_url( admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)), 'flag_deleteskin').'" title="' . __( 'Delete this skin', 'flag' ) . '">' . __('Delete', 'flag' ) . '</a>';
- 		}
-		echo "</td>";
-*/
+
 	echo "</tr>
 	<tr class='$class second'>
 		<td class='skin-title'><img src='".$flag_options['skinsDirURL'].dirname($skin_file)."/".basename($skin_file, '.php').".png' alt='{$skin_data['Name']}' title='{$skin_data['Name']}' /></td>
-		<td class='desc' colspan='2'><p>{$skin_data['Description']}</p></td>";
+		<td class='desc'><p>{$skin_data['Description']}</p></td>";
+ // delete link
+		if ( current_user_can('FlAG Delete skins') ) {
+		echo "<td class='skin-delete action-links'>";
+		if ( dirname($skin_file) != $flag_options['flashSkin'] ) {
+			echo '<a class="delete" href="'.admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)).'" title="' . __( 'Delete this skin', 'flag' ) . '">' . __('Delete', 'flag' ) . '</a>';
+		}
+		echo "</td>";
+ 		}
 	echo "</tr>\n";
 	}
 ?>
