@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/flash-album-gallery\n"
-"POT-Creation-Date: 2009-10-05 13:06+0000\n"
+"POT-Creation-Date: 2009-10-19 15:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,7 +159,7 @@ msgstr ""
 msgid "FlAG Manage skins"
 msgstr ""
 
-#: admin/admin.php:26 admin/skins.php:259
+#: admin/admin.php:26 admin/skins.php:312
 msgid "Skins"
 msgstr ""
 
@@ -407,7 +407,7 @@ msgid "Title"
 msgstr ""
 
 #: admin/manage-galleries.php:44 admin/manage-images.php:169
-#: admin/media-upload.php:185 admin/skins.php:271 admin/skins.php:279
+#: admin/media-upload.php:185 admin/skins.php:324 admin/skins.php:332
 msgid "Description"
 msgstr ""
 
@@ -419,8 +419,8 @@ msgstr ""
 msgid "Quantity"
 msgstr ""
 
-#: admin/manage-galleries.php:47 admin/skins.php:23 admin/skins.php:272
-#: admin/skins.php:280
+#: admin/manage-galleries.php:47 admin/skins.php:23 admin/skins.php:325
+#: admin/skins.php:333
 msgid "Action"
 msgstr ""
 
@@ -433,6 +433,7 @@ msgid "Delete this gallery ?"
 msgstr ""
 
 #: admin/manage-galleries.php:76 admin/manage-images.php:293
+#: admin/skins.php:383
 msgid "Delete"
 msgstr ""
 
@@ -595,7 +596,7 @@ msgstr ""
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
-#: admin/manage.php:89 admin/manage.php:111
+#: admin/manage.php:89 admin/manage.php:111 admin/skins.php:226
 msgid "deleted successfully"
 msgstr ""
 
@@ -1142,11 +1143,15 @@ msgstr ""
 msgid "Add skins"
 msgstr ""
 
-#: admin/settings.php:360
+#: admin/settings.php:354
+msgid "Delete skins"
+msgstr ""
+
+#: admin/settings.php:358
 msgid "Change options"
 msgstr ""
 
-#: admin/settings.php:364
+#: admin/settings.php:362
 msgid "Update capabilities"
 msgstr ""
 
@@ -1205,7 +1210,7 @@ msgstr ""
 msgid "The skin installed successfully."
 msgstr ""
 
-#: admin/skins.php:122 admin/skins.php:316
+#: admin/skins.php:122 admin/skins.php:369
 msgid "Activate this skin"
 msgstr ""
 
@@ -1257,38 +1262,64 @@ msgstr ""
 msgid "Installing the skin"
 msgstr ""
 
-#: admin/skins.php:270 admin/skins.php:278
+#: admin/skins.php:226 admin/skins.php:281 admin/skins.php:323
+#: admin/skins.php:331
 msgid "Skin"
 msgstr ""
 
-#: admin/skins.php:289
+#: admin/skins.php:228
+msgid "Can't find skin directory "
+msgstr ""
+
+#: admin/skins.php:228
+msgid ". Try delete it manualy via ftp"
+msgstr ""
+
+#: admin/skins.php:231
+msgid "You need activate another skin before delete it"
+msgstr ""
+
+#: admin/skins.php:234
+msgid ""
+"You do not have sufficient permissions to delete skins of GRAND FlAGallery."
+msgstr ""
+
+#: admin/skins.php:281
+msgid "activated successfully"
+msgstr ""
+
+#: admin/skins.php:342
 msgid "No skins to show"
 msgstr ""
 
-#: admin/skins.php:302
+#: admin/skins.php:355
 #, php-format
 msgid "Version %s"
 msgstr ""
 
-#: admin/skins.php:306
+#: admin/skins.php:359
 msgid "Visit author homepage"
 msgstr ""
 
-#: admin/skins.php:307
+#: admin/skins.php:360
 #, php-format
 msgid "By %s"
 msgstr ""
 
-#: admin/skins.php:310
+#: admin/skins.php:363
 msgid "Visit skin site"
 msgstr ""
 
-#: admin/skins.php:316
+#: admin/skins.php:369
 msgid "Activate"
 msgstr ""
 
-#: admin/skins.php:318
+#: admin/skins.php:371
 msgid "Activated"
+msgstr ""
+
+#: admin/skins.php:383
+msgid "Delete this skin"
 msgstr ""
 
 #: admin/tinymce/tinymce.php:114 admin/tinymce/window.php:16
