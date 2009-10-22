@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+V0.35 - 22.10.2009
+- Added : Confirmation popup for delete skin option
+- Bugfix: Fix for included skins with WP 2.7.1 and PHP 4
+- Update : Update for Wordpress v.2.8.5
+
 V0.34 - 19.10.2009
 - Added : Delete skin option
 - Added : Capability for 'delete skin'

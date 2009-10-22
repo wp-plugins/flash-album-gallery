@@ -1,6 +1,6 @@
 <?php
 /**
- * Return a script for the flash slideshow. Can be used in any tmeplate with <?php echo flagShowFlashAlbum($galleryID, $width, $height) ? >
+ * Return a script for the flash slideshow. Can be used in any tmeplate with <?php echo flagShowFlashAlbum($galleryID, $name, $width, $height) ? >
  * Require the script swfobject.js in the header or footer
  * 
  * @access public 
