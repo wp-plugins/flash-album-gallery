@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/flash-album-gallery\n"
-"POT-Creation-Date: 2009-10-19 15:17+0000\n"
+"POT-Creation-Date: 2009-10-28 10:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -533,6 +533,10 @@ msgstr ""
 msgid "Alt & Title Text / Description"
 msgstr ""
 
+#: admin/manage-images.php:286
+msgid "Size: "
+msgstr ""
+
 #: admin/manage-images.php:291
 #, php-format
 msgid "View \"%s\""
@@ -550,7 +554,7 @@ msgstr ""
 msgid "Edit thumb"
 msgstr ""
 
-#: admin/manage-images.php:293
+#: admin/manage-images.php:293 admin/skins.php:383
 #, php-format
 msgid "Delete \"%s\""
 msgstr ""
