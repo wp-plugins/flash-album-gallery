@@ -31,7 +31,7 @@ function install_skins_dashboard() {
 	<form method="post" enctype="multipart/form-data" action="<?php echo admin_url('admin.php?page=flag-skins&action=upload&tabs=2') ?>">
 		<?php wp_nonce_field( 'skin-upload') ?>
 		<p><input type="file" name="skinzip" />
-		<input type="submit" class="button" value="<?php _e('Install Now') ?>" /></p>
+		<input type="submit" class="button" value="<?php _e('Install Now', 'flag') ?>" /></p>
 	</form>
 	</div>
 	
@@ -380,7 +380,7 @@ $flag_options = get_option ('flag_options');
 		if ( current_user_can('FlAG Delete skins') ) {
 		echo "<td class='skin-delete action-links'>";
 		if ( dirname($skin_file) != $flag_options['flashSkin'] ) {
-			echo '<a class="delete" href="'.admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)).'" title="' . __( 'Delete this skin', 'flag' ) . '">' . __('Delete', 'flag' ) . '</a>';
+			echo '<a class="delete" onclick="javascript:check=confirm( \'' . attribute_escape(sprintf(__('Delete "%s"' , 'flag'), $skin_data['Name'])). '\');if(check==false) return false;" href="'.admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)).'" title="' . __( 'Delete this skin', 'flag' ) . '">' . __('Delete', 'flag' ) . '</a>';
 		}
 		echo "</td>";
  		}

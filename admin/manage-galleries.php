@@ -44,7 +44,7 @@ function flag_manage_gallery_main() {
 				<th scope="col" ><?php _e('Description', 'flag') ?></th>
 				<th scope="col" ><?php _e('Author', 'flag') ?></th>
 				<th scope="col" ><?php _e('Quantity', 'flag') ?></th>
-				<th scope="col" ><?php _e('Action'); ?></th>
+				<th scope="col" ><?php _e('Action', 'flag'); ?></th>
 			</tr>
 			</thead>
 			<tbody>
@@ -73,7 +73,7 @@ if($gallerylist) {
 			<td><?php echo $gallery->counter; ?></td>
 			<td>
 				<?php if (flagAdmin::can_manage_this_gallery($gallery->author)) : ?>
-					<a href="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=delete&amp;gid=" . $gid, 'flag_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'flag')?>');if(check==false) return false;"><?php _e('Delete') ?></a>
+					<a href="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=delete&amp;gid=" . $gid, 'flag_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'flag')?>');if(check==false) return false;"><?php _e('Delete','flag') ?></a>
 				<?php endif; ?>
 			</td>
 		</tr>

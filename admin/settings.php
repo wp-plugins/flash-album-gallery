@@ -97,7 +97,7 @@ function flag_admin_options()  {
 						<span class="setting-description"><?php _e('A RSS feed will be added to you blog header.','flag') ?></span></td>
 					</tr>
 				</table>
-			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag') ;?>"/></div>
 			</form>	
 		</div>	
 		
@@ -130,7 +130,7 @@ function flag_admin_options()  {
 						<td><input type="text" size="3" maxlength="3" name="thumbQuality" value="<?php echo $flag->options['thumbQuality']; ?>" /> %</td>
 					</tr>
 				</table>
-			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag') ;?>"/></div>
 			</form>	
 		</div>
 		
@@ -154,7 +154,7 @@ function flag_admin_options()  {
 						<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $flag->options['imgQuality']; ?>" /> %</td>
 					</tr>
 				</table>
-			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag') ;?>"/></div>
 			</form>	
 		</div>
 		
@@ -184,7 +184,7 @@ function flag_admin_options()  {
 						</td>
 					</tr>
 				</table>
-			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag') ;?>"/></div>
 			</form>	
 		</div>
 		
@@ -310,7 +310,7 @@ if($flag->options['itemDescription']) { ?>
 <?php } ?>
 				</table>
 				<div class="clear"> &nbsp; </div>
-				<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes') ;?>"/></div>
+				<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag') ;?>"/></div>
 		</form>
 	</div>
 <?php endif; ?>

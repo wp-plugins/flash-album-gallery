@@ -162,11 +162,11 @@ jQuery(document).ready( function() {
 		<div class="inside">
 			<table class="form-table" >
 				<tr>
-					<th align="left" scope="row"><?php _e('Title') ?>:</th>
+					<th align="left" scope="row"><?php _e('Title', 'flag') ?>:</th>
 					<td align="left"><input type="text" size="50" name="title" value="<?php echo attribute_escape(stripslashes($gallery->title)); ?>"  /></td>
 				</tr>
 				<tr>
-					<th align="left" scope="row"><?php _e('Description') ?>:</th> 
+					<th align="left" scope="row"><?php _e('Description', 'flag') ?>:</th> 
 					<td align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo attribute_escape(stripslashes($gallery->galdesc)); ?></textarea></td>
 				</tr>
 				<tr>
@@ -283,14 +283,14 @@ if($picturelist) {
 							</a></strong>
 							<br /><?php echo $date ?>
 							<?php  $imgpath = WINABSPATH.$picture->path."/".$picture->filename; 
-								$img = @getimagesize($imgpath); if($img) echo '<br />Size: '.$img[0].'x'.$img[1].' px'; 
+								$img = @getimagesize($imgpath); if($img) echo '<br />'.__('Size: ', 'flag').$img[0].'x'.$img[1].' px'; 
 							?>
 							<p>
 							<?php
 							$actions = array();
 							$actions['view']   = '<a class="thickbox" href="' . $picture->imageURL . '" title="' . attribute_escape(sprintf(__('View "%s"'), $picture->filename)) . '">' . __('View', 'flag') . '</a>';
 							$actions['custom_thumb']   = '<a class="thickbox" href="' . FLAG_URLPATH . 'admin/manage_thumbnail.php?id=' . $pid . '" title="' . __('Customize thumbnail','flag') . '">' . __('Edit thumb', 'flag') . '</a>';
-							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=flag-manage-gallery&amp;mode=delpic&amp;gid=".$act_gid."&amp;pid=".$pid, 'flag_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . attribute_escape(sprintf(__('Delete "%s"' , 'flag'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete') . '</a>';
+							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=flag-manage-gallery&amp;mode=delpic&amp;gid=".$act_gid."&amp;pid=".$pid, 'flag_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . attribute_escape(sprintf(__('Delete "%s"' , 'flag'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete','flag') . '</a>';
 							$action_count = count($actions);
 							$i = 0;
 							echo '<div class="row-actions">';
