@@ -49,6 +49,11 @@ Important Links:
  
 == Changelog ==
  
+V0.36 - 5.11.2009 
+ 
+* Added : Italian translation 
+* Update : Little fixes of text  
+ 
 V0.35 - 22.10.2009 
  
 * Added : Confirmation popup for delete skin option 
