@@ -1,18 +1,20 @@
 <?php
+// Create XML output
+header("content-type:text/xml;charset=utf-8");
 
 // look up for the path
-if(file_exists(dirname(__FILE__) . "/../../flash-album-gallery/flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../../flash-album-gallery/flag-config.php");
-} else if(file_exists(dirname(__FILE__) . "/../../../flash-album-gallery/flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../../../flash-album-gallery/flag-config.php");
-} else if(file_exists(dirname(__FILE__) . "/../flash-album-gallery/flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../flash-album-gallery/flag-config.php");
-} else if(file_exists(dirname(__FILE__) . "/../../flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../../flag-config.php");
-} else if(file_exists(dirname(__FILE__) . "/../../../flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../../../flag-config.php");
-} else if(file_exists(dirname(__FILE__) . "/../flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../flag-config.php");
+if(file_exists(dirname(dirname(dirname(__FILE__))) . "/flash-album-gallery/flag-config.php")) {
+	require_once(dirname(dirname(dirname(__FILE__))) . "/flash-album-gallery/flag-config.php");
+} else if(file_exists(dirname(dirname(dirname(dirname(__FILE__)))) . "/flash-album-gallery/flag-config.php")) {
+	require_once(dirname(dirname(dirname(dirname(__FILE__)))) . "/flash-album-gallery/flag-config.php");
+} else if(file_exists(dirname(dirname(__FILE__)) . "/flash-album-gallery/flag-config.php")) {
+	require_once(dirname(dirname(__FILE__)) . "/flash-album-gallery/flag-config.php");
+} else if(file_exists(dirname(dirname(dirname(__FILE__))) . "/flag-config.php")) {
+	require_once(dirname(dirname(dirname(__FILE__))) . "/flag-config.php");
+} else if(file_exists(dirname(dirname(dirname(dirname(__FILE__)))) . "/flag-config.php")) {
+	require_once(dirname(dirname(dirname(dirname(__FILE__)))) . "/flag-config.php");
+} else if(file_exists(dirname(dirname(__FILE__)) . "/flag-config.php")) {
+	require_once(dirname(dirname(__FILE__)) . "/flag-config.php");
 }
 
 global $wpdb;
@@ -22,9 +24,6 @@ $siteurl	 = get_option ('siteurl');
 
 // get the gallery id
 $gID = explode( '_', $_GET['gid'] );
-
-// Create XML output
-header("content-type:text/xml;charset=utf-8");
 
 echo "<gallery title='".attribute_escape(stripslashes($_GET['albumname']))."'>\n";
 // get the pictures

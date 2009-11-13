@@ -222,7 +222,7 @@ if ( isset($_GET['delete']) ) {
 		if ( $flag_options['flashSkin'] != $delskin ) {
 			$skins_dir = trailingslashit( $flag_options['skinsDirABS'] );
 			$skin = $skins_dir.$delskin.'/';
-			if( folderDelete($skin) ) {
+			if( flagFolderDelete($skin) ) {
 				flagGallery::show_message( __('Skin','flag').' \''.$delskin.'\' '.__('deleted successfully','flag') );
 			} else {
 				flagGallery::show_message( __('Can\'t find skin directory ','flag').' \''.$delskin.'\' '.__('. Try delete it manualy via ftp','flag') );
@@ -240,7 +240,7 @@ if ( isset($_GET['delete']) ) {
  * @param $path full-path to folder
  * @return bool result of deletion
  */
-function folderDelete($path) {
+function flagFolderDelete($path) {
   if (is_dir($path)) {
 	  if (version_compare(PHP_VERSION, '5.0.0') < 0) {
 		$entries = array();
@@ -255,7 +255,7 @@ function folderDelete($path) {
 
 	foreach ($entries as $entry) {
 	  if ($entry != '.' && $entry != '..') {
-		folderDelete($path.'/'.$entry);
+		flagFolderDelete($path.'/'.$entry);
 	  }
 	}
 

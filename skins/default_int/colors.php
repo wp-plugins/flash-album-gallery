@@ -1,26 +1,28 @@
 <?php
-
-// look up for the path
-if(file_exists(dirname(__FILE__) . "/../../flash-album-gallery/flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../../flash-album-gallery/flag-config.php");
-} else if(file_exists(dirname(__FILE__) . "/../../../flash-album-gallery/flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../../../flash-album-gallery/flag-config.php");
-} else if(file_exists(dirname(__FILE__) . "/../flash-album-gallery/flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../flash-album-gallery/flag-config.php");
-} else if(file_exists(dirname(__FILE__) . "/../../flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../../flag-config.php");
-} else if(file_exists(dirname(__FILE__) . "/../../../flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../../../flag-config.php");
-} else if(file_exists(dirname(__FILE__) . "/../flag-config.php")) {
-	require_once(dirname(__FILE__) . "/../flag-config.php");
-}
-
-global $wpdb;
-
-$flag_options = get_option('flag_options');
-
 // Create XML output
 header("content-type:text/xml;charset=utf-8");
+?>
+<!-- 
+<?php 
+// look up for the path
+if(file_exists(dirname(dirname(dirname(__FILE__))) . "/flash-album-gallery/flag-config.php")) {
+	require_once(dirname(dirname(dirname(__FILE__))) . "/flash-album-gallery/flag-config.php");
+} else if(file_exists(dirname(dirname(dirname(dirname(__FILE__)))) . "/flash-album-gallery/flag-config.php")) {
+	require_once(dirname(dirname(dirname(dirname(__FILE__)))) . "/flash-album-gallery/flag-config.php");
+} else if(file_exists(dirname(dirname(__FILE__)) . "/flash-album-gallery/flag-config.php")) {
+	require_once(dirname(dirname(__FILE__)) . "/flash-album-gallery/flag-config.php");
+} else if(file_exists(dirname(dirname(dirname(__FILE__))) . "/flag-config.php")) {
+	require_once(dirname(dirname(dirname(__FILE__))) . "/flag-config.php");
+} else if(file_exists(dirname(dirname(dirname(dirname(__FILE__)))) . "/flag-config.php")) {
+	require_once(dirname(dirname(dirname(dirname(__FILE__)))) . "/flag-config.php");
+} else if(file_exists(dirname(dirname(__FILE__)) . "/flag-config.php")) {
+	require_once(dirname(dirname(__FILE__)) . "/flag-config.php");
+}
+?>
+ -->
+<?php
+$flag_options = get_option('flag_options');
+
 $background = $flag_options['flashBacktransparent'] ? '' : str_replace('#','0x',$flag_options['flashBackcolor']);
 $buttonsBG = str_replace('#','0x',$flag_options['buttonsBG']);
 $buttonsOver = str_replace('#','0x',$flag_options['buttonsMouseOver']);

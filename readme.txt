@@ -49,6 +49,11 @@ Important Links:
  
 == Changelog ==
  
+V0.37 - 13.11.2009 
+
+* Added : French translation 
+* Bugfix : Fix for Skin page (blank page)  
+
 V0.36 - 5.11.2009 
  
 * Added : Italian translation 
