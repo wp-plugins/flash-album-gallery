@@ -139,7 +139,7 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height, $skin) {
 
 	if (empty($width) ) $width  = $flag_options['flashWidth'];
 	if (empty($height)) $height = (int) $flag_options['flashHeight'];
-	if($name == '') $name = ' ';
+	if($name == '') $name = 'Gallery';
 	if($skin == '') $skin = $flag_options['flashSkin'];
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	if(!is_dir($skinpath)) $skin = 'default';
