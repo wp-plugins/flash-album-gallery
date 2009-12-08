@@ -9,7 +9,7 @@
  * @param integer $flashHeight Height of the flash container
  * @return the content
  */
-function flagShowFlashAlbum($galleryID, $name, $width, $height) {
+function flagShowFlashAlbum($galleryID, $name, $width, $height, $skin) {
 	
 	if ( !class_exists('swfobject') ) :
 	/**
@@ -22,13 +22,15 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 	    var $width;
 		/* specifies the height of your SWF */
 	    var $height;
+		/* specifies the skin of your SWF */
+	    var $skin;
 		/* the javascript output */
 	    var $js;
 		/* the replacemnt message */
 	    var $message = 'The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed..';
-	    var $devlink = '<h1 style="font-size:14px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" title="GRAND Flash Album Gallery">GRAND Flash Album Gallery</a></h1>
-						<h1 style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a href="http://photogallerycreator.com" title="Skins for GRAND FlAGallery">Skins for GRAND FlAGallery</a></h1>
-						<h2 style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a href="http://codeasily.com" title="Flash Templates, WordPress Themes and WordPress plugins">developed by CodEasily.com - Flash Templates, WordPress Themes and WordPress plugins</a></h2>';
+	    var $devlink = '<h1 style="font-size:14px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a style="font-size:14px; font-weight:normal; margin:0; padding:0; background:none; border:none;" href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" title="GRAND Flash Album Gallery">GRAND Flash Album Gallery</a></h1>
+						<h1 style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;" href="http://photogallerycreator.com" title="Skins for GRAND FlAGallery">Skins for GRAND FlAGallery, Photo Galleries, Video Galleries</a></h1>
+						<h2 style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;" href="http://codeasily.com" title="Wordpress Flash Templates, WordPress Themes and WordPress plugins">developed by CodEasily.com - WordPress Flash Templates, WordPress Themes and WordPress plugins</a></h2>';
 		/* the classname for the div element */
 	    var $classname = 'swfobject';			
 		/* array of flashvars */
@@ -137,9 +139,12 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 
 	if (empty($width) ) $width  = $flag_options['flashWidth'];
 	if (empty($height)) $height = (int) $flag_options['flashHeight'];
-	if($name == '') $name = 'Gallery';
+	if($name == '') $name = ' ';
+	if($skin == '') $skin = $flag_options['flashSkin'];
+	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+	if(!is_dir($skinpath)) $skin = 'default';
 	// init the flash output
-	$swfobject = new swfobject( $flag_options['skinsDirURL'].$flag_options['flashSkin'].'/gallery.swf' , 'so' . $galleryID, $width, $height, '9.0.45', 'false');
+	$swfobject = new swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , 'so' . $galleryID, $width, $height, '9.0.45', 'false');
 	global $swfCounter;
 
 	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed..', 'flag').'</p>';
@@ -152,7 +157,7 @@ function flagShowFlashAlbum($galleryID, $name, $width, $height) {
 	$swfobject->add_attributes('name', 'so' . $galleryID . '_f' . $swfCounter);
 
 	// adding the flash parameter	
-	$swfobject->add_flashvars( 'path', $flag_options['skinsDirURL'].$flag_options['flashSkin'].'/' );
+	$swfobject->add_flashvars( 'path', $flag_options['skinsDirURL'].$skin.'/' );
 	$swfobject->add_flashvars( 'gID', $galleryID );
 	$swfobject->add_flashvars( 'galName', $name );
 	$swfobject->add_flashvars( 'width', $width );

@@ -275,7 +275,9 @@ if( isset($_GET['skin']) ) {
 	// Flash settings
 	$flag_options['flashSkin'] = $set_skin; 
 
-	include_once ( $flag_options['skinsDirABS'].$_GET['skin'] );	// activate skin
+	if( isset($_GET['resetcolor']) ) {
+		include_once ( $flag_options['skinsDirABS'].$_GET['skin'] );	// activate skin colors
+	}
 
 	update_option('flag_options', $flag_options);
 	flagGallery::show_message( __('Skin','flag').' \''.$set_skin.'\' '.__('activated successfully','flag') );
@@ -377,13 +379,14 @@ $flag_options = get_option ('flag_options');
 		<td class='skin-title'><img src='".$flag_options['skinsDirURL'].dirname($skin_file)."/".basename($skin_file, '.php').".png' alt='{$skin_data['Name']}' title='{$skin_data['Name']}' /></td>
 		<td class='desc'><p>{$skin_data['Description']}</p></td>";
  // delete link
-		if ( current_user_can('FlAG Delete skins') ) {
 		echo "<td class='skin-delete action-links'>";
+		echo '<a href="'.admin_url('admin.php?page=flag-skins&skin='.$skin_file).'&resetcolor=yes" title="' . __( 'Reset skin color settings', 'flag' ) . '">' . __('Set default colors', 'flag' ) . '</a><br /><br />'."\n";
+		if ( current_user_can('FlAG Delete skins') ) {
 		if ( dirname($skin_file) != $flag_options['flashSkin'] ) {
 			echo '<a class="delete" onclick="javascript:check=confirm( \'' . attribute_escape(sprintf(__('Delete "%s"' , 'flag'), $skin_data['Name'])). '\');if(check==false) return false;" href="'.admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)).'" title="' . __( 'Delete this skin', 'flag' ) . '">' . __('Delete', 'flag' ) . '</a>';
 		}
-		echo "</td>";
  		}
+		echo "</td>";
 	echo "</tr>\n";
 	}
 ?>

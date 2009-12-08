@@ -1,5 +1,5 @@
 <?php
-
+if ( !class_exists('flagdb') ) :
 /**
  * FlAG Gallery Database Class
  * 
@@ -9,14 +9,18 @@ class flagdb {
 	/**
 	 * Holds the list of all galleries
 	 *
+     * @access public
+     * @var object|array
 	 */
 	var $galleries = false;
 	
-	/**
-	 * The array for the pagination
-	 *
-	 */
-	var $paged = false;
+    /**
+     * Holds the list of all images
+     *
+     * @access public
+     * @var object|array
+     */
+    var $images = false;
 	
 	/**
 	 * PHP4 compatibility layer for calling the PHP5 constructor.
@@ -34,7 +38,7 @@ class flagdb {
 		global $wpdb;
 		
 		$this->galleries = array();
-		$this->paged = array();
+        $this->images    = array();
 		
 		register_shutdown_function(array(&$this, "__destruct"));
 		
@@ -63,6 +67,7 @@ class flagdb {
 		global $wpdb; 
 		
 		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
+		if( $order_by == 'rand') $order_by = 'RAND()';
 		$limit_by  = ( $limit > 0 ) ? 'LIMIT ' . intval($start) . ',' . intval($limit) : '';
 		$this->galleries = $wpdb->get_results( "SELECT SQL_CALC_FOUND_ROWS * FROM $wpdb->flaggallery ORDER BY {$order_by} {$order_dir} {$limit_by}", OBJECT_K );
 		
@@ -76,16 +81,17 @@ class flagdb {
 		if ( !$this->galleries )
 			return array();
 		
+        // get the galleries information    
+        foreach ($this->galleries as $key => $value) {
+            $galleriesID[] = $key;
+            // init the counter values
+            $this->galleries[$key]->counter = 0;
+            wp_cache_add($key, $this->galleries[$key], 'flag_gallery');      
+        }
+
 		// if we didn't need to count the images then stop here
 		if ( !$counter )
 			return $this->galleries;
-		
-		// get the galleries information 	
- 		foreach ($this->galleries as $key => $value) {
-   			$galleriesID[] = $key;
-   			// init the counter values
-   			$this->galleries[$key]->counter = 0;	
-		}
 		
 		// get the counter values 	
 		$picturesCounter = $wpdb->get_results('SELECT galleryid, COUNT(*) as counter FROM '.$wpdb->flagpictures.' WHERE galleryid IN (\''.implode('\',\'', $galleriesID).'\') GROUP BY galleryid', OBJECT_K);
@@ -94,8 +100,10 @@ class flagdb {
 			return $this->galleries;
 		
 		// add the counter to the gallery objekt	
- 		foreach ($picturesCounter as $key => $value)
+ 		foreach ($picturesCounter as $key => $value) {
 			$this->galleries[$value->galleryid]->counter = $value->counter;
+            wp_cache_add($value->galleryid, $this->galleries[$value->galleryid], 'flag_gallery');
+		}
 		
 		return $this->galleries;
 	}
@@ -109,15 +117,23 @@ class flagdb {
 	function find_gallery( $id ) {		
 		global $wpdb;
 		
-		if( is_numeric($id) )
+        if( is_numeric($id) ) {
+            
+            if ( $gallery = wp_cache_get($id, 'flag_gallery') )
+                return $gallery;
+            
 			$gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->flaggallery WHERE gid = %d", $id ) );
-		else
+
+        } else
 			$gallery = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->flaggallery WHERE name = %s", $id ) );
 		
 		// Build the object from the query result
-		if ($gallery) 
-			return $gallery;
-		else 
+        if ($gallery) {
+            $gallery->abspath = WINABSPATH . $gallery->path;
+            wp_cache_add($id, $gallery, 'flag_gallery');
+            
+            return $gallery;            
+        } else 
 			return false;
 	}
 	
@@ -147,16 +163,9 @@ class flagdb {
 		
 		// Query database
 		if( is_numeric($id) )
-			$result = $wpdb->get_results( $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS tt.*, t.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d ORDER BY tt.{$order_by} {$order_dir} {$limit_by}", $id ) );
+			$result = $wpdb->get_results( $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS tt.*, t.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = %d ORDER BY tt.{$order_by} {$order_dir} {$limit_by}", $id ), OBJECT_K );
 		else
-			$result = $wpdb->get_results( $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS tt.*, t.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s ORDER BY tt.{$order_by} {$order_dir} {$limit_by}", $id ) );
-
-		// Count the number of images and calculate the pagination
-		if ($limit > 0) {
-			$this->paged['total_objects'] = intval ( $wpdb->get_var( "SELECT FOUND_ROWS()" ) );
-			$this->paged['objects_per_page'] = max ( count( $result ), $limit );
-			$this->paged['max_objects_per_page'] = ( $limit > 0 ) ? ceil( $this->paged['total_objects'] / intval($limit)) : 1;
-		}
+			$result = $wpdb->get_results( $wpdb->prepare( "SELECT SQL_CALC_FOUND_ROWS tt.*, t.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE t.name = %s ORDER BY tt.{$order_by} {$order_dir} {$limit_by}", $id ), OBJECT_K );
 
 		// Build the object
 		if ($result) {
@@ -166,6 +175,9 @@ class flagdb {
 				$gallery[$key] = new flagImage( $value );
 		}
 		
+        // Could not add to cache, the structure is different to find_gallery() cache_add, need rework
+        //wp_cache_add($id, $gallery, 'ngg_gallery');
+
 		return $gallery;		
 	}
 	
@@ -203,6 +215,9 @@ class flagdb {
 				
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->flagpictures WHERE galleryid = %d", $gid) );
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->flaggallery WHERE gid = %d", $gid) );
+        
+        wp_cache_delete($id, 'flag_gallery');
+
 		//TODO:Remove all tag relationship
 		return true;
 	}
@@ -222,6 +237,7 @@ class flagdb {
 			  "INSERT INTO $wpdb->flagpictures (galleryid, filename, description, alttext) VALUES "
 			. "('$gid', '$filename', '$desc', '$alttext');");
 		$pid = (int) $wpdb->insert_id;
+        wp_cache_delete($gid, 'flag_gallery');
 		
 		return $pid;
 	}
@@ -262,6 +278,8 @@ class flagdb {
 		if ( !empty($sql) && $pid != 0)
 			$result = $wpdb->query( "UPDATE $wpdb->flagpictures SET $sql WHERE pid = $pid" );
 
+        wp_cache_delete($pid, 'flag_image'); 
+
 		return $result;
 	}
 	
@@ -274,6 +292,9 @@ class flagdb {
 	function find_image( $id ) {
 		global $wpdb;
 		
+        if ( $image = wp_cache_get($id, 'flag_image') )
+            return $image;
+        
 		// Query database
 		$result = $wpdb->get_row( $wpdb->prepare( "SELECT tt.*, t.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.pid = %d ", $id ) );
 		
@@ -322,10 +343,12 @@ class flagdb {
 		global $wpdb;
 		
 		// Delete the image row
-		$wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = $pid");
+		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->flagpictures WHERE pid = %d", $pid) );
 		
-		// Delete tag references
-		wp_delete_object_term_relationships($pid, 'flag_tag');
+        // Remove from cache
+        wp_cache_delete( $id, 'flag_image'); 
+        
+        return $result;
 	}
 	
 	/**
@@ -335,16 +358,30 @@ class flagdb {
 	 * @param integer $limit
 	 * @return
 	 */
-	function find_last_images($page = 0, $limit = 30) {
+	function find_last_images($page = 0, $limit = 30, $galleryId = 0, $orderby = "id") {
 		global $wpdb;
 		
 		$offset = (int) $page * $limit;
 		
+        $galleryId = (int) $galleryId;
+        $gallery_clause = ($galleryId === 0) ? '' : ' AND galleryid = ' . $galleryId . ' ';
+
+        // default order by pid
+        $order = 'pid DESC';
+        switch ($orderby) {
+            case 'date':
+                $order = 'imagedate DESC';
+                break;
+            case 'sort':
+                $order = 'sortorder ASC';
+                break;
+        }
+
 		$result = array();
 		$gallery_cache = array();
 		
 		// Query database
-		$images = $wpdb->get_results("SELECT * FROM $wpdb->flagpictures WHERE 1=1 ORDER BY pid DESC LIMIT $offset, $limit");
+		$images = $wpdb->get_results("SELECT * FROM $wpdb->flagpictures WHERE 1=1 $gallery_clause ORDER BY $order LIMIT $offset, $limit");
 		
 		// Build the object from the query result
 		if ($images) {	
@@ -398,12 +435,14 @@ class flagdb {
 	}
 
 }
+endif;
 
-if ( ! isset($flagdb) ) {
-	/**
-	 * Initate the FlAG Gallery Database Object, for later cache reasons
-	 * @global object $flagdb Creates a new wpdb object based on wp-config.php Constants for the database
-	 */
-	$flagdb = new flagdb();
+if ( ! isset($GLOBALS['flagdb']) ) {
+    /**
+     * Initate the FlAGallery Database Object, for later cache reasons
+     * @global object $flagdb Creates a new flagdb object
+     */
+    unset($GLOBALS['flagdb']);
+    $GLOBALS['flagdb'] =& new flagdb();
 }
 ?>

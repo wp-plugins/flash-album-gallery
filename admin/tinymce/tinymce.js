@@ -9,6 +9,10 @@ function insertFLAGLink() {
 	var galleryname = document.getElementById('galleryname').value;
 	var gallerywidth = document.getElementById('gallerywidth').value;
 	var galleryheight = document.getElementById('galleryheight').value;
+	var galorderby = document.getElementById('galorderby').value;
+	var galorder = document.getElementById('galorder').value;
+	var galexclude = document.getElementById('galexclude').value;
+	var skinname = document.getElementById('skinname').value;
 	var gallery = document.getElementById('galleries');
 	var len = gallery.length;
 	var galleryid="";
@@ -27,8 +31,23 @@ function insertFLAGLink() {
 	else
 		var gallerysize="";
 
+	if (galleryid == 'all') {
+		if (galorderby) {
+			var galorderby = " orderby=" + galorderby;
+		} else var galorderby = '';
+		if (galorder) {
+			var galorder = " order=" + galorder;
+		} else var galorder = '';
+		if (galexclude) {
+			var galexclude = " exclude=" + galexclude;
+		} else var galexclude = '';
+		if (skinname) {
+			var skinname = " skin=" + skinname;
+		} else var skinname = '';
+	}
+
 	if (galleryid != 0 )
-		tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + ']';
+		tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + galorderby + galorder + galexclude + skinname + ']';
 	else
 		tinyMCEPopup.close();
 	

@@ -14,7 +14,7 @@ class flagMediaRss {
 	 * Function called by the wp_head action to output the RSS link for medias
 	 */
 	function add_mrss_alternate_link() {
-		echo "<link id='MediaRSS' rel='alternate' type='application/rss+xml' title='Flash Album Gallery RSS Feed' href='" . flagMediaRss::get_mrss_url() . "' />\n";		
+		echo "<link id='MediaRSS' rel='alternate' type='application/rss+xml' title='GRAND FlAGallery RSS Feed' href='" . flagMediaRss::get_mrss_url() . "' />\n";		
 	}
 	
 	/**
@@ -119,7 +119,7 @@ class flagMediaRss {
 	 * Get the XML <generator> node
 	 */
 	function get_generator_mrss_node($indent = "\t\t") {	
-		return $indent . "<generator><![CDATA[Flash Album Gallery [http://codeasily.com]]]></generator>\n";
+		return $indent . "<generator><![CDATA[GRAND Flash Album Gallery [http://codeasily.com]]]></generator>\n";
 	}	
 	
 	/**

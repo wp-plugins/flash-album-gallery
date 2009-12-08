@@ -1,6 +1,13 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+V0.38 - 08.12.2009 
+- Added : Shortcode parameters (orderby=gid | title | random, order=DESC | ASC, exclude, skin) 
+- Added : Popup tabs for additional shortcode parameters 
+- Added : Ability to add more flash albums in post/posts with different skins 
+- Added : Ability set default skin colors or leave your own 
+- Bugfix : small fixes  
+
 V0.37 - 13.11.2009 
 - Added : French translation 
 - Bugfix : Fix for Skin page (blank page)  

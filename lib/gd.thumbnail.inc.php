@@ -3,8 +3,8 @@
  * gd.thumbnail.inc.php
  * 
  * @author 		Ian Selby (ian@gen-x-design.com)
- * @copyright 	Copyright 2006-2008
- * @version 	1.1.3 (PHP4)
+ * @copyright 	Copyright 2006-2009
+ * @version 	1.2.0 (based on 1.1.3)
  * @modded      by Sergey Pasyuk
  * 
  */
@@ -112,12 +112,9 @@ class flag_Thumbnail {
         $this->currentDimensions    = array();
         $this->newDimensions        = array();
         $this->fileName             = $fileName;
-        $this->imageMeta			= array();
         $this->percent              = 100;
         $this->maxWidth             = 0;
         $this->maxHeight            = 0;
-        $this->watermarkImgPath		= '';
-        $this->watermarkText		= '';
 
         //check to see if file exists
         if(!file_exists($this->fileName)) {
@@ -174,7 +171,6 @@ class flag_Thumbnail {
 	            $size = GetImageSize($this->fileName);
     	        $this->currentDimensions = array('width'=>$size[0],'height'=>$size[1]);
 	            $this->newImage = $this->oldImage;
-	            $this->gatherImageMeta();
 	        }
         }
 
@@ -721,71 +717,7 @@ class flag_Thumbnail {
     }
     
     /**
-     * Reads selected exif meta data from jpg images and populates $this->imageMeta with appropriate values if found
-     *
-     */
-    function gatherImageMeta() {
-    	//only attempt to retrieve info if exif exists
-    	if(function_exists("exif_read_data") && $this->format == 'JPG') {
-			$imageData = @exif_read_data($this->fileName);
-			if(isset($imageData['Make'])) 
-				$this->imageMeta['make'] = ucwords(strtolower($imageData['Make']));
-			if(isset($imageData['Model'])) 
-				$this->imageMeta['model'] = $imageData['Model'];
-			if(isset($imageData['COMPUTED']['ApertureFNumber'])) {
-				$this->imageMeta['aperture'] = $imageData['COMPUTED']['ApertureFNumber'];
-				$this->imageMeta['aperture'] = str_replace('/','',$this->imageMeta['aperture']);
-			}
-			if(isset($imageData['ExposureTime'])) {
-				$exposure = explode('/',$imageData['ExposureTime']);
-				$exposure = round($exposure[1]/$exposure[0],-1);
-				$this->imageMeta['exposure'] = '1/' . $exposure . ' second';
-			}
-			if(isset($imageData['Flash'])) {
-				if($imageData['Flash'] > 0) {
-					$this->imageMeta['flash'] = 'Yes';
-				}
-				else {
-					$this->imageMeta['flash'] = 'No';
-				}
-			}
-			if(isset($imageData['FocalLength'])) {
-				$focus = explode('/',$imageData['FocalLength']);
-				if ($focus[1] > 0)
-					$this->imageMeta['focalLength'] = round($focus[0]/$focus[1],2) . ' mm';
-			}
-			if(isset($imageData['DateTime'])) {
-				$date = $imageData['DateTime'];
-				$date = explode(' ',$date);
-				$date = str_replace(':','-',$date[0]) . ' ' . $date[1];
-				$this->imageMeta['dateTaken'] = date('m/d/Y g:i A',strtotime($date));
-			}
-    	}
-    }
-    
-    /**
-     * Rotates image either 90 degrees clockwise or counter-clockwise
-     *
-     * @param string $direction
-     */
-    function rotateImage($direction = 'CW') {
-    	if($direction == 'CW') {
-    		$this->workingImage = imagerotate($this->workingImage,-90,0);
-    	}
-    	else {
-    		$this->workingImage = imagerotate($this->workingImage,90,0);
-    	}
-    	$newWidth = $this->currentDimensions['height'];
-    	$newHeight = $this->currentDimensions['width'];
-		$this->oldImage = $this->workingImage;
-		$this->newImage = $this->workingImage;
-		$this->currentDimensions['width'] = $newWidth;
-		$this->currentDimensions['height'] = $newHeight;
-    }
-
-    /**
-     * Fast imagecopyresampled
-     * by tim@leethost.com
+     * Fast imagecopyresampled by tim@leethost.com
      *
      */	
 	function fastimagecopyresampled (&$dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h, $quality = 3) {

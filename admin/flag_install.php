@@ -143,14 +143,14 @@ function flag_install () {
  * @access internal
  * @return void
  */
-function flag_default_options() {
+function flag_default_options($colors=true) {
 	
 	global $blog_id, $flag;
 
 	$flag_options['galleryPath']			= 'wp-content/flagallery/';  		// set default path to the gallery
 	$flag_options['swfUpload']				= true;								// activate the batch upload
 	$flag_options['deleteImg']				= true;								// delete Images
-	$flag_options['useMediaRSS']			= true;								// activate the global Media RSS file
+	$flag_options['useMediaRSS']			= false;							// activate the global Media RSS file
 	
 	// Sort Settings
 	$flag_options['galSort']				= 'sortorder';						// Sort order
@@ -163,6 +163,7 @@ function flag_default_options() {
 	$flag_options['flashWidth']				= '100%'; 
 	$flag_options['flashHeight']			= '500';
 
+if ($colors) {
 	// Flash colors settings
 	$flag_options['flashColorSet'] 			= true;
 	$flag_options['flashBacktransparent'] 	= false;
@@ -181,6 +182,7 @@ function flag_default_options() {
 	$flag_options['itemBG']					= '#EAE6EF';		
 	$flag_options['itemTitle']				= '#7485c2';		
 	$flag_options['itemDescription']		= '#e0e0e0';		
+}
 		
 	// Image Settings
 	$flag_options['imgResize']				= false;							// Activate resize (not used)
