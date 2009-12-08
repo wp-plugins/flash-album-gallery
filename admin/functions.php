@@ -474,10 +474,12 @@ class flagAdmin{
 				// required until PHP 5.2.0
 				$filepart['filename'] = substr($filepart["basename"],0 ,strlen($filepart["basename"]) - (strlen($filepart["extension"]) + 1) );
 				
-				$filename = sanitize_title($filepart['filename']) . '.' . $filepart['extension'];
+				//clean filename and extract extension
+				$filepart = flagGallery::fileinfo( $imagefiles['name'][$key] );
+				$filename = $filepart['basename'];
 
 				// check for allowed extension and if it's an image file
-				$ext = array('jpeg', 'jpg', 'png', 'gif'); 
+				$ext = array('jpg', 'png', 'gif'); 
 				if ( !in_array($filepart['extension'], $ext) || !@getimagesize($temp_file) ){ 
 					flagGallery::show_error('<strong>'.$_FILES[$key]['name'].' </strong>'.__('is no valid image file!','flag'));
 					continue;
@@ -486,7 +488,7 @@ class flagAdmin{
 				// check if this filename already exist in the folder
 				$i = 0;
 				while (in_array($filename,$dirlist)) {
-					$filename = sanitize_title($filepart['filename']) . '_' . $i++ . '.' .$filepart['extension'];
+					$filename = $filepart['filename'] . '_' . $i++ . '.' .$filepart['extension'];
 				}
 				
 				$dest_file = WINABSPATH . $gallerypath . '/' . $filename;
