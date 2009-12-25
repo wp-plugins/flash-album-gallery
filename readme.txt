@@ -1,9 +1,9 @@
 === GRAND Flash Album Gallery === 
-Contributors: Sergey Pasyuk
+Contributors: Sergey 'Rattus' Pasyuk
 Donate link: 
 Tags: flash, slideshow, gallery, embed, admin, post, posts, page, rss, plugin, photo album, picture, pictures, photo, photos, image, images, multi-categories gallery, skinable gallery, skin, widget, sidebar, photo gallery, image gallery, picture gallery, manage, manage photos, thumbnail, category, categories, automatic 
 Requires at least: 2.7 
-Tested up to: 2.8.5 
+Tested up to: 2.9 
 Stable tag: trunk 
  
 GRAND Flash Album Gallery is a full integrated (flash skin based, slideshow) Image Gallery plugin with a powerfull admin back end. 
@@ -30,8 +30,9 @@ Important Links:
  
 = Features = 
  
-* Unlimited number of pictures in slideshow. 
-* Flash skins: You can add and change flash skins for displaying galleries. 
+* Unlimited number of pictures in flash gallery. 
+* Flash skins: You can add and change flash skins for displaying galleries. Display each new album with different skin.
+* Display few galleries in one flash album (random gallery feature on page reload)  
 * Ability to automatically play slideshow. 
 * Customize the color of all the user controls and backgrounds. 
 * Full screen mode for dramatic presentations. 
@@ -49,6 +50,11 @@ Important Links:
  
 == Changelog ==
  
+V0.39 - 25.12.2009 
+
+* Added : Spanish translation 
+* Bugfix : bugfixes for WP2.9  
+
 V0.38 - 08.12.2009 
 
 * Added : Shortcode parameters (orderby=gid | title | random, order=DESC | ASC, exclude, skin) 

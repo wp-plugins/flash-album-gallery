@@ -1,5 +1,9 @@
 GRAND FlAGallery
-by Sergey Pasyuk & CodEasily DEV Team
+by Sergey 'Rattus' Pasyuk & CodEasily DEV Team
+
+V0.39 - 25.12.2009 
+- Added : Spanish translation 
+- Bugfix : bugfixes for WP2.9  
 
 V0.38 - 08.12.2009 
 - Added : Shortcode parameters (orderby=gid | title | random, order=DESC | ASC, exclude, skin) 
