@@ -50,6 +50,11 @@ Important Links:
  
 == Changelog ==
  
+V0.39pl1 - 31.01.2010 
+
+* Added : Portuguese  translation 
+* Added : Traditional Chinese  translation 
+
 V0.39 - 25.12.2009 
 
 * Added : Spanish translation 

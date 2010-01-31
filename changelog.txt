@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Sergey 'Rattus' Pasyuk & CodEasily DEV Team
 
+V0.39pl1 - 31.01.2010 
+- Added : Portuguese  translation 
+- Added : Traditional Chinese  translation 
+
 V0.39 - 25.12.2009 
 - Added : Spanish translation 
 - Bugfix : bugfixes for WP2.9  
