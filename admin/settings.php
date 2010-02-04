@@ -62,9 +62,7 @@ function flag_admin_options()  {
 			<li><a href="#" rel="thumbnails"><?php _e('Thumbnails', 'flag') ;?></a></li>
 			<li><a href="#" rel="images"><?php _e('Images', 'flag') ;?></a></li>
 			<li><a href="#" rel="sorting"><?php _e( 'Sorting', 'flag' ) ;?></a></li>
-<?php if($flag->options['flashColorSet']) { ?>
 			<li><a href="#" rel="colors"><?php _e('Colors', 'flag') ;?></a></li>
-<?php } ?>
 			<li><a href="#" rel="roles"><?php _e('Roles', 'flag') ;?></a></li>
 		</ul>
 
@@ -188,7 +186,6 @@ function flag_admin_options()  {
 			</form>	
 		</div>
 		
-<?php if($flag->options['flashColorSet']) : ?>
 		<!-- Slideshow settings -->
 <script type="text/javascript">
 jQuery(document).ready(function() {
@@ -222,19 +219,14 @@ jQuery(document).ready(function() {
 		<input type="hidden" name="page_options" value="flashBackcolor,buttonsBG,flashBacktransparent,buttonsMouseOver,buttonsMouseOut,catButtonsMouseOver,catButtonsMouseOut,catButtonsTextMouseOver,catButtonsTextMouseOut,thumbMouseOver,thumbMouseOut,mainTitle,categoryTitle,itemBG,itemTitle,itemDescription" />
 		<h2><?php _e('Colors','flag'); ?></h2>
 				<table class="form-table flag-options">
-<?php if($flag->options['flashBackcolor']) { ?>
 					<tr>
 						<th style="width: 30%;"><?php _e('Background Color','flag') ?>:</th>
 						<td><input class="colorPick" type="text" size="8" maxlength="7" id="flashBackcolor" name="flashBackcolor" value="<?php echo $flag->options['flashBackcolor'] ?>" /><div id="cp_flashBackcolor" style="background:#F9F9F9;position:absolute;display:none;"></div> <label><input type="checkbox" id="flashBacktransparent" name="flashBacktransparent" value="transparent" <?php if($flag->options['flashBacktransparent']) echo 'checked="checked"'; ?> /> transparent</label></td>
 					</tr>
-<?php } 
-if($flag->options['buttonsBG']) { ?>
 					<tr>					
 						<th><?php _e('Buttons Background Color','flag') ?>:</th>
 						<td><input class="colorPick" type="text" size="8" maxlength="7" id="buttonsBG" name="buttonsBG" value="<?php echo $flag->options['buttonsBG'] ?>" /><div id="cp_buttonsBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 					</tr>
-<?php } 
-if($flag->options['buttonsMouseOver']) { ?>
 					<tr>					
 						<th><?php _e('Buttons Text Color','flag') ?>:</th>
 						<td>
@@ -244,8 +236,6 @@ if($flag->options['buttonsMouseOver']) { ?>
 							<div id="cp_buttonsMouseOut" style="background:#F9F9F9;position:absolute;display:none;"></div>
 						</td>
 					</tr>
-<?php } 
-if($flag->options['catButtonsMouseOver']) { ?>
 					<tr>					
 						<th><?php _e('Category Buttons Color','flag') ?>:</th>
 						<td>
@@ -255,8 +245,6 @@ if($flag->options['catButtonsMouseOver']) { ?>
 							<div id="cp_catButtonsMouseOut" style="background:#F9F9F9;position:absolute;display:none;"></div>
 						</td>
 					</tr>
-<?php } 
-if($flag->options['catButtonsTextMouseOver']) { ?>
 					<tr>					
 						<th><?php _e('Category Buttons Text Color','flag') ?>:</th>
 						<td>
@@ -266,8 +254,6 @@ if($flag->options['catButtonsTextMouseOver']) { ?>
 							<div id="cp_catButtonsTextMouseOut" style="background:#F9F9F9;position:absolute;display:none;"></div>
 						</td>
 					</tr>
-<?php } 
-if($flag->options['thumbMouseOver']) { ?>
 					<tr>					
 						<th><?php _e('Thumbs Rollover Color','flag') ?>:</th>
 						<td>
@@ -277,43 +263,31 @@ if($flag->options['thumbMouseOver']) { ?>
 							<div id="cp_thumbMouseOut" style="background:#F9F9F9;position:absolute;display:none;"></div>
 						</td>
 					</tr>
-<?php } 
-if($flag->options['mainTitle']) { ?>
 					<tr>					
 						<th><?php _e('Main Title','flag') ?>:</th>
 						<td><input class="colorPick" type="text" size="8" maxlength="7" id="mainTitle" name="mainTitle" value="<?php echo $flag->options['mainTitle'] ?>" /><div id="cp_mainTitle" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 					</tr>
-<?php } 
-if($flag->options['categoryTitle']) { ?>
 					<tr>					
 						<th><?php _e('Category Title','flag') ?>:</th>
 						<td><input class="colorPick" type="text" size="8" maxlength="7" id="categoryTitle" name="categoryTitle" value="<?php echo $flag->options['categoryTitle'] ?>" /><div id="cp_categoryTitle" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 					</tr>
-<?php } 
-if($flag->options['itemBG']) { ?>
 					<tr>					
 						<th><?php _e('Item Background','flag') ?>:</th>
 						<td><input class="colorPick" type="text" size="8" maxlength="7" id="itemBG" name="itemBG" value="<?php echo $flag->options['itemBG'] ?>" /><div id="cp_itemBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 					</tr>
-<?php } 
-if($flag->options['itemTitle']) { ?>
 					<tr>					
 						<th><?php _e('Item Title','flag') ?>:</th>
 						<td><input class="colorPick" type="text" size="8" maxlength="7" id="itemTitle" name="itemTitle" value="<?php echo $flag->options['itemTitle'] ?>" /><div id="cp_itemTitle" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 					</tr>
-<?php } 
-if($flag->options['itemDescription']) { ?>
 					<tr>					
 						<th><?php _e('Item Description','flag') ?>:</th>
 						<td><input class="colorPick" type="text" size="8" maxlength="7" id="itemDescription" name="itemDescription" value="<?php echo $flag->options['itemDescription'] ?>" /><div id="cp_itemDescription" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 					</tr>
-<?php } ?>
 				</table>
 				<div class="clear"> &nbsp; </div>
 				<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag') ;?>"/></div>
 		</form>
 	</div>
-<?php endif; ?>
 	
 	<div id="roles" class="cptab">
 		<form method="POST" name="addroles" id="addroles" accept-charset="utf-8">

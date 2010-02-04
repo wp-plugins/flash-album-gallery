@@ -50,6 +50,10 @@ Important Links:
  
 == Changelog ==
  
+V0.39pl2 - 04.02.2010 
+* Bugfix : TinyMCE button insert wrong shortcode 
+* Bugfix : Color tab and color settings not showing 
+
 V0.39pl1 - 31.01.2010 
 
 * Added : Portuguese  translation 
@@ -159,6 +163,10 @@ This problem could happened if you have a low memory_limit in your php environme
 3. I get the message "Fatal error: Allowed memory size of xxx bytes exhausted" or get the "Error: Exceed Memory limit.". What does this means? 
  
 This problem could happened if you have a low memory_limit in your php environment or you have a very large image (resolution, not size). The memory limit sets the maximum amount of memory in bytes that a script is allowed to allocate. You can either lower the resolution of your images or increase the PHP Memory limit (via ini_set, php.ini or htaccess). If you didn't know how to do that, please contact your web hoster. 
+
+4. Is there a function for inserting gallery in template file instead post?
+
+<?php do_shortcode( '[flagallery gid=all name="My Gallery" w=100% h=500]' ); ?>
  
 **Read as startup :** 
 http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review/
@@ -168,6 +176,10 @@ When writing a page/post, you can use the follow tag:
 [flagallery gid=x name="ALBUM TITLE" w=width h=height]   -   (e.g.: [flagallery gid=1,3,5,6 name="New Year 2009" w=100% h=400] ) 
  
 Use 'gid=all' for including all galleries in the album   -   (e.g.: [flagallery gid=all name="ALBUM TITLE"] ) 
+For 'gid=all' there are additional parameters such as: 
+orderby=gid | title | rand (default is 'gid'); 
+order=ASC | DESC (default is 'DESC');
+exclude=1,4,5 (exclude gallery IDs separated by comma). 
  
 Live Demo : http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/ 
  

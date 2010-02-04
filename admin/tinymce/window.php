@@ -175,17 +175,21 @@ jQuery('#galleries').change(function(){
 			if (galleryid == 'all') {
 				if (galorderby) {
 					var galorderby = " orderby=" + galorderby;
-				} else var galorderby = '';
+				} 
 				if (galorder) {
 					var galorder = " order=" + galorder;
-				} else var galorder = '';
+				}
 				if (galexclude) {
 					var galexclude = " exclude=" + galexclude;
-				} else var galexclude = '';
-				if (skinname) {
-					var skinname = " skin=" + skinname;
-				} else var skinname = '';
+				} 
+			} else {
+				var galorderby = '';
+				var galorder = '';
+				var galexclude = '';
 			}
+			if (skinname) {
+				var skinname = " skin=" + skinname;
+			} else var skinname = '';
 
 			if (galleryid != 0 ) {
 				tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + galorderby + galorder + galexclude + skinname + ']';
