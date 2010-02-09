@@ -241,6 +241,7 @@ if ( isset($_GET['delete']) ) {
  * @return bool result of deletion
  */
 function flagFolderDelete($path) {
+  $path = trailingslashit( $path );
   if (is_dir($path)) {
 	  if (version_compare(PHP_VERSION, '5.0.0') < 0) {
 		$entries = array();
@@ -255,7 +256,7 @@ function flagFolderDelete($path) {
 
 	foreach ($entries as $entry) {
 	  if ($entry != '.' && $entry != '..') {
-		flagFolderDelete($path.'/'.$entry);
+		flagFolderDelete($path.$entry);
 	  }
 	}
 
