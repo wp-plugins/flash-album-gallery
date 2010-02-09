@@ -100,7 +100,7 @@ function flag_overview_setup(){
 					
 		include_once ( dirname (__FILE__).  '/flag_install.php');
 		
-		flag_default_options($colors=false);
+		flag_default_options();
 		$flag->load_options();
 		
 		flagGallery::show_message(__('Reset all settings to default parameter','flag'));

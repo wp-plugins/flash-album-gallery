@@ -143,7 +143,7 @@ function flag_install () {
  * @access internal
  * @return void
  */
-function flag_default_options($colors=true) {
+function flag_default_options() {
 	
 	global $blog_id, $flag;
 
@@ -163,7 +163,6 @@ function flag_default_options($colors=true) {
 	$flag_options['flashWidth']				= '100%'; 
 	$flag_options['flashHeight']			= '500';
 
-if ($colors) {
 	// Flash colors settings
 	$flag_options['flashColorSet'] 			= true;
 	$flag_options['flashBacktransparent'] 	= false;
@@ -182,7 +181,6 @@ if ($colors) {
 	$flag_options['itemBG']					= '#EAE6EF';		
 	$flag_options['itemTitle']				= '#7485c2';		
 	$flag_options['itemDescription']		= '#e0e0e0';		
-}
 		
 	// Image Settings
 	$flag_options['imgResize']				= false;							// Activate resize (not used)
