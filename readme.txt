@@ -51,10 +51,12 @@ Important Links:
 == Changelog ==
  
 V0.39pl3 - 12.02.2010 
+
 * Bugfix : Image uploader fix (Error 'no valid image') 
 * Added : German translation
 
 V0.39pl2 - 04.02.2010 
+
 * Bugfix : TinyMCE button insert wrong shortcode 
 * Bugfix : Color tab and color settings not showing 
 
