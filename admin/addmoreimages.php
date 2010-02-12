@@ -154,7 +154,7 @@ function flag_add_more_images($galleryID = 0){
 						<table class="form-table"> 
 						<tr valign="top"> 
 							<th scope="row"><strong><?php _e('Upload image(s):', 'flag') ;?></strong></th>
-							<td><span id='spanButtonPlaceholder'></span><input type="file" name="imagefiles" id="imagefiles" size="35" class="imagefiles"/></td>
+							<td><span id='spanButtonPlaceholder'></span><input type="file" name="imagefiles[]" id="imagefiles" size="35" class="imagefiles"/></td>
 							<td><div class="alignright actions"><input class="button-secondary action" type="submit" name="backToGallery" value="<?php _e('Back to gallery', 'flag') ?>" /></div>
 								<input name="galleryselect" id="galleryselect" type="hidden" value="<?php echo $galleryID ?>" ></td>
 						</tr> 

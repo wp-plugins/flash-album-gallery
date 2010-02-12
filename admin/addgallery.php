@@ -225,7 +225,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<table class="form-table"> 
 				<tr valign="top"> 
 					<th scope="row"><strong><?php _e('Upload image(s):', 'flag') ;?></strong></th>
-					<td><span id='spanButtonPlaceholder'></span><input type="file" name="imagefiles" id="imagefiles" size="35" class="imagefiles"/></td>
+					<td><span id='spanButtonPlaceholder'></span><input type="file" name="imagefiles[]" id="imagefiles" size="35" class="imagefiles"/></td>
 				</tr>
 				<tr valign="top"> 
 					<td colspan="2"><label for="galleryselect"><?php _e('in to', 'flag') ;?></label> <select name="galleryselect" id="galleryselect">

@@ -437,9 +437,13 @@ class flagAdmin{
 		}
 	}
 
-	// **************************************************************
+	/**
+	 * Function for uploading of images via the upload form
+	 * 
+	 * @class flagAdmin
+	 * @return void
+	 */
 	function upload_images() {
-	// upload of pictures
 		
 		global $wpdb;
 		
@@ -455,9 +459,9 @@ class flagAdmin{
 		}
 
 		// get the path to the gallery	
-		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = '$galleryID' ");
+		$gallery = flagdb::find_gallery($galleryID);
 
-		if (!$gallerypath){
+		if ( empty($gallery->path) ){
 			flagGallery::show_error(__('Failure in database, no gallery path set !','flag'));
 			return;
 		} 
@@ -465,56 +469,57 @@ class flagAdmin{
 		// read list of images
 		$dirlist = flagAdmin::scandir(WINABSPATH.$gallerypath);
 		
-		foreach ($_FILES as $key => $value) {
-			
-			// look only for uploded files
-			if ($_FILES[$key]['error'] == 0) {
-				$temp_file = $_FILES[$key]['tmp_name'];
-				$filepart = pathinfo ( strtolower($_FILES[$key]['name']) );
-				// required until PHP 5.2.0
-				$filepart['filename'] = substr($filepart["basename"],0 ,strlen($filepart["basename"]) - (strlen($filepart["extension"]) + 1) );
-				
-				//clean filename and extract extension
-				$filepart = flagGallery::fileinfo( $imagefiles['name'][$key] );
-				$filename = $filepart['basename'];
+		$imagefiles = $_FILES['imagefiles'];
+		
+		if (is_array($imagefiles)) {
+			foreach ($imagefiles['name'] as $key => $value) {
 
-				// check for allowed extension and if it's an image file
-				$ext = array('jpg', 'png', 'gif'); 
-				if ( !in_array($filepart['extension'], $ext) || !@getimagesize($temp_file) ){ 
-					flagGallery::show_error('<strong>'.$_FILES[$key]['name'].' </strong>'.__('is no valid image file!','flag'));
-					continue;
+				// look only for uploded files
+				if ($imagefiles['error'][$key] == 0) {
+					
+					$temp_file = $imagefiles['tmp_name'][$key];
+					
+					//clean filename and extract extension
+					$filepart = flagGallery::fileinfo( $imagefiles['name'][$key] );
+					$filename = $filepart['basename'];
+						
+					// check for allowed extension and if it's an image file
+					$ext = array('jpg', 'png', 'gif'); 
+					if ( !in_array($filepart['extension'], $ext) || !@getimagesize($temp_file) ){ 
+						flagGallery::show_error('<strong>' . $imagefiles['name'][$key] . ' </strong>' . __('is no valid image file!','flag'));
+						continue;
+					}
+	
+					// check if this filename already exist in the folder
+					$i = 0;
+					while ( in_array( $filename, $dirlist ) ) {
+						$filename = $filepart['filename'] . '_' . $i++ . '.' .$filepart['extension'];
+					}
+					
+					$dest_file = $gallery->abspath . '/' . $filename;
+					
+					//check for folder permission
+					if ( !is_writeable($gallery->abspath) ) {
+						$message = sprintf(__('Unable to write to directory %s. Is this directory writable by the server?', 'flag'), $gallery->abspath);
+						flagGallery::show_error($message);
+						return;				
+					}
+					
+					// save temp file to gallery
+					if ( !@move_uploaded_file($temp_file, $dest_file) ){
+						flagGallery::show_error(__('Error, the file could not moved to : ','flag') . $dest_file);
+						flagAdmin::check_safemode( $gallery->abspath );		
+						continue;
+					} 
+					if ( !flagAdmin::chmod($dest_file) ) {
+						flagGallery::show_error(__('Error, the file permissions could not set','flag'));
+						continue;
+					}
+					
+					// add to imagelist & dirlist
+					$imageslist[] = $filename;
+					$dirlist[] = $filename;
 				}
-
-				// check if this filename already exist in the folder
-				$i = 0;
-				while (in_array($filename,$dirlist)) {
-					$filename = $filepart['filename'] . '_' . $i++ . '.' .$filepart['extension'];
-				}
-				
-				$dest_file = WINABSPATH . $gallerypath . '/' . $filename;
-				
-				//check for folder permission
-				if (!is_writeable(WINABSPATH.$gallerypath)) {
-					$message = sprintf(__('Unable to write to directory %s. Is this directory writable by the server?', 'flag'), WINABSPATH.$gallerypath);
-					flagGallery::show_error($message);
-					return;				
-				}
-				
-				// save temp file to gallery
-				if (!@move_uploaded_file($_FILES[$key]['tmp_name'], $dest_file)){
-					flagGallery::show_error(__('Error, the file could not moved to : ','flag').$dest_file);
-					flagAdmin::check_safemode(WINABSPATH.$gallerypath);		
-					continue;
-				} 
-				if (!flagAdmin::chmod ($dest_file)) {
-					flagGallery::show_error(__('Error, the file permissions could not set','flag'));
-					continue;
-				}
-				
-				// add to imagelist & dirlist
-				$imageslist[] = $filename;
-				$dirlist[] = $filename;
-
 			}
 		}
 		
