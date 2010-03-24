@@ -155,13 +155,15 @@ That's it ... Have fun!
  
 == Screenshots == 
  
-1. Screenshot Manage Gallery 
-2. Screenshot Sort Gallery 
-3. Screenshot Add / Change Skins 
-4. Screenshot Options Page 
-5. Screenshot Flash Album Gallery 
-6. Screenshot Post Editor buttons to help you insert shortcode 
-7. Screenshot Post Editor insert shortcode popup 
+8. 3D Cube Gallery skin
+9. 3D Cube Gallery loading images
+5. Default skin (Midnight)
+1. Manage Gallery 
+2. Sort Gallery 
+3. Add / Change Skins 
+4. Options Page 
+6. Post Editor buttons to help you insert shortcode 
+7. Post Editor insert shortcode popup 
  
 == Frequently Asked Questions == 
  
