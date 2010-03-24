@@ -58,11 +58,20 @@ function flag_overview_server() {
 ?>
 <div id="dashboard_server_settings" class="dashboard-widget-holder wp_dashboard_empty">
 	<div class="flag-dashboard-widget">
+	  <?php if (IS_WPMU) {
+	  	if (wpmu_enable_function('wpmuQuotaCheck'))
+			echo flag_SpaceManager::details();
+		else {
+			//TODO:WPMU message in WP2.5 style
+			echo flag_SpaceManager::details();
+		}
+	  } else { ?>
 		<div class="dashboard-widget-content">
      	<ul class="settings">
      		<?php get_serverinfo(); ?>
 	  	</ul>
 		</div>
+	  <?php } ?>
   </div>
 </div>
 <?php	
@@ -98,9 +107,12 @@ function flag_overview_setup(){
 	if (isset($_POST['resetdefault'])) {	
 		check_admin_referer('flag_uninstall');
 					
-		include_once ( dirname (__FILE__).  '/flag_install.php');
+		include_once ( dirname (__FILE__). '/flag_install.php');
+		include_once( dirname (__FILE__). '/tuning.php');
 		
 		flag_default_options();
+		flag_tune();
+		$flag->define_constant();
 		$flag->load_options();
 		
 		flagGallery::show_message(__('Reset all settings to default parameter','flag'));
@@ -148,6 +160,7 @@ function flag_overview_setup(){
 				</div>
 			</div>
 		</div>
+	<?php if (!IS_WPMU || wpmu_site_admin() ) : ?>
 	<div id="major-publishing-actions">
 	<form id="resetsettings" name="resetsettings" method="post">
 		<?php wp_nonce_field('flag_uninstall') ?>
@@ -160,6 +173,7 @@ function flag_overview_setup(){
 			<br class="clear" />
 	</form>
 	</div>
+	<?php endif; ?>
 
 <?php
 }
@@ -182,7 +196,7 @@ jQuery("#photogallerycreator img").css({display:"block", margin:"0 auto 5px auto
 /*]]>*/
 </script>
 		<p><?php _e("What's new at PhotoGalleryCreator.com","flag"); ?></p>
-		<div id="photogallerycreator" style="text-align:center; overflow:auto; max-height:480px;">
+		<div id="photogallerycreator" style="text-align:center; overflow:auto; max-height:627px;">
 			<script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/swfobject.js"></script>
 			<script type="text/javascript">
 			/*<![CDATA[*/
@@ -242,7 +256,11 @@ add_meta_box('dashboard_right_now', __('Welcome to FlAG Gallery !', 'flag'), 'fl
 add_meta_box('flag_server', __('Server Settings', 'flag'), 'flag_overview_server', FLAGFOLDER, 'normal', 'core');
 add_meta_box('flag_gd_lib', __('Graphic Library', 'flag'), 'flag_overview_graphic_lib', FLAGFOLDER, 'normal', 'core');
 
-// ***************************************************************
+/**
+ * Show GD Library version information
+ * 
+ * @return void
+ */
 function flag_GD_info() {
 	
 	if(function_exists("gd_info")){
@@ -260,7 +278,12 @@ function flag_GD_info() {
 	}
 }
 
-// ***************************************************************		
+/**
+ * Return localized Yes or no 
+ * 
+ * @param bool $bool
+ * @return return 'Yes' | 'No'
+ */
 function flag_GD_Support($bool){
 	if($bool) 
 		return __('Yes', 'flag');
@@ -268,7 +291,12 @@ function flag_GD_Support($bool){
 		return __('No', 'flag');
 }
 
-// ***************************************************************
+/**
+ * Show up some server infor's
+ * @author GamerZ (http://www.lesterchan.net)
+ * 
+ * @return void
+ */
 function get_serverinfo() {
 	global $wpdb;
 	// Get MYSQL Version
@@ -278,28 +306,40 @@ function get_serverinfo() {
 	if (is_array($mysqlinfo)) $sql_mode = $mysqlinfo[0]->Value;
 	if (empty($sql_mode)) $sql_mode = __('Not set', 'flag');
 	// Get PHP Safe Mode
-	$safe_mode = ini_get('safe_mode') ? __('On', 'flag') : __('Off', 'flag');
+	if(ini_get('safe_mode')) $safe_mode = __('On', 'flag');
+	else $safe_mode = __('Off', 'flag');
 	// Get PHP allow_url_fopen
-	$allow_url_fopen = ini_get('allow_url_fopen') ? __('On', 'flag') : __('Off', 'flag'); 
-	// Get PHP max Upload Size
-	$upload_max = ini_get('upload_max_filesize') ? ini_get('upload_max_filesize') : __('N/A', 'flag');
-	// Get PHP max Post Size
-	$post_max = ini_get('post_max_size') ? ini_get('post_max_size') : __('N/A', 'flag');
-	// Get PHP max execution time
-	$max_execute = ini_get('max_execution_time') ? ini_get('max_execution_time') : __('N/A', 'flag');
+	if(ini_get('allow_url_fopen')) $allow_url_fopen = __('On', 'flag');
+	else $allow_url_fopen = __('Off', 'flag'); 
+	// Get PHP Max Upload Size
+	if(ini_get('upload_max_filesize')) $upload_max = ini_get('upload_max_filesize');	
+	else $upload_max = __('N/A', 'flag');
+	// Get PHP Output buffer Size
+	if(ini_get('output_buffering')) $output_buffer = ini_get('output_buffering');	
+	else $output_buffer = __('N/A', 'flag');
+	// Get PHP Max Post Size
+	if(ini_get('post_max_size')) $post_max = ini_get('post_max_size');
+	else $post_max = __('N/A', 'flag');
+	// Get PHP Max execution time
+	if(ini_get('max_execution_time')) $max_execute = ini_get('max_execution_time');
+	else $max_execute = __('N/A', 'flag');
 	// Get PHP Memory Limit 
-	$memory_limit = ini_get('memory_limit') ? ini_get('memory_limit') : __('N/A', 'flag');
+	if(ini_get('memory_limit')) $memory_limit = ini_get('memory_limit');
+	else $memory_limit = __('N/A', 'flag');
 	// Get actual memory_get_usage
-	$memory_usage = function_exists('memory_get_usage') ? round(memory_get_usage() / 1024 / 1024, 2) . __(' MByte', 'flag') : __('N/A', 'flag');
+	if (function_exists('memory_get_usage')) $memory_usage = round(memory_get_usage() / 1024 / 1024, 2) . __(' MByte', 'flag');
+	else $memory_usage = __('N/A', 'flag');
 	// required for EXIF read
-	$exif = is_callable('exif_read_data') ? __('Yes', 'flag'). " ( V" . substr(phpversion('exif'),0,4) . ")" : __('No', 'flag');
+	if (is_callable('exif_read_data')) $exif = __('Yes', 'flag'). " ( V" . substr(phpversion('exif'),0,4) . ")" ;
+	else $exif = __('No', 'flag');
 	// required for meta data
-	$iptc = is_callable('iptcparse') ? __('Yes', 'flag') : __('No', 'flag');
+	if (is_callable('iptcparse')) $iptc = __('Yes', 'flag');
+	else $iptc = __('No', 'flag');
 	// required for meta data
-	$xml = is_callable('xml_parser_create') ? __('Yes', 'flag') : __('No', 'flag');
-	
+	if (is_callable('xml_parser_create')) $xml = __('Yes', 'flag');
+	else $xml = __('No', 'flag');
 ?>
-	<li><?php _e('Operating System', 'flag'); ?> : <span><?php echo PHP_OS; ?></span></li>
+	<li><?php _e('Operating System', 'flag'); ?> : <span><?php echo PHP_OS; ?>&nbsp;(<?php echo (PHP_INT_SIZE * 8) ?>&nbsp;Bit)</span></li>
 	<li><?php _e('Server', 'flag'); ?> : <span><?php echo $_SERVER["SERVER_SOFTWARE"]; ?></span></li>
 	<li><?php _e('Memory usage', 'flag'); ?> : <span><?php echo $memory_usage; ?></span></li>
 	<li><?php _e('MYSQL Version', 'flag'); ?> : <span><?php echo $sqlversion; ?></span></li>
@@ -310,6 +350,7 @@ function get_serverinfo() {
 	<li><?php _e('PHP Memory Limit', 'flag'); ?> : <span><?php echo $memory_limit; ?></span></li>
 	<li><?php _e('PHP Max Upload Size', 'flag'); ?> : <span><?php echo $upload_max; ?></span></li>
 	<li><?php _e('PHP Max Post Size', 'flag'); ?> : <span><?php echo $post_max; ?></span></li>
+	<li><?php _e('PHP Output Buffer Size', 'flag'); ?> : <span><?php echo $output_buffer; ?></span></li>
 	<li><?php _e('PHP Max Script Execute Time', 'flag'); ?> : <span><?php echo $max_execute; ?>s</span></li>
 	<li><?php _e('PHP Exif support', 'flag'); ?> : <span><?php echo $exif; ?></span></li>
 	<li><?php _e('PHP IPTC support', 'flag'); ?> : <span><?php echo $iptc; ?></span></li>
@@ -317,6 +358,127 @@ function get_serverinfo() {
 <?php
 }
 
+/**
+ * WPMU feature taken from Z-Space Upload Quotas
+ * @author Dylan Reeve
+ * @url http://dylan.wibble.net/
+ *
+ */
+class flag_SpaceManager {
+ 
+ 	function getQuota() {
+		if (function_exists(get_space_allowed))
+			$quota = get_space_allowed();
+		else
+			$quota = get_site_option( "blog_upload_space" );
+			
+		return $quota;
+	}
+	 
+	function details() {
+		
+		// take default seetings
+		$settings = array(
+
+			'remain'	=> array(
+			'color_text'	=> 'white',
+			'color_bar'		=> '#0D324F',
+			'color_bg'		=> '#a0a0a0',
+			'decimals'		=> 2,
+			'unit'			=> 'm',
+			'display'		=> true,
+			'graph'			=> false
+			),
+
+			'used'		=> array(
+			'color_text'	=> 'white',
+			'color_bar'		=> '#0D324F',
+			'color_bg'		=> '#a0a0a0',
+			'decimals'		=> 2,
+			'unit'			=> 'm',
+			'display'		=> true,
+			'graph'			=> true
+			)
+		);
+
+		$quota = flag_SpaceManager::getQuota() * 1024 * 1024;
+		$used = get_dirsize( constant( 'ABSPATH' ) . constant( 'UPLOADS' ) );
+//		$used = get_dirsize( ABSPATH."wp-content/blogs.dir/".$blog_id."/files" );
+		
+		if ($used > $quota) $percentused = '100';
+		else $percentused = ( $used / $quota ) * 100;
+
+		$remaining = $quota - $used;
+		$percentremain = 100 - $percentused;
+
+		$out = '';
+		$out .= '<div id="spaceused"> <h3>'.__('Storage Space','flag').'</h3>';
+
+		if ($settings['used']['display']) {
+			$out .= __('Upload Space Used:','flag') . "\n";
+			$out .= flag_SpaceManager::buildGraph($settings['used'], $used,$quota,$percentused);
+			$out .= "<br />";
+		}
+
+		if($settings['remain']['display']) {
+			$out .= __('Upload Space Remaining:','flag') . "\n";
+			$out .= flag_SpaceManager::buildGraph($settings['remain'], $remaining,$quota,$percentremain);
+
+		}
+
+		$out .= "</div>";
+
+		echo $out;
+	}
+
+	function buildGraph($settings, $size, $quota, $percent) {
+		$color_bar = $settings['color_bar'];
+		$color_bg = $settings['color_bg'];
+		$color_text = $settings['color_text'];
+		
+		switch ($settings['unit']) {
+			case "b":
+				$unit = "B";
+				break;
+				
+			case "k":
+				$unit = "KB";
+				$size = $size / 1024;
+				$quota = $quota / 1024;
+				break;
+				
+			case "g":   // Gigabytes, really?
+				$unit = "GB";
+				$size = $size / 1024 / 1024 / 1024;
+				$quota = $quota / 1024 / 1024 / 1024;
+				break;
+				
+			default:
+				$unit = "MB";
+				$size = $size / 1024 / 1024;
+				$quota = $quota / 1024 / 1024;
+				break;
+		}
+
+		$size = round($size, (int)$settings['decimals']);
+
+		$pct = round(($size / $quota)*100);
+
+		if ($settings['graph']) {
+			//TODO:move style to CSS
+			$out = '<div style="display: block; margin: 0; padding: 0; height: 15px; border: 1px inset; width: 100%; background-color: '.$color_bg.';">'."\n";
+			$out .= '<div style="display: block; height: 15px; border: none; background-color: '.$color_bar.'; width: '.$pct.'%;">'."\n";
+			$out .= '<div style="display: inline; position: relative; top: 0; left: 0; font-size: 10px; color: '.$color_text.'; font-weight: bold; padding-bottom: 2px; padding-left: 5px;">'."\n";
+			$out .= $size.$unit;
+			$out .= "</div>\n</div>\n</div>\n";
+		} else {
+			$out = "<strong>".$size.$unit." ( ".number_format($percent)."%)"."</strong><br />";
+		}
+
+		return $out;
+	}
+
+}
 
 /**
  * get_phpinfo() - Extract all of the data from phpinfo into a nested array

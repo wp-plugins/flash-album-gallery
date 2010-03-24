@@ -37,12 +37,16 @@ function flag_upgrade() {
 			flag_add_sql_column( $wpdb->flagpictures, 'hitcounter', "INT(11) UNSIGNED DEFAULT '0';");
 			flag_add_sql_column( $wpdb->flagpictures, 'commentson', "INT(1) UNSIGNED NOT NULL DEFAULT '1';");
 			flag_add_sql_column( $wpdb->flagpictures, 'exclude', "TINYINT NULL DEFAULT '0';");
-		}		
 		
-		$flag_options = get_option('flag_options');	
-		$flag_options['skinsDirABS'] = FLAG_ABSPATH . 'skins/'; 
-		$flag_options['skinsDirURL'] = FLAG_URLPATH . 'skins/'; 
-		update_option('flag_options', $flag_options);
+			$flag_options = get_option('flag_options');	
+			$flag_options['skinsDirABS'] = FLAG_ABSPATH . 'skins/'; 
+			$flag_options['skinsDirURL'] = FLAG_URLPATH . 'skins/'; 
+			update_option('flag_options', $flag_options);
+		}		
+		// v0.32 -> v0.40
+		if (version_compare($installed_ver, '0.40', '<')) {
+			flag_add_sql_column( $wpdb->flagpictures, 'meta_data', "LONGTEXT AFTER used_ips;");
+		}		
 
 	// update now the database
 		update_option( "flag_db_version", FLAG_DBVERSION );

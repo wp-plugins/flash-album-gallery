@@ -1,7 +1,7 @@
 <?php
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 // look up for the path
-require_once( dirname(__FILE__) . '/../flag-config.php');
+require_once( dirname(dirname(__FILE__)) . '/flag-config.php');
 
 // check for correct capability
 if ( !is_user_logged_in() )
@@ -13,38 +13,14 @@ if ( !current_user_can('FlAG Change skin') )
 
 require_once (dirname (__FILE__) . '/get_skin.php');
 
-add_action('install_skins_dashboard', 'install_skins_dashboard');
-function install_skins_dashboard() {
-	?>
-	<ul id="tabs" class="tabs">
-		<li class="selected"><a href="#" rel="addskin"><?php _e('Add new skin', 'flag') ;?></a></li>
-		<li><a href="#" rel="wantmore"><?php _e('Want more skins?', 'flag') ;?></a></li>
-	<?php if(isset($_GET['action']))
-		echo '<li><a href="#" rel="uploadaction">'. __('Action', 'flag') . '</a></li>';
-	?>
-	</ul>
-
-	<div id="addskin" class="cptab">
-		<h2><?php _e('Add new skin', 'flag') ;?></h2>
-	<h4><?php _e('Install a skin in .zip format', 'flag') ?></h4>
-	<p><?php _e('If you have a skin in a .zip format, You may install it by uploading it here.', 'flag') ?></p>
-	<form method="post" enctype="multipart/form-data" action="<?php echo admin_url('admin.php?page=flag-skins&action=upload&tabs=2') ?>">
-		<?php wp_nonce_field( 'skin-upload') ?>
-		<p><input type="file" name="skinzip" />
-		<input type="submit" class="button" value="<?php _e('Install Now', 'flag') ?>" /></p>
-	</form>
-	</div>
-	
-	<div id="wantmore" class="cptab">
-		<h2><?php _e('More skins', 'flag') ;?></h2>
-	<p><?php _e('If you want more skins, You may get it at.', 'flag') ?> <a target="_blank" href="http://photogallerycreator.com">PhotoGalleryCreator.com</a></p>
-	</div>
-<?php }
+if( isset($_POST['installskin']) ) { 
+	require_once (dirname (__FILE__) . '/skin_install.php');
+}
 add_action('install_skins_upload', 'upload_skin');
 function upload_skin() {
 
-	echo '<div id="uploadaction" class="cptab">';
-	echo '<h2>'.__('Install info', 'flag').'</h2>';
+	echo '<div id="uploadaction">';
+	echo '<h3>'.__('Install info', 'flag').'</h3>';
 
 	if ( ! ( ( $uploads = wp_upload_dir() ) && false === $uploads['error'] ) ) {
 		echo "<p>".$uploads['error']."</p>\n";
@@ -71,149 +47,88 @@ function upload_skin() {
 			} else {
 				$local_file = $uploads['basedir'] . '/' . $filename;
 			}
-			do_skin_install_local_package($local_file, $filename);
+			if( $installed_skin = do_skin_install_local_package($local_file, $filename) ) {
+				@ rename($installed_skin.basename($installed_skin).'.png', $installed_skin.'screenshot.png');
+				if( !file_exists( $installed_skin.'settings.php' ) ) {
+					@ unlink($installed_skin.'colors.php');
+					@ copy(dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php');
+					$content = file_get_contents($installed_skin.'xml.php');
+					$pos = strpos($content,'/../../flash-album-gallery/flag-config.php');
+					if($pos === false) {
+						$content = str_replace('/../../flag-config.php','/../../flash-album-gallery/flag-config.php',$content);
+						$fp = fopen($installed_skin.'xml.php','w');
+						fwrite($fp,$content);
+						fclose($fp);
+					}
+				}
+			}
 		}
 	}
 	echo '</div>';
 }
 
 /**
- * Install a skin from a local file.
+ * Get skin options
  *
  */
-function do_skin_install_local_package($package, $filename = '') {
-	global $wp_filesystem;
-
-	if ( empty($package) ) {
-		show_message( __('No skin Specified', 'flag') );
-		return;
-	}
-
-	if ( empty($filename) )
-		$filename = basename($package);
-
-	$url = 'admin.php?page=flag-skins&action=upload&tabs=2';
-	$url = add_query_arg(array('package' => $filename), $url);
-
-	$url = wp_nonce_url($url, 'skin-upload');
-	if ( false === ($credentials = request_filesystem_credentials($url)) )
-		return;
-
-	if ( ! WP_Filesystem($credentials) ) {
-		request_filesystem_credentials($url, '', true); //Failed to connect, Error and request again
-		return;
-	}
-
-	if ( $wp_filesystem->errors->get_error_code() ) {
-		foreach ( $wp_filesystem->errors->get_error_messages() as $message )
-			show_message($message);
-		return;
-	}
-
-	$result = wp_install_skin_local_package( $package, 'show_message' );
-
-	if ( is_wp_error($result) ) {
-		show_message($result);
-		show_message( __('Installation Failed', 'flag') );
-	} else {
-		show_message( __('The skin installed successfully.', 'flag') );
-		$skin_file = $result;
-		$install_actions = apply_filters('install_skin_complete_actions', array(
-							'activate_skin' => '<a href="'.admin_url('admin.php?page=flag-skins&skin='.$skin_file).'" title="' . __('Activate this skin', 'flag') . '" target="_parent">' . __('Activate Skin', 'flag') . '</a>',
-							'skins_page' => '<a href="#'.basename($skin_file, '.php').'" title="' . __('Goto skin overview', 'flag') . '" target="_parent">' . __('Skin overview', 'flag') . '</a>'
-							), array(), $skin_file);
-		if ( ! empty($install_actions) )
-			show_message('<strong>' . __('Actions:', 'flag') . '</strong> ' . implode(' | ', (array)$install_actions));
-	}
-}
-
-/**
- * Install skin from local package
- *
- */
-function wp_install_skin_local_package($package, $feedback = '') {
-	global $wp_filesystem;
-
-	if ( !empty($feedback) )
-		add_filter('install_feedback', $feedback);
-
-	// Is a filesystem accessor setup?
-	if ( ! $wp_filesystem || ! is_object($wp_filesystem) )
-		WP_Filesystem();
-
-	if ( ! is_object($wp_filesystem) )
-		return new WP_Error('fs_unavailable', __('Could not access filesystem.', 'flag'));
-
-	if ( $wp_filesystem->errors->get_error_code() )
-		return new WP_Error('fs_error', __('Filesystem error', 'flag'), $wp_filesystem->errors);
-
-	//Get the base skin folder
+function flag_skin_options_tab() {
+	//Get the active skin
 	$flag_options = get_option('flag_options');
-	$skins_dir = $flag_options['skinsDirABS'];
-	if ( empty($skins_dir) )
-		return new WP_Error('fs_no_skins_dir', __('Unable to locate FlAGallery Skin directory.', 'flag'));
-
-	//And the same for the Content directory.
-	$content_dir = $wp_filesystem->wp_content_dir();
-	if( empty($content_dir) )
-		return new WP_Error('fs_no_content_dir', __('Unable to locate WordPress Content directory (wp-content).', 'flag'));
-
-	$skins_dir = trailingslashit( $skins_dir );
-	$content_dir = trailingslashit( $content_dir );
-
-	if ( empty($package) )
-		return new WP_Error('no_package', __('Install package not available.', 'flag'));
-
-	$working_dir = $content_dir . 'upgrade/' . basename($package, '.zip');
-
-	// Clean up working directory
-	if ( $wp_filesystem->is_dir($working_dir) )
-		$wp_filesystem->delete($working_dir, true);
-
-	apply_filters('install_feedback', __('Unpacking the skin package', 'flag'));
-	// Unzip package to working directory
-	$result = unzip_file($package, $working_dir);
-
-	// Once extracted, delete the package
-	unlink($package);
-
-	if ( is_wp_error($result) ) {
-		$wp_filesystem->delete($working_dir, true);
-		return $result;
+	$active_skin = $flag_options['skinsDirABS'].$flag_options['flashSkin'].'/'.$flag_options['flashSkin'].'.php';
+	include_once($active_skin);
+	if(function_exists('flag_skin_options')) {
+		flag_skin_options();
+	} else {
+		include_once(FLAG_ABSPATH.'admin/db_skin_color_scheme.php');
+		flag_skin_options();
 	}
-
-	//Get a list of the directories in the working directory before we delete it, We need to know the new folder for the skin
-	$filelist = array_keys( $wp_filesystem->dirlist($working_dir) );
-
-	if( $wp_filesystem->exists( $skins_dir . $filelist[0] ) ) {
-		$wp_filesystem->delete($working_dir, true);
-		return new WP_Error('install_folder_exists', __('Folder already exists.', 'flag'), $filelist[0] );
-	}
-
-	apply_filters('install_feedback', __('Installing the skin', 'flag'));
-	// Copy new version of skin into place.
-	$result = copy_dir($working_dir, $skins_dir);
-	if ( is_wp_error($result) ) {
-		$wp_filesystem->delete($working_dir, true);
-		return $result;
-	}
-
-	//Get a list of the directories in the working directory before we delete it, We need to know the new folder for the skin
-	$filelist = array_keys( $wp_filesystem->dirlist($working_dir) );
-
-	// Remove working directory
-	$wp_filesystem->delete($working_dir, true);
-
-	if( empty($filelist) )
-		return false; //We couldnt find any files in the working dir, therefor no skin installed? Failsafe backup.
-
-	$folder = $filelist[0];
-	$skin = get_skins('/' . $folder); //Ensure to pass with leading slash
-	$skinfiles = array_keys($skin); //Assume the requested skin is the first in the list
-
-	//Return the skin files name.
-	return  $folder . '/' . $skinfiles[0];
 }
+
+
+if ( isset($_POST['updateskinoption']) ) {	
+	check_admin_referer('skin_settings');
+	// get the hidden option fields, taken from WP core
+	if ( $_POST['skinoptions'] )	
+		$options = explode(',', stripslashes($_POST['skinoptions']));
+	if ($options) {
+		$settings_content = '<?php '."\n";
+		foreach ($options as $option) {
+			$option = trim($option);
+			$value = trim($_POST[$option]);
+			$flag->options[$option] = $value;
+			$settings_content .= '$'.$option.' = \''.str_replace('#','',$value)."';\n";
+		}
+		$settings_content .= '?>'."\n";
+		// the path should always end with a slash	
+		$flag->options['galleryPath']    = trailingslashit($flag->options['galleryPath']);
+	}
+	// Save options
+	$flag_options = get_option('flag_options');
+	update_option('flag_options', $flag->options);
+	if( flagGallery::saveFile($flag_options['skinsDirABS'].$flag_options['flashSkin'].'_settings.php',$settings_content,'w') ){
+		flagGallery::show_message(__('Update Successfully','flag'));
+	}
+}
+
+if ( isset($_POST['updateoption']) ) {	
+	check_admin_referer('flag_settings');
+	// get the hidden option fields, taken from WP core
+	if ( $_POST['page_options'] )	
+		$options = explode(',', stripslashes($_POST['page_options']));
+	if ($options) {
+		foreach ($options as $option) {
+			$option = trim($option);
+			$value = trim($_POST[$option]);
+			$flag->options[$option] = $value;
+		}
+		// the path should always end with a slash	
+		$flag->options['galleryPath']    = trailingslashit($flag->options['galleryPath']);
+	}
+	// Save options
+	update_option('flag_options', $flag->options);
+ 	flagGallery::show_message(__('Update Successfully','flag'));
+}		
+
 
 if ( isset($_GET['delete']) ) {
 	$delskin = $_GET['delete'];
@@ -222,10 +137,12 @@ if ( isset($_GET['delete']) ) {
 		if ( $flag_options['flashSkin'] != $delskin ) {
 			$skins_dir = trailingslashit( $flag_options['skinsDirABS'] );
 			$skin = $skins_dir.$delskin.'/';
-			if( flagFolderDelete($skin) ) {
-				flagGallery::show_message( __('Skin','flag').' \''.$delskin.'\' '.__('deleted successfully','flag') );
-			} else {
-				flagGallery::show_message( __('Can\'t find skin directory ','flag').' \''.$delskin.'\' '.__('. Try delete it manualy via ftp','flag') );
+			if ( is_dir($skin) ) {
+				if( flagGallery::flagFolderDelete($skin) ) {
+					flagGallery::show_message( __('Skin','flag').' \''.$delskin.'\' '.__('deleted successfully','flag') );
+				} else {
+					flagGallery::show_message( __('Can\'t find skin directory ','flag').' \''.$delskin.'\' '.__('. Try delete it manualy via ftp','flag') );
+				}
 			}
 		} else {
 			flagGallery::show_message( __('You need activate another skin before delete it','flag') );
@@ -235,87 +152,68 @@ if ( isset($_GET['delete']) ) {
 	}
 }
 
-/**
- * Function used to delete a folder.
- * @param $path full-path to folder
- * @return bool result of deletion
- */
-function flagFolderDelete($path) {
-  $path = trailingslashit( $path );
-  if (is_dir($path)) {
-	  if (version_compare(PHP_VERSION, '5.0.0') < 0) {
-		$entries = array();
-		if ($handle = opendir($path)) {
-		  while (false !== ($file = readdir($handle))) $entries[] = $file;
-		  closedir($handle);
-		}
-	  }else{
-		$entries = scandir($path);
-		if ($entries === false) $entries = array();
-	  }
-
-	foreach ($entries as $entry) {
-	  if ($entry != '.' && $entry != '..') {
-		flagFolderDelete($path.$entry);
-	  }
-	}
-
-	return rmdir($path);
-  } elseif (file_exists($path)){
-	return unlink($path);
-  } else {
-  	return false;
-  }
-}
-
 if( isset($_GET['skin']) ) {
-	global $blog_id, $flag;
-
-	$set_skin = dirname($_GET['skin']);
+	$set_skin = $_GET['skin'];
 	$flag_options = get_option('flag_options');
-	// Flash settings
-	$flag_options['flashSkin'] = $set_skin; 
-
-	if( isset($_GET['resetcolor']) ) {
-		include_once ( $flag_options['skinsDirABS'].$_GET['skin'] );	// activate skin colors
+	if($flag_options['flashSkin'] != $set_skin) {
+		$flag_options['flashSkin'] = $set_skin;
+		$active_skin = $flag_options['skinsDirABS'].$set_skin.'/'.$set_skin.'.php';
+		include_once($active_skin);
+		update_option('flag_options', $flag_options);
+		flagGallery::show_message( __('Skin','flag').' \''.$set_skin.'\' '.__('activated successfully','flag') );
 	}
-
-	update_option('flag_options', $flag_options);
-	flagGallery::show_message( __('Skin','flag').' \''.$set_skin.'\' '.__('activated successfully','flag') );
 }
 
-if( current_user_can('FlAG Add skins') ) {
-	echo '<div id="slider" class="wrap">';
-
-	do_action('install_skins_dashboard');
-	if( isset($_GET['action']) ) {
-		do_action('install_skins_upload');
-	}
-
-	echo '<script type="text/javascript">	
-	/* <![CDATA[ */
-	var cptabs=new ddtabcontent("tabs");
-	cptabs.setpersist(false);
-	cptabs.setselectedClassTarget("linkparent");
-	cptabs.init();
-
-	jQuery(document).ready(function(){
-		jQuery("#tabs a[rel=uploadaction]").parent("li").siblings().click(function () {
-			jQuery("#tabs a[rel=uploadaction]").hide("slow");
-		});
-	});
-	/* ]]> */
-	</script>';
-	echo '</div>';
-} 
 ?>
+<div id="slider" class="wrap">
+	<ul id="tabs" class="tabs">
+		<li class="selected"><a href="#" rel="addskin"><?php _e('Add new skin', 'flag') ;?></a></li>
+		<li><a href="#" rel="wantmore"><?php _e('Want more skins?', 'flag') ;?></a></li>
+		<li><a href="#" rel="skinoptions"><?php _e('Skin Options', 'flag') ;?></a></li>
+	</ul>
 
+	<div id="addskin" class="cptab">
+		<h2><?php _e('Add new skin', 'flag') ;?></h2>
+<?php if( current_user_can('FlAG Add skins') ) { ?>
+		<h4><?php _e('Install a skin in .zip format', 'flag') ?></h4>
+		<p><?php _e('If you have a skin in a .zip format, You may install it by uploading it here.', 'flag') ?></p>
+		<form method="post" enctype="multipart/form-data" action="<?php echo admin_url('admin.php?page=flag-skins') ?>">
+			<?php wp_nonce_field( 'skin-upload') ?>
+			<p><input type="file" name="skinzip" />
+			<input type="submit" class="button" name="installskin" value="<?php _e('Install Now', 'flag') ?>" /></p>
+		</form>
+		<?php if( isset($_POST['installskin']) ) { 
+			do_action('install_skins_upload'); 
+		} ?>
+<?php } else { ?>
+		<p><?php _e('You do not have sufficient permissions to install skin through admin page. You can install it by uploading via ftp to /flagallery-skins/ folder.', 'flag') ?></p>
+<?php } ?>
+	</div>
+	
+	<div id="wantmore" class="cptab">
+		<h2><?php _e('More skins', 'flag') ;?></h2>
+		<p><?php _e('If you want more skins, You may get it at.', 'flag') ?> <a target="_blank" href="http://photogallerycreator.com">PhotoGalleryCreator.com</a></p>
+	</div>
+	
+	<div id="skinoptions" class="cptab">
+		<h2><?php _e('Skin Options', 'flag') ;?></h2>
+		<?php flag_skin_options_tab(); ?>
+	</div>
+	
+	<script type="text/javascript">	
+		/* <![CDATA[ */
+		var cptabs=new ddtabcontent("tabs");
+		cptabs.setpersist(true);
+		cptabs.setselectedClassTarget("linkparent");
+		cptabs.init();
+		/* ]]> */
+	</script>
+</div>
 
 <div class="wrap">
 <h2><?php _e('Skins', 'flag'); ?></h2>
 
 <?php
-
 $all_skins = get_skins();
 $total_all_skins = count($all_skins);
 $flag_options = get_option ('flag_options');
@@ -346,8 +244,6 @@ $flag_options = get_option ('flag_options');
 		</tr>';
 	}
 	foreach ( (array)$all_skins as $skin_file => $skin_data) {
-		$actions = array();
-		$is_active = false /*is_skin_active($skin_file)*/;
 		$class = ( dirname($skin_file) == $flag_options['flashSkin'] ) ? 'active' : 'inactive';
 		echo "
 	<tr id='".basename($skin_file, '.php')."' class='$class first'>
@@ -369,7 +265,7 @@ $flag_options = get_option ('flag_options');
 		echo "</td>";
 		echo "<td class='skin-activate action-links'>";
 		if ( dirname($skin_file) != $flag_options['flashSkin'] ) {
-			echo '<strong><a href="'.admin_url('admin.php?page=flag-skins&skin='.$skin_file).'" title="' . __( 'Activate this skin', 'flag' ) . '">' . __('Activate', 'flag' ) . '</a></strong>';
+			echo '<strong><a href="'.admin_url('admin.php?page=flag-skins&skin='.dirname($skin_file)).'" title="' . __( 'Activate this skin', 'flag' ) . '">' . __('Activate', 'flag' ) . '</a></strong>';
  		} else {
  			echo "<strong>".__('Activated', 'flag' )."</strong>";
  		}
@@ -377,11 +273,10 @@ $flag_options = get_option ('flag_options');
 
 	echo "</tr>
 	<tr class='$class second'>
-		<td class='skin-title'><img src='".$flag_options['skinsDirURL'].dirname($skin_file)."/".basename($skin_file, '.php').".png' alt='{$skin_data['Name']}' title='{$skin_data['Name']}' /></td>
+		<td class='skin-title'><img src='".WP_PLUGIN_URL."/flagallery-skins/".dirname($skin_file)."/screenshot.png' alt='{$skin_data['Name']}' title='{$skin_data['Name']}' /></td>
 		<td class='desc'><p>{$skin_data['Description']}</p></td>";
  // delete link
 		echo "<td class='skin-delete action-links'>";
-		echo '<a href="'.admin_url('admin.php?page=flag-skins&skin='.$skin_file).'&resetcolor=yes" title="' . __( 'Reset skin color settings', 'flag' ) . '">' . __('Set default colors', 'flag' ) . '</a><br /><br />'."\n";
 		if ( current_user_can('FlAG Delete skins') ) {
 		if ( dirname($skin_file) != $flag_options['flashSkin'] ) {
 			echo '<a class="delete" onclick="javascript:check=confirm( \'' . attribute_escape(sprintf(__('Delete "%s"' , 'flag'), $skin_data['Name'])). '\');if(check==false) return false;" href="'.admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)).'" title="' . __( 'Delete this skin', 'flag' ) . '">' . __('Delete', 'flag' ) . '</a>';

@@ -8,16 +8,25 @@ class flagManageGallery {
 	var $gid = false;
 	var $pid = false;
 	var $base_page = 'admin.php?page=flag-manage-gallery';
+	var $search_result = false;
 	
 	// initiate the manage page
 	function flagManageGallery() {
 
 		// GET variables
-		$this->gid  = (int) $_GET['gid'];
-		$this->pid  = (int) $_GET['pid'];	
-		$this->mode = trim ($_GET['mode']);
-		
-		//Look for POST process
+		if(isset($_GET['gid']))
+			$this->gid  = (int) $_GET['gid'];
+		if(isset($_GET['pid']))
+			$this->pid  = (int) $_GET['pid'];	
+		if(isset($_GET['mode']))
+			$this->mode = trim ($_GET['mode']);
+		// Should be only called via manage galleries overview
+		if ( $_POST['page'] == 'manage-galleries' )
+			$this->post_processor_galleries();
+		// Should be only called via a edit single gallery page	
+		if ( $_POST['page'] == 'manage-images' )
+			$this->post_processor_images();
+		//Look for other POST process
 		if ( !empty($_POST) || !empty($_GET) )
 			$this->processor();
 	
@@ -34,15 +43,7 @@ class flagManageGallery {
 				include_once (dirname (__FILE__) . '/manage-images.php');
 				flag_picturelist();	
 			break;
- 			case 'add':	
-				if(current_user_can('FlAG Upload images')){
-					include_once (dirname (__FILE__) . '/addmoreimages.php');
-					flag_add_more_images($this->gid);	
-				} else {
-					die(__('Cheatin&#8217; uh?'));
-				}
-			break;
-	  	case 'main':
+		  	case 'main':
 			default:
 				if(current_user_can('FlAG Upload images')){
 					include_once (dirname (__FILE__) . '/addgallery.php');
@@ -55,12 +56,11 @@ class flagManageGallery {
 	}
 
 	function processor() {
-	
-		global $wpdb, $flag;
+		global $wpdb, $flag, $flagdb;
 		
-		if ($this->mode == 'delete') {
 		// Delete a gallery
-		
+		if ($this->mode == 'delete') {
+
 			check_admin_referer('flag_editgallery');
 		
 			// get the path to the gallery
@@ -91,21 +91,17 @@ class flagManageGallery {
 		 	$this->mode = 'main'; // show mainpage
 		}
 	
-		if ($this->mode == 'delpic') {
 		// Delete a picture
-		//TODO:Remove also Tag reference
+		if ($this->mode == 'delpic') {
+
 			check_admin_referer('flag_delpicture');
-			$filename = $wpdb->get_var("SELECT filename FROM $wpdb->flagpictures WHERE pid = '$this->pid' ");
-			if ($filename) {
-				$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = '$this->gid' ");
-				if ($gallerypath){
-					$thumb_folder = flagGallery::get_thumbnail_folder($gallerypath, FALSE);
-					if ($flag->options['deleteImg']) {
-						@unlink(WINABSPATH . $gallerypath . '/thumbs/thumbs_' .$filename);
-						@unlink(WINABSPATH . $gallerypath . '/' . $filename);
-					}
-				}		
-				$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = $this->pid");
+			$image = $flagdb->find_image( $this->pid );
+			if ($image) {
+				if ($flag->options['deleteImg']) {
+					@unlink($image->imagePath);
+					@unlink($image->thumbPath);	
+				} 
+				$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = $image->pid");
 			}
 			if($delete_pic)
 				flagGallery::show_message( __('Picture','flag').' \''.$this->pid.'\' '.__('deleted successfully','flag') );
@@ -114,63 +110,136 @@ class flagManageGallery {
 	
 		}
 		
+		// will be called after a ajax operation
+		if (isset ($_POST['ajax_callback']))  {
+				if ($_POST['ajax_callback'] == 1)
+					flagGallery::show_message(__('Operation successful. Please clear your browser cache.',"flag"));
+		}
+	
+		if ( isset ($_POST['backToGallery']) )
+			$this->mode = 'edit';
+		
+		// show sort order
+		if ( isset ($_POST['sortGallery']) )
+			$this->mode = 'sort';
+		
+		if ( isset ($_GET['s']) )	
+			$this->search_images();
+		
+	}
+		
+	function post_processor_galleries() {
+		global $wpdb, $flag, $flagdb;
+		
+		// bulk update in a single gallery
 		if (isset ($_POST['bulkaction']) && isset ($_POST['doaction']))  {
-			// do bulk update
-			
-			check_admin_referer('flag_updategallery');
-			
-			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = '$this->gid' ");
-			$imageslist = array();
-			
-			if ( is_array($_POST['doaction']) ) {
-				foreach ( $_POST['doaction'] as $imageID ) {
-					$imageslist[] = $wpdb->get_var("SELECT filename FROM $wpdb->flagpictures WHERE pid = '$imageID' ");
-				}
-			}
+
+			check_admin_referer('flag_bulkgallery');
 			
 			switch ($_POST['bulkaction']) {
 				case 'no_action';
 				// No action
 					break;
-				case 'new_thumbnail':
-				// Create new thumbnails
-					flagAdmin::do_ajax_operation( 'create_thumbnail' , $_POST['doaction'], __('Create new thumbnails','flag') );
-					break;
-				case 'resize_images':
-				// Resample images
-					flagAdmin::do_ajax_operation( 'resize_image' , $_POST['doaction'], __('Resize images','flag') );
-					break;
-				case 'delete_images':
-				// Delete images
-					if ( is_array($_POST['doaction']) ) {
-					if ($gallerypath){
-						$thumb_folder = flagGallery::get_thumbnail_folder($gallerypath, FALSE);
-						foreach ( $_POST['doaction'] as $imageID ) {
-							$filename = $wpdb->get_var("SELECT filename FROM $wpdb->flagpictures WHERE pid = '$imageID' ");
-							if ($flag->options['deleteImg']) {
-								@unlink(WINABSPATH.$gallerypath.'/'.$thumb_folder.'/'. "thumbs_" .$filename);
-								@unlink(WINABSPATH.$gallerypath.'/'.$filename);	
-							} 
-							$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = $imageID");
-						}
-					}		
-					if($delete_pic)
-						flagGallery::show_message(__('Pictures deleted successfully ',"flag"));
-					}
-					break;
 				case 'import_meta':
 				// Import Metadata
-					flagAdmin::import_MetaData($_POST['doaction']);
-					flagGallery::show_message(__('Import metadata finished',"flag"));
+					// A prefix 'gallery_' will first fetch all ids from the selected galleries
+					flagAdmin::do_ajax_operation( 'gallery_import_metadata' , $_POST['doaction'], __('Import metadata','flag') );
 					break;
 			}
 		}
+
+		if (isset ($_POST['TB_bulkaction']) && isset ($_POST['TB_ResizeImages']))  {
+			
+			check_admin_referer('flag_thickbox_form');
+			
+			//save the new values for the next operation
+			$flag->options['imgWidth']  = (int) $_POST['imgWidth'];
+			$flag->options['imgHeight'] = (int) $_POST['imgHeight'];
+			// What is in the case the user has no if cap 'FlAG Change options' ? Check feedback
+			update_option('flag_options', $flag->options);
+			
+			$gallery_ids  = explode(',', $_POST['TB_imagelist']);
+			// A prefix 'gallery_' will first fetch all ids from the selected galleries
+			flagAdmin::do_ajax_operation( 'gallery_resize_image' , $gallery_ids, __('Resize images','flag') );
+		}
+
+		if (isset ($_POST['TB_bulkaction']) && isset ($_POST['TB_NewThumbnail']))  {
+			
+			check_admin_referer('flag_thickbox_form');
+			
+			//save the new values for the next operation
+			$flag->options['thumbWidth']  = (int)  $_POST['thumbWidth'];
+			$flag->options['thumbHeight'] = (int)  $_POST['thumbHeight'];
+			$flag->options['thumbFix']    = (bool) $_POST['thumbFix']; 
+			// What is in the case the user has no if cap 'FlAG Change options' ? Check feedback
+			update_option('flag_options', $flag->options);
+			
+			$gallery_ids  = explode(',', $_POST['TB_imagelist']);
+			// A prefix 'gallery_' will first fetch all ids from the selected galleries
+			flagAdmin::do_ajax_operation( 'gallery_create_thumbnail' , $gallery_ids, __('Create new thumbnails','flag') );
+		}
+
+	}
+
+	function post_processor_images() {
+		global $wpdb, $flag, $flagdb;
 		
-		// will be called after a ajax operation
-		if (isset ($_POST['ajax_callback']))  {
-				if ($_POST['ajax_callback'] == 1)
-					flagGallery::show_message(__('Operation successful. Please clear your browser cache.',"flag"));
-			$this->mode = 'edit';		
+		// bulk update in a single gallery
+		if (isset ($_POST['bulkaction']) && isset ($_POST['doaction']))  {
+			
+			check_admin_referer('flag_updategallery');
+			
+			switch ($_POST['bulkaction']) {
+				case 'no_action';
+					break;
+				case 'delete_images':
+					if ( is_array($_POST['doaction']) ) {
+						foreach ( $_POST['doaction'] as $imageID ) {
+							$image = $flagdb->find_image( $imageID );
+							if ($image) {
+								if ($flag->options['deleteImg']) {
+									@unlink($image->imagePath);
+									@unlink($image->thumbPath);	
+								} 
+								$delete_pic = flagdb::delete_image( $image->pid );
+							}
+						}
+						if($delete_pic)
+							flagGallery::show_message(__('Pictures deleted successfully ', 'flag'));
+					}
+					break;
+				case 'import_meta':
+					flagAdmin::do_ajax_operation( 'import_metadata' , $_POST['doaction'], __('Import metadata', 'flag') );
+					break;
+			}
+		}
+
+		if (isset ($_POST['TB_bulkaction']) && isset ($_POST['TB_ResizeImages']))  {
+			
+			check_admin_referer('flag_thickbox_form');
+			
+			//save the new values for the next operation
+			$flag->options['imgWidth']  = (int) $_POST['imgWidth'];
+			$flag->options['imgHeight'] = (int) $_POST['imgHeight'];
+			
+			update_option('flag_options', $flag->options);
+			
+			$pic_ids  = explode(',', $_POST['TB_imagelist']);
+			flagAdmin::do_ajax_operation( 'resize_image' , $pic_ids, __('Resize images','flag') );
+		}
+
+		if (isset ($_POST['TB_bulkaction']) && isset ($_POST['TB_NewThumbnail']))  {
+			
+			check_admin_referer('flag_thickbox_form');
+			
+			//save the new values for the next operation
+			$flag->options['thumbWidth']  = (int)  $_POST['thumbWidth'];
+			$flag->options['thumbHeight'] = (int)  $_POST['thumbHeight'];
+			$flag->options['thumbFix']    = (bool) $_POST['thumbFix']; 
+			update_option('flag_options', $flag->options);
+			
+			$pic_ids  = explode(',', $_POST['TB_imagelist']);
+			flagAdmin::do_ajax_operation( 'create_thumbnail' , $pic_ids, __('Create new thumbnails','flag') );
 		}
 		
 		if (isset ($_POST['TB_bulkaction']) && isset ($_POST['TB_SelectGallery']))  {
@@ -197,11 +266,12 @@ class flagManageGallery {
 		
 			check_admin_referer('flag_updategallery');
 		
-			$gallery_title   = attribute_escape($_POST['title']);
-			$gallery_path    = attribute_escape($_POST['path']);
-			$gallery_desc    = attribute_escape($_POST['gallerydesc']);
+			$gallery_title   = esc_attr($_POST['title']);
+			$gallery_path    = esc_attr($_POST['path']);
+			$gallery_desc    = esc_attr($_POST['gallerydesc']);
+			$gallery_preview = (int) $_POST['previewpic'];
 			
-			$wpdb->query("UPDATE $wpdb->flaggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc' WHERE gid = '$this->gid'");
+			$wpdb->query("UPDATE $wpdb->flaggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', previewpic = '$gallery_preview' WHERE gid = '$this->gid'");
 	
 			if (isset ($_POST['author']))  {		
 				$gallery_author  = (int) $_POST['author'];
@@ -223,18 +293,6 @@ class flagManageGallery {
 			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = '$this->gid' ");
 			flagAdmin::import_gallery($gallerypath);
 		}
-	
-		if ( isset ($_POST['backToGallery']) )
-			$this->mode = 'edit';
-		
-		// show sort order
-		if ( isset ($_POST['sortGallery']) )
-			$this->mode = 'sort';
-
-		// add more images
-		if ( isset ($_POST['addImages']) )
-			$this->mode = 'add';
-		
 	}
 	
 	function update_pictures() {
@@ -245,6 +303,7 @@ class flagManageGallery {
 		
 		$description = 	$_POST['description'];
 		$alttext = 		$_POST['alttext'];
+		$exclude = 		$_POST['exclude'];
 		$pictures = 	$_POST['pid'];
 		
 		if ( is_array($description) ) {
@@ -259,6 +318,20 @@ class flagManageGallery {
 				$wpdb->query( "UPDATE $wpdb->flagpictures SET alttext = '$alttext' WHERE pid = $key");
 			}
 		}
+		if ( is_array($pictures) ){
+			foreach( $pictures as $pid ){
+				$pid = (int) $pid;
+				if (is_array($exclude)){
+					if ( array_key_exists($pid, $exclude) )
+						$wpdb->query("UPDATE $wpdb->flagpictures SET exclude = 1 WHERE pid = '$pid'");
+					else 
+						$wpdb->query("UPDATE $wpdb->flagpictures SET exclude = 0 WHERE pid = '$pid'");
+				} else {
+					$wpdb->query("UPDATE $wpdb->flagpictures SET exclude = 0 WHERE pid = '$pid'");
+				}
+			}
+		}
+
 		return;
 	}
 
@@ -281,6 +354,20 @@ class flagManageGallery {
 			$query .= " AND meta_value != '0'";
 	
 		return $wpdb->get_col( $query );
+	}
+	
+	function search_images() {
+		global $flagdb;
+		
+		if ( empty($_GET['s']) )
+			return;
+		//on what ever reason I need to set again the query var
+		set_query_var('s', $_GET['s']);
+		$request = get_search_query();
+		// looknow for the images
+		$this->search_result = $flagdb->search_for_images( $request );
+		// show pictures page
+		$this->mode = 'edit'; 
 	}
 
 }

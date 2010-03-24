@@ -69,7 +69,9 @@
 	      			jQuery('.flagform').submit();
 	    		});
 	    	} else {
-	    		div.hide("slow");
+	    		//div.hide("slow");
+	    		jQuery("#" + s.id).hide("slow");
+				jQuery("#" + s.id + "_container h2").hide("slow");
 				jQuery('.flagform').prepend("<input type=\"hidden\" name=\"ajax_callback\" value=\"1\">");
 	    		jQuery('.flagform').submit();
 	    	}

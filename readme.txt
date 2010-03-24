@@ -1,9 +1,9 @@
 === GRAND Flash Album Gallery === 
-Contributors: Sergey 'Rattus' Pasyuk
+Contributors: Sergey Pasyuk
 Donate link: 
 Tags: flash, slideshow, gallery, embed, admin, post, posts, page, rss, plugin, photo album, picture, pictures, photo, photos, image, images, multi-categories gallery, skinable gallery, skin, widget, sidebar, photo gallery, image gallery, picture gallery, manage, manage photos, thumbnail, category, categories, automatic 
-Requires at least: 2.7 
-Tested up to: 2.9 
+Requires at least: 2.8 
+Tested up to: 2.9.2 
 Stable tag: trunk 
  
 GRAND Flash Album Gallery is a full integrated (flash skin based, slideshow) Image Gallery plugin with a powerfull admin back end. 
@@ -30,9 +30,8 @@ Important Links:
  
 = Features = 
  
-* Unlimited number of pictures in flash gallery. 
-* Flash skins: You can add and change flash skins for displaying galleries. Display each new album with different skin.
-* Display few galleries in one flash album (random gallery feature on page reload)  
+* Unlimited number of pictures in slideshow. 
+* Flash skins: You can add and change flash skins for displaying galleries. 
 * Ability to automatically play slideshow. 
 * Customize the color of all the user controls and backgrounds. 
 * Full screen mode for dramatic presentations. 
@@ -47,9 +46,19 @@ Important Links:
 * Upload tab integration: You have access to all pictures via the upload tab. 
 * Import folder with images tab integration: You have access to all server directories via the import tab. 
 * Sort images feature. 
+* Show selected images only for registered users feature.
  
 == Changelog ==
  
+V0.40 - 24.03.2010 
+
+* Change : DataBase structure 
+* Change : Skin options now on skins page 
+* Change : Skins now in separate folder outside of plugin folder 
+* Added : Each skin has own color settings saved in file
+* Added : Hide image for unregistered users option
+* Added : SWFaddress for deeplinking in flash
+
 V0.39pl3 - 12.02.2010 
 
 * Bugfix : Image uploader fix (Error 'no valid image') 
@@ -169,10 +178,6 @@ This problem could happened if you have a low memory_limit in your php environme
 3. I get the message "Fatal error: Allowed memory size of xxx bytes exhausted" or get the "Error: Exceed Memory limit.". What does this means? 
  
 This problem could happened if you have a low memory_limit in your php environment or you have a very large image (resolution, not size). The memory limit sets the maximum amount of memory in bytes that a script is allowed to allocate. You can either lower the resolution of your images or increase the PHP Memory limit (via ini_set, php.ini or htaccess). If you didn't know how to do that, please contact your web hoster. 
-
-4. Is there a function for inserting gallery in template file instead post?
-
-<?php do_shortcode( '[flagallery gid=all name="My Gallery" w=100% h=500]' ); ?>
  
 **Read as startup :** 
 http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review/
@@ -182,10 +187,6 @@ When writing a page/post, you can use the follow tag:
 [flagallery gid=x name="ALBUM TITLE" w=width h=height]   -   (e.g.: [flagallery gid=1,3,5,6 name="New Year 2009" w=100% h=400] ) 
  
 Use 'gid=all' for including all galleries in the album   -   (e.g.: [flagallery gid=all name="ALBUM TITLE"] ) 
-For 'gid=all' there are additional parameters such as: 
-orderby=gid | title | rand (default is 'gid'); 
-order=ASC | DESC (default is 'DESC');
-exclude=1,4,5 (exclude gallery IDs separated by comma). 
  
 Live Demo : http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/ 
  

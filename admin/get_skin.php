@@ -86,7 +86,7 @@ function get_skins($skin_folder = '') {
 	$flag_skins = array ();
 	$skin_root = $flag_options['skinsDirABS'];
 	if( !empty($skin_folder) )
-		$skin_root .= $skin_folder;
+		$skin_root = $skin_folder;
 
 	// Files in flash-album-gallery/skins directory
 	$skins_dir = @ opendir( $skin_root);

@@ -1,5 +1,13 @@
 GRAND FlAGallery
-by Sergey 'Rattus' Pasyuk & CodEasily DEV Team
+by Sergey Pasyuk & CodEasily DEV Team
+
+V0.40 - 24.03.2010 
+- Change : DataBase structure 
+- Change : Skin options now on skins page 
+- Change : Skins now in separate folder outside of plugin folder 
+- Added : Each skin has own color settings saved in file
+- Added : Hide image for unregistered users option
+- Added : SWFaddress for deeplinking in flash
 
 V0.39pl3 - 12.02.2010 
 - Bugfix : Image uploader fix (Error 'no valid image') 

@@ -1,5 +1,5 @@
 <?php
-
+if ( !class_exists('flagImage') ) :
 /**
 * Image PHP class for the WordPress plugin FlAG Gallery
 * 
@@ -39,7 +39,7 @@ class flagImage{
 	 * @param object $gallery The flagGallery object representing the gallery containing this image
 	 * @return void
 	 */
-	function flagImage($gallery, $row = false) {			
+	function flagImage($gallery) {			
 			
 		//This must be an object
 		$gallery = (object) $gallery;
@@ -59,9 +59,12 @@ class flagImage{
 		$this->thumbURL 	= get_option ('siteurl') . '/' . $this->path . '/thumbs/thumbs_' . $this->filename;
 		$this->imagePath	= WINABSPATH.$this->path . '/' . $this->filename;
 		$this->thumbPath	= WINABSPATH.$this->path . '/thumbs/thumbs_' . $this->filename;
+		$this->meta_data	= unserialize($this->meta_data);
+		
+		wp_cache_add($this->pid, $this, 'flag_image');
 		
 	}
 	
 }
-
+endif;
 ?>

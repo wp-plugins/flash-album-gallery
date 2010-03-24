@@ -70,8 +70,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	//get all galleries (after we added new ones)
 	$gallerylist = $flagdb->find_all_galleries('gid', 'DESC');
 
-	?>
+?>
 	
+<?php if( !IS_WPMU || current_user_can('FlAG Import folder') ) { ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.css" />
 	<script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.js"></script>
 	<script type="text/javascript">
@@ -91,8 +92,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		  });
 	/* ]]> */
 	</script>
-
-	<?php if($flag->options['swfUpload']) { ?>
+<?php }
+if($flag->options['swfUpload']) { ?>
 	<!-- SWFUpload script -->
 	<script type="text/javascript">
 	/* <![CDATA[ */
@@ -156,7 +157,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			</div>
 		</div>
 	</div>
-	<?php } else { ?>
+<?php } else { ?>
 	<!-- MultiFile script -->
 	<script type="text/javascript">	
 	/* <![CDATA[ */
@@ -176,7 +177,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<ul id="tabs" class="tabs">
 			<li class="selected"><a href="#" rel="addgallery"><?php _e('Add new gallery', 'flag') ;?></a></li>
 			<li><a href="#" rel="uploadimage"><?php _e('Upload Images', 'flag') ;?></a></li>
+<?php if( !IS_WPMU || current_user_can('FlAG Import folder') ) { ?>
 			<li><a href="#" rel="importfolder"><?php _e('Import image folder', 'flag') ;?></a></li>
+<?php } ?>
 		</ul>
 
 		<!-- create gallery -->
@@ -190,8 +193,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				</tr>
 				<tr valign="top"> 
 					<td><input type="text" size="65" name="galleryname" value="" /><br />
+					<?php if(!IS_WPMU) { ?>
 						<?php _e('Create a new , empty gallery below the folder', 'flag') ;?>  <strong><?php echo $defaultpath ?></strong><br />
+					<?php } ?>
 						<i>( <?php _e('Allowed characters for file and folder names are', 'flag') ;?>: a-z, A-Z, 0-9, -, _ )</i></td>
+					<?php do_action('flag_add_new_gallery_form'); ?>
 					<td><div class="submit" style="margin: 0; padding: 0;"><input class="button-primary" type="submit" name= "addgallery" value="<?php _e('Add gallery', 'flag') ;?>"/></div></td>
 				</tr>
 				</table>
@@ -204,7 +210,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	<script type="text/javascript">	
 	/* <![CDATA[ */
 		jQuery(document).ready(function(){
-			jQuery("#choosegalfirst").animate({opacity: "0.5"}, 600);
+			if(jQuery("#galleryselect").val() == 0) {
+				jQuery("#choosegalfirst").animate({opacity: "0.5"}, 600);
+				jQuery("#choosegalfirst .disabledbut").show();
+			}
 			jQuery("#choosegalfirst .disabledbut").click(function () {
 				alert("Choose gallery, please.")
 			});
@@ -228,15 +237,20 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<td><span id='spanButtonPlaceholder'></span><input type="file" name="imagefiles[]" id="imagefiles" size="35" class="imagefiles"/></td>
 				</tr>
 				<tr valign="top"> 
-					<td colspan="2"><label for="galleryselect"><?php _e('in to', 'flag') ;?></label> <select name="galleryselect" id="galleryselect">
-					<option value="0" ><?php _e('Choose gallery', 'flag') ?></option>
-					<?php
-						foreach($gallerylist as $gallery) {
-							if( empty($gallery->title) ) { $name = $gallery->name; } else { $name = attribute_escape(stripslashes($gallery->title)); }
-							echo '<option value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
-						}					?>
-					</select>
-					<?php echo $maxsize; ?>
+					<td colspan="2"><label for="galleryselect"><?php _e('in to', 'flag') ;?></label> 
+						<select name="galleryselect" id="galleryselect">
+							<option value="0" ><?php _e('Choose gallery', 'flag') ?></option>
+							<?php $ingallery = isset($_GET['gid']) ? (int) $_GET['gid'] : '';
+							foreach($gallerylist as $gallery) {
+									if ( !flagAdmin::can_manage_this_gallery($gallery->author) )
+										continue;
+									$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
+									$sel = ($ingallery == $gallery->gid) ? 'selected="selected" ' : '';
+									echo '<option ' . $sel . 'value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
+							} ?>
+						</select>
+						<?php echo $maxsize; ?>
+						<br /><?php if ((IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?>
 					</td>
 				</tr> 
 				</table>
@@ -248,11 +262,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					<input type="submit" name="enable_flash" id="enable_flash" title="<?php _e('Upload multiple files at once by ctrl/shift-selecting in dialog','flag') ?>" value="<?php _e('Enable flash based upload', 'flag') ;?>" />
 					<?php } ?>
 					</span>
-					<span id="choosegalfirst"><input class="button-primary" type="submit" name="uploadimage" id="uploadimage_btn" value="<?php _e('Upload images', 'flag') ;?>" /><span class="disabledbut"></span></span>
+					<span id="choosegalfirst"><input class="button-primary" type="submit" name="uploadimage" id="uploadimage_btn" value="<?php _e('Upload images', 'flag') ;?>" /><span class="disabledbut" style="display: none;"></span></span>
 					<div class="clear"></div>
 				</div>
 			</form>
 		</div>
+<?php if( !IS_WPMU || current_user_can('FlAG Import folder') ) { ?>
 		<!-- import folder -->
 		<div id="importfolder" class="cptab">
 		<h2><?php _e('Import image folder', 'flag') ;?></h2>
@@ -270,6 +285,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<div class="submit"><input class="button-primary" type="submit" name= "importfolder" value="<?php _e('Import folder', 'flag') ;?>"/></div>
 			</form>
 		</div>
+<?php } ?>
 
 <script type="text/javascript">
 	var cptabs=new ddtabcontent("tabs");

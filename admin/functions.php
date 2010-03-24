@@ -9,24 +9,29 @@ class flagAdmin{
 
 	/**
 	 * create a new gallery & folder
+	 * 
+	 * @class flagAdmin
+	 * @param string $gallerytitle
+	 * @param string $defaultpath
+	 * @param bool $output if the function should show an error messsage or not
+	 * @return 
 	 */
-	function create_gallery($gallerytitle, $defaultpath) {
-		// create a new gallery & folder
+	function create_gallery($gallerytitle, $defaultpath, $output = true) {
 		global $wpdb, $user_ID;
  
 		// get the current user ID
 		get_currentuserinfo();
 
 		//cleanup pathname
+		$galleryname = sanitize_file_name( $gallerytitle );
 		$galleryname = apply_filters('flag_gallery_name', $gallerytitle);
-		$gallerytitle = attribute_escape($gallerytitle);
 		$flagpath = $defaultpath . $galleryname;
 		$flagRoot = WINABSPATH . $defaultpath;
 		$txt = '';
 		
 		// No gallery name ?
 		if (empty($galleryname)) {	
-			flagGallery::show_error( __('No valid gallery name!', 'flag') );
+			if ($output) flagGallery::show_error( __('No valid gallery name!', 'flag') );
 			return false;
 		}
 		
@@ -35,7 +40,7 @@ class flagAdmin{
 			if ( !wp_mkdir_p( $flagRoot ) ) {
 				$txt  = __('Directory', 'flag').' <strong>' . $defaultpath . '</strong> '.__('didn\'t exist. Please create first the main gallery folder ', 'flag').'!<br />';
 				$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'flag').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
-				flagGallery::show_error($txt);
+				if ($output) flagGallery::show_error($txt);
 				return false;
 			}
 		}
@@ -44,7 +49,7 @@ class flagAdmin{
 		if ( !is_writeable( $flagRoot ) ) {
 			$txt  = __('Directory', 'flag').' <strong>' . $defaultpath . '</strong> '.__('is not writeable !', 'flag').'<br />';
 			$txt .= __('Check this link, if you didn\'t know how to set the permission :', 'flag').' <a href="http://codex.wordpress.org/Changing_File_Permissions">http://codex.wordpress.org/Changing_File_Permissions</a> ';
-			flagGallery::show_error($txt);
+			if ($output) flagGallery::show_error($txt);
 			return false;
 		}
 		
@@ -68,7 +73,7 @@ class flagAdmin{
 			$help  = __('The server setting Safe-Mode is on !', 'flag');	
 			$help .= '<br />'.__('If you have problems, please create directory', 'flag').' <strong>' . $flagpath . '</strong> ';	
 			$help .= __('and the thumbnails directory', 'flag').' <strong>' . $flagpath . '/thumbs</strong> '.__('with permission 777 manually !', 'flag');
-			flagGallery::show_message($help);
+			if ($output) flagGallery::show_message($help);
 		}
 		
 		// show an error message			
@@ -78,25 +83,34 @@ class flagAdmin{
 				@rmdir(WINABSPATH . $flagpath . '/thumbs');
 				@rmdir(WINABSPATH . $flagpath);
 			}
-			flagGallery::show_error($txt);
+			if ($output) flagGallery::show_error($txt);
 			return false;
 		}
 		
 		$result = $wpdb->get_var("SELECT name FROM $wpdb->flaggallery WHERE name = '$galleryname' ");
 		
 		if ($result) {
-			flagGallery::show_error( __ngettext( 'Gallery', 'Galleries', 1, 'flag' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'flag'));
+			if ($output) flagGallery::show_error( __ngettext( 'Gallery', 'Galleries', 1, 'flag' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'flag'));
 			return false;			
 		} else { 
 			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flaggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $flagpath, $gallerytitle , $user_ID) );
+			// and give me the new id
+			$gallery_id = (int) $wpdb->insert_id;
+			// here you can inject a custom function
+			do_action('flag_created_new_gallery', $gallery_id);
+
+			// return only the id if defined
+			if ($return_id)
+				return $gallery_id;
+
 			if ($result) {
 				$message  = __('Gallery \'%1$s\' successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','flag');
-				$message  = sprintf($message, stripcslashes($gallerytitle), '[flagallery gid=' . $wpdb->insert_id . ' name="' . stripcslashes($gallerytitle) . '"]');
-				$message .= '<a href="' . admin_url() . 'admin.php?page=flag-manage-gallery&mode=edit&gid=' . $wpdb->insert_id . '" >';
+				$message  = sprintf($message, stripcslashes($gallerytitle), '[flagallery gid=' . $gallery_id . ' name="' . stripcslashes($gallerytitle) . '"]');
+				$message .= '<a href="' . admin_url() . 'admin.php?page=flag-manage-gallery&mode=edit&gid=' . $gallery_id . '" >';
 				$message .= __('Edit gallery','flag');
 				$message .= '</a>';
 				
-				flagGallery::show_message($message); 
+				if ($output) flagGallery::show_message($message); 
 			}
 			return true;
 		} 
@@ -190,7 +204,13 @@ class flagAdmin{
 
 	}
 
-	// **************************************************************
+	/**
+	 * flagAdmin::scandir()
+	 * 
+	 * @class flagAdmin
+	 * @param string $dirname
+	 * @return array
+	 */
 	function scandir($dirname = '.') { 
 		// thx to php.net :-)
 		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
@@ -234,37 +254,22 @@ class flagAdmin{
 
 		// skip if file is not there
 		if (!$thumb->error) {
-			if ($flag->options['thumbCrop']) {
-				
-				// THX to Kees de Bruin, better thumbnails if portrait format
-				$width = $flag->options['thumbWidth'];
-				$height = $flag->options['thumbHeight'];
-				$curwidth = $thumb->currentDimensions['width'];
-				$curheight = $thumb->currentDimensions['height'];
-				if ($curwidth > $curheight) {
-					$aspect = (100 * $curwidth) / $curheight;
-				} else {
-					$aspect = (100 * $curheight) / $curwidth;
-				}
-				$width = round(($width * $aspect) / 100);
-				$height = round(($height * $aspect) / 100);
-
-				$thumb->resize($width,$height);
-				$thumb->cropFromCenter($width);
-			} 
-			elseif ($flag->options['thumbFix'])  {
+			if ($flag->options['thumbFix'])  {
 				// check for portrait format
 				if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
+					// first resize to the wanted width
 					$thumb->resize($flag->options['thumbWidth'], 0);
 					// get optimal y startpos
 					$ypos = ($thumb->currentDimensions['height'] - $flag->options['thumbHeight']) / 2;
 					$thumb->crop(0, $ypos, $flag->options['thumbWidth'],$flag->options['thumbHeight']);	
 				} else {
-					$thumb->resize(0,$flag->options['thumbHeight']);	
+					// first resize to the wanted height
+					$thumb->resize(0, $flag->options['thumbHeight']);	
 					// get optimal x startpos
 					$xpos = ($thumb->currentDimensions['width'] - $flag->options['thumbWidth']) / 2;
 					$thumb->crop($xpos, 0, $flag->options['thumbWidth'],$flag->options['thumbHeight']);	
 				}
+			//this create a thumbnail but keep ratio settings	
 			} else {
 				$thumb->resize($flag->options['thumbWidth'],$flag->options['thumbHeight']);	
 			}
@@ -272,7 +277,15 @@ class flagAdmin{
 			// save the new thumbnail
 			$thumb->save($image->thumbPath, $flag->options['thumbQuality']);
 			flagAdmin::chmod ($image->thumbPath); 
-		} 
+
+			//read the new sizes
+			$new_size = @getimagesize ( $image->thumbPath );
+			$size['width'] = $new_size[0];
+			$size['height'] = $new_size[1]; 
+			
+			// add them to the database
+			flagdb::update_image_meta($image->pid, array( 'thumbnail' => $size) );
+} 
 				
 		$thumb->destruct();
 		
@@ -286,6 +299,7 @@ class flagAdmin{
 	/**
 	 * flagAdmin::resize_image() - create a new image, based on the height /width
 	 * 
+	 * @class flagAdmin
 	 * @param object | int $image contain all information about the image or the id
 	 * @param integer $width optional 
 	 * @param integer $height optional
@@ -304,6 +318,9 @@ class flagAdmin{
 		if ( !is_object($image) ) 
 			return __('Object didn\'t contain correct data','flag');	
 
+		// before we start we import the meta data to database (required for uploads before V0.40)
+		flagAdmin::maybe_import_meta( $image->pid );
+
 		// if no parameter is set, take global settings
 		$width  = ($width  == 0) ? $flag->options['imgWidth']  : $width;
 		$height = ($height == 0) ? $flag->options['imgHeight'] : $height;
@@ -317,6 +334,10 @@ class flagAdmin{
 		if (!$file->error) {
 			$file->resize($width, $height, 4);
 			$file->save($image->imagePath, $flag->options['imgQuality']);
+			// read the new sizes
+			$size = @getimagesize ( $image->imagePath );
+			// add them to the database
+			flagdb::update_image_meta($image->pid, array( 'width' => $size[0], 'height' => $size[1] ) );
 			$file->destruct();
 		} else {
             $file->destruct();
@@ -326,9 +347,15 @@ class flagAdmin{
 		return '1';
 	}
 
-	// **************************************************************
-	function add_Images($galleryID, $imageslist) {
-		// add images to database		
+	/**
+	 * Add images to database
+	 * 
+	 * @class flagAdmin
+	 * @param int $galleryID
+	 * @param array $imageslist
+	 * @return array $image_ids Id's which are sucessful added
+	 */
+	function add_Images($galleryID, $imageslist, $name2alt = false) {
 		global $wpdb;
 		
 		$alttext = '';
@@ -336,7 +363,14 @@ class flagAdmin{
 		
 		if ( is_array($imageslist) ) {
 			foreach($imageslist as $picture) {
-				$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flagpictures (galleryid, filename, alttext) VALUES (%s, %s, %s)", $galleryID, $picture, $alttext) );
+				if($name2alt) {
+					// strip off the extension of the filename
+					$path_parts = pathinfo( $picture );
+					$alttext = ( !isset($path_parts['filename']) ) ? substr($path_parts['basename'], 0,strpos($path_parts['basename'], '.')) : $path_parts['filename'];
+				}
+				// save it to the database 
+				$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flagpictures (galleryid, filename, alttext, exclude) VALUES (%s, %s, %s, 0)", $galleryID, $picture, $alttext) );
+				// and give me the new id
 				$pic_id = (int) $wpdb->insert_id;
 				if ($result) 
 					$image_ids[] = $pic_id;
@@ -371,26 +405,34 @@ class flagAdmin{
 		if (!is_array($imagesIds))
 			$imagesIds = array($imagesIds);
 		
-		foreach($imagesIds as $pic_id) {
-			$picture = flagdb::find_image($pic_id);
-			if (!$picture->error) {
+		foreach($imagesIds as $imageID) {
+			$image = flagdb::find_image($imageID);
+			if (!$image->error) {
 
-				$meta = flagAdmin::get_MetaData($picture->imagePath);
+				$meta = flagAdmin::get_MetaData($image->pid);
 				
 				// get the title
-				if (!$alttext = $meta['title'])
-					$alttext = $picture->alttext;
+				$alttext = empty( $meta['title'] ) ? $image->alttext : $meta['title'];
 				// get the caption / description field
-				if (!$description = $meta['caption'])
-					$description = $picture->description;
+				$description = empty( $meta['caption'] ) ? $image->description : $meta['caption'];
 				// get the file date/time from exif
 				$timestamp = $meta['timestamp'];
 				// update database
-				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", attribute_escape($alttext), attribute_escape($description), $timestamp, $pic_id) );
-			}// error check
+				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", attribute_escape($alttext), attribute_escape($description), $timestamp, $image->pid) );
+				if ($result === false)
+					return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not update data base)', 'flag') . '</strong>';		
+				
+				//this flag will inform us the import is already one time performed
+				$meta['common']['saved']  = true; 
+				$result = flagdb::update_image_meta($image->pid, $meta['common']);
+				
+				if ($result === false)
+					return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not update meta data)', 'flag') . '</strong>';
+			} else
+				return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not find image)', 'flag') . '</strong>';// error check
 		}
 		
-		return true;
+		return '1';
 		
 	}
 
@@ -402,23 +444,57 @@ class flagAdmin{
 	 * @param string $picPath must be Gallery absPath + filename
 	 * @return array metadata
 	 */
-	function get_MetaData($picPath) {
+	function get_MetaData($id) {
 		
 		require_once(FLAG_ABSPATH . '/lib/meta.php');
 		
 		$meta = array();
 
-		$pdata = new flagMeta($picPath);
-		$meta['title'] = $pdata->get_META('title');		
-		$meta['caption'] = $pdata->get_META('caption');	
-		$meta['timestamp'] = $pdata->get_date_time();	
+		$pdata = new flagMeta( $id );
+
+		$meta['title'] = trim ( $pdata->get_META('title') );		
+		$meta['caption'] = trim ( $pdata->get_META('caption') );	
+		$meta['keywords'] = trim ( $pdata->get_META('keywords') );
+		$meta['timestamp'] = $pdata->get_date_time();
+		// this contain other useful meta information
+		$meta['common'] = $pdata->get_common_meta();
 		
 		return $meta;
 		
 	}
 
+	/**
+	 * Maybe import some meta data to the database. The functions checks the flag 'saved'
+	 * and if based on compat reason (pre V0.40) we save then some meta datas to the database
+	 * 
+	 * @param int $id
+	 * @return result
+	 */
+	function maybe_import_meta( $id ) {
+				
+		require_once(FLAG_ABSPATH . '/lib/meta.php');
+				
+		$image = new flagMeta( $id );
+		
+		if ( $image->meta_data['saved'] != true ) {
+			//this flag will inform us the import is already one time performed
+			$meta['saved']  = true; 
+			$result = flagdb::update_image_meta($image->pid, $meta['common']);
+		} else
+			return false;
+		
+		return $result;		
 
-	// **************************************************************
+	}
+
+	/**
+	 * flagAdmin::getOnlyImages()
+	 * 
+	 * @class flagAdmin
+	 * @param mixed $p_event
+	 * @param mixed $p_header
+	 * @return bool
+	 */
 	function getOnlyImages($p_event, $p_header)	{
 		
 		$info = pathinfo($p_header['filename']);
@@ -447,6 +523,10 @@ class flagAdmin{
 		
 		global $wpdb;
 		
+		// WPMU action
+		if (flagAdmin::check_quota())
+			return;
+
 		// Images must be an array
 		$imageslist = array();
 
@@ -540,26 +620,35 @@ class flagAdmin{
 
 	} // end function
 	
-	// **************************************************************
+	/**
+	 * Upload function will be called via the Flash uploader
+	 * 
+	 * @class flagAdmin
+	 * @param integer $galleryID
+	 * @return string $result
+	 */
 	function swfupload_image($galleryID = 0) {
-		// This function is called by the swfupload
+
 		global $wpdb;
 		
 		if ($galleryID == 0) {
 			@unlink($temp_file);		
-			return __('No gallery selected !','flag');;
+			return __('No gallery selected!','flag');;
 		}
 
+		// WPMU action
+		if (flagAdmin::check_quota())
+			return '0';
+
 		// Check the upload
-		if (!isset($_FILES['Filedata']) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) 
-			return __('Invalid upload. Error Code : ','flag') . $_FILES["Filedata"]["error"];
+		if (!isset($_FILES['Filedata']) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] === UPLOAD_ERR_OK) 
+			flagAdmin::file_upload_error_message($_FILES['Filedata']['error']); 
 
 		// get the filename and extension
 		$temp_file = $_FILES["Filedata"]['tmp_name'];
-		$filepart = pathinfo ( strtolower($_FILES['Filedata']['name']) );
-		// required until PHP 5.2.0
-		$filepart['filename'] = substr($filepart['basename'],0 ,strlen($filepart['basename']) - (strlen($filepart["extension"]) + 1) );
-		$filename = sanitize_title($filepart['filename']) . '.' . $filepart['extension'];
+
+		$filepart = flagGallery::fileinfo( $_FILES['Filedata']['name'] );
+		$filename = $filepart['basename'];
 
 		// check for allowed extension
 		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
@@ -596,9 +685,58 @@ class flagAdmin{
 		return '0';
 	}	
 	
-	// **************************************************************
+	/**
+	 * File upload error message
+	 * 
+	 * @class flagAdmin
+	 * @return string $result
+	 */
+	function file_upload_error_message($error_code) {
+		switch ($error_code) {
+			case UPLOAD_ERR_INI_SIZE:
+				return __('The uploaded file exceeds the upload_max_filesize directive in php.ini','flag');
+			case UPLOAD_ERR_FORM_SIZE:
+				return __('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form','flag');
+			case UPLOAD_ERR_PARTIAL:
+				return __('The uploaded file was only partially uploaded','flag');
+			case UPLOAD_ERR_NO_FILE:
+				return __('No file was uploaded','flag');
+			case UPLOAD_ERR_NO_TMP_DIR:
+				return __('Missing a temporary folder','flag');
+			case UPLOAD_ERR_CANT_WRITE:
+				return __('Failed to write file to disk','flag');
+			case UPLOAD_ERR_EXTENSION:
+				return __('File upload stopped by extension','flag');
+			default:
+				return __('Unknown upload error','flag');
+		}
+	}
+
+	/**
+	 * Check the Quota under WPMU. Only needed for this case
+	 * 
+	 * @class flagAdmin
+	 * @return bool $result
+	 */
+	function check_quota() {
+
+			if ( (IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck'))
+				if( $error = upload_is_user_over_quota( false ) ) {
+					flagGallery::show_error( __( 'Sorry, you have used your space allocation. Please delete some files to upload more files.','flag' ) );
+					return true;
+				}
+			return false;
+	}
+	
+	/**
+	 * Set correct file permissions (taken from wp core)
+	 * 
+	 * @class flagAdmin
+	 * @param string $filename
+	 * @return bool $result
+	 */
 	function chmod($filename = '') {
-		// Set correct file permissions (taken from wp core)
+
 		$stat = @ stat(dirname($filename));
 		$perms = $stat['mode'] & 0007777;
 		$perms = $perms & 0000666;
@@ -608,9 +746,16 @@ class flagAdmin{
 		return false;
 	}
 	
+	/**
+	 * Check UID in folder and Script
+	 * Read http://www.php.net/manual/en/features.safe-mode.php to understand safe_mode
+	 * 
+	 * @class flagAdmin
+	 * @param string $foldername
+	 * @return bool $result
+	 */
 	function check_safemode($foldername) {
-		// Check UID in folder and Script
-		// Read http://www.php.net/manual/en/features.safe-mode.php to understand safe_mode
+
 		if ( SAFE_MODE ) {
 			
 			$script_uid = ( ini_get('safe_mode_gid') ) ? getmygid() : getmyuid();
@@ -627,21 +772,25 @@ class flagAdmin{
 		return true;
 	}
 	
+	/**
+	 * Capability check. Check is the ID fit's to the user_ID
+	 * 
+	 * @class flagAdmin
+	 * @param int $check_ID is the user_id
+	 * @return bool $result
+	 */
 	function can_manage_this_gallery($check_ID) {
-		// check is the ID fit's to the user_ID'
-		global $user_ID, $current_user, $wp_roles;
+
+		global $user_ID, $wp_roles;
 		
-		// get the current user ID
-		get_currentuserinfo();
- 		
 		if ( !current_user_can('FlAG Manage others gallery') ) {
-			if ( $user_ID != $check_ID && $current_user->user_level != 10) {
+			// get the current user ID
+			get_currentuserinfo();
+			
+			if ( $user_ID != $check_ID)
 				return false;
-			}
 		}
-		
 		return true;
-	
 	}
 	
 	/**
@@ -721,6 +870,11 @@ class flagAdmin{
 	
 	/**
 	 * Copy images to another gallery
+	 * 
+	 * @class flagAdmin
+	 * @param array|int $pic_ids ID's of the images
+	 * @param int $dest_gid destination gallery
+	 * @return void
 	 */
 	function copy_images($pic_ids, $dest_gid) {
 		
@@ -748,6 +902,9 @@ class flagAdmin{
 		$destination_path = WINABSPATH . $destination->path;
 		
 		foreach ($images as $image) {		
+			// WPMU action
+			if ( flagAdmin::check_quota() )
+				return;
 			
 			$i = 0;
 			$tmp_prefix = ''; 
@@ -771,7 +928,7 @@ class flagAdmin{
 			!@copy($image->thumbPath, $destination_thumb_file_path);
 			
 			// Create new database entry for the image
-			$new_pid = flagdb::insert_image( $destination->gid, $destination_file_name, $image->alttext, $image->description);
+			$new_pid = flagdb::insert_image( $destination->gid, $destination_file_name, $image->alttext, $image->description, $image->exclude);
 
 			if (!isset($new_pid)) {				
 				$errors .= sprintf(__('Failed to copy database row for picture %s','flag'), $image->pid) . '<br />';
@@ -803,6 +960,15 @@ class flagAdmin{
 		return;
 	}
 	
+	/**
+	 * Initate the Ajax operation
+	 * 
+	 * @class flagAdmin	 
+	 * @param string $operation name of the function which should be executed
+	 * @param array $image_array
+	 * @param string $title name of the operation
+	 * @return string the javascript output
+	 */
 	function do_ajax_operation( $operation, $image_array, $title = '' ) {
 		
 		if ( !is_array($image_array) || empty($image_array) )
@@ -837,23 +1003,45 @@ class flagAdmin{
 	/**
 	 * flagAdmin::set_gallery_preview() - define a preview pic after the first upload, can be changed in the gallery settings
 	 * 
+	 * @class flagAdmin
 	 * @param int $galleryID
-	 * @return
+	 * @return void
 	 */
 	function set_gallery_preview( $galleryID ) {
 		
 		global $wpdb;
 		
-		$imageID = $wpdb->get_var("SELECT previewpic FROM $wpdb->flaggallery WHERE gid = '$galleryID' ");
+		$gallery = flagdb::find_gallery( $galleryID );
 		
 		// in the case no preview image is setup, we do this now
-		if ($imageID == 0) {
-			$firstImage = $wpdb->get_var("SELECT pid FROM $wpdb->flagpictures WHERE galleryid = '$galleryID' ORDER by pid DESC limit 0,1");
-			if ($firstImage)
+		if ($gallery->previewpic == 0) {
+			$firstImage = $wpdb->get_var("SELECT pid FROM $wpdb->flagpictures WHERE exclude != 1 AND galleryid = '$galleryID' ORDER by pid DESC limit 0,1");
+			if ($firstImage) {
 				$wpdb->query("UPDATE $wpdb->flaggallery SET previewpic = '$firstImage' WHERE gid = '$galleryID'");
+				wp_cache_delete($galleryID, 'flag_gallery');
+			}
 		}
 		
 		return;
+	}
+
+	/**
+	 * Return a JSON coded array of Image ids for a requested gallery
+	 * 
+	 * @param int $galleryID
+	 * @return arry (JSON)
+	 */
+	function get_image_ids( $galleryID ) {
+		
+		if ( !function_exists('json_encode') )
+			return(-2);
+		
+		$gallery = flagdb::get_ids_from_gallery($galleryID, 'pid', 'ASC', false);
+
+		header('Content-Type: text/plain; charset=' . get_option('blog_charset'), true);
+		$output = json_encode($gallery);
+		
+		return $output;
 	}
 
 } // END class flagAdmin

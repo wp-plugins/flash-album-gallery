@@ -11,7 +11,6 @@ $flag_options = get_option('flag_options');
 
 // Some parameters from the URL
 $pictureID = (int) $_GET['pid'];
-$mode = attribute_escape($_GET['mode']);
 
 // let's get the image data
 $picture  = flagdb::find_image( $pictureID );

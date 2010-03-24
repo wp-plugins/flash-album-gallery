@@ -44,24 +44,25 @@ function flag_sortorder($galleryID = 0){
 	$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->flagpictures WHERE galleryid = '$galleryID' ORDER BY sortorder {$dir}");
 
 	//this is the url without any presort variable
-	$base_url = 'admin.php?page=flag-manage-gallery&amp;mode=sort&amp;gid=' . $galleryID;
+	$base_url = admin_url() . 'admin.php?page=flag-manage-gallery&amp;mode=sort&amp;gid=' . $galleryID;
 	
 ?>
 <script type="text/javascript" src="<?php echo FLAG_URLPATH ?>admin/js/jquery.tablednd_0_5.js"></script>
 <script type="text/javascript" src="<?php echo FLAG_URLPATH ?>admin/js/jquery.tablesorter.js"></script>
 <div class="wrap">
-	<form id="sortGallery" method="POST" action="<?php echo $base_url ?>" accept-charset="utf-8">
 			<h2><?php _e('Sort Gallery', 'flag') ?></h2>
-			<div class="tablenav">
-				<div class="alignleft actions">
-					<?php wp_nonce_field('flag_updatesortorder') ?>
-					<input class="button-primary action" type="submit" name="updateSortorder" value="<?php _e('Update Sort Order', 'flag') ?>" />
-				</div>
-				<div class="alignright actions">
-					<input class="button-secondary action" type="submit" name="backToGallery" value="<?php _e('Back to gallery', 'flag') ?>" />
-				</div>
-			</div>	
-	
+
+	<form class="alignright" method="POST" action="<?php echo admin_url() . 'admin.php?page=flag-manage-gallery&amp;mode=edit&amp;gid=' . $galleryID; ?>" accept-charset="utf-8">
+		<div class="alignright tablenav" style="margin-bottom: -36px;">
+			<input class="button-secondary action" type="submit" name="backToGallery" value="<?php _e('Back to gallery', 'flag') ?>" />
+		</div>
+	</form>
+	<form id="sortGallery" method="POST" action="<?php echo $base_url ?>" accept-charset="utf-8">
+		<div class="alignleft tablenav">
+			<?php wp_nonce_field('flag_updatesortorder') ?>
+			<input class="button-primary action" type="submit" name="updateSortorder" value="<?php _e('Update Sort Order', 'flag') ?>" />
+		</div>
+		<br clear="all" />
 <script type="text/javascript">
 /*<![CDATA[*/
 jQuery(document).ready(function($) {

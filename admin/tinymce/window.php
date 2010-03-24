@@ -39,11 +39,11 @@ if($_REQUEST['riched'] == "false") {
 <body id="link" onload="tinyMCEPopup.executeOnLoad('init();');document.body.style.display='';document.getElementById('galleries').focus();" style="display: none">
 <?php } ?>
 <form name="FlAG" action="#">
-	<div class="tabs">
+	<div class="tabs" style="position:relative; overflow:hidden; margin-bottom:-1px;">
 		<ul>
 			<li id="gallery_tab" class="current"><span><a href="javascript:mcTabs.displayTab('gallery_tab','gallery_panel');" onmousedown="return false;"><?php _e( 'Galleries', 'flag' ) ?></a></span></li>
-			<li id="skin_tab"><span><a href="javascript:mcTabs.displayTab('skin_tab','skin_panel');" onmousedown="return false;"><?php _e( 'Skin', 'flag' ) ?></a></span></li>
-			<li id="sort_tab"><span><a href="javascript:mcTabs.displayTab('sort_tab','sort_panel');" onmousedown="return false;"><?php _e('Sort', 'nggallery'); ?></a></span></li>
+			<li id="sort_tab"><span><a href="javascript:mcTabs.displayTab('sort_tab','sort_panel');" onmousedown="return false;"><?php _e('Sort', 'flag'); ?></a></span></li>
+			<li id="custom_tab" style="display:none;"><span><a href="javascript:mcTabs.displayTab('custom_tab','custom_panel');" onmousedown="return false;"><?php _e( 'Skin', 'flag' ) ?></a></span></li>
 		</ul>
 	</div>
 	
@@ -58,7 +58,7 @@ if($_REQUEST['riched'] == "false") {
          <tr>
             <td nowrap="nowrap" valign="top"><label for="gallerytag"><?php _e("Select galleries", 'flag'); ?>:<span style="color:red;"> *</span></label><br /><small><?php _e("(album categories)", 'flag'); ?></small></td>
             <td><select id="galleries" name="galleries" style="width: 200px" size="6" multiple="multiple">
-                    <option value="all" selected="selected" onclick="javascript:document.getElementById('sort_tab').style.display='block'" style="font-weight:bold">* - all galleries</option>
+                    <option value="all" selected="selected" onclick="javascript:document.getElementById('sort_tab').style.display='block'" style="font-weight:bold">* - <?php _e("all galleries", 'flag'); ?></option>
 				<?php
 					$gallerylist = $flagdb->find_all_galleries('gid', 'ASC');
 					if(is_array($gallerylist)) {
@@ -71,33 +71,19 @@ if($_REQUEST['riched'] == "false") {
             </select></td>
          </tr>
          <tr>
-            <td nowrap="nowrap" valign="middle">
-<script type="text/javascript">
-/* <![CDATA[ */
-function setVisibility(){
-  document.getElementById('gallerysize').style.visibility = (document.getElementById('gallerycustomsize').checked) ? 'visible':'hidden';
-}
-jQuery('#galleries').change(function(){
-	jQuery('#sort_tab').hide();
-    if(jQuery('#galleries option[value=all]:selected')) {
-        jQuery('#galleries option[value=all]:selected').siblings().removeAttr('selected');
-    }
-});
-/* ]]> */
-</script>
-				<input id="gallerycustomsize" name="gallerycustomsize" type="checkbox" style="vertical-align:middle;" onclick="setVisibility()" /> <label for="gallerycustomsize" onclick="setVisibility()"><?php _e("custom size", 'flag'); ?></label></td>
-            <td valign="middle"><div id="gallerysize" style="visibility:hidden;">width: <input id="gallerywidth" type="text" name="galleryheight" style="width: 50px" /> &nbsp; height: <input id="galleryheight" type="text" name="galleryheight" style="width: 50px" /></div></td>
+            <td nowrap="nowrap" valign="middle" colspan="2">
+				<input id="gallerycustom" name="gallerycustom" type="checkbox" style="vertical-align:middle;" onclick="setVisibility()" /> <label for="gallerycustom" onclick="setVisibility()"><?php _e("custom settings", 'flag'); ?></label></td>
          </tr>
         </table>
 		</div>
 		<!-- /gallery panel -->
 		<!-- skin panel -->
-		<div id="skin_panel" class="panel">
+		<div id="custom_panel" class="panel">
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
             <td nowrap="nowrap" valign="middle"><label for="skinname"><?php _e("Choose skin", 'flag'); ?>:</label></td>
             <td valign="middle"><select id="skinname" name="skinname" style="width: 200px">
-                    <option value="" selected="selected">choose custom skin</option>
+                    <option value="" selected="selected"><?php _e("choose custom skin", 'flag'); ?></option>
 <?php
 	foreach ( (array)$all_skins as $skin_file => $skin_data) {
 		echo '<option value="'.dirname($skin_file).'">'.$skin_data['Name'].'</option>'."\n";
@@ -105,26 +91,30 @@ jQuery('#galleries').change(function(){
 ?>
             </select></td>
          </tr>
+		 <tr>
+			<td valign="top"><label for="skinname"><?php _e("Skin size", 'flag'); ?>:</label><br /><span style="font-size:9px">(<?php _e("blank for default", 'flag'); ?>)</span></td>
+            <td valign="top"><?php _e("width", 'flag'); ?>: <input id="gallerywidth" type="text" name="galleryheight" style="width: 50px" /> &nbsp; <?php _e("height", 'flag'); ?>: <input id="galleryheight" type="text" name="galleryheight" style="width: 50px" /></td>
+		 </tr>
         </table>
 		</div>
-		<!-- /skin panel -->
+		<!-- /custom panel -->
 		<!-- sort panel -->
 		<div id="sort_panel" class="panel">
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
             <td nowrap="nowrap" valign="middle"><label for="galorderby"><?php _e("Order by", 'flag'); ?>:</label></td>
             <td valign="middle"><select id="galorderby" name="galorderby" style="width: 200px">
-                    <option value="" selected="selected">Gallery IDs (default)</option>
-                    <option value="title">Gallery Title</option>
-                    <!-- <option value="sortorder">User Defined</option> -->
-                    <option value="rand">Randomly</option>
+                    <option value="" selected="selected"><?php _e("Gallery IDs (default)", 'flag'); ?></option>
+                    <option value="title"><?php _e("Gallery Title", 'flag'); ?></option>
+                    <!-- <option value="sortorder"><?php _e("User Defined", 'flag'); ?></option> -->
+                    <option value="rand"><?php _e("Randomly", 'flag'); ?></option>
             </select></td>
          </tr>
          <tr>
             <td nowrap="nowrap" valign="middle"><label for="galorder"><?php _e("Order", 'flag'); ?>:</label></td>
             <td valign="middle"><select id="galorder" name="galorder" style="width: 200px">
-                    <option value="" selected="selected">DESC (default)</option>
-                    <option value="ASC">ASC</option>
+                    <option value="" selected="selected"><?php _e("DESC (default)", 'flag'); ?></option>
+                    <option value="ASC"><?php _e("ASC", 'flag'); ?></option>
             </select></td>
          </tr>
          <tr>
@@ -209,6 +199,19 @@ jQuery('#galleries').change(function(){
 		</div>
 	</div>
 <?php } ?>
+	<script type="text/javascript">
+	/* <![CDATA[ */
+	function setVisibility(){
+	  jQuery('#custom_tab').css('display',(document.getElementById('gallerycustom').checked) ? 'block':'none');
+	}
+	jQuery('#galleries').change(function(){
+		jQuery('#sort_tab').hide();
+		if(jQuery('#galleries option[value=all]:selected')) {
+			jQuery('#galleries option[value=all]:selected').siblings().removeAttr('selected');
+		}
+	});
+	/* ]]> */
+	</script>
 </form>
 </body>
 </html>

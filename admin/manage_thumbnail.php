@@ -36,30 +36,20 @@ $resizedPreviewInfo = $thumb->newDimensions;
 $thumb->destruct();
 
 $preview_image		= FLAG_URLPATH . 'flagshow.php?pid=' . $picture->pid . '&amp;width=350&amp;height=350';
-$imageInfo			= getimagesize($picture->imagePath);
+$imageInfo			= @getimagesize($picture->imagePath);
 $rr = round($imageInfo[0] / $resizedPreviewInfo['newWidth'], 2);
 
-if ( ($flag_options['thumbFix'] == 1) and (!$flag_options['thumbCrop']) ) {
+if ( ($flag_options['thumbFix'] == 1) ) {
+
 	$WidthHtmlPrev  = $flag_options['thumbWidth'];
 	$HeightHtmlPrev = $flag_options['thumbHeight'];
-}
 
-if ( ($flag_options['thumbFix'] == 1) and ($flag_options['thumbCrop'] == 1) ) {
-	$WidthHtmlPrev  = $flag_options['thumbWidth'];
-	$HeightHtmlPrev = $flag_options['thumbHeight'];
-}
-
-if ( (!$flag_options['thumbFix']) and ($flag_options['thumbCrop'] == 1) ) {
-	$WidthHtmlPrev  = $flag_options['thumbWidth'];
-	$HeightHtmlPrev = $flag_options['thumbWidth'];
-}
-
-if ( (!$flag_options['thumbFix']) and (!$flag_options['thumbCrop']) ) {
+} else {
 	// H > W
 	if ($imageInfo[1] > $imageInfo[0]) {
 
-		$HeightHtmlPrev =  $flag_options['thumbHeight'];
-		$WidthHtmlPrev = round($imageInfo[0] / ($imageInfo[1] / $flag_options['thumbHeight']),0);
+		$HeightHtmlPrev	=  $flag_options['thumbHeight'];
+		$WidthHtmlPrev 	= round($imageInfo[0] / ($imageInfo[1] / $flag_options['thumbHeight']),0);
 		
 	} else {
 		
@@ -89,8 +79,8 @@ if ( (!$flag_options['thumbFix']) and (!$flag_options['thumbCrop']) ) {
 			status = 'edit';	
 		}
 		
-		var rx = <?php echo $WidthHtmlPrev ?> / coords.w;
-		var ry = <?php echo $HeightHtmlPrev ?> / coords.h;
+		var rx = <?php echo $WidthHtmlPrev; ?> / coords.w;
+		var ry = <?php echo $HeightHtmlPrev; ?> / coords.h;
 		
 		jQuery('#imageToEditPreview').css({
 			width: Math.round(rx * <?php echo $resizedPreviewInfo['newWidth'] ?>) + 'px',
@@ -125,12 +115,12 @@ if ( (!$flag_options['thumbFix']) and (!$flag_options['thumbCrop']) ) {
 					newUrl = jQuery("#"+selectedImage).attr("src") + "?" + d.getTime();
 					jQuery("#"+selectedImage).attr("src" , newUrl);
 					
-					jQuery('#thumbMsg').html("<?php echo _e("Thumbnail updated", "flag") ?>");
+					jQuery('#thumbMsg').html("<?php _e('Thumbnail updated', 'flag') ?>");
 					jQuery('#thumbMsg').css({'display':'block'});
 					setTimeout(function(){ jQuery('#thumbMsg').fadeOut('slow'); }, 1500);
 			},
 		  error: function() {
-		  			jQuery('#thumbMsg').html("<?php echo _e("Error updating thumbnail.", "flag") ?>");
+		  			jQuery('#thumbMsg').html("<?php _e('Error updating thumbnail.', 'flag') ?>");
 					jQuery('#thumbMsg').css({'display':'block'});
 					setTimeout(function(){ jQuery('#thumbMsg').fadeOut('slow'); }, 1500);
 		    }
@@ -144,7 +134,7 @@ if ( (!$flag_options['thumbFix']) and (!$flag_options['thumbCrop']) ) {
 <table width="98%" align="center" style="border:1px solid #DADADA">
 	<tr>
 		<td rowspan="3" valign="middle" align="center" width="350" style="background-color:#DADADA;">
-			<img src="<?php echo $preview_image ?>" alt="" id="imageToEdit" />	
+			<img src="<?php echo $preview_image; ?>" alt="" id="imageToEdit" />	
 		</td>
 		<td width="300" style="background-color : #DADADA;">
 			<small style="margin-left:6px; display:block;"><?php _e('Select the area for the thumbnail from the picture on the left.', 'flag') ?></small>
@@ -152,11 +142,11 @@ if ( (!$flag_options['thumbFix']) and (!$flag_options['thumbCrop']) ) {
 	</tr>
 	<tr>
 		<td align="center" width="300" height="320">
-			<div id="previewNewThumb" style="display:none;width:<?php echo $WidthHtmlPrev ?>px;height:<?php echo $HeightHtmlPrev ?>px;overflow:hidden; margin-left:5px;">
-				<img src="<?php echo $preview_image ?>" id="imageToEditPreview" />
+			<div id="previewNewThumb" style="display:none;width:<?php echo $WidthHtmlPrev; ?>px;height:<?php echo $HeightHtmlPrev; ?>px;overflow:hidden; margin-left:5px;">
+				<img src="<?php echo $preview_image; ?>" id="imageToEditPreview" />
 			</div>
 			<div id="actualThumb">
-				<img src="<?php echo $picture->thumbURL ?>?<?php echo time()?>" />
+				<img src="<?php echo $picture->thumbURL; ?>?<?php echo time()?>" />
 			</div>
 		</td>
 	</tr>

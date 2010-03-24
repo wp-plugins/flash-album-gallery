@@ -112,11 +112,17 @@ p#flag-inlinebutton {
 }
 
 .fixed .column-alt_title_desc {
-	
+
 }
 
 .fixed .column-exclude, .fixed .column-action, .fixed .column-delete {
-	width: 10%;
+	width: 2.2em; text-align: center;
+}
+.fixed .column-exclude input {
+	margin-top:4px;
+}
+.fixed .column-views {
+	width: 4em; text-align: center;
 }
 
 

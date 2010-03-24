@@ -4,51 +4,89 @@
 * Image METADATA PHP class for the WordPress plugin FlAGallery
 */
 class flagMeta {
-	/**** Image Data ****/
-	var $imagePath = "";
-	// ABS Path to the image
-	var $exif_data = false;
-	// EXIF data array
-	var $iptc_data = false;
-	// IPTC data array
-	var $xmp_data = false;
-	// XMP data array
-	/**** Filtered Data ****/
-	var $exif_array = false;
-	// EXIF data array
-	var $iptc_array = false;
-	// IPTC data array
-	var $xmp_array = false;
 
-	// XMP data array
+	/**** Image Data ****/
+    var $image			=	'';		// The image object
+    var $size			=	false;	// The image size
+	var $exif_data 		= 	false;	// EXIF data array
+	var $iptc_data 		= 	false;	// IPTC data array
+	var $xmp_data  		= 	false;	// XMP data array
+	/**** Filtered Data ****/
+	var $exif_array 	= 	false;	// EXIF data array
+	var $iptc_array 	= 	false;	// IPTC data array
+	var $xmp_array  	= 	false;	// XMP data array
+
 	/**
-		 * flagMeta::flagMeta()
-		 * 
-		 * @param string $image path to a image
-		 * @param bool $onlyEXIF parse only exif if needed
-		 * @return
-		 */
-	function flagMeta($image, $onlyEXIF = false) {
-		$this->imagePath = $image;
-		if (!file_exists($this->imagePath))
+	 * flagMeta::flagMeta()
+	 * 
+	 * @param string $image path to a image
+	 * @param bool $onlyEXIF parse only exif if needed
+	 * @return
+	 */
+	function flagMeta($pic_id, $onlyEXIF = false) {
+
+		//get the path and other data about the image
+		$this->image = flagdb::find_image( $pic_id );
+ 
+ 		$this->image = apply_filters( 'flag_find_image_meta', $this->image  );		
+ 
+ 		if ( !file_exists( $this->image->imagePath ) )
 			return false;
-		$size = @ getimagesize($this->imagePath, $metadata);
-		if ($size && is_array($metadata)) {
+
+ 		$this->size = @getimagesize ( $this->image->imagePath , $metadata );
+
+		if ($this->size && is_array($metadata)) {
+
 			// get exif - data
-			if (is_callable('exif_read_data'))
-				$this->exif_data = @ exif_read_data($this->imagePath, 0, true);
-			// stop here if we didn't need other meta data
-			if ($onlyEXIF)
-				return true;
-			// get the iptc data - should be in APP13
-			if (is_callable('iptcparse'))
-				$this->iptc_data = @ iptcparse($metadata["APP13"]);
+			if ( is_callable('exif_read_data'))
+			$this->exif_data = @exif_read_data($this->image->imagePath , 0, true );
+ 			
+ 			// stop here if we didn't need other meta data
+ 			if ($onlyEXIF)
+ 				return true;
+ 			
+ 			// get the iptc data - should be in APP13
+ 			if ( is_callable('iptcparse'))
+			$this->iptc_data = @iptcparse($metadata["APP13"]);
+
 			// get the xmp data in a XML format
-			if (is_callable('xml_parser_create'))
-				$this->xmp_data = $this->extract_XMP($this->imagePath);
+			if ( is_callable('xml_parser_create'))
+			$this->xmp_data = $this->extract_XMP($this->image->imagePath );
+						
 			return true;
 		}
-		return false;
+ 		
+ 		return false;
+	}
+
+	/**
+	 * return the saved meta data from the database
+	 * 
+	 * @param string $object (optional)
+	 * @return array|mixed return either the complete array or the single object
+	 */
+	function get_saved_meta($object = false) {
+		
+		$meta = $this->image->meta_data;
+		
+		//check if we already import the meat data to the database
+		if (!is_array($meta) || ($meta['saved'] != true))
+			return false;
+		
+		// return one element if requested	
+		if ($object)
+			return $meta[$object];
+		
+		//removed saved parameter we don't need that to show
+		unset($meta['saved']);
+		
+		// and remove empty tags
+		foreach ($meta as $key => $value) {
+			if ( empty($value) )
+				unset($meta[$key]);	
+		}
+		
+		return $meta;
 	}
 
 	/**
@@ -57,53 +95,69 @@ class flagMeta {
 	* @return structured EXIF data
 	*/
 	function get_EXIF($object = false) {
+
 		if (!$this->exif_data)
 			return false;
-		if (!is_array($this->exif_array)) {
-			$meta = array();
+		
+		if (!is_array($this->exif_array)){
+			
+			$meta= array();
+			
 			// taken from WP core
 			$exif = $this->exif_data['EXIF'];
-			if (!empty ($exif['FNumber']))
-				$meta['aperture'] = "F " . round($this->exif_frac2dec($exif['FNumber']), 2);
-			if (!empty ($exif['Model']))
-				$meta['camera'] = trim($exif['Model']);
-			if (!empty ($exif['DateTimeDigitized']))
+			if (!empty($exif['FNumber']))
+				$meta['aperture'] = 'F ' . round( $this->exif_frac2dec( $exif['FNumber'] ), 2 );
+			if (!empty($exif['Model']))
+				$meta['camera'] = trim( $exif['Model'] );
+			if (!empty($exif['DateTimeDigitized']))
 				$meta['created_timestamp'] = date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $this->exif_date2ts($exif['DateTimeDigitized']));
-			if (!empty ($exif['FocalLength']))
-				$meta['focal_length'] = $this->exif_frac2dec($exif['FocalLength']) . __(' mm', 'flag');
-			if (!empty ($exif['ISOSpeedRatings']))
+			if (!empty($exif['FocalLength']))
+				$meta['focal_length'] = $this->exif_frac2dec( $exif['FocalLength'] ) . __(' mm','flag');
+			if (!empty($exif['ISOSpeedRatings']))
 				$meta['iso'] = $exif['ISOSpeedRatings'];
-			if (!empty ($exif['ExposureTime'])) {
-				$meta['shutter_speed'] = $this->exif_frac2dec($exif['ExposureTime']);
-				$meta['shutter_speed'] = ($meta['shutter_speed'] > 0 . 0 and $meta['shutter_speed'] < 1 . 0) ? ("1/" . round(1 / $meta['shutter_speed'], - 1)) : ($meta['shutter_speed']);
-				$meta['shutter_speed'] .= __(' sec', 'flag');
-			}
+			if (!empty($exif['ExposureTime'])) {
+				 $meta['shutter_speed']  = $this->exif_frac2dec ($exif['ExposureTime']);
+				 $meta['shutter_speed']  =($meta['shutter_speed'] > 0.0 and $meta['shutter_speed'] < 1.0) ? ( '1/' . round( 1 / $meta['shutter_speed'], -1) ) : ($meta['shutter_speed']); 
+				 $meta['shutter_speed'] .=  __(' sec','flag');
+				}
+			//Bit 0 indicates the flash firing status
+			if (!empty($exif['Flash']))
+				$meta['flash'] =  ( $exif['Flash'] & 1 ) ? __('Fired', 'flag') : __('Not fired',' flag');
+	
 			// additional information
 			$exif = $this->exif_data['IFD0'];
-			if (!empty ($exif['Model']))
+			if (!empty($exif['Model']))
 				$meta['camera'] = $exif['Model'];
-			if (!empty ($exif['Make']))
+			if (!empty($exif['Make']))
 				$meta['make'] = $exif['Make'];
-			if (!empty ($exif['ImageDescription']))
+			if (!empty($exif['ImageDescription']))
 				$meta['title'] = utf8_encode($exif['ImageDescription']);
+			if (!empty($exif['Orientation']))
+				$meta['Orientation'] = $exif['Orientation'];
+	
 			// this is done by Windows
 			$exif = $this->exif_data['WINXP'];
-			if (!empty ($exif['Title']) && empty ($meta['title']))
+
+			if (!empty($exif['Title']) && empty($meta['title']))
 				$meta['title'] = utf8_encode($exif['Title']);
-			if (!empty ($exif['Author']))
+			if (!empty($exif['Author']))
 				$meta['author'] = utf8_encode($exif['Author']);
-			if (!empty ($exif['Keywords']))
+			if (!empty($exif['Keywords']))
 				$meta['tags'] = utf8_encode($exif['Keywords']);
-			if (!empty ($exif['Subject']))
+			if (!empty($exif['Subject']))
 				$meta['subject'] = utf8_encode($exif['Subject']);
-			if (!empty ($exif['Comments']))
+			if (!empty($exif['Comments']))
 				$meta['caption'] = utf8_encode($exif['Comments']);
+							
 			$this->exif_array = $meta;
 		}
-		// return one element if requested
+		
+		// return one element if requested	
 		if ($object)
 			return $this->exif_array[$object];
+				
 		return $this->exif_array;
+	
 	}
 
 	// convert a fraction string to a decimal
@@ -153,7 +207,9 @@ class flagMeta {
 				"2#115" => 'source', 
 				"2#116" => 'copyright', 
 				"2#118" => 'contact', 
-				"2#120" => 'caption');
+				"2#120" => 'caption'
+			);
+			
 			// var_dump($this->iptc_data);
 			$meta = array();
 			foreach ($iptcTags as $key => $value) {
@@ -206,22 +262,17 @@ class flagMeta {
 			return false;
 		if (!is_array($this->xmp_array)) {
 			$parser = xml_parser_create();
-			xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
-			// Dont mess with my cAsE sEtTings
-			xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-			// Dont bother with empty info
+			xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);		// Dont mess with my cAsE sEtTings
+			xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);		// Dont bother with empty info
 			xml_parse_into_struct($parser, $this->xmp_data, $values);
 			xml_parser_free($parser);
-			$xmlarray = array();
-			// The XML array
-			$this->xmp_array = array();
-			// The returned array
-			$stack = array();
-			// tmp array used for stacking
-			$list_array = array();
-			// tmp array for list elements
-			$list_element = false;
-			// rdf:li indicator
+			
+			$xmlarray			= array();	// The XML array
+			$this->xmp_array  	= array();	// The returned array
+			$stack        		= array();	// tmp array used for stacking
+		 	$list_array   		= array();	// tmp array for list elements
+		 	$list_element 		= false;	// rdf:li indicator
+			
 			foreach ($values as $val) {
 				if ($val['type'] == "open") {
 					array_push($stack, $val['tag']);
@@ -252,23 +303,26 @@ class flagMeta {
 						array_pop($stack);
 					}
 				}
-			}
-			// foreach
+			} // foreach
+			
 			// cut off the useless tags
 			$xmlarray = $xmlarray['x:xmpmeta']['rdf:RDF']['rdf:Description'];
+			
 			// --------- Some values from the XMP format--------- //
-			$xmpTags = array(
-				'xap:CreateDate' => 'created_timestamp', 
-				'xap:ModifyDate' => 'last_modfied', 
-				'xap:CreatorTool' => 'tool', 
-				'dc:format' => 'format', 
-				'dc:title' => 'title', 
-				'dc:creator' => 'author', 
-				'dc:subject' => 'keywords', 
-				'dc:description' => 'caption', 
-				'photoshop:AuthorsPosition' => 'position', 
-				'photoshop:City' => 'city', 
-				'photoshop:Country' => 'country');
+			$xmpTags = array (
+				'xap:CreateDate' 			=> 'created_timestamp',
+				'xap:ModifyDate'  			=> 'last_modfied',
+				'xap:CreatorTool' 			=> 'tool',
+				'dc:format' 				=> 'format',
+				'dc:title'					=> 'title',
+				'dc:creator' 				=> 'author',
+				'dc:subject' 				=> 'keywords',
+				'dc:description' 			=> 'caption',
+				'photoshop:AuthorsPosition' => 'position',
+				'photoshop:City'			=> 'city',
+				'photoshop:Country' 		=> 'country'
+			);
+
 			foreach ($xmpTags as $key => $value) {
 				// if the kex exist
 				if ($xmlarray[$key]) {
@@ -292,6 +346,7 @@ class flagMeta {
 	function setArrayValue(& $array, $stack, $value) {
 		if ($stack) {
 			$key = array_shift($stack);
+			//TODO:Review this, reports sometimes a error "Fatal error: Only variables can be passed by reference" (PHP 5.2.6)
 			$this->setArrayValue($array [$key], $stack, $value);
 			return $array;
 		}
@@ -307,7 +362,9 @@ class flagMeta {
 	* @return mixed $value
 	*/
 	function get_META($object = false) {
-		// defined order XMP , before IPTC and EXIF.
+		// defined order first look into database, then XMP, IPTC and EXIF.
+		if ($value = $this->get_saved_meta($object))
+			return $value;
 		if ($value = $this->get_XMP($object))
 			return $value;
 		if ($value = $this->get_IPTC($object))
@@ -326,42 +383,47 @@ class flagMeta {
 	*/
 	function i8n_name($key) {
 		$tagnames = array(
-			'aperture' => __('Aperture', 'flag'), 
-			'credit' => __('Credit', 'flag'), 
-			'camera' => __('Camera', 'flag'), 
-			'caption' => __('Caption', 'flag'), 
-			'created_timestamp' => __('Date/Time', 'flag'), 
-			'copyright' => __('Copyright', 'flag'), 
-			'focal_length' => __('Focal length', 'flag'), 
-			'iso' => __('ISO', 'flag'), 
-			'shutter_speed' => __('Shutter speed', 'flag'), 
-			'title' => __('Title', 'flag'), 
-			'author' => __('Author', 'flag'), 
-			'tags' => __('Tags', 'flag'), 
-			'subject' => __('Subject', 'flag'), 
-			'make' => __('Make', 'flag'), 
-			'status' => __('Edit Status', 'flag'), 
-			'category' => __('Category', 'flag'), 
-			'keywords' => __('Keywords', 'flag'), 
-			'created_date' => __('Date Created', 'flag'), 
-			'created_time' => __('Time Created', 'flag'), 
-			'position' => __('Author Position', 'flag'), 
-			'city' => __('City', 'flag'), 
-			'location' => __('Location', 'flag'), 
-			'state' => __('Province/State', 'flag'), 
-			'country_code' => __('Country code', 'flag'), 
-			'country' => __('Country', 'flag'), 
-			'headline' => __('Headline', 'flag'), 
-			'credit' => __('Credit', 'flag'), 
-			'source' => __('Source', 'flag'), 
-			'copyright' => __('Copyright Notice', 'flag'), 
-			'contact' => __('Contact', 'flag'), 
-			'last_modfied' => __('Last modified', 'flag'), 
-			'tool' => __('Program tool', 'flag'), 
-			'format' => __('Format', 'flag'));
-		if ($tagnames[$key])
-			$key = $tagnames[$key];
-		return ($key);
+		'aperture' 			=> __('Aperture','flag'),
+		'credit' 			=> __('Credit','flag'),
+		'camera' 			=> __('Camera','flag'),
+		'caption' 			=> __('Caption','flag'),
+		'created_timestamp' => __('Date/Time','flag'),
+		'copyright' 		=> __('Copyright','flag'),
+		'focal_length' 		=> __('Focal length','flag'),
+		'iso' 				=> __('ISO','flag'),
+		'shutter_speed' 	=> __('Shutter speed','flag'),
+		'title' 			=> __('Title','flag'),
+		'author' 			=> __('Author','flag'),
+		'tags' 				=> __('Tags','flag'),
+		'subject' 			=> __('Subject','flag'),
+		'make' 				=> __('Make','flag'),
+		'status' 			=> __('Edit Status','flag'),
+		'category'			=> __('Category','flag'),
+		'keywords' 			=> __('Keywords','flag'),
+		'created_date' 		=> __('Date Created','flag'),
+		'created_time'		=> __('Time Created','flag'),
+		'position'			=> __('Author Position','flag'),
+		'city'				=> __('City','flag'),
+		'location'			=> __('Location','flag'),
+		'state' 			=> __('Province/State','flag'),
+		'country_code'		=> __('Country code','flag'),
+		'country'			=> __('Country','flag'),
+		'headline' 			=> __('Headline','flag'),
+		'credit'			=> __('Credit','flag'),
+		'source'			=> __('Source','flag'),
+		'copyright'			=> __('Copyright Notice','flag'),
+		'contact'			=> __('Contact','flag'),
+		'last_modfied'		=> __('Last modified','flag'),
+		'tool'				=> __('Program tool','flag'),
+		'format'			=> __('Format','flag'),
+		'width'				=> __('Image Width','flag'),
+		'height'			=> __('Image Height','flag'),
+		'flash'				=> __('Flash','flag')
+		);
+		
+		if ($tagnames[$key]) $key = $tagnames[$key];
+		
+		return($key);
 	}
 
 	function get_date_time() {
@@ -381,6 +443,47 @@ class flagMeta {
 		// Return the MySQL format
 		$date_time = date('Y-m-d H:i:s', $date_time);
 		return $date_time;
+	}
+
+	/**
+	 * This function return the most common metadata, via a filter we can add more
+	 * Reason : GD manipulation removes that options
+	 * 
+	 * @return void
+	 */
+	function get_common_meta() {
+		global $wpdb;
+		
+		$meta = array(
+			'aperture' => 0,
+			'credit' => '',
+			'camera' => '',
+			'caption' => '',
+			'created_timestamp' => 0,
+			'copyright' => '',
+			'focal_length' => 0,
+			'iso' => 0,
+			'shutter_speed' => 0,
+			'flash' => 0,
+			'title' => '',
+			'keywords' => ''
+		);
+				
+		$meta = apply_filters( 'flag_read_image_metadata', $meta  );
+		
+		// meta should be still an array
+		if ( !is_array($meta) )
+			return false;
+		
+		foreach ($meta as $key => $value) {
+			$meta[$key] = $this->get_META($key);			
+		}
+		
+		//let's add now the size of the image 
+		$meta['width']  = $this->size[0];
+		$meta['height'] = $this->size[1];
+		
+		return $meta;		
 	}
 
 }

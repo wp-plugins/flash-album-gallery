@@ -4,7 +4,6 @@
  * Built on top of the swfupload library
  *   http://swfupload.org version 2.2.0
  *
- *  version 1.0.2
  */
 
 // on load change the upload to swfupload

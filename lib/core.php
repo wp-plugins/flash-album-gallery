@@ -235,7 +235,61 @@ class flagGallery {
 		
 		return $filepart;
 	}
-	
+
+	/**
+	 * Function used to delete a folder.
+	 * @param $path full-path to folder
+	 * @return bool result of deletion
+	 */
+	function flagFolderDelete($path) {
+		if (is_dir($path)) {
+			if (version_compare(PHP_VERSION, '5.0.0') < 0) {
+				$entries = array();
+				if ($handle = opendir($path)) {
+					while (false !== ($file = readdir($handle))) $entries[] = $file;
+					closedir($handle);
+				}
+			} else {
+				$entries = scandir($path);
+				if ($entries === false) $entries = array();
+			}
+			foreach ($entries as $entry) {
+				if ($entry != '.' && $entry != '..') {
+					flagGallery::flagFolderDelete($path.'/'.$entry);
+				}
+			}
+			return rmdir($path);
+		} elseif (file_exists($path)) {
+			return unlink($path);
+		} else {
+			return false;
+		}
+	}
+
+	/*
+	 * Save file
+	 * @param $sName    - file name
+	 * @param $sContent - file content
+	 * @param $mode     - open file mode
+	 * @return the number of bytes written, or FALSE on error.
+	 */
+
+	function saveFile($sName,$sContent,$mode='w+') {
+		if (!$dFile=fopen($sName, $mode)) {
+			flagGallery::show_error(__("Can't create/open file '","flag").$sName."'.");
+			exit;
+		}
+		flock ($dFile,LOCK_EX);
+		ftruncate ($dFile,0);
+		if ( $result=fwrite($dFile,$sContent) === FALSE) {
+	        flagGallery::show_error(__("Can't write data to file '","flag").$sName."'.");
+	        exit;
+	    }
+		fflush ($dFile);
+		flock ($dFile,LOCK_UN);
+		fclose ($dFile);
+		return $result;
+	}
 }
 
 ?>

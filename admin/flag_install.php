@@ -11,7 +11,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 **/
 
 function flag_install () {
-	global $wpdb, $wp_roles, $flag_db_version, $wp_version;
+	global $wpdb, $wp_roles, $wp_version;
 
 	// Check for capability
 	if ( !current_user_can('activate_plugins') ) 
@@ -28,6 +28,7 @@ function flag_install () {
 	$role->add_cap('FlAG overview');
 	$role->add_cap('FlAG Use TinyMCE');
 	$role->add_cap('FlAG Upload images');
+	$role->add_cap('FlAG Import folder');
 	$role->add_cap('FlAG Manage gallery');
 	$role->add_cap('FlAG Manage others gallery');
 	$role->add_cap('FlAG Change skin');
@@ -61,19 +62,20 @@ function flag_install () {
 		description MEDIUMTEXT NULL ,
 		alttext MEDIUMTEXT NULL ,
 		imagedate DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+		exclude TINYINT NULL DEFAULT '0',
+		sortorder BIGINT(20) DEFAULT '0' NOT NULL ,
 		location TEXT,
 		city TINYTEXT,
 		state TINYTEXT,
 		country TINYTEXT,
 		credit TEXT,
 		copyright TEXT,
-		sortorder BIGINT(20) DEFAULT '0' NOT NULL ,
 		commentson INT(1) UNSIGNED NOT NULL DEFAULT '1',
-		exclude TINYINT NULL DEFAULT '0',
 		hitcounter INT(11) UNSIGNED DEFAULT '0',
 		total_value INT(11) UNSIGNED DEFAULT '0',
 		total_votes INT(11) UNSIGNED DEFAULT '0',
 		used_ips LONGTEXT,
+		meta_data LONGTEXT,
 		PRIMARY KEY pid (pid)
 		) $charset_collate;";
 	
@@ -129,11 +131,12 @@ function flag_install () {
  	
 	
 	// upgrade plugin
-	//require_once(FLAG_ABSPATH . 'admin/tuning.php');
-
+	require_once(FLAG_ABSPATH . 'admin/tuning.php');
+	if( flag_tune() ) {
+		flagGallery::show_message(__("GRAND FlAGallery plugin - update successfull!"));
+	}
 	// if all is passed , save the DBVERSION
 	add_option("flag_db_version", FLAG_DBVERSION);
-
 }
 
 
@@ -157,33 +160,13 @@ function flag_default_options() {
 	$flag_options['galSortDir']				= 'ASC';							// Sort direction
 
 	// Flash settings
-	$flag_options['skinsDirABS']			= FLAG_ABSPATH . 'skins/'; 
-	$flag_options['skinsDirURL']			= FLAG_URLPATH . 'skins/'; 
+	$flag_options['skinsDirABS']			= str_replace("\\","/", WP_PLUGIN_DIR . '/flagallery-skins/' );
+	$flag_options['skinsDirURL']			= WP_PLUGIN_URL . '/flagallery-skins/';
 	$flag_options['flashSkin']				= 'default'; 
 	$flag_options['flashWidth']				= '100%'; 
 	$flag_options['flashHeight']			= '500';
 
-	// Flash colors settings
-	$flag_options['flashColorSet'] 			= true;
-	$flag_options['flashBacktransparent'] 	= false;
-	$flag_options['flashBackcolor']			= '#262626';
-	$flag_options['buttonsBG']				= '#000000';
-	$flag_options['buttonsMouseOver']		= '#7485c2';
-	$flag_options['buttonsMouseOut']		= '#717171';
-	$flag_options['catButtonsMouseOver']	= '#000000';
-	$flag_options['catButtonsMouseOut']		= '#000000';
-	$flag_options['catButtonsTextMouseOver']= '#7485c2';
-	$flag_options['catButtonsTextMouseOut']	= '#bcbcbc';
-	$flag_options['thumbMouseOver']			= '#7485c2';
-	$flag_options['thumbMouseOut']			= '#000000';
-	$flag_options['mainTitle']				= '#ffffff';
-	$flag_options['categoryTitle']			= '#7485c2';		
-	$flag_options['itemBG']					= '#EAE6EF';		
-	$flag_options['itemTitle']				= '#7485c2';		
-	$flag_options['itemDescription']		= '#e0e0e0';		
-		
 	// Image Settings
-	$flag_options['imgResize']				= false;							// Activate resize (not used)
 	$flag_options['imgWidth']				= 800;  							// Image Width
 	$flag_options['imgHeight']				= 600;  							// Image height
 	$flag_options['imgQuality']				= 85;								// Image Quality
@@ -192,12 +175,22 @@ function flag_default_options() {
 	$flag_options['thumbWidth']				= 115;  							// Thumb Width
 	$flag_options['thumbHeight']			= 100;  							// Thumb height
 	$flag_options['thumbFix']				= true;								// Fix the dimension
-	$flag_options['thumbCrop']				= false;							// Crop square thumbnail
 	$flag_options['thumbQuality']			= 100;  							// Thumb Quality
 
-	// CSS Style
-	//$flag_options['FlCSSfile']					= 'gallery.css';				// set default css filename for Flash Album Gallery
-	
+	$flag_options['advanced']				= false;  							// Advanced options
+
+	// special overrides for WPMU	
+	if (IS_WPMU) {
+		// get the site options
+		$flag_wpmu_options = get_site_option('flag_options');
+		// get the default value during installation
+		if (!is_array($flag_wpmu_options)) {
+			$flag_wpmu_options['galleryPath'] = 'wp-content/blogs.dir/%BLOG_ID%/files/';
+			update_site_option('flag_options', $flag_wpmu_options);
+		}
+		$flag_options['galleryPath']  		= str_replace("%BLOG_ID%", $blog_id , $flag_wpmu_options['galleryPath']);
+	} 
+
 	update_option('flag_options', $flag_options);
 
 }
@@ -244,6 +237,7 @@ function flag_uninstall() {
 	flag_remove_capability("FlAG overview");
 	flag_remove_capability("FlAG Use TinyMCE");
 	flag_remove_capability("FlAG Upload images");
+	flag_remove_capability("FlAG Import folder");
 	flag_remove_capability("FlAG Manage gallery");
 	flag_remove_capability('FlAG Manage others gallery');
 	flag_remove_capability("FlAG Change skin");
