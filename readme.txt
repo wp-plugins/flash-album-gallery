@@ -155,15 +155,15 @@ That's it ... Have fun!
  
 == Screenshots == 
  
-8. 3D Cube Gallery skin
-9. 3D Cube Gallery loading images
-5. Default skin (Midnight)
-1. Manage Gallery 
-2. Sort Gallery 
-3. Add / Change Skins 
-4. Options Page 
-6. Post Editor buttons to help you insert shortcode 
-7. Post Editor insert shortcode popup 
+1. 3D Cube Gallery skin
+2. 3D Cube Gallery loading images
+3. Default skin (Midnight)
+4. Manage Gallery 
+5. Sort Gallery 
+6. Add / Change Skins 
+7. Options Page 
+9. Post Editor insert shortcode popup 
+8. Post Editor buttons to help you insert shortcode 
  
 == Frequently Asked Questions == 
  
