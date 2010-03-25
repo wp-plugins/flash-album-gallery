@@ -16,7 +16,7 @@ Make your blog nicer and your life easier!!! Code easily with <a href="http://co
  
 = IMPORTANT!!! = 
 
-If GRAND FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings' 
+If GRAND FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
  
 Important Links: 
  
