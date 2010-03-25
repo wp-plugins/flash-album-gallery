@@ -177,6 +177,24 @@ function flag_default_options() {
 	$flag_options['thumbFix']				= true;								// Fix the dimension
 	$flag_options['thumbQuality']			= 100;  							// Thumb Quality
 
+	// Flash default skin colors settings
+	$flag_options['flashBacktransparent'] 	= false;
+	$flag_options['flashBackcolor']			= '262626';
+	$flag_options['buttonsBG']				= '000000';
+	$flag_options['buttonsMouseOver']		= '7485c2';
+	$flag_options['buttonsMouseOut']		= '717171';
+	$flag_options['catButtonsMouseOver']	= '000000';
+	$flag_options['catButtonsMouseOut']		= '000000';
+	$flag_options['catButtonsTextMouseOver']= '7485c2';
+	$flag_options['catButtonsTextMouseOut']	= 'bcbcbc';
+	$flag_options['thumbMouseOver']			= '7485c2';
+	$flag_options['thumbMouseOut']			= '000000';
+	$flag_options['mainTitle']				= 'ffffff';
+	$flag_options['categoryTitle']			= '7485c2';		
+	$flag_options['itemBG']					= 'eae6ef';		
+	$flag_options['itemTitle']				= '7485c2';		
+	$flag_options['itemDescription']		= 'e0e0e0';		
+
 	$flag_options['advanced']				= false;  							// Advanced options
 
 	// special overrides for WPMU	
