@@ -170,28 +170,68 @@ That's it ... Have fun!
  
 == Frequently Asked Questions == 
  
-1. The slideshow didn't work. I only see the message "The Flash Player and a browser with Javascript  needed..", but everything is installed and activated. 
- 
-Make sure you have the following in your template. (It's in the original WP index.php template, but if you're creating your own, you may have forgotten to include it) : 
-<?php wp_head(); ?> 
-That line would go in between your <HEAD> </HEAD> tags 
- 
-2. When I try to activate the plugin I get the message : "Plugin could not be activated because it triggered a fatal error." 
- 
-This problem could happened if you have a low memory_limit in your php environment and a lot of plugins installed. For a simple test deactivate all other plugins and try then to activate GRAND Flash Album Gallery again. Please check also if you have a minimum memory_limit of 16Mbyte (as much as possible). 
- 
-3. I get the message "Fatal error: Allowed memory size of xxx bytes exhausted" or get the "Error: Exceed Memory limit.". What does this means? 
- 
-This problem could happened if you have a low memory_limit in your php environment or you have a very large image (resolution, not size). The memory limit sets the maximum amount of memory in bytes that a script is allowed to allocate. You can either lower the resolution of your images or increase the PHP Memory limit (via ini_set, php.ini or htaccess). If you didn't know how to do that, please contact your web hoster. 
- 
 **Read as startup :** 
 http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review/
  
-When writing a page/post, you can use the follow tag: 
- 
-[flagallery gid=x name="ALBUM TITLE" w=width h=height]   -   (e.g.: [flagallery gid=1,3,5,6 name="New Year 2009" w=100% h=400] ) 
- 
-Use 'gid=all' for including all galleries in the album   -   (e.g.: [flagallery gid=all name="ALBUM TITLE"] ) 
+= The flash didn't work. I only see the message "The Flash Player and a browser with Javascript  needed..", but everything is installed and activated. =
+
+Make sure you have the following in your template. (It's in the original WP header.php template, but if you're creating your own, you may have forgotten to include it):
+<?php wp_head(); ?>
+That line would go in between your <HEAD> </HEAD> tags
+
+**When I try to activate the plugin I get the message : "Plugin could not be activated because it triggered a fatal error."**
+
+This problem could happened if you have a low memory_limit in your php environment and a lot of plugins installed. For a simple test deactivate all other plugins and try then to activate GRAND Flash Album Gallery again. Please check also if you have a minimum memory_limit of 16Mbyte (as much as possible).
+
+**I get the message "Fatal error: Allowed memory size of xxx bytes exhausted" or get the "Error: Exceed Memory limit.". What does this means ?**
+
+This problem could happened if you have a low memory_limit in your php environment or you have a very large image (resolution, not size). The memory limit sets the maximum amount of memory in bytes that a script is allowed to allocate. You can either lower the resolution of your images or increase the PHP Memory limit (via ini_set, php.ini or htaccess). If you didn't know how to do that, please contact your web hoster.
+
+**I get the error message: "Couldn't load the Main XML file.Error #1090" **
+
+Make sure that all colors set properly on Skins page -&gt; Skin options tab. Colors should be in HEX-format (without '#' symbol from v0.40).
+
+**When I open the archive/category page of my site… it will show the post but with this message : 'The Flash Player and a browser with Javascript support are needed..'
+But if I open the post, it will shows the gallery perfectly**
+
+It's because your theme use some function different from <?php the_content('Read more'); ?> to display post excerpt in index.php or archive.php or category.php. If you insert "more" (page breack) tag in post before shortcode, then flash will be only on individual page.
+
+**How to create a categories in flash album? I only have one category, which is the name of the gallery.**
+
+You can do it easily with FlAGallery button on editor panel, when you edit post. In trhe popup window hold down 'Ctrl' button and choose galleries left mouse button. Or just write gallery IDs separated by comma in "gid" attribute: [flagallery gid=7,3,5,2 name="My Galleries"]
+	To display ALL galleries as categories: [flagallery gid=all name="My Galleries"]
+
+**How can I set it to auto slideshow when open the page?**
+
+Download and activate skin with auto slideshow http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/
+
+**The gallery keeps loading without ever showing the images**
+
+You've probably changed site url, so flash think that images are on other domain. Just click Reset settings on Overview page. That will solve the problem.
+
+**ERROR: Couldn't load the media file.Error #2036**
+
+Make sure that you have equal number of images in Manage Gallery and in ftp folder. Check if you have broken images.
+
+**How do I set a specific category as the first one that is displayed?**
+
+if you have three galleries and shortcode like: [flagallery gid=3,1,2 name="Gallery"]
+	first gallery will be with ID=3, then ID=1, and then ID=2
+	if you have: [flagallery gid=all name="Gallery" orderby=title order=ASC exclude=1]
+	it will display all galleries except ID=1 sorted by title of gallery.
+
+**[IOErrorEvent type="ioError" bubbles=false cancelable=false eventPhase=2 text="Error #2032"]**
+
+Probably you use some plugin that extend standard WordPress TinyMCE Editor. And it replace ( " ) symbol in shortcode to ( “ ). Try remove all quotes from shortcode (album name without quotes shouldn't consist spaces).
+
+**I get this error code: ERROR: IMG_5879.JPG : Invalid upload. Error Code : 1.**
+
+Error Code: 1. This mean that the uploaded file exceeds the upload_max_filesize directive in php.ini.
+	Check PHP Max Upload Size on Overview page.
+
+**When i install this plugin and go to add a gallary name, it gives an error that 'directory wp-content/flagallery doesnot exists'**
+
+Create it manually with chmod 0755.
  
 Live Demo : http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/ 
  
