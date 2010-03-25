@@ -1,336 +1,500 @@
-# SOME DESCRIPTIVE TITLE.
-# This file is put in the public domain.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translation of the WordPress plugin   by .
+# Copyright (C) 2010 
+# This file is distributed under the same license as the  package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/flash-album-gallery\n"
-"POT-Creation-Date: 2009-10-28 10:59+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2010-03-25 07:58+0000\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: LANGUAGE <LL@LI.ORG>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: admin/addgallery.php:37 admin/addmoreimages.php:36
+#: admin/addgallery.php:37
 msgid "Upload failed!"
 msgstr ""
 
-#: admin/addgallery.php:49 admin/addmoreimages.php:41 admin/functions.php:453
-#: admin/functions.php:543
+#: admin/addgallery.php:49 admin/functions.php:537
 msgid "No gallery selected !"
 msgstr ""
 
-#: admin/addgallery.php:117 admin/addmoreimages.php:88
+#: admin/addgallery.php:118
 msgid "Image Files"
 msgstr ""
 
-#: admin/addgallery.php:136 admin/addgallery.php:166
-#: admin/addmoreimages.php:107 admin/addmoreimages.php:136
+#: admin/addgallery.php:137 admin/addgallery.php:167
 msgid "remove"
 msgstr ""
 
-#: admin/addgallery.php:137 admin/addmoreimages.php:108
+#: admin/addgallery.php:138
 msgid "Browse..."
 msgstr ""
 
-#: admin/addgallery.php:138 admin/addgallery.php:203 admin/addgallery.php:251
-#: admin/addmoreimages.php:109 admin/addmoreimages.php:168
+#: admin/addgallery.php:139 admin/addgallery.php:209 admin/addgallery.php:265
 msgid "Upload images"
 msgstr ""
 
-#: admin/addgallery.php:177
+#: admin/addgallery.php:178
 msgid "Add new gallery"
 msgstr ""
 
-#: admin/addgallery.php:178
+#: admin/addgallery.php:179
 msgid "Upload Images"
 msgstr ""
 
-#: admin/addgallery.php:179 admin/addgallery.php:258
+#: admin/addgallery.php:181 admin/addgallery.php:273
 msgid "Import image folder"
 msgstr ""
 
-#: admin/addgallery.php:184
+#: admin/addgallery.php:187
 msgid "Create a new gallery"
 msgstr ""
 
-#: admin/addgallery.php:189
+#: admin/addgallery.php:192
 msgid "New Gallery"
 msgstr ""
 
-#: admin/addgallery.php:193
+#: admin/addgallery.php:197
 msgid "Create a new , empty gallery below the folder"
 msgstr ""
 
-#: admin/addgallery.php:194
+#: admin/addgallery.php:199
 msgid "Allowed characters for file and folder names are"
 msgstr ""
 
-#: admin/addgallery.php:195
+#: admin/addgallery.php:201
 msgid "Add gallery"
 msgstr ""
 
-#: admin/addgallery.php:227 admin/addmoreimages.php:156
+#: admin/addgallery.php:236
 msgid "Upload image(s):"
 msgstr ""
 
-#: admin/addgallery.php:231
+#: admin/addgallery.php:240
 msgid "in to"
 msgstr ""
 
-#: admin/addgallery.php:232
+#: admin/addgallery.php:242
 msgid "Choose gallery"
 msgstr ""
 
-#: admin/addgallery.php:246 admin/addmoreimages.php:164
+#: admin/addgallery.php:260
 msgid ""
 "The batch upload requires Adobe Flash 10, disable it if you have problems"
 msgstr ""
 
-#: admin/addgallery.php:246 admin/addmoreimages.php:164
+#: admin/addgallery.php:260
 msgid "Disable flash upload"
 msgstr ""
 
-#: admin/addgallery.php:248 admin/addmoreimages.php:166
+#: admin/addgallery.php:262
 msgid "Upload multiple files at once by ctrl/shift-selecting in dialog"
 msgstr ""
 
-#: admin/addgallery.php:248 admin/addmoreimages.php:166
+#: admin/addgallery.php:262
 msgid "Enable flash based upload"
 msgstr ""
 
-#: admin/addgallery.php:263
+#: admin/addgallery.php:278
 msgid "Import from Server path:"
 msgstr ""
 
-#: admin/addgallery.php:264
+#: admin/addgallery.php:279
 msgid "Toggle DIR Browser"
 msgstr ""
 
-#: admin/addgallery.php:267
+#: admin/addgallery.php:282
 msgid ""
 " Please note : For safe-mode = ON you need to add the subfolder thumbs "
 "manually"
 msgstr ""
 
-#: admin/addgallery.php:270
+#: admin/addgallery.php:285
 msgid "Import folder"
 msgstr ""
 
-#: admin/addmoreimages.php:145
-#, php-format
-msgid "Upload More Images in \"%s\""
+#: admin/admin.php:27 admin/admin.php:29
+msgid ""
+"(and above) use a different database structure than in previous versions - "
+"this was to support new features. You must update your database in order for "
+"this version to work - <STRONG>backup your database first</STRONG> then"
 msgstr ""
 
-#: admin/addmoreimages.php:150
-msgid "Add images to gallery"
+#: admin/admin.php:27 admin/admin.php:29
+msgid "click here"
 msgstr ""
 
-#: admin/addmoreimages.php:158 admin/manage-sort.php:61
-msgid "Back to gallery"
+#: admin/admin.php:27 admin/admin.php:29
+msgid "to run the update script"
 msgstr ""
 
-#: admin/admin.php:23 admin/admin.php:24
-msgid "Flash Album Gallery overview"
+#: admin/admin.php:46 admin/admin.php:47
+msgid "GRAND Flash Album Gallery overview"
 msgstr ""
 
-#: admin/admin.php:23
+#: admin/admin.php:46
 msgid "FlAGallery"
 msgstr ""
 
-#: admin/admin.php:24
+#: admin/admin.php:47
 msgid "Overview"
 msgstr ""
 
-#: admin/admin.php:25
+#: admin/admin.php:48
 msgid "FlAG Manage gallery"
 msgstr ""
 
-#: admin/admin.php:25
+#: admin/admin.php:48
 msgid "Manage Galleries"
 msgstr ""
 
-#: admin/admin.php:26
+#: admin/admin.php:49
 msgid "FlAG Manage skins"
 msgstr ""
 
-#: admin/admin.php:26 admin/skins.php:312
+#: admin/admin.php:49 admin/skins.php:214
 msgid "Skins"
 msgstr ""
 
-#: admin/admin.php:27
+#: admin/admin.php:50
 msgid "FlAG Change options"
 msgstr ""
 
-#: admin/admin.php:27
+#: admin/admin.php:50
 msgid "Options"
 msgstr ""
 
-#: admin/admin.php:77
+#: admin/admin.php:52 lib/class.swfobject.php:60
+msgid "GRAND Flash Album Gallery"
+msgstr ""
+
+#: admin/admin.php:52
+msgid "GRAND FlAGallery"
+msgstr ""
+
+#: admin/admin.php:115
 msgid "You do not have the correct permission"
 msgstr ""
 
-#: admin/admin.php:78
+#: admin/admin.php:116
 msgid "Unexpected Error"
 msgstr ""
 
-#: admin/admin.php:79
+#: admin/admin.php:117
 msgid "A failure occurred"
+msgstr ""
+
+#: admin/admin.php:171 admin/admin.php:211 admin/functions.php:93
+#: admin/functions.php:169 admin/manage-images.php:190 admin/manage.php:89
+#: admin/overview.php:234
+msgid "Gallery"
+msgid_plural "Galleries"
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/admin.php:183
+msgid "PhotoGalleryCreator.com"
+msgstr ""
+
+#: admin/admin.php:191
+msgid "Get help with GRAND FlAGallery"
+msgstr ""
+
+#: admin/admin.php:195
+msgid "More Help &amp; Info"
+msgstr ""
+
+#: admin/admin.php:197
+msgid "GRAND FlAGallery Video Tutorial"
+msgstr ""
+
+#: admin/admin.php:198
+msgid "FAQ"
+msgstr ""
+
+#: admin/admin.php:199
+msgid "GRAND FlAGallery Review"
+msgstr ""
+
+#: admin/admin.php:200
+msgid "Get your language pack"
+msgstr ""
+
+#: admin/admin.php:201
+msgid "Skins for GRAND FlAGallery"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:51 skins/default/default.php:69
+#: skins/default_int/default_int.php:69
+msgid "Color Settings"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:54 skins/default/default.php:72
+#: skins/default_int/default_int.php:72
+msgid "Background Color"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:58 skins/default/default.php:76
+#: skins/default_int/default_int.php:76
+msgid "Buttons Background Color"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:62 skins/default/default.php:80
+#: skins/default_int/default_int.php:80
+msgid "Buttons Text Color"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:71 skins/default/default.php:89
+#: skins/default_int/default_int.php:89
+msgid "Category Buttons Color"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:80 skins/default/default.php:98
+#: skins/default_int/default_int.php:98
+msgid "Category Buttons Text Color"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:89 skins/default/default.php:107
+#: skins/default_int/default_int.php:107
+msgid "Thumbs Rollover Color"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:98 skins/default/default.php:116
+#: skins/default_int/default_int.php:116
+msgid "Main Title"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:102 skins/default/default.php:120
+#: skins/default_int/default_int.php:120
+msgid "Category Title"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:106 skins/default/default.php:124
+#: skins/default_int/default_int.php:124
+msgid "Item Background"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:110 skins/default/default.php:128
+#: skins/default_int/default_int.php:128
+msgid "Item Title"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:114 skins/default/default.php:132
+#: skins/default_int/default_int.php:132
+msgid "Item Description"
+msgstr ""
+
+#: admin/db_skin_color_scheme.php:120 admin/manage-images.php:245
+#: admin/manage-images.php:281 admin/manage-images.php:429
+#: admin/settings.php:95 admin/settings.php:119 admin/settings.php:149
+#: skins/default/default.php:138 skins/default_int/default_int.php:138
+msgid "Save Changes"
 msgstr ""
 
 #: admin/flag_install.php:24
 msgid "Sorry, Flash Album Gallery works only with a role called administrator"
 msgstr ""
 
-#: admin/flag_install.php:121
+#: admin/flag_install.php:123
 msgid ""
 "Flash Album Gallery : Tables could not created, please check your database "
 "settings"
 msgstr ""
 
-#: admin/functions.php:29
+#: admin/flag_install.php:136
+msgid "GRAND FlAGallery plugin - update successfull!"
+msgstr ""
+
+#: admin/functions.php:34
 msgid "No valid gallery name!"
 msgstr ""
 
-#: admin/functions.php:36 admin/functions.php:45 admin/functions.php:59
-#: admin/functions.php:127 admin/functions.php:134
+#: admin/functions.php:41 admin/functions.php:50 admin/functions.php:64
+#: admin/functions.php:141 admin/functions.php:148
 msgid "Directory"
 msgstr ""
 
-#: admin/functions.php:36
+#: admin/functions.php:41
 msgid "didn't exist. Please create first the main gallery folder "
 msgstr ""
 
-#: admin/functions.php:37 admin/functions.php:46
+#: admin/functions.php:42 admin/functions.php:51
 msgid "Check this link, if you didn't know how to set the permission :"
 msgstr ""
 
-#: admin/functions.php:45 admin/functions.php:59
+#: admin/functions.php:50 admin/functions.php:64
 msgid "is not writeable !"
 msgstr ""
 
-#: admin/functions.php:54 admin/functions.php:64 lib/core.php:99
+#: admin/functions.php:59 admin/functions.php:69 lib/core.php:99
 msgid "Unable to create directory "
 msgstr ""
 
-#: admin/functions.php:68
+#: admin/functions.php:73
 msgid "The server setting Safe-Mode is on !"
 msgstr ""
 
-#: admin/functions.php:69
+#: admin/functions.php:74
 msgid "If you have problems, please create directory"
 msgstr ""
 
-#: admin/functions.php:70
+#: admin/functions.php:75
 msgid "and the thumbnails directory"
 msgstr ""
 
-#: admin/functions.php:70
+#: admin/functions.php:75
 msgid "with permission 777 manually !"
 msgstr ""
 
-#: admin/functions.php:88 admin/functions.php:155 admin/manage-images.php:139
-#: admin/manage.php:89 admin/overview.php:220
-msgid "Gallery"
-msgid_plural "Galleries"
-msgstr[0] ""
-msgstr[1] ""
-
-#: admin/functions.php:88
+#: admin/functions.php:93
 msgid "already exists"
 msgstr ""
 
-#: admin/functions.php:93
+#: admin/functions.php:107
 #, php-format
 msgid ""
-"Gallery '%1$s' successfully created.<br/>You can show this gallery with the "
-"tag %2$s.<br/>"
+"Gallery '%1$s' successfully created.<BR>You can show this gallery with the "
+"tag %2$s.<BR>"
 msgstr ""
 
-#: admin/functions.php:96
+#: admin/functions.php:110
 msgid "Edit gallery"
 msgstr ""
 
-#: admin/functions.php:127
-msgid "doesn&#96;t exist!"
+#: admin/functions.php:141
+msgid "doesn`t exist!"
 msgstr ""
 
-#: admin/functions.php:134
+#: admin/functions.php:148
 msgid "contains no pictures"
 msgstr ""
 
-#: admin/functions.php:152
+#: admin/functions.php:166
 msgid "Database error. Could not add gallery!"
 msgstr ""
 
-#: admin/functions.php:155
+#: admin/functions.php:169
 msgid "successfully created!"
 msgstr ""
 
-#: admin/functions.php:184 admin/functions.php:525 admin/manage-images.php:212
-#: admin/manage.php:137
+#: admin/functions.php:198 admin/functions.php:612
+#: admin/manage-galleries.php:123 admin/manage-images.php:266
+#: admin/manage.php:179 admin/manage.php:242
 msgid "Create new thumbnails"
 msgstr ""
 
-#: admin/functions.php:187
+#: admin/functions.php:201
 msgid " picture(s) successfully added"
 msgstr ""
 
-#: admin/functions.php:226 admin/functions.php:305
+#: admin/functions.php:246 admin/functions.php:319
 msgid "Object didn't contain correct data"
 msgstr ""
 
-#: admin/functions.php:231
+#: admin/functions.php:251
 msgid " is not writeable "
 msgstr ""
 
-#: admin/functions.php:312
+#: admin/functions.php:329
 msgid " is not writeable"
 msgstr ""
 
-#: admin/functions.php:461 admin/functions.php:566
+#: admin/functions.php:423
+msgid "(Error : Couldn't not update data base)"
+msgstr ""
+
+#: admin/functions.php:430
+msgid "(Error : Couldn't not update meta data)"
+msgstr ""
+
+#: admin/functions.php:432
+msgid "(Error : Couldn't not find image)"
+msgstr ""
+
+#: admin/functions.php:545 admin/functions.php:662
 msgid "Failure in database, no gallery path set !"
 msgstr ""
 
-#: admin/functions.php:482 admin/functions.php:560
+#: admin/functions.php:569 admin/functions.php:656
 msgid "is no valid image file!"
 msgstr ""
 
-#: admin/functions.php:496 admin/functions.php:666 admin/functions.php:734
+#: admin/functions.php:583 admin/functions.php:822 admin/functions.php:895
 #, php-format
 msgid ""
 "Unable to write to directory %s. Is this directory writable by the server?"
 msgstr ""
 
-#: admin/functions.php:503 admin/functions.php:583
+#: admin/functions.php:590 admin/functions.php:679
 msgid "Error, the file could not moved to : "
 msgstr ""
 
-#: admin/functions.php:508 admin/functions.php:587
+#: admin/functions.php:595 admin/functions.php:683
 msgid "Error, the file permissions could not set"
 msgstr ""
 
-#: admin/functions.php:529
+#: admin/functions.php:616
 msgid " Image(s) successfully added"
 msgstr ""
 
-#: admin/functions.php:548
-msgid "Invalid upload. Error Code : "
+#: admin/functions.php:636
+msgid "No gallery selected!"
 msgstr ""
 
-#: admin/functions.php:613
+#: admin/functions.php:697
+msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
+msgstr ""
+
+#: admin/functions.php:699
+msgid ""
+"The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in "
+"the HTML form"
+msgstr ""
+
+#: admin/functions.php:701
+msgid "The uploaded file was only partially uploaded"
+msgstr ""
+
+#: admin/functions.php:703
+msgid "No file was uploaded"
+msgstr ""
+
+#: admin/functions.php:705
+msgid "Missing a temporary folder"
+msgstr ""
+
+#: admin/functions.php:707
+msgid "Failed to write file to disk"
+msgstr ""
+
+#: admin/functions.php:709
+msgid "File upload stopped by extension"
+msgstr ""
+
+#: admin/functions.php:711
+msgid "Unknown upload error"
+msgstr ""
+
+#: admin/functions.php:725
+msgid ""
+"Sorry, you have used your space allocation. Please delete some files to "
+"upload more files."
+msgstr ""
+
+#: admin/functions.php:765
 #, php-format
 msgid ""
-"SAFE MODE Restriction in effect! You need to create the folder <strong>%s</"
-"strong> manually"
+"SAFE MODE Restriction in effect! You need to create the folder <STRONG>%s manually"
 msgstr ""
 
-#: admin/functions.php:614
+#: admin/functions.php:766
 #, php-format
 msgid ""
 "When safe_mode is on, PHP checks to see if the owner (%s) of the current "
@@ -338,123 +502,189 @@ msgid ""
 "function or its directory"
 msgstr ""
 
-#: admin/functions.php:660 admin/functions.php:728
+#: admin/functions.php:816 admin/functions.php:889
 msgid "The destination gallery does not exist"
 msgstr ""
 
-#: admin/functions.php:691
+#: admin/functions.php:847
 #, php-format
 msgid "Failed to move image %1$s to %2$s"
 msgstr ""
 
-#: admin/functions.php:709
+#: admin/functions.php:865
 #, php-format
 msgid "Moved %1$s picture(s) to gallery : %2$s ."
 msgstr ""
 
-#: admin/functions.php:758
+#: admin/functions.php:922
 #, php-format
 msgid "Failed to copy image %1$s to %2$s"
 msgstr ""
 
-#: admin/functions.php:770
+#: admin/functions.php:934
 #, php-format
 msgid "Failed to copy database row for picture %s"
 msgstr ""
 
-#: admin/functions.php:775
+#: admin/functions.php:939
 #, php-format
 msgid ""
-"Image %1$s (%2$s) copied as image %3$s (%4$s) &raquo; The file already "
+"Image %1$s (%2$s) copied as image %3$s (%4$s) » The file already "
 "existed in the destination gallery."
 msgstr ""
 
-#: admin/functions.php:778
+#: admin/functions.php:942
 #, php-format
 msgid "Image %1$s (%2$s) copied as image %3$s (%4$s)"
 msgstr ""
 
-#: admin/functions.php:787
+#: admin/functions.php:951
 #, php-format
 msgid "Copied %1$s picture(s) to gallery: %2$s ."
 msgstr ""
 
-#: admin/manage-galleries.php:19 admin/manage-images.php:39
-msgid "&laquo;"
+#: admin/manage-galleries.php:20 admin/manage-images.php:54
+msgid "«"
 msgstr ""
 
-#: admin/manage-galleries.php:20 admin/manage-images.php:40
-msgid "&raquo;"
+#: admin/manage-galleries.php:21 admin/manage-images.php:55
+msgid "»"
 msgstr ""
 
-#: admin/manage-galleries.php:27
-msgid "Gallery Overview"
-msgstr ""
-
-#: admin/manage-galleries.php:30 admin/manage-images.php:202
-#, php-format
-msgid "Displaying %s&#8211;%s of %s"
-msgstr ""
-
-#: admin/manage-galleries.php:42 admin/manage-images.php:234
-#: admin/manage-images.php:243 admin/manage-sort.php:98
-#: admin/manage-sort.php:107
-msgid "ID"
-msgstr ""
-
-#: admin/manage-galleries.php:43 admin/manage-images.php:165 lib/meta.php:338
-msgid "Title"
-msgstr ""
-
-#: admin/manage-galleries.php:44 admin/manage-images.php:169
-#: admin/media-upload.php:185 admin/skins.php:324 admin/skins.php:332
-msgid "Description"
-msgstr ""
-
-#: admin/manage-galleries.php:45 admin/manage-images.php:177 lib/meta.php:339
-msgid "Author"
-msgstr ""
-
-#: admin/manage-galleries.php:46
-msgid "Quantity"
-msgstr ""
-
-#: admin/manage-galleries.php:47 admin/skins.php:23 admin/skins.php:325
-#: admin/skins.php:333
-msgid "Action"
-msgstr ""
-
-#: admin/manage-galleries.php:67
-msgid "Edit"
-msgstr ""
-
-#: admin/manage-galleries.php:76
-msgid "Delete this gallery ?"
-msgstr ""
-
-#: admin/manage-galleries.php:76 admin/manage-images.php:293
-#: admin/skins.php:383
-msgid "Delete"
-msgstr ""
-
-#: admin/manage-galleries.php:83 admin/manage-images.php:313
-#: admin/manage-sort.php:139
-msgid "No entries found"
-msgstr ""
-
-#: admin/manage-images.php:16
-msgid "Gallery not found."
-msgstr ""
-
-#: admin/manage-images.php:22
-msgid "Sorry, you have no access here"
-msgstr ""
-
-#: admin/manage-images.php:107
+#: admin/manage-galleries.php:62 admin/manage-images.php:135
 msgid "No images selected"
 msgstr ""
 
-#: admin/manage-images.php:121
+#: admin/manage-galleries.php:79
+#, php-format
+msgid ""
+"You are about to start the bulk edit for %s galleries \n"
+" \n"
+" 'Cancel' to stop, 'OK' to proceed."
+msgstr ""
+
+#: admin/manage-galleries.php:104
+msgid "Gallery Overview"
+msgstr ""
+
+#: admin/manage-galleries.php:107 admin/manage-galleries.php:110
+#: admin/manage-images.php:175 admin/manage-images.php:178
+msgid "Search Images"
+msgstr ""
+
+#: admin/manage-galleries.php:122 admin/manage-images.php:265
+msgid "No action"
+msgstr ""
+
+#: admin/manage-galleries.php:124 admin/manage-images.php:267
+#: admin/manage.php:163 admin/manage.php:228
+msgid "Resize images"
+msgstr ""
+
+#: admin/manage-galleries.php:125 admin/manage-images.php:269
+#: admin/manage.php:146 admin/manage.php:212
+msgid "Import metadata"
+msgstr ""
+
+#: admin/manage-galleries.php:127
+msgid "Apply"
+msgstr ""
+
+#: admin/manage-galleries.php:132 admin/manage-images.php:256
+#, php-format
+msgid "Displaying %s–%s of %s"
+msgstr ""
+
+#: admin/manage-galleries.php:148 admin/manage-images.php:544
+#: admin/manage-sort.php:99 admin/manage-sort.php:108
+msgid "ID"
+msgstr ""
+
+#: admin/manage-galleries.php:149 admin/manage-images.php:217 lib/meta.php:395
+msgid "Title"
+msgstr ""
+
+#: admin/manage-galleries.php:150 admin/manage-images.php:221
+#: admin/manage-images.php:547 admin/media-upload.php:185 admin/skins.php:225
+#: admin/skins.php:233
+msgid "Description"
+msgstr ""
+
+#: admin/manage-galleries.php:151 admin/manage-images.php:229 lib/meta.php:396
+msgid "Author"
+msgstr ""
+
+#: admin/manage-galleries.php:152
+msgid "Quantity"
+msgstr ""
+
+#: admin/manage-galleries.php:153 admin/skins.php:226 admin/skins.php:234
+msgid "Action"
+msgstr ""
+
+#: admin/manage-galleries.php:174
+msgid "Edit"
+msgstr ""
+
+#: admin/manage-galleries.php:186
+msgid "Delete this gallery ?"
+msgstr ""
+
+#: admin/manage-galleries.php:186 admin/manage-images.php:374
+#: admin/skins.php:282
+msgid "Delete"
+msgstr ""
+
+#: admin/manage-galleries.php:193 admin/manage-images.php:423
+#: admin/manage-sort.php:140
+msgid "No entries found"
+msgstr ""
+
+#: admin/manage-galleries.php:211 admin/manage-images.php:480
+msgid "Resize Images to"
+msgstr ""
+
+#: admin/manage-galleries.php:215
+msgid "Width x height (in pixel). FlAGallery will keep ratio size"
+msgstr ""
+
+#: admin/manage-galleries.php:220 admin/manage-galleries.php:250
+#: admin/manage-images.php:273 admin/manage-images.php:460
+#: admin/manage-images.php:489 admin/manage-images.php:519
+msgid "OK"
+msgstr ""
+
+#: admin/manage-galleries.php:222 admin/manage-galleries.php:252
+#: admin/manage-images.php:462 admin/manage-images.php:491
+#: admin/manage-images.php:521
+msgid "Cancel"
+msgstr ""
+
+#: admin/manage-galleries.php:239 admin/manage-images.php:508
+msgid "Width x height (in pixel)"
+msgstr ""
+
+#: admin/manage-galleries.php:241 admin/manage-images.php:510
+msgid "These values are maximum values "
+msgstr ""
+
+#: admin/manage-galleries.php:244 admin/manage-images.php:513
+msgid "Set fix dimension"
+msgstr ""
+
+#: admin/manage-galleries.php:246 admin/manage-images.php:515
+msgid "Ignore the aspect ratio, no portrait thumbnails"
+msgstr ""
+
+#: admin/manage-images.php:31
+msgid "Gallery not found."
+msgstr ""
+
+#: admin/manage-images.php:37
+msgid "Sorry, you have no access here"
+msgstr ""
+
+#: admin/manage-images.php:157
 #, php-format
 msgid ""
 "You are about to start the bulk edit for %s images \n"
@@ -462,185 +692,177 @@ msgid ""
 " 'Cancel' to stop, 'OK' to proceed."
 msgstr ""
 
-#: admin/manage-images.php:141
+#: admin/manage-images.php:172
+#, php-format
+msgid "Search results for “%s”"
+msgstr ""
+
+#: admin/manage-images.php:192
 msgid "Choose another gallery"
 msgstr ""
 
-#: admin/manage-images.php:161
+#: admin/manage-images.php:213
 msgid "Gallery settings"
 msgstr ""
 
-#: admin/manage-images.php:173
+#: admin/manage-images.php:225
 msgid "Path"
 msgstr ""
 
-#: admin/manage-images.php:191
+#: admin/manage-images.php:244
 msgid "Scan Folder for new images"
 msgstr ""
 
-#: admin/manage-images.php:192 admin/manage-images.php:225
-#: admin/manage-images.php:319 admin/settings.php:100 admin/settings.php:133
-#: admin/settings.php:157 admin/settings.php:187 admin/settings.php:313
-msgid "Save Changes"
-msgstr ""
-
-#: admin/manage-images.php:211
-msgid "No action"
-msgstr ""
-
-#: admin/manage-images.php:213 admin/manage.php:141
-msgid "Resize images"
-msgstr ""
-
-#: admin/manage-images.php:214
+#: admin/manage-images.php:268
 msgid "Delete images"
 msgstr ""
 
-#: admin/manage-images.php:215
-msgid "Import metadata"
-msgstr ""
-
-#: admin/manage-images.php:216
+#: admin/manage-images.php:270
 msgid "Copy to..."
 msgstr ""
 
-#: admin/manage-images.php:217
+#: admin/manage-images.php:271
 msgid "Move to..."
 msgstr ""
 
-#: admin/manage-images.php:219 admin/manage-images.php:349
-msgid "OK"
-msgstr ""
-
-#: admin/manage-images.php:221
+#: admin/manage-images.php:276
 msgid "Sort gallery"
 msgstr ""
 
-#: admin/manage-images.php:223
+#: admin/manage-images.php:279
 msgid "Add Images"
 msgstr ""
 
-#: admin/manage-images.php:235 admin/manage-images.php:244
-#: admin/media-upload.php:206
-msgid "Thumbnail"
-msgstr ""
-
-#: admin/manage-images.php:236 admin/manage-images.php:245
-msgid "Filename / Date"
-msgstr ""
-
-#: admin/manage-images.php:237 admin/manage-images.php:246
-msgid "Alt & Title Text / Description"
-msgstr ""
-
-#: admin/manage-images.php:286
+#: admin/manage-images.php:362 admin/manage-images.php:366
 msgid "Size: "
 msgstr ""
 
-#: admin/manage-images.php:291
+#: admin/manage-images.php:362 admin/manage-images.php:366
+msgid "pixel"
+msgstr ""
+
+#: admin/manage-images.php:371
 #, php-format
 msgid "View \"%s\""
 msgstr ""
 
-#: admin/manage-images.php:291
+#: admin/manage-images.php:371
 msgid "View"
 msgstr ""
 
-#: admin/manage-images.php:292
+#: admin/manage-images.php:372
+msgid "Show Meta data"
+msgstr ""
+
+#: admin/manage-images.php:372
+msgid "Meta"
+msgstr ""
+
+#: admin/manage-images.php:373
 msgid "Customize thumbnail"
 msgstr ""
 
-#: admin/manage-images.php:292
+#: admin/manage-images.php:373
 msgid "Edit thumb"
 msgstr ""
 
-#: admin/manage-images.php:293 admin/skins.php:383
+#: admin/manage-images.php:374 admin/skins.php:282
 #, php-format
 msgid "Delete \"%s\""
 msgstr ""
 
-#: admin/manage-images.php:333
+#: admin/manage-images.php:444
 msgid "Select the destination gallery:"
 msgstr ""
 
-#: admin/manage-images.php:351
-msgid "Cancel"
+#: admin/manage-images.php:484
+msgid "Width x height (in pixel). GRAND FlAGallery will keep ratio size"
+msgstr ""
+
+#: admin/manage-images.php:545 admin/media-upload.php:206
+msgid "Thumbnail"
+msgstr ""
+
+#: admin/manage-images.php:546 admin/manage-sort.php:101
+#: admin/manage-sort.php:110
+msgid "Filename"
+msgstr ""
+
+#: admin/manage-images.php:547 admin/manage-sort.php:103
+#: admin/manage-sort.php:112
+msgid "Alt &amp; Title Text"
+msgstr ""
+
+#: admin/manage-images.php:548
+msgid "Only for logged in users"
 msgstr ""
 
 #: admin/manage-sort.php:31
 msgid "Sort order changed"
 msgstr ""
 
-#: admin/manage-sort.php:54
+#: admin/manage-sort.php:53
 msgid "Sort Gallery"
 msgstr ""
 
-#: admin/manage-sort.php:58 admin/manage-sort.php:145
+#: admin/manage-sort.php:57
+msgid "Back to gallery"
+msgstr ""
+
+#: admin/manage-sort.php:63 admin/manage-sort.php:146
 msgid "Update Sort Order"
 msgstr ""
 
-#: admin/manage-sort.php:99 admin/manage-sort.php:108
+#: admin/manage-sort.php:100 admin/manage-sort.php:109
 msgid "Thumb"
 msgstr ""
 
-#: admin/manage-sort.php:100 admin/manage-sort.php:109
-msgid "Filename"
-msgstr ""
-
-#: admin/manage-sort.php:101 admin/manage-sort.php:110
+#: admin/manage-sort.php:102 admin/manage-sort.php:111
 msgid "Date"
 msgstr ""
 
-#: admin/manage-sort.php:102 admin/manage-sort.php:111
-msgid "Alt &amp; Title Text"
-msgstr ""
-
-#: admin/manage.php:42 admin/manage_thumbnail.php:17
-#: admin/manage_thumbnail.php:20
-msgid "Cheatin&#8217; uh?"
-msgstr ""
-
-#: admin/manage.php:89 admin/manage.php:111 admin/skins.php:226
+#: admin/manage.php:89 admin/manage.php:107 admin/skins.php:142
 msgid "deleted successfully"
 msgstr ""
 
-#: admin/manage.php:111
+#: admin/manage.php:107
 msgid "Picture"
 msgstr ""
 
-#: admin/manage.php:158
-msgid "Pictures deleted successfully "
-msgstr ""
-
-#: admin/manage.php:164
-msgid "Import metadata finished"
-msgstr ""
-
-#: admin/manage.php:172
+#: admin/manage.php:116
 msgid "Operation successful. Please clear your browser cache."
 msgstr ""
 
-#: admin/manage.php:216
+#: admin/manage.php:208
+msgid "Pictures deleted successfully "
+msgstr ""
+
+#: admin/manage.php:286
 msgid "Update successful"
 msgstr ""
 
-#: admin/manage_thumbnail.php:114
+#: admin/manage_thumbnail.php:17 admin/manage_thumbnail.php:20
+#: admin/showmeta.php:10 admin/showmeta.php:13
+msgid "Cheatin’ uh?"
+msgstr ""
+
+#: admin/manage_thumbnail.php:104
 msgid "Select with the mouse the area for the new thumbnail."
 msgstr ""
 
-#: admin/manage_thumbnail.php:128
+#: admin/manage_thumbnail.php:118
 msgid "Thumbnail updated"
 msgstr ""
 
-#: admin/manage_thumbnail.php:133
+#: admin/manage_thumbnail.php:123
 msgid "Error updating thumbnail."
 msgstr ""
 
-#: admin/manage_thumbnail.php:150
+#: admin/manage_thumbnail.php:140
 msgid "Select the area for the thumbnail from the picture on the left."
 msgstr ""
 
-#: admin/manage_thumbnail.php:165
+#: admin/manage_thumbnail.php:155 admin/wpmu.php:64
 msgid "Update"
 msgstr ""
 
@@ -653,7 +875,7 @@ msgid "No gallery"
 msgstr ""
 
 #: admin/media-upload.php:138
-msgid "Select &#187;"
+msgid "Select »"
 msgstr ""
 
 #: admin/media-upload.php:169
@@ -712,845 +934,1047 @@ msgstr ""
 msgid "FlAG Gallery Overview"
 msgstr ""
 
-#: admin/overview.php:106
+#: admin/overview.php:118
 msgid "Reset all settings to default parameter"
 msgstr ""
 
-#: admin/overview.php:117
+#: admin/overview.php:129
 msgid ""
 "Uninstall sucessful ! Now delete the plugin and enjoy your life ! Good luck !"
 msgstr ""
 
-#: admin/overview.php:125
+#: admin/overview.php:137
 msgid "Plugin Home"
 msgstr ""
 
-#: admin/overview.php:130
+#: admin/overview.php:142
 msgid "Plugin Comments"
 msgstr ""
 
-#: admin/overview.php:135
+#: admin/overview.php:147
 msgid "Rate Plugin"
 msgstr ""
 
-#: admin/overview.php:140
+#: admin/overview.php:152
 msgid "My Plugins"
 msgstr ""
 
-#: admin/overview.php:145
+#: admin/overview.php:157
 msgid "Contact Me"
 msgstr ""
 
-#: admin/overview.php:155
+#: admin/overview.php:168
 msgid "Reset settings"
 msgstr ""
 
-#: admin/overview.php:155
+#: admin/overview.php:168
 msgid ""
 "Reset all options to default settings ?\\n\\nChoose [Cancel] to Stop, [OK] "
 "to proceed.\\n"
 msgstr ""
 
-#: admin/overview.php:158
+#: admin/overview.php:171
 msgid "Uninstall plugin"
 msgstr ""
 
-#: admin/overview.php:158
+#: admin/overview.php:171
 msgid ""
 "You are about to Uninstall this plugin from WordPress.\\nThis action is not "
 "reversible.\\n\\nChoose [Cancel] to Stop, [OK] to Uninstall.\\n"
 msgstr ""
 
-#: admin/overview.php:184
+#: admin/overview.php:198
 msgid "What's new at PhotoGalleryCreator.com"
 msgstr ""
 
-#: admin/overview.php:208
+#: admin/overview.php:222
 msgid "At a Glance"
 msgstr ""
 
-#: admin/overview.php:214
+#: admin/overview.php:228
 msgid "Image"
 msgid_plural "Images"
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/overview.php:229
+#: admin/overview.php:243
 msgid "Upload pictures"
 msgstr ""
 
-#: admin/overview.php:230
+#: admin/overview.php:244
 msgid "Here you can control your images and galleries."
 msgstr ""
 
-#: admin/overview.php:232
+#: admin/overview.php:246
 msgid "Gallery Administrator"
 msgstr ""
 
-#: admin/overview.php:232
+#: admin/overview.php:246
 msgid "Gallery Editor"
 msgstr ""
 
-#: admin/overview.php:233
+#: admin/overview.php:247
 #, php-format
 msgid "You currently have %s rights."
 msgstr ""
 
-#: admin/overview.php:239
+#: admin/overview.php:253
 msgid "Setup Box"
 msgstr ""
 
-#: admin/overview.php:240
+#: admin/overview.php:254
 msgid "News Box"
 msgstr ""
 
-#: admin/overview.php:241
+#: admin/overview.php:255
 msgid "Welcome to FlAG Gallery !"
 msgstr ""
 
-#: admin/overview.php:242
+#: admin/overview.php:256
 msgid "Server Settings"
 msgstr ""
 
-#: admin/overview.php:243
+#: admin/overview.php:257
 msgid "Graphic Library"
 msgstr ""
 
-#: admin/overview.php:259
+#: admin/overview.php:277
 msgid "No GD support"
 msgstr ""
 
-#: admin/overview.php:266 admin/overview.php:295 admin/overview.php:297
-#: admin/overview.php:299
+#: admin/overview.php:289 admin/overview.php:333 admin/overview.php:336
+#: admin/overview.php:339
 msgid "Yes"
 msgstr ""
 
-#: admin/overview.php:268 admin/overview.php:295 admin/overview.php:297
-#: admin/overview.php:299
+#: admin/overview.php:291 admin/overview.php:334 admin/overview.php:337
+#: admin/overview.php:340
 msgid "No"
 msgstr ""
 
-#: admin/overview.php:279
+#: admin/overview.php:307
 msgid "Not set"
 msgstr ""
 
-#: admin/overview.php:281 admin/overview.php:283
+#: admin/overview.php:309 admin/overview.php:312
 msgid "On"
 msgstr ""
 
-#: admin/overview.php:281 admin/overview.php:283
+#: admin/overview.php:310 admin/overview.php:313
 msgid "Off"
 msgstr ""
 
-#: admin/overview.php:285 admin/overview.php:287 admin/overview.php:289
-#: admin/overview.php:291 admin/overview.php:293
+#: admin/overview.php:316 admin/overview.php:319 admin/overview.php:322
+#: admin/overview.php:325 admin/overview.php:328 admin/overview.php:331
 msgid "N/A"
 msgstr ""
 
-#: admin/overview.php:293
+#: admin/overview.php:330
 msgid " MByte"
 msgstr ""
 
-#: admin/overview.php:302
+#: admin/overview.php:342
 msgid "Operating System"
 msgstr ""
 
-#: admin/overview.php:303
+#: admin/overview.php:343
 msgid "Server"
 msgstr ""
 
-#: admin/overview.php:304
+#: admin/overview.php:344
 msgid "Memory usage"
 msgstr ""
 
-#: admin/overview.php:305
+#: admin/overview.php:345
 msgid "MYSQL Version"
 msgstr ""
 
-#: admin/overview.php:306
+#: admin/overview.php:346
 msgid "SQL Mode"
 msgstr ""
 
-#: admin/overview.php:307
+#: admin/overview.php:347
 msgid "PHP Version"
 msgstr ""
 
-#: admin/overview.php:308
+#: admin/overview.php:348
 msgid "PHP Safe Mode"
 msgstr ""
 
-#: admin/overview.php:309
+#: admin/overview.php:349
 msgid "PHP Allow URL fopen"
 msgstr ""
 
-#: admin/overview.php:310
+#: admin/overview.php:350
 msgid "PHP Memory Limit"
 msgstr ""
 
-#: admin/overview.php:311
+#: admin/overview.php:351
 msgid "PHP Max Upload Size"
 msgstr ""
 
-#: admin/overview.php:312
+#: admin/overview.php:352
 msgid "PHP Max Post Size"
 msgstr ""
 
-#: admin/overview.php:313
+#: admin/overview.php:353
+msgid "PHP Output Buffer Size"
+msgstr ""
+
+#: admin/overview.php:354
 msgid "PHP Max Script Execute Time"
 msgstr ""
 
-#: admin/overview.php:314
+#: admin/overview.php:355
 msgid "PHP Exif support"
 msgstr ""
 
-#: admin/overview.php:315
+#: admin/overview.php:356
 msgid "PHP IPTC support"
 msgstr ""
 
-#: admin/overview.php:316
+#: admin/overview.php:357
 msgid "PHP XML support"
 msgstr ""
 
-#: admin/settings.php:32
+#: admin/overview.php:415
+msgid "Storage Space"
+msgstr ""
+
+#: admin/overview.php:418
+msgid "Upload Space Used:"
+msgstr ""
+
+#: admin/overview.php:424
+msgid "Upload Space Remaining:"
+msgstr ""
+
+#: admin/settings.php:30 admin/skins.php:109 admin/skins.php:129
 msgid "Update Successfully"
 msgstr ""
 
-#: admin/settings.php:50
+#: admin/settings.php:49
 msgid "Updated capabilities"
 msgstr ""
 
-#: admin/settings.php:61 admin/settings.php:74
+#: admin/settings.php:60 admin/settings.php:69
 msgid "General Options"
 msgstr ""
 
-#: admin/settings.php:62
-msgid "Thumbnails"
-msgstr ""
-
-#: admin/settings.php:63
+#: admin/settings.php:61
 msgid "Images"
 msgstr ""
 
-#: admin/settings.php:64 admin/settings.php:164
+#: admin/settings.php:62 admin/settings.php:126
 msgid "Sorting"
 msgstr ""
 
-#: admin/settings.php:66 admin/settings.php:223
-msgid "Colors"
-msgstr ""
-
-#: admin/settings.php:68
+#: admin/settings.php:63
 msgid "Roles"
 msgstr ""
 
-#: admin/settings.php:80
+#: admin/settings.php:75 admin/wpmu.php:47
 msgid "Gallery path"
 msgstr ""
 
-#: admin/settings.php:82
+#: admin/settings.php:77
 msgid "This is the default path for all galleries"
 msgstr ""
 
-#: admin/settings.php:85
+#: admin/settings.php:80
 msgid "Default flash size (W x H)"
 msgstr ""
 
-#: admin/settings.php:90
+#: admin/settings.php:85
 msgid "Delete image files"
 msgstr ""
 
-#: admin/settings.php:92
+#: admin/settings.php:87
 msgid "Delete files, when removing a gallery in the database"
 msgstr ""
 
-#: admin/settings.php:95
+#: admin/settings.php:90
 msgid "Activate Media RSS feed"
 msgstr ""
 
-#: admin/settings.php:97
+#: admin/settings.php:92
 msgid "A RSS feed will be added to you blog header."
 msgstr ""
 
-#: admin/settings.php:107
-msgid "Thumbnail settings"
-msgstr ""
-
-#: admin/settings.php:111
-msgid ""
-"Please note : If you change the settings, you need to recreate the "
-"thumbnails under -> Manage Gallery ."
-msgstr ""
-
-#: admin/settings.php:114
-msgid "Width x Height (in pixel)"
-msgstr ""
-
-#: admin/settings.php:116
-msgid "These values are maximum values "
-msgstr ""
-
-#: admin/settings.php:119
-msgid "Set fix dimension"
-msgstr ""
-
-#: admin/settings.php:121
-msgid "Ignore the aspect ratio, no portrait thumbnails"
-msgstr ""
-
-#: admin/settings.php:124
-msgid "Crop square thumbnail from image"
-msgstr ""
-
-#: admin/settings.php:126
-msgid "Create square thumbnails, use only the width setting :"
-msgstr ""
-
-#: admin/settings.php:129
-msgid "Thumbnail quality"
-msgstr ""
-
-#: admin/settings.php:140
+#: admin/settings.php:102
 msgid "Image settings"
 msgstr ""
 
-#: admin/settings.php:146
+#: admin/settings.php:108
 msgid "Resize Images"
 msgstr ""
 
-#: admin/settings.php:149
+#: admin/settings.php:111
 msgid "Width x Height (in pixel). Flash Album Gallery will keep ratio size"
 msgstr ""
 
-#: admin/settings.php:152
+#: admin/settings.php:114
 msgid "Image quality"
 msgstr ""
 
-#: admin/settings.php:168
+#: admin/settings.php:130
 msgid "Sort options"
 msgstr ""
 
-#: admin/settings.php:171
+#: admin/settings.php:133
 msgid "Sort thumbnails"
 msgstr ""
 
-#: admin/settings.php:173
+#: admin/settings.php:135
 msgid "Custom order"
 msgstr ""
 
-#: admin/settings.php:174
+#: admin/settings.php:136
 msgid "Image ID"
 msgstr ""
 
-#: admin/settings.php:175
+#: admin/settings.php:137
 msgid "File name"
 msgstr ""
 
-#: admin/settings.php:176
+#: admin/settings.php:138
 msgid "Alt / Title text"
 msgstr ""
 
-#: admin/settings.php:177
+#: admin/settings.php:139
 msgid "Date / Time"
 msgstr ""
 
-#: admin/settings.php:181
+#: admin/settings.php:143
 msgid "Sort direction"
 msgstr ""
 
-#: admin/settings.php:182
+#: admin/settings.php:144
 msgid "Ascending"
 msgstr ""
 
-#: admin/settings.php:183
+#: admin/settings.php:145
 msgid "Descending"
 msgstr ""
 
-#: admin/settings.php:227
-msgid "Background Color"
-msgstr ""
-
-#: admin/settings.php:233
-msgid "Buttons Background Color"
-msgstr ""
-
-#: admin/settings.php:239
-msgid "Buttons Text Color"
-msgstr ""
-
-#: admin/settings.php:250
-msgid "Category Buttons Color"
-msgstr ""
-
-#: admin/settings.php:261
-msgid "Category Buttons Text Color"
-msgstr ""
-
-#: admin/settings.php:272
-msgid "Thumbs Rollover Color"
-msgstr ""
-
-#: admin/settings.php:283
-msgid "Main Title"
-msgstr ""
-
-#: admin/settings.php:289
-msgid "Category Title"
-msgstr ""
-
-#: admin/settings.php:295
-msgid "Item Background"
-msgstr ""
-
-#: admin/settings.php:301
-msgid "Item Title"
-msgstr ""
-
-#: admin/settings.php:307
-msgid "Item Description"
-msgstr ""
-
-#: admin/settings.php:322
+#: admin/settings.php:158
 msgid "Roles / capabilities"
 msgstr ""
 
-#: admin/settings.php:323
+#: admin/settings.php:159
 msgid ""
 "Select the lowest role which should be able to access the follow "
 "capabilities. Flash Album Gallery supports the standard roles from WordPress."
 msgstr ""
 
-#: admin/settings.php:326
+#: admin/settings.php:162
 msgid "Main Flash Album Gallery overview"
 msgstr ""
 
-#: admin/settings.php:330
+#: admin/settings.php:166
 msgid "Use TinyMCE Button / Upload tab"
 msgstr ""
 
-#: admin/settings.php:334
+#: admin/settings.php:170
 msgid "Add gallery / Upload images"
 msgstr ""
 
-#: admin/settings.php:338
+#: admin/settings.php:174
+msgid "Import images folder"
+msgstr ""
+
+#: admin/settings.php:178
 msgid "Manage gallery"
 msgstr ""
 
-#: admin/settings.php:342
+#: admin/settings.php:182
 msgid "Manage others gallery"
 msgstr ""
 
-#: admin/settings.php:346
+#: admin/settings.php:186
 msgid "Change skin"
 msgstr ""
 
-#: admin/settings.php:350
+#: admin/settings.php:190
 msgid "Add skins"
 msgstr ""
 
-#: admin/settings.php:354
+#: admin/settings.php:194
 msgid "Delete skins"
 msgstr ""
 
-#: admin/settings.php:358
+#: admin/settings.php:198
 msgid "Change options"
 msgstr ""
 
-#: admin/settings.php:362
+#: admin/settings.php:202
 msgid "Update capabilities"
 msgstr ""
 
-#: admin/skins.php:20 admin/skins.php:28
-msgid "Add new skin"
+#: admin/showmeta.php:28
+msgid "Meta Data"
 msgstr ""
 
-#: admin/skins.php:21
-msgid "Want more skins?"
+#: admin/showmeta.php:33 admin/showmeta.php:59 admin/showmeta.php:84
+#: admin/showmeta.php:108
+msgid "Tag"
 msgstr ""
 
-#: admin/skins.php:29
-msgid "Install a skin in .zip format"
+#: admin/showmeta.php:34 admin/showmeta.php:60 admin/showmeta.php:85
+#: admin/showmeta.php:109
+msgid "Value"
 msgstr ""
 
-#: admin/skins.php:30
-msgid ""
-"If you have a skin in a .zip format, You may install it by uploading it here."
+#: admin/showmeta.php:48
+msgid "No meta data saved"
 msgstr ""
 
-#: admin/skins.php:34
-msgid "Install Now"
+#: admin/showmeta.php:54
+msgid "EXIF Data"
 msgstr ""
 
-#: admin/skins.php:39
-msgid "More skins"
+#: admin/showmeta.php:73
+msgid "No exif data"
 msgstr ""
 
-#: admin/skins.php:40
-msgid "If you want more skins, You may get it at."
+#: admin/showmeta.php:80
+msgid "IPTC Data"
 msgstr ""
 
-#: admin/skins.php:47
-msgid "Install info"
+#: admin/showmeta.php:104
+msgid "XMP Data"
 msgstr ""
 
-#: admin/skins.php:58 admin/skins.php:88
+#: admin/skin_install.php:10 admin/skins.php:34
 msgid "No skin Specified"
 msgstr ""
 
-#: admin/skins.php:61
+#: admin/skin_install.php:39
+msgid "Installation Failed"
+msgstr ""
+
+#: admin/skin_install.php:42
+msgid "The skin installed successfully."
+msgstr ""
+
+#: admin/skin_install.php:45 admin/skins.php:268
+msgid "Activate this skin"
+msgstr ""
+
+#: admin/skin_install.php:45
+msgid "Activate Skin"
+msgstr ""
+
+#: admin/skin_install.php:46
+msgid "Goto skin overview"
+msgstr ""
+
+#: admin/skin_install.php:46
+msgid "Skin overview"
+msgstr ""
+
+#: admin/skin_install.php:49
+msgid "Actions:"
+msgstr ""
+
+#: admin/skin_install.php:69
+msgid "Could not access filesystem."
+msgstr ""
+
+#: admin/skin_install.php:72
+msgid "Filesystem error"
+msgstr ""
+
+#: admin/skin_install.php:78
+msgid "Unable to locate FlAGallery Skin directory."
+msgstr ""
+
+#: admin/skin_install.php:83
+msgid "Unable to locate WordPress Content directory (wp-content)."
+msgstr ""
+
+#: admin/skin_install.php:89
+msgid "Install package not available."
+msgstr ""
+
+#: admin/skin_install.php:97
+msgid "Unpacking the skin package"
+msgstr ""
+
+#: admin/skin_install.php:114
+msgid "Folder already exists."
+msgstr ""
+
+#: admin/skin_install.php:117
+msgid "Installing the skin"
+msgstr ""
+
+#: admin/skins.php:23
+msgid "Install info"
+msgstr ""
+
+#: admin/skins.php:37
 #, php-format
 msgid "Installing Skin from file: %s"
 msgstr ""
 
-#: admin/skins.php:70
+#: admin/skins.php:46
 #, php-format
 msgid "The uploaded file could not be moved to %s."
 msgstr ""
 
-#: admin/skins.php:117
-msgid "Installation Failed"
-msgstr ""
-
-#: admin/skins.php:119
-msgid "The skin installed successfully."
-msgstr ""
-
-#: admin/skins.php:122 admin/skins.php:369
-msgid "Activate this skin"
-msgstr ""
-
-#: admin/skins.php:122
-msgid "Activate Skin"
-msgstr ""
-
-#: admin/skins.php:123
-msgid "Goto skin overview"
-msgstr ""
-
-#: admin/skins.php:123
-msgid "Skin overview"
-msgstr ""
-
-#: admin/skins.php:126
-msgid "Actions:"
-msgstr ""
-
-#: admin/skins.php:145
-msgid "Could not access filesystem."
-msgstr ""
-
-#: admin/skins.php:148
-msgid "Filesystem error"
-msgstr ""
-
-#: admin/skins.php:154
-msgid "Unable to locate FlAGallery Skin directory."
-msgstr ""
-
-#: admin/skins.php:159
-msgid "Unable to locate WordPress Content directory (wp-content)."
-msgstr ""
-
-#: admin/skins.php:165
-msgid "Install package not available."
-msgstr ""
-
-#: admin/skins.php:173
-msgid "Unpacking the skin package"
-msgstr ""
-
-#: admin/skins.php:190
-msgid "Folder already exists."
-msgstr ""
-
-#: admin/skins.php:193
-msgid "Installing the skin"
-msgstr ""
-
-#: admin/skins.php:226 admin/skins.php:281 admin/skins.php:323
-#: admin/skins.php:331
+#: admin/skins.php:142 admin/skins.php:163 admin/skins.php:224
+#: admin/skins.php:232 admin/tinymce/window.php:46
 msgid "Skin"
 msgstr ""
 
-#: admin/skins.php:228
+#: admin/skins.php:144
 msgid "Can't find skin directory "
 msgstr ""
 
-#: admin/skins.php:228
+#: admin/skins.php:144
 msgid ". Try delete it manualy via ftp"
 msgstr ""
 
-#: admin/skins.php:231
+#: admin/skins.php:148
 msgid "You need activate another skin before delete it"
 msgstr ""
 
-#: admin/skins.php:234
+#: admin/skins.php:151
 msgid ""
 "You do not have sufficient permissions to delete skins of GRAND FlAGallery."
 msgstr ""
 
-#: admin/skins.php:281
+#: admin/skins.php:163
 msgid "activated successfully"
 msgstr ""
 
-#: admin/skins.php:342
+#: admin/skins.php:170 admin/skins.php:176
+msgid "Add new skin"
+msgstr ""
+
+#: admin/skins.php:171
+msgid "Want more skins?"
+msgstr ""
+
+#: admin/skins.php:172 admin/skins.php:199
+msgid "Skin Options"
+msgstr ""
+
+#: admin/skins.php:178
+msgid "Install a skin in .zip format"
+msgstr ""
+
+#: admin/skins.php:179
+msgid ""
+"If you have a skin in a .zip format, You may install it by uploading it here."
+msgstr ""
+
+#: admin/skins.php:183
+msgid "Install Now"
+msgstr ""
+
+#: admin/skins.php:189
+msgid ""
+"You do not have sufficient permissions to install skin through admin page. "
+"You can install it by uploading via ftp to /flagallery-skins/ folder."
+msgstr ""
+
+#: admin/skins.php:194
+msgid "More skins"
+msgstr ""
+
+#: admin/skins.php:195
+msgid "If you want more skins, You may get it at."
+msgstr ""
+
+#: admin/skins.php:243
 msgid "No skins to show"
 msgstr ""
 
-#: admin/skins.php:355
+#: admin/skins.php:254
 #, php-format
 msgid "Version %s"
 msgstr ""
 
-#: admin/skins.php:359
+#: admin/skins.php:258
 msgid "Visit author homepage"
 msgstr ""
 
-#: admin/skins.php:360
+#: admin/skins.php:259
 #, php-format
 msgid "By %s"
 msgstr ""
 
-#: admin/skins.php:363
+#: admin/skins.php:262
 msgid "Visit skin site"
 msgstr ""
 
-#: admin/skins.php:369
+#: admin/skins.php:268
 msgid "Activate"
 msgstr ""
 
-#: admin/skins.php:371
+#: admin/skins.php:270
 msgid "Activated"
 msgstr ""
 
-#: admin/skins.php:383
+#: admin/skins.php:282
 msgid "Delete this skin"
 msgstr ""
 
-#: admin/tinymce/tinymce.php:114 admin/tinymce/window.php:16
-#: admin/tinymce/window.php:26
+#: admin/tinymce/tinymce.php:114 admin/tinymce/window.php:19
+#: admin/tinymce/window.php:30
 msgid "Insert Flash Album with one or more galleries"
 msgstr ""
 
-#: admin/tinymce/window.php:8
+#: admin/tinymce/window.php:9
 msgid "You are not allowed to be here"
 msgstr ""
 
-#: admin/tinymce/window.php:42
+#: admin/tinymce/window.php:44
+msgid "Galleries"
+msgstr ""
+
+#: admin/tinymce/window.php:45
+msgid "Sort"
+msgstr ""
+
+#: admin/tinymce/window.php:55
 msgid "Album Name"
 msgstr ""
 
-#: admin/tinymce/window.php:46
+#: admin/tinymce/window.php:59
 msgid "Select galleries"
 msgstr ""
 
-#: admin/tinymce/window.php:46
+#: admin/tinymce/window.php:59
 msgid "(album categories)"
 msgstr ""
 
-#: admin/tinymce/window.php:74
-msgid "custom size"
+#: admin/tinymce/window.php:61
+msgid "all galleries"
 msgstr ""
 
-#: admin/tinymce/window.php:85 admin/tinymce/window.php:128
+#: admin/tinymce/window.php:75
+msgid "custom settings"
+msgstr ""
+
+#: admin/tinymce/window.php:84
+msgid "Choose skin"
+msgstr ""
+
+#: admin/tinymce/window.php:86
+msgid "choose custom skin"
+msgstr ""
+
+#: admin/tinymce/window.php:95
+msgid "Skin size"
+msgstr ""
+
+#: admin/tinymce/window.php:95
+msgid "blank for default"
+msgstr ""
+
+#: admin/tinymce/window.php:96
+msgid "width"
+msgstr ""
+
+#: admin/tinymce/window.php:96
+msgid "height"
+msgstr ""
+
+#: admin/tinymce/window.php:105
+msgid "Order by"
+msgstr ""
+
+#: admin/tinymce/window.php:107
+msgid "Gallery IDs (default)"
+msgstr ""
+
+#: admin/tinymce/window.php:108
+msgid "Gallery Title"
+msgstr ""
+
+#: admin/tinymce/window.php:109
+msgid "User Defined"
+msgstr ""
+
+#: admin/tinymce/window.php:110
+msgid "Randomly"
+msgstr ""
+
+#: admin/tinymce/window.php:114
+msgid "Order"
+msgstr ""
+
+#: admin/tinymce/window.php:116
+msgid "DESC (default)"
+msgstr ""
+
+#: admin/tinymce/window.php:117
+msgid "ASC"
+msgstr ""
+
+#: admin/tinymce/window.php:121
+msgid "Exclude Gallery"
+msgstr ""
+
+#: admin/tinymce/window.php:132 admin/tinymce/window.php:198
 msgid "Insert"
+msgstr ""
+
+#: admin/tuning.php:15 admin/tuning.php:21
+msgid "Directory <STRONG>\""
+msgstr ""
+
+#: admin/tuning.php:15
+msgid ""
+"\"</STRONG> doesn't exist. Please create first the <STRONG>\"flagallery-skins"
+"\"</STRONG> folder!"
+msgstr ""
+
+#: admin/tuning.php:21
+msgid "\"</STRONG> is not writeable!"
 msgstr ""
 
 #: admin/upgrade.php:20
 msgid "Upgrade database structure..."
 msgstr ""
 
-#: admin/upgrade.php:49 admin/upgrade.php:59
+#: admin/upgrade.php:53 admin/upgrade.php:63
 msgid "finished"
 msgstr ""
 
-#: admin/upgrade.php:57
+#: admin/upgrade.php:61
 msgid "Import date and time information..."
 msgstr ""
 
-#: admin/upgrade.php:130 admin/upgrade.php:149
+#: admin/upgrade.php:134 admin/upgrade.php:153
 msgid "Upgrade GRAND FlAGallery"
 msgstr ""
 
-#: admin/upgrade.php:131
+#: admin/upgrade.php:135
 msgid "The script detect that you upgrade from a older version."
 msgstr ""
 
-#: admin/upgrade.php:132
+#: admin/upgrade.php:136
 msgid ""
 "Your database tables for GRAND FlAGallery is out-of-date, and must be "
 "upgraded before you can continue."
 msgstr ""
 
-#: admin/upgrade.php:133
+#: admin/upgrade.php:137
 msgid ""
 "If you would like to downgrade later, please make first a complete backup of "
 "your database and the images."
 msgstr ""
 
-#: admin/upgrade.php:134
+#: admin/upgrade.php:138
 msgid "The upgrade process may take a while, so please be patient."
 msgstr ""
 
-#: admin/upgrade.php:135
+#: admin/upgrade.php:139
 msgid "Start upgrade now"
 msgstr ""
 
-#: admin/upgrade.php:151
+#: admin/upgrade.php:155
 msgid "Upgrade sucessful"
 msgstr ""
 
-#: admin/upgrade.php:152
+#: admin/upgrade.php:156
 msgid "Continue"
+msgstr ""
+
+#: admin/wpmu.php:32
+msgid "Update successfully"
+msgstr ""
+
+#: admin/wpmu.php:41
+msgid "General WordPress MU Settings"
+msgstr ""
+
+#: admin/wpmu.php:49
+msgid ""
+"This is the default path for all blogs. With the placeholder %BLOG_ID% you "
+"can organize the folder structure better. The path must end with a /."
+msgstr ""
+
+#: admin/wpmu.php:52
+msgid "Enable upload quota check"
+msgstr ""
+
+#: admin/wpmu.php:54
+msgid "Should work if the gallery is bellow the blog.dir"
+msgstr ""
+
+#: admin/wpmu.php:58
+msgid "Enable roles/capabilities"
+msgstr ""
+
+#: admin/wpmu.php:60
+msgid "Allow users to change the roles for other blog authors."
+msgstr ""
+
+#: flag.php:135
+msgid ""
+"Sorry, GRAND Flash Album Gallery works only with a Memory Limit of 16 MB "
+"higher"
+msgstr ""
+
+#: lib/class.swfobject.php:61
+msgid "Skins for GRAND FlAGallery, Photo Galleries, Video Galleries"
+msgstr ""
+
+#: lib/class.swfobject.php:62
+msgid ""
+"developed by CodEasily.com - WordPress Flash Templates, WordPress Themes and "
+"WordPress plugins"
+msgstr ""
+
+#: lib/class.swfobject.php:63 lib/swfobject.php:33
+msgid ""
+"The <A href="http://wordpress.org/%22http://www.macromedia.com/go/getflashplayer/%22">Flash Player</A> "
+"and a browser with Javascript support are needed."
 msgstr ""
 
 #: lib/core.php:199
 #, php-format
 msgid ""
 "Note : Based on your server memory limit you should not upload larger images "
-"then <strong>%d x %d</strong> pixel"
+"then <STRONG>%d x %d</STRONG> pixel"
 msgstr ""
 
-#: lib/meta.php:73
+#: lib/core.php:279
+msgid "Can't create/open file '"
+msgstr ""
+
+#: lib/core.php:285
+msgid "Can't write data to file '"
+msgstr ""
+
+#: lib/meta.php:115
 msgid " mm"
 msgstr ""
 
-#: lib/meta.php:79
+#: lib/meta.php:121
 msgid " sec"
 msgstr ""
 
-#: lib/meta.php:329
+#: lib/meta.php:125
+msgid "Fired"
+msgstr ""
+
+#: lib/meta.php:125
+msgid "Not fired"
+msgstr ""
+
+#: lib/meta.php:386
 msgid "Aperture"
 msgstr ""
 
-#: lib/meta.php:330 lib/meta.php:355
+#: lib/meta.php:387 lib/meta.php:412
 msgid "Credit"
 msgstr ""
 
-#: lib/meta.php:331
+#: lib/meta.php:388
 msgid "Camera"
 msgstr ""
 
-#: lib/meta.php:332
+#: lib/meta.php:389
 msgid "Caption"
 msgstr ""
 
-#: lib/meta.php:333
+#: lib/meta.php:390
 msgid "Date/Time"
 msgstr ""
 
-#: lib/meta.php:334
+#: lib/meta.php:391
 msgid "Copyright"
 msgstr ""
 
-#: lib/meta.php:335
+#: lib/meta.php:392
 msgid "Focal length"
 msgstr ""
 
-#: lib/meta.php:336
+#: lib/meta.php:393
 msgid "ISO"
 msgstr ""
 
-#: lib/meta.php:337
+#: lib/meta.php:394
 msgid "Shutter speed"
 msgstr ""
 
-#: lib/meta.php:340
+#: lib/meta.php:397
 msgid "Tags"
 msgstr ""
 
-#: lib/meta.php:341
+#: lib/meta.php:398
 msgid "Subject"
 msgstr ""
 
-#: lib/meta.php:342
+#: lib/meta.php:399
 msgid "Make"
 msgstr ""
 
-#: lib/meta.php:343
+#: lib/meta.php:400
 msgid "Edit Status"
 msgstr ""
 
-#: lib/meta.php:344
+#: lib/meta.php:401
 msgid "Category"
 msgstr ""
 
-#: lib/meta.php:345
+#: lib/meta.php:402
 msgid "Keywords"
 msgstr ""
 
-#: lib/meta.php:346
+#: lib/meta.php:403
 msgid "Date Created"
 msgstr ""
 
-#: lib/meta.php:347
+#: lib/meta.php:404
 msgid "Time Created"
 msgstr ""
 
-#: lib/meta.php:348
+#: lib/meta.php:405
 msgid "Author Position"
 msgstr ""
 
-#: lib/meta.php:349
+#: lib/meta.php:406
 msgid "City"
 msgstr ""
 
-#: lib/meta.php:350
+#: lib/meta.php:407
 msgid "Location"
 msgstr ""
 
-#: lib/meta.php:351
+#: lib/meta.php:408
 msgid "Province/State"
 msgstr ""
 
-#: lib/meta.php:352
+#: lib/meta.php:409
 msgid "Country code"
 msgstr ""
 
-#: lib/meta.php:353
+#: lib/meta.php:410
 msgid "Country"
 msgstr ""
 
-#: lib/meta.php:354
+#: lib/meta.php:411
 msgid "Headline"
 msgstr ""
 
-#: lib/meta.php:356
+#: lib/meta.php:413
 msgid "Source"
 msgstr ""
 
-#: lib/meta.php:357
+#: lib/meta.php:414
 msgid "Copyright Notice"
 msgstr ""
 
-#: lib/meta.php:358
+#: lib/meta.php:415
 msgid "Contact"
 msgstr ""
 
-#: lib/meta.php:359
+#: lib/meta.php:416
 msgid "Last modified"
 msgstr ""
 
-#: lib/meta.php:360
+#: lib/meta.php:417
 msgid "Program tool"
 msgstr ""
 
-#: lib/meta.php:361
+#: lib/meta.php:418
 msgid "Format"
 msgstr ""
 
-#: lib/shortcodes.php:71 lib/shortcodes.php:86
+#: lib/meta.php:419
+msgid "Image Width"
+msgstr ""
+
+#: lib/meta.php:420
+msgid "Image Height"
+msgstr ""
+
+#: lib/meta.php:421
+msgid "Flash"
+msgstr ""
+
+#: lib/shortcodes.php:84 lib/shortcodes.php:99
 msgid "[Gallery not found]"
 msgstr ""
 
-#: lib/shortcodes.php:80
+#: lib/shortcodes.php:93
 #, php-format
 msgid "[Gallery %s not found]"
 msgstr ""
 
-#: lib/swfobject.php:145
-msgid ""
-"The <a href=\"http://www.macromedia.com/go/getflashplayer\">Flash Player</a> "
-"and a browser with Javascript support are needed.."
+#: skins/default/default.php:69 skins/default_int/default_int.php:69
+msgid "set default settings"
+msgstr ""
+
+#: widgets/widgets.php:28
+msgid "Add recent or random images from the galleries"
+msgstr ""
+
+#: widgets/widgets.php:30
+msgid "FlAGallery Widget"
+msgstr ""
+
+#: widgets/widgets.php:130
+msgid "Title :"
+msgstr ""
+
+#: widgets/widgets.php:136
+msgid "Show :"
+msgstr ""
+
+#: widgets/widgets.php:141
+msgid "Thumbnails"
+msgstr ""
+
+#: widgets/widgets.php:142
+msgid "Original images"
+msgstr ""
+
+#: widgets/widgets.php:149
+msgid "random"
+msgstr ""
+
+#: widgets/widgets.php:150
+msgid "recent added "
+msgstr ""
+
+#: widgets/widgets.php:156
+msgid "Enable IE8 Web Slices"
+msgstr ""
+
+#: widgets/widgets.php:161
+msgid "Width x Height :"
+msgstr ""
+
+#: widgets/widgets.php:168
+msgid "Select :"
+msgstr ""
+
+#: widgets/widgets.php:170
+msgid "All galleries"
+msgstr ""
+
+#: widgets/widgets.php:171
+msgid "Only which are not listed"
+msgstr ""
+
+#: widgets/widgets.php:172
+msgid "Only which are listed"
+msgstr ""
+
+#: widgets/widgets.php:178
+msgid "Gallery ID :"
+msgstr ""
+
+#: widgets/widgets.php:180
+msgid "Gallery IDs, separated by commas."
 msgstr ""
 
 #: xml/media-rss.php:39
