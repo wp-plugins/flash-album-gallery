@@ -49,6 +49,10 @@ Important Links:
  
 == Changelog ==
  
+V0.41 - 25.03.2010 
+
+* Bugfix : Skin options didn't save colors
+
 V0.40 - 24.03.2010 
 
 * Change : DataBase structure 
