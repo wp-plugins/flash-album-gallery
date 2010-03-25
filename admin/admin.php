@@ -119,49 +119,53 @@ class flagAdminPanel{
 		wp_register_script('flag-progressbar', FLAG_URLPATH .'admin/js/flag.progressbar.js', array('jquery'), '1.0.0');
 		wp_register_script('swfupload_f10', FLAG_URLPATH .'admin/js/swfupload.js', array('jquery'), '2.2.0');
 				
-		switch ($_GET['page']) {
-			case FLAGFOLDER : 
-				wp_enqueue_script( 'postbox' );
-			case "flag-manage-gallery" :
-				print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
-				wp_enqueue_script( 'multifile', FLAG_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.4.6' );
-				wp_enqueue_script( 'flag-swfupload-handler', FLAG_URLPATH .'admin/js/swfupload.handler.js', array('swfupload_f10'), '2.2.0' );
-				wp_enqueue_script( 'postbox' );
-				wp_enqueue_script( 'flag-ajax' );
-				wp_enqueue_script( 'flag-progressbar' );
-				add_thickbox();
-			break;
-			case "flag-options" :
-				print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
-			break;		
-			case "flag-skins" :
-				wp_enqueue_script('farbtastic-nosharp', FLAG_URLPATH.'admin/js/farbtastic-nosharp.js', array('jquery'), '1.2');
-				//wp_enqueue_script( 'farbtastic' );
- 				print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
-			break;		
+		if (isset($_GET['page'])) { 
+			switch ($_GET['page']) {
+				case FLAGFOLDER : 
+					wp_enqueue_script( 'postbox' );
+				case "flag-manage-gallery" :
+					print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
+					wp_enqueue_script( 'multifile', FLAG_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.4.6' );
+					wp_enqueue_script( 'flag-swfupload-handler', FLAG_URLPATH .'admin/js/swfupload.handler.js', array('swfupload_f10'), '2.2.0' );
+					wp_enqueue_script( 'postbox' );
+					wp_enqueue_script( 'flag-ajax' );
+					wp_enqueue_script( 'flag-progressbar' );
+					add_thickbox();
+				break;
+				case "flag-options" :
+					print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
+				break;		
+				case "flag-skins" :
+					wp_enqueue_script('farbtastic-nosharp', FLAG_URLPATH.'admin/js/farbtastic-nosharp.js', array('jquery'), '1.2');
+					//wp_enqueue_script( 'farbtastic' );
+					print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
+				break;		
+			}
 		}
 	}		
 	
 	function load_styles() {
 		
-		switch ($_GET['page']) {
-			case FLAGFOLDER :
-				wp_enqueue_style( 'flagadmin', FLAG_URLPATH .'admin/css/flagadmin.css', false, '2.8.1', 'screen' );
-				wp_admin_css( 'css/dashboard' );
-			break;
-			case "flag-options" :
-			case "flag-manage-gallery" :
-				wp_enqueue_style( 'flagtabs', FLAG_URLPATH .'admin/css/tabs.css', false, '1.0.0', 'screen' );
-				wp_enqueue_style( 'flagadmin', FLAG_URLPATH .'admin/css/flagadmin.css', false, '2.8.1', 'screen' );
-				wp_enqueue_style( 'thickbox');
-			break;
-			case "flag-skins" :
-				wp_enqueue_style( 'farbtastic' );
-				wp_enqueue_style( 'flagtabs', FLAG_URLPATH .'admin/css/tabs.css', false, '1.0.0', 'screen' );
-				wp_enqueue_style( 'flagadmin', FLAG_URLPATH .'admin/css/flagadmin.css', false, '2.8.1', 'screen' );
-				wp_admin_css( 'css/dashboard' );
-			break;
-		}	
+		if (isset($_GET['page'])) { 
+			switch ($_GET['page']) {
+				case FLAGFOLDER :
+					wp_enqueue_style( 'flagadmin', FLAG_URLPATH .'admin/css/flagadmin.css', false, '2.8.1', 'screen' );
+					wp_admin_css( 'css/dashboard' );
+				break;
+				case "flag-options" :
+				case "flag-manage-gallery" :
+					wp_enqueue_style( 'flagtabs', FLAG_URLPATH .'admin/css/tabs.css', false, '1.0.0', 'screen' );
+					wp_enqueue_style( 'flagadmin', FLAG_URLPATH .'admin/css/flagadmin.css', false, '2.8.1', 'screen' );
+					wp_enqueue_style( 'thickbox');
+				break;
+				case "flag-skins" :
+					wp_enqueue_style( 'farbtastic' );
+					wp_enqueue_style( 'flagtabs', FLAG_URLPATH .'admin/css/tabs.css', false, '1.0.0', 'screen' );
+					wp_enqueue_style( 'flagadmin', FLAG_URLPATH .'admin/css/flagadmin.css', false, '2.8.1', 'screen' );
+					wp_admin_css( 'css/dashboard' );
+				break;
+			}	
+		}
 	}
 	
 	function show_help($help, $screen) {
