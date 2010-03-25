@@ -3,20 +3,24 @@
 header("content-type:text/xml;charset=utf-8");
 
 // look up for the path
-require_once( str_replace("\\","/", dirname(dirname(dirname(__FILE__))) . "/flash-album-gallery/flag-config.php") );
+if(file_exists(dirname(dirname(dirname(__FILE__))) . "/flash-album-gallery/flag-config.php")) {
+	require_once( str_replace("\\","/", dirname(dirname(dirname(__FILE__))) . "/flash-album-gallery/flag-config.php") );
+} else if(file_exists(dirname(dirname(dirname(__FILE__))) . "/flag-config.php")) {
+	require_once( str_replace("\\","/", dirname(dirname(dirname(__FILE__))) . "/flag-config.php") );
+}
 
 global $wpdb;
 
 $flag_options = get_option ('flag_options');
-$siteurl	 = get_option ('siteurl');
+$siteurl = get_option ('siteurl');
 
 // get the gallery id
 $gID = explode( '_', $_GET['gid'] );
 
 if ( is_user_logged_in() ) 
-	$exclude_clause = ' AND exclude<>1 ';
-else 
 	$exclude_clause = '';
+else 
+	$exclude_clause = ' AND exclude<>1 ';
 
 echo "<gallery title='".attribute_escape(stripslashes($_GET['albumname']))."'>\n";
 // get the pictures
