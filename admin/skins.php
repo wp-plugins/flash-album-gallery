@@ -88,7 +88,9 @@ function flag_skin_options_tab() {
 if ( isset($_POST['updateskinoption']) ) {	
 	check_admin_referer('skin_settings');
 	// get the hidden option fields, taken from WP core
-	if ( $_POST['skinoptions'] )	
+	if ( $_POST['skin_options'] )
+		$options = explode(',', stripslashes($_POST['skin_options']));
+	elseif ( $_POST['skinoptions'] )
 		$options = explode(',', stripslashes($_POST['skinoptions']));
 	if ($options) {
 		$settings_content = '<?php '."\n";
