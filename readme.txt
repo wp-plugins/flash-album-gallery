@@ -187,9 +187,9 @@ This problem could happened if you have a low memory_limit in your php environme
 
 This problem could happened if you have a low memory_limit in your php environment or you have a very large image (resolution, not size). The memory limit sets the maximum amount of memory in bytes that a script is allowed to allocate. You can either lower the resolution of your images or increase the PHP Memory limit (via ini_set, php.ini or htaccess). If you didn't know how to do that, please contact your web hoster.
 
-= I get the error message: "Couldn't load the Main XML file.Error #1090" =
+= I get the error message: "Couldn't load the Color XML file.Error #1090" =
 
-Make sure that all colors set properly on Skins page -&gt; Skin options tab. Colors should be in HEX-format (without '#' symbol from v0.40).
+Make sure that all colors set properly on Skins page -> Skin options tab. Colors should be in HEX-format (without '#' symbol from v0.40).
 
 = When I open the archive/category page of my site it will show the post but with this message: 'The Flash Player and a browser with Javascript support are needed...'. But if I open the post, it will shows the gallery perfectly =
 
