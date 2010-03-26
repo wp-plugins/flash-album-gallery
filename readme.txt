@@ -191,8 +191,7 @@ This problem could happened if you have a low memory_limit in your php environme
 
 Make sure that all colors set properly on Skins page -&gt; Skin options tab. Colors should be in HEX-format (without '#' symbol from v0.40).
 
-= When I open the archive/category page of my site it will show the post but with this message : 'The Flash Player and a browser with Javascript support are needed..'
-But if I open the post, it will shows the gallery perfectly =
+= When I open the archive/category page of my site it will show the post but with this message: 'The Flash Player and a browser with Javascript support are needed...'. But if I open the post, it will shows the gallery perfectly =
 
 It's because your theme use some function different from <?php the_content('Read more'); ?> to display post excerpt in index.php or archive.php or category.php. If you insert "more" (page breack) tag in post before shortcode, then flash will be only on individual page.
 
