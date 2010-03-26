@@ -169,36 +169,36 @@ if( isset($_GET['skin']) ) {
 ?>
 <div id="slider" class="wrap">
 	<ul id="tabs" class="tabs">
-		<li class="selected"><a href="#" rel="addskin"><?php _e('Add new skin', 'flag') ;?></a></li>
-		<li><a href="#" rel="wantmore"><?php _e('Want more skins?', 'flag') ;?></a></li>
-		<li><a href="#" rel="skinoptions"><?php _e('Skin Options', 'flag') ;?></a></li>
+		<li class="selected"><a href="#" rel="addskin"><?php _e('Add new skin', 'flag'); ?></a></li>
+		<li><a href="#" rel="wantmore"><?php _e('Want more skins?', 'flag'); ?></a></li>
+		<li><a href="#" rel="skinoptions"><?php _e('Skin Options', 'flag'); ?></a></li>
 	</ul>
 
 	<div id="addskin" class="cptab">
-		<h2><?php _e('Add new skin', 'flag') ;?></h2>
+		<h2><?php _e('Add new skin', 'flag'); ?></h2>
 <?php if( current_user_can('FlAG Add skins') ) { ?>
-		<h4><?php _e('Install a skin in .zip format', 'flag') ?></h4>
-		<p><?php _e('If you have a skin in a .zip format, You may install it by uploading it here.', 'flag') ?></p>
-		<form method="post" enctype="multipart/form-data" action="<?php echo admin_url('admin.php?page=flag-skins') ?>">
-			<?php wp_nonce_field( 'skin-upload') ?>
+		<h4><?php _e('Install a skin in .zip format', 'flag'); ?></h4>
+		<p><?php _e('If you have a skin in a .zip format, You may install it by uploading it here.', 'flag'); ?></p>
+		<form method="post" enctype="multipart/form-data" action="<?php echo admin_url('admin.php?page=flag-skins'); ?>">
+			<?php wp_nonce_field( 'skin-upload'); ?>
 			<p><input type="file" name="skinzip" />
-			<input type="submit" class="button" name="installskin" value="<?php _e('Install Now', 'flag') ?>" /></p>
+			<input type="submit" class="button" name="installskin" value="<?php _e('Install Now', 'flag'); ?>" /></p>
 		</form>
 		<?php if( isset($_POST['installskin']) ) { 
 			do_action('install_skins_upload'); 
 		} ?>
 <?php } else { ?>
-		<p><?php _e('You do not have sufficient permissions to install skin through admin page. You can install it by uploading via ftp to /flagallery-skins/ folder.', 'flag') ?></p>
+		<p><?php _e('You do not have sufficient permissions to install skin through admin page. You can install it by uploading via ftp to /flagallery-skins/ folder.', 'flag'); ?></p>
 <?php } ?>
 	</div>
 	
 	<div id="wantmore" class="cptab">
-		<h2><?php _e('More skins', 'flag') ;?></h2>
-		<p><?php _e('If you want more skins, You may get it at.', 'flag') ?> <a target="_blank" href="http://photogallerycreator.com">PhotoGalleryCreator.com</a></p>
+		<h2><?php _e('More skins', 'flag'); ?></h2>
+		<p><?php _e('If you want more skins, You may get it at.', 'flag'); ?> <a target="_blank" href="http://photogallerycreator.com">PhotoGalleryCreator.com</a></p>
 	</div>
 	
 	<div id="skinoptions" class="cptab">
-		<h2><?php _e('Skin Options', 'flag') ;?></h2>
+		<h2><?php _e('Skin Options', 'flag'); ?></h2>
 		<?php flag_skin_options_tab(); ?>
 	</div>
 	

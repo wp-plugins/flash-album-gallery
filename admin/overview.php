@@ -10,7 +10,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 function flag_admin_overview()  {	
 ?>
 <div class="wrap flag-wrap">
-	<h2><?php _e('FlAG Gallery Overview', 'flag') ?></h2>
+	<h2><?php _e('FlAG Gallery Overview', 'flag'); ?></h2>
 	<div id="flag-overview" class="metabox-holder">
 		<div id="side-info-column" class="inner-sidebar" style="display:block;">
 				<?php do_meta_boxes(FLAGFOLDER, 'side', null); ?>
@@ -163,12 +163,12 @@ function flag_overview_setup(){
 	<?php if (!IS_WPMU || wpmu_site_admin() ) : ?>
 	<div id="major-publishing-actions">
 	<form id="resetsettings" name="resetsettings" method="post">
-		<?php wp_nonce_field('flag_uninstall') ?>
+		<?php wp_nonce_field('flag_uninstall'); ?>
 			<div id="save-action" class="alignleft">
-				<input class="button" id="save-post" type="submit" name="resetdefault" value="<?php _e('Reset settings', 'flag') ;?>" onclick="javascript:check=confirm('<?php _e('Reset all options to default settings ?\n\nChoose [Cancel] to Stop, [OK] to proceed.\n','flag'); ?>');if(check==false) return false;" />
+				<input class="button" id="save-post" type="submit" name="resetdefault" value="<?php _e('Reset settings', 'flag'); ?>" onclick="javascript:check=confirm('<?php _e('Reset all options to default settings ?\n\nChoose [Cancel] to Stop, [OK] to proceed.\n','flag'); ?>');if(check==false) return false;" />
 			</div>
 			<div id="preview-action" class="alignright">
-				<input type="submit" name="uninstall" class="button delete" value="<?php _e('Uninstall plugin', 'flag') ?>" onclick="javascript:check=confirm('<?php _e('You are about to Uninstall this plugin from WordPress.\nThis action is not reversible.\n\nChoose [Cancel] to Stop, [OK] to Uninstall.\n','flag'); ?>');if(check==false) return false;" />
+				<input type="submit" name="uninstall" class="button delete" value="<?php _e('Uninstall plugin', 'flag'); ?>" onclick="javascript:check=confirm('<?php _e('You are about to Uninstall this plugin from WordPress.\nThis action is not reversible.\n\nChoose [Cancel] to Stop, [OK] to Uninstall.\n','flag'); ?>');if(check==false) return false;" />
 			</div>
 			<br class="clear" />
 	</form>
@@ -187,7 +187,7 @@ function flag_news_box(){
 <script type="text/javascript">
 /*<![CDATA[*/
 jQuery(document).ready(function(){
-jQuery("#photogallerycreator").load("<?php echo FLAG_URLPATH ?>admin/news.php #flag-skin-gallery td:lt(10) > div", {want2Read:'http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/'},function(){
+jQuery("#photogallerycreator").load("<?php echo FLAG_URLPATH; ?>admin/news.php #flag-skin-gallery td:lt(10) > div", {want2Read:'http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/'},function(){
 //Write your additional jQuery script below. Use as many functions as you like, for instance:
 jQuery("#photogallerycreator div").css({border:"1px solid #dedede", margin:"5px", padding:"10px 0"});
 jQuery("#photogallerycreator img").css({display:"block", margin:"0 auto 5px auto"});
@@ -240,8 +240,8 @@ function flag_overview_right_now() {
 </div>
 <div class="versions">
     <p>
-			<?php if(current_user_can('FlAG Upload images')): ?><a class="button rbutton" href="admin.php?page=flag-manage-gallery&tabs=1"><strong><?php _e('Upload pictures', 'flag') ?></strong></a><?php endif; ?>
-			<?php _e('Here you can control your images and galleries.', 'flag') ?></p>
+			<?php if(current_user_can('FlAG Upload images')): ?><a class="button rbutton" href="admin.php?page=flag-manage-gallery&tabs=1"><strong><?php _e('Upload pictures', 'flag'); ?></strong></a><?php endif; ?>
+			<?php _e('Here you can control your images and galleries.', 'flag'); ?></p>
 		<span><?php
 			$userlevel = '<span class="b">' . (current_user_can('manage_options') ? __('Gallery Administrator', 'flag') : __('Gallery Editor', 'flag')) . '</span>';
         printf(__('You currently have %s rights.', 'flag'), $userlevel);
@@ -339,7 +339,7 @@ function get_serverinfo() {
 	if (is_callable('xml_parser_create')) $xml = __('Yes', 'flag');
 	else $xml = __('No', 'flag');
 ?>
-	<li><?php _e('Operating System', 'flag'); ?> : <span><?php echo PHP_OS; ?>&nbsp;(<?php echo (PHP_INT_SIZE * 8) ?>&nbsp;Bit)</span></li>
+	<li><?php _e('Operating System', 'flag'); ?> : <span><?php echo PHP_OS; ?>&nbsp;(<?php echo (PHP_INT_SIZE * 8); ?>&nbsp;Bit)</span></li>
 	<li><?php _e('Server', 'flag'); ?> : <span><?php echo $_SERVER["SERVER_SOFTWARE"]; ?></span></li>
 	<li><?php _e('Memory usage', 'flag'); ?> : <span><?php echo $memory_usage; ?></span></li>
 	<li><?php _e('MYSQL Version', 'flag'); ?> : <span><?php echo $sqlversion; ?></span></li>

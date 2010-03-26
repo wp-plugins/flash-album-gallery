@@ -111,7 +111,7 @@ class add_flag_button {
 				jQuery("#ed_toolbar").append('<input type=\"button\" style=\"margin:3px 2px 2px;\" class=\"ed_button\" id=\"FlAGallery_button\" onClick=\"wpflagins();\" value=\"FlAGallery\" />');
 			});
 			function wpflagins() {
-				tb_show("<?php _e('Insert Flash Album with one or more galleries', 'flag'); ?>","<?php echo FLAG_URLPATH ?>admin/tinymce/window.php?riched=false&TB_iframe=true&width=360&height=210",false);
+				tb_show("<?php _e('Insert Flash Album with one or more galleries', 'flag'); ?>","<?php echo FLAG_URLPATH; ?>admin/tinymce/window.php?riched=false&TB_iframe=true&width=360&height=210",false);
 				jQuery("#TB_window").css({width:"360px", height:"210px", marginTop:"-120px", marginLeft:"-180px", top:"50%"});
 				jQuery("#TB_iframeContent").css({width:"360px", height:"210px"});
 				jQuery(window).unbind("resize");

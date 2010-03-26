@@ -49,11 +49,15 @@ Important Links:
  
 == Changelog ==
  
-V0.41 - 25.03.2010 
+= v0.42 - 25.03.2010 =
+
+* Changed : Replaced all php short_open_tag from '<?=...?>' to '<?php echo ...; ?>'
+
+= v0.41 - 25.03.2010 =
 
 * Bugfix : Skin options didn't save colors
 
-V0.40 - 24.03.2010 
+= v0.40 - 24.03.2010 =
 
 * Change : DataBase structure 
 * Change : Skin options now on skins page 
@@ -61,28 +65,33 @@ V0.40 - 24.03.2010
 * Added : Each skin has own color settings saved in file
 * Added : Hide image for unregistered users option
 * Added : SWFaddress for deeplinking in flash
+* Added : Meta data for Images
+* Added : Action popup for Resize image... and Create new thumbnails
+* Added : New Action - Import Meta data
+* Added : Actions on Manage Galleries page
+* Added : Search Images on Manage Galleries page
 
-V0.39pl3 - 12.02.2010 
+= v0.39pl3 - 12.02.2010 =
 
 * Bugfix : Image uploader fix (Error 'no valid image') 
 * Added : German translation
 
-V0.39pl2 - 04.02.2010 
+= v0.39pl2 - 04.02.2010 =
 
 * Bugfix : TinyMCE button insert wrong shortcode 
 * Bugfix : Color tab and color settings not showing 
 
-V0.39pl1 - 31.01.2010 
+= v0.39pl1 - 31.01.2010 =
 
 * Added : Portuguese  translation 
 * Added : Traditional Chinese  translation 
 
-V0.39 - 25.12.2009 
+= v0.39 - 25.12.2009 =
 
 * Added : Spanish translation 
 * Bugfix : bugfixes for WP2.9  
 
-V0.38 - 08.12.2009 
+= v0.38 - 08.12.2009 =
 
 * Added : Shortcode parameters (orderby=gid | title | random, order=DESC | ASC, exclude, skin) 
 * Added : Popup tabs for additional shortcode parameters 
@@ -90,41 +99,41 @@ V0.38 - 08.12.2009
 * Added : Ability set default skin colors or leave your own 
 * Bugfix : small fixes  
 
-V0.37 - 13.11.2009 
+= v0.37 - 13.11.2009 =
 
 * Added : French translation 
 * Bugfix : Fix for Skin page (blank page)  
 
-V0.36 - 5.11.2009 
+= v0.36 - 5.11.2009 =
  
 * Added : Italian translation 
 * Update : Little fixes of text  
  
-V0.35 - 22.10.2009 
+= v0.35 - 22.10.2009 =
  
 * Added : Confirmation popup for delete skin option 
 * Bugfix: Fix for included skins with WP 2.7.1 and PHP 4 
 * Update : Update for Wordpress v.2.8.5 
  
-V0.34 - 19.10.2009 
+= v0.34 - 19.10.2009 =
  
 * Added : Delete skin option 
 * Added : Capability for 'delete skin' 
 * Bugfix : Fix for flag.ajax.js (conflict with wp-security-scan plugin) 
  
-V0.33 - 5.10.2009 
+= v0.33 - 5.10.2009 =
  
 * Bugfix : Fix for skins upload 
 * Bugfix : Fix editor buttons in IE 
  
-V0.32 - 30.09.2009 
+= v0.32 - 30.09.2009 =
  
 * Added : Skin "PhotoGallery PRO 1.0 DEMO" 
 * Bugfix : Fix for image date & time 
 * Bugfix : Fixed html special chars in description of image 
 * Changed : Database structure 
  
-V0.29 - 17.08.2009 
+= v0.29 - 17.08.2009 =
  
 * NEW : Import images from folder 
 * Added : Button "FlAGallery" on HTML Editor panel, even if Visual Editor is disabled 

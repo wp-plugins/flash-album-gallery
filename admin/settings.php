@@ -57,10 +57,10 @@ function flag_admin_options()  {
 <div id="slider" class="wrap">
 
 	<ul id="tabs" class="tabs">
-		<li class="selected"><a href="#" rel="generaloptions"><?php _e('General Options', 'flag') ;?></a></li>
-		<li><a href="#" rel="images"><?php _e('Images', 'flag') ;?></a></li>
-		<li><a href="#" rel="sorting"><?php _e( 'Sorting', 'flag' ) ;?></a></li>
-		<li><a href="#" rel="roles"><?php _e('Roles', 'flag') ;?></a></li>
+		<li class="selected"><a href="#" rel="generaloptions"><?php _e('General Options', 'flag'); ?></a></li>
+		<li><a href="#" rel="images"><?php _e('Images', 'flag'); ?></a></li>
+		<li><a href="#" rel="sorting"><?php _e( 'Sorting', 'flag' ); ?></a></li>
+		<li><a href="#" rel="roles"><?php _e('Roles', 'flag'); ?></a></li>
 	</ul>
 
 	<!-- General Options -->
@@ -68,31 +68,31 @@ function flag_admin_options()  {
 	<div id="generaloptions" class="cptab">
 		<h2><?php _e('General Options','flag'); ?></h2>
 		<form name="generaloptions" method="post">
-		<?php wp_nonce_field('flag_settings') ?>
+		<?php wp_nonce_field('flag_settings'); ?>
 		<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,useMediaRSS" />
 			<table class="form-table flag-options">
 				<tr valign="top">
-					<th align="left"><?php _e('Gallery path','flag') ?></th>
+					<th align="left"><?php _e('Gallery path','flag'); ?></th>
 					<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="galleryPath" value="<?php echo $flag->options['galleryPath']; ?>" />
-					<span class="setting-description"><?php _e('This is the default path for all galleries','flag') ?></span></td>
+					<span class="setting-description"><?php _e('This is the default path for all galleries','flag'); ?></span></td>
 				</tr>
 				<tr valign="top">
-					<th><?php _e('Default flash size (W x H)','flag') ?>:</th>
-					<td><input type="text" size="4" maxlength="4" name="flashWidth" value="<?php echo $flag->options['flashWidth'] ?>" /> x
-					<input type="text" size="4" maxlength="4" name="flashHeight" value="<?php echo $flag->options['flashHeight'] ?>" /></td>
+					<th><?php _e('Default flash size (W x H)','flag'); ?>:</th>
+					<td><input type="text" size="4" maxlength="4" name="flashWidth" value="<?php echo $flag->options['flashWidth']; ?>" /> x
+					<input type="text" size="4" maxlength="4" name="flashHeight" value="<?php echo $flag->options['flashHeight']; ?>" /></td>
 				</tr>					
 				<tr valign="top">
-					<th align="left"><?php _e('Delete image files','flag') ?></th>
+					<th align="left"><?php _e('Delete image files','flag'); ?></th>
 					<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $flag->options['deleteImg']); ?> />
-					<?php _e('Delete files, when removing a gallery in the database','flag') ?></td>
+					<?php _e('Delete files, when removing a gallery in the database','flag'); ?></td>
 				</tr>
 				<tr>
-					<th align="left"><?php _e('Activate Media RSS feed','flag') ?></th>
+					<th align="left"><?php _e('Activate Media RSS feed','flag'); ?></th>
 					<td><input type="checkbox" name="useMediaRSS" value="1" <?php checked('1', $flag->options['useMediaRSS']); ?> />
-					<span class="setting-description"><?php _e('A RSS feed will be added to you blog header.','flag') ?></span></td>
+					<span class="setting-description"><?php _e('A RSS feed will be added to you blog header.','flag'); ?></span></td>
 				</tr>
 			</table>
-		<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag') ;?>"/></div>
+		<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
 		</form>	
 	</div>	
 	
@@ -101,22 +101,22 @@ function flag_admin_options()  {
 	<div id="images" class="cptab">
 		<h2><?php _e('Image settings','flag'); ?></h2>
 		<form name="imagesettings" method="POST">
-		<?php wp_nonce_field('flag_settings') ?>
+		<?php wp_nonce_field('flag_settings'); ?>
 		<input type="hidden" name="page_options" value="imgResize,imgWidth,imgHeight,imgQuality" />
 			<table class="form-table flag-options">
 				<tr valign="top">
-					<th scope="row" style="width:250px;"><label for="fixratio"><?php _e('Resize Images','flag') ?></label><br /><small>(Manage Gallery -> 'Resize Images' action)</small></th>
+					<th scope="row" style="width:250px;"><label for="fixratio"><?php _e('Resize Images','flag'); ?></label><br /><small>(Manage Gallery -> 'Resize Images' action)</small></th>
 					<td><input type="hidden" name="imgResize" value="1" <?php checked('1', $flag->options['imgResize']); ?> /> </td>
 					<td><input type="text" size="5" name="imgWidth" value="<?php echo $flag->options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $flag->options['imgHeight']; ?>" />
-					<span class="setting-description"><?php _e('Width x Height (in pixel). Flash Album Gallery will keep ratio size','flag') ?></span></td>
+					<span class="setting-description"><?php _e('Width x Height (in pixel). Flash Album Gallery will keep ratio size','flag'); ?></span></td>
 				</tr>
 				<tr valign="top">
-					<th align="left"><?php _e('Image quality','flag') ?></th>
+					<th align="left"><?php _e('Image quality','flag'); ?></th>
 					<td></td>
 					<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $flag->options['imgQuality']; ?>" /> %</td>
 				</tr>
 			</table>
-		<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag') ;?>"/></div>
+		<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
 		</form>	
 	</div>
 	
@@ -125,81 +125,81 @@ function flag_admin_options()  {
 	<div id="sorting" class="cptab">
 		<h2><?php _e('Sorting','flag'); ?></h2>
 		<form name="gallerysort" method="POST">
-		<?php wp_nonce_field('flag_settings') ?>
+		<?php wp_nonce_field('flag_settings'); ?>
 		<input type="hidden" name="page_options" value="galSort,galSortDir" />
-		<h3><?php _e('Sort options','flag') ?></h3>
+		<h3><?php _e('Sort options','flag'); ?></h3>
 			<table class="form-table flag-options">
 				<tr>
-					<th valign="top"><?php _e('Sort thumbnails','flag') ?>:</th>
+					<th valign="top"><?php _e('Sort thumbnails','flag'); ?>:</th>
 					<td>
-					<label><input name="galSort" type="radio" value="sortorder" <?php checked('sortorder', $flag->options['galSort']); ?> /> <?php _e('Custom order', 'flag') ;?></label><br />
-					<label><input name="galSort" type="radio" value="pid" <?php checked('pid', $flag->options['galSort']); ?> /> <?php _e('Image ID', 'flag') ;?></label><br />
-					<label><input name="galSort" type="radio" value="filename" <?php checked('filename', $flag->options['galSort']); ?> /> <?php _e('File name', 'flag') ;?></label><br />
-					<label><input name="galSort" type="radio" value="alttext" <?php checked('alttext', $flag->options['galSort']); ?> /> <?php _e('Alt / Title text', 'flag') ;?></label><br />
-					<label><input name="galSort" type="radio" value="imagedate" <?php checked('imagedate', $flag->options['galSort']); ?> /> <?php _e('Date / Time', 'flag') ;?></label>
+					<label><input name="galSort" type="radio" value="sortorder" <?php checked('sortorder', $flag->options['galSort']); ?> /> <?php _e('Custom order', 'flag'); ?></label><br />
+					<label><input name="galSort" type="radio" value="pid" <?php checked('pid', $flag->options['galSort']); ?> /> <?php _e('Image ID', 'flag'); ?></label><br />
+					<label><input name="galSort" type="radio" value="filename" <?php checked('filename', $flag->options['galSort']); ?> /> <?php _e('File name', 'flag'); ?></label><br />
+					<label><input name="galSort" type="radio" value="alttext" <?php checked('alttext', $flag->options['galSort']); ?> /> <?php _e('Alt / Title text', 'flag'); ?></label><br />
+					<label><input name="galSort" type="radio" value="imagedate" <?php checked('imagedate', $flag->options['galSort']); ?> /> <?php _e('Date / Time', 'flag'); ?></label>
 					</td>
 				</tr>
 				<tr>
-					<th valign="top"><?php _e('Sort direction','flag') ?>:</th>
-					<td><label><input name="galSortDir" type="radio" value="ASC" <?php checked('ASC', $flag->options['galSortDir']); ?> /> <?php _e('Ascending', 'flag') ;?></label><br />
-					<label><input name="galSortDir" type="radio" value="DESC" <?php checked('DESC', $flag->options['galSortDir']); ?> /> <?php _e('Descending', 'flag') ;?></label>
+					<th valign="top"><?php _e('Sort direction','flag'); ?>:</th>
+					<td><label><input name="galSortDir" type="radio" value="ASC" <?php checked('ASC', $flag->options['galSortDir']); ?> /> <?php _e('Ascending', 'flag'); ?></label><br />
+					<label><input name="galSortDir" type="radio" value="DESC" <?php checked('DESC', $flag->options['galSortDir']); ?> /> <?php _e('Descending', 'flag'); ?></label>
 					</td>
 				</tr>
 			</table>
-		<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag') ;?>"/></div>
+		<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
 		</form>	
 	</div>
 	
 <?php if (flag_wpmu_enable_function('wpmuRoles')) : ?>
 	<div id="roles" class="cptab">
 		<form method="POST" name="addroles" id="addroles" accept-charset="utf-8">
-			<?php wp_nonce_field('flag_addroles') ?>
+			<?php wp_nonce_field('flag_addroles'); ?>
 			<input type="hidden" name="page_options" value="flashBackcolor,buttonsMouseOver,buttonsMouseOut,catButtonsMouseOver,catButtonsMouseOut,catButtonsTextMouseOver,catButtonsTextMouseOut,thumbMouseOver,thumbMouseOut,mainTitle,categoryTitle,itemTitle,itemDescription" />
 			<h2><?php _e('Roles / capabilities','flag'); ?></h2>
-			<p><?php _e('Select the lowest role which should be able to access the follow capabilities. Flash Album Gallery supports the standard roles from WordPress.', 'flag') ?></p>
+			<p><?php _e('Select the lowest role which should be able to access the follow capabilities. Flash Album Gallery supports the standard roles from WordPress.', 'flag'); ?></p>
 			<table class="form-table"> 
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Main Flash Album Gallery overview', 'flag') ;?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Main Flash Album Gallery overview', 'flag'); ?>:</th> 
 				<td><label for="general"><select style="width: 150px;" name="general" id="general"><?php wp_dropdown_roles( flag_get_role('FlAG overview') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Use TinyMCE Button / Upload tab', 'flag') ;?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Use TinyMCE Button / Upload tab', 'flag'); ?>:</th> 
 				<td><label for="tinymce"><select style="width: 150px;" name="tinymce" id="tinymce"><?php wp_dropdown_roles( flag_get_role('FlAG Use TinyMCE') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Add gallery / Upload images', 'flag') ;?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Add gallery / Upload images', 'flag'); ?>:</th> 
 				<td><label for="add_gallery"><select style="width: 150px;" name="add_gallery" id="add_gallery"><?php wp_dropdown_roles( flag_get_role('FlAG Upload images') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Import images folder', 'flag') ;?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Import images folder', 'flag'); ?>:</th> 
 				<td><label for="add_gallery"><select style="width: 150px;" name="import_gallery" id="import_gallery"><?php wp_dropdown_roles( flag_get_role('FlAG Import folder') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Manage gallery', 'flag') ;?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Manage gallery', 'flag'); ?>:</th> 
 				<td><label for="manage_gallery"><select style="width: 150px;" name="manage_gallery" id="manage_gallery"><?php wp_dropdown_roles( flag_get_role('FlAG Manage gallery') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Manage others gallery', 'flag') ;?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Manage others gallery', 'flag'); ?>:</th> 
 				<td><label for="manage_others"><select style="width: 150px;" name="manage_others" id="manage_others"><?php wp_dropdown_roles( flag_get_role('FlAG Manage others gallery') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Change skin', 'flag') ;?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Change skin', 'flag'); ?>:</th> 
 				<td><label for="change_skin"><select style="width: 150px;" name="change_skin" id="change_skin"><?php wp_dropdown_roles( flag_get_role('FlAG Change skin') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Add skins', 'flag') ;?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Add skins', 'flag'); ?>:</th> 
 				<td><label for="add_skins"><select style="width: 150px;" name="add_skins" id="add_skins"><?php wp_dropdown_roles( flag_get_role('FlAG Add skins') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Delete skins', 'flag') ;?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Delete skins', 'flag'); ?>:</th> 
 				<td><label for="delete_skins"><select style="width: 150px;" name="delete_skins" id="delete_skins"><?php wp_dropdown_roles( flag_get_role('FlAG Delete skins') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Change options', 'flag') ;?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Change options', 'flag'); ?>:</th> 
 				<td><label for="change_options"><select style="width: 150px;" name="change_options" id="change_options"><?php wp_dropdown_roles( flag_get_role('FlAG Change options') ); ?></select></label></td>
 			</tr>
 			</table>
-			<div class="submit"><input type="submit" class="button-primary" name= "update_cap" value="<?php _e('Update capabilities', 'flag') ;?>"/></div>
+			<div class="submit"><input type="submit" class="button-primary" name= "update_cap" value="<?php _e('Update capabilities', 'flag'); ?>"/></div>
 		</form>
 	</div>
 <?php endif; ?>

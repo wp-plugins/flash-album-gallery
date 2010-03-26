@@ -131,12 +131,12 @@ function flag_upgrade_page()  {
 	}
 ?>
 <div class="wrap">
-	<h2><?php _e('Upgrade GRAND FlAGallery', 'flag') ;?></h2>
-	<p><?php _e('The script detect that you upgrade from a older version.', 'flag') ;?>
+	<h2><?php _e('Upgrade GRAND FlAGallery', 'flag'); ?></h2>
+	<p><?php _e('The script detect that you upgrade from a older version.', 'flag'); ?>
 	   <?php _e('Your database tables for GRAND FlAGallery is out-of-date, and must be upgraded before you can continue.', 'flag'); ?>
-       <?php _e('If you would like to downgrade later, please make first a complete backup of your database and the images.', 'flag') ;?></p>
+       <?php _e('If you would like to downgrade later, please make first a complete backup of your database and the images.', 'flag'); ?></p>
 	<p><?php _e('The upgrade process may take a while, so please be patient.', 'flag'); ?></p>
-	<h3><a href="<?php echo $filepath;?>&amp;upgrade=now"><?php _e('Start upgrade now', 'flag'); ?>...</a></h3>      
+	<h3><a href="<?php echo $filepath; ?>&amp;upgrade=now"><?php _e('Start upgrade now', 'flag'); ?>...</a></h3>      
 </div>
 <?php
 }
@@ -150,10 +150,10 @@ function flag_upgrade_page()  {
 function flag_start_upgrade($filepath) {
 ?>
 <div class="wrap">
-	<h2><?php _e('Upgrade GRAND FlAGallery', 'flag') ;?></h2>
-	<p><?php flag_upgrade();?></p>
-	<p><?php _e('Upgrade sucessful', 'flag') ;?></p>
-	<h3><a href="<?php echo $filepath;?>"><?php _e('Continue', 'flag'); ?>...</a></h3>
+	<h2><?php _e('Upgrade GRAND FlAGallery', 'flag'); ?></h2>
+	<p><?php flag_upgrade(); ?></p>
+	<p><?php _e('Upgrade sucessful', 'flag'); ?></p>
+	<h3><a href="<?php echo $filepath; ?>"><?php _e('Continue', 'flag'); ?>...</a></h3>
 </div>
 <?php
 } 

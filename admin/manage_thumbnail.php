@@ -60,15 +60,15 @@ if ( ($flag_options['thumbFix'] == 1) ) {
 }
 
 ?>
-<script src="<?php echo FLAG_URLPATH ?>/admin/js/Jcrop/js/jquery.Jcrop.js"></script>
-<link rel="stylesheet" href="<?php echo FLAG_URLPATH ?>/admin/js/Jcrop/css/jquery.Jcrop.css" type="text/css" />
+<script src="<?php echo FLAG_URLPATH; ?>/admin/js/Jcrop/js/jquery.Jcrop.js"></script>
+<link rel="stylesheet" href="<?php echo FLAG_URLPATH; ?>/admin/js/Jcrop/css/jquery.Jcrop.css" type="text/css" />
 
 <script language="JavaScript">
 <!--
 	
 	var status = 'start';
 	var xT, yT, wT, hT, selectedCoords;
-	var selectedImage = "thumb-<?php echo $id ?>";
+	var selectedImage = "thumb-<?php echo $id; ?>";
 
 	function showPreview(coords)
 	{
@@ -83,8 +83,8 @@ if ( ($flag_options['thumbFix'] == 1) ) {
 		var ry = <?php echo $HeightHtmlPrev; ?> / coords.h;
 		
 		jQuery('#imageToEditPreview').css({
-			width: Math.round(rx * <?php echo $resizedPreviewInfo['newWidth'] ?>) + 'px',
-			height: Math.round(ry * <?php echo $resizedPreviewInfo['newHeight'] ?>) + 'px',
+			width: Math.round(rx * <?php echo $resizedPreviewInfo['newWidth']; ?>) + 'px',
+			height: Math.round(ry * <?php echo $resizedPreviewInfo['newHeight']; ?>) + 'px',
 			marginLeft: '-' + Math.round(rx * coords.x) + 'px',
 			marginTop: '-' + Math.round(ry * coords.y) + 'px'
 		});
@@ -101,26 +101,26 @@ if ( ($flag_options['thumbFix'] == 1) ) {
 	function updateThumb() {
 		
 		if ( (wT == 0) || (hT == 0) || (wT == undefined) || (hT == undefined) ) {
-			alert("<?php _e('Select with the mouse the area for the new thumbnail.', 'flag') ?>");
+			alert("<?php _e('Select with the mouse the area for the new thumbnail.', 'flag'); ?>");
 			return false;			
 		}
 				
 		jQuery.ajax({
 		  url: "admin-ajax.php",
 		  type : "POST",
-		  data:  {x: xT, y: yT, w: wT, h: hT, action: 'flagCreateNewThumb', id: <?php echo $id ?>, rr: <?php echo $rr ?>},
+		  data:  {x: xT, y: yT, w: wT, h: hT, action: 'flagCreateNewThumb', id: <?php echo $id; ?>, rr: <?php echo $rr; ?>},
 		  cache: false,
 		  success: function(data){
 					var d = new Date();
 					newUrl = jQuery("#"+selectedImage).attr("src") + "?" + d.getTime();
 					jQuery("#"+selectedImage).attr("src" , newUrl);
 					
-					jQuery('#thumbMsg').html("<?php _e('Thumbnail updated', 'flag') ?>");
+					jQuery('#thumbMsg').html("<?php _e('Thumbnail updated', 'flag'); ?>");
 					jQuery('#thumbMsg').css({'display':'block'});
 					setTimeout(function(){ jQuery('#thumbMsg').fadeOut('slow'); }, 1500);
 			},
 		  error: function() {
-		  			jQuery('#thumbMsg').html("<?php _e('Error updating thumbnail.', 'flag') ?>");
+		  			jQuery('#thumbMsg').html("<?php _e('Error updating thumbnail.', 'flag'); ?>");
 					jQuery('#thumbMsg').css({'display':'block'});
 					setTimeout(function(){ jQuery('#thumbMsg').fadeOut('slow'); }, 1500);
 		    }
@@ -137,7 +137,7 @@ if ( ($flag_options['thumbFix'] == 1) ) {
 			<img src="<?php echo $preview_image; ?>" alt="" id="imageToEdit" />	
 		</td>
 		<td width="300" style="background-color : #DADADA;">
-			<small style="margin-left:6px; display:block;"><?php _e('Select the area for the thumbnail from the picture on the left.', 'flag') ?></small>
+			<small style="margin-left:6px; display:block;"><?php _e('Select the area for the thumbnail from the picture on the left.', 'flag'); ?></small>
 		</td>		
 	</tr>
 	<tr>
@@ -152,7 +152,7 @@ if ( ($flag_options['thumbFix'] == 1) ) {
 	</tr>
 	<tr style="background-color:#DADADA;">
 		<td>
-			<input type="button" name="update" value="<?php _e('Update', 'flag') ?>" onclick="updateThumb()" class="button-secondary" style="float:left; margin-left:4px;"/>
+			<input type="button" name="update" value="<?php _e('Update', 'flag'); ?>" onclick="updateThumb()" class="button-secondary" style="float:left; margin-left:4px;"/>
 			<div id="thumbMsg" style="color:#FF0000; display : none;font-size:11px; float:right; width:60%; height:2em; line-height:2em;"></div>
 		</td>
 	</tr>
@@ -164,7 +164,7 @@ if ( ($flag_options['thumbFix'] == 1) ) {
 		jQuery('#imageToEdit').Jcrop({
 			onChange: showPreview,
 			onSelect: showPreview,
-			aspectRatio: <?php echo round($WidthHtmlPrev/$HeightHtmlPrev,1) ?>
+			aspectRatio: <?php echo round($WidthHtmlPrev/$HeightHtmlPrev,1); ?>
 		});
 	});
 -->

@@ -128,7 +128,7 @@ class flagWidget {
 
 		<p>
 			<label for="flag_images-title-<?php echo $number; ?>"><?php _e('Title :','flag'); ?>
-			<input id="flag_images-title-<?php echo $number; ?>" name="widget_flag_images[<?php echo $number; ?>][title] ?>" type="text" class="widefat" value="<?php echo $title; ?>" />
+			<input id="flag_images-title-<?php echo $number; ?>" name="widget_flag_images[<?php echo $number; ?>][title]; ?>" type="text" class="widefat" value="<?php echo $title; ?>" />
 			</label>
 		</p>
 			

@@ -115,7 +115,7 @@ if($flag->options['swfUpload']) { ?>
 				// File Upload Settings
 				file_size_limit : "<?php echo wp_max_upload_size(); ?>b",
 				file_types : "*.jpg;*.gif;*.png",
-				file_types_description : "<?php _e('Image Files', 'flag') ;?>",
+				file_types_description : "<?php _e('Image Files', 'flag'); ?>",
 				
 				// Queue handler
 				file_queued_handler : fileQueued,
@@ -134,9 +134,9 @@ if($flag->options['swfUpload']) { ?>
 				
 				// i18names
 				custom_settings : {
-					"remove" : "<?php _e('remove', 'flag') ;?>",
-					"browse" : "<?php _e('Browse...', 'flag') ;?>",
-					"upload" : "<?php _e('Upload images', 'flag') ;?>"
+					"remove" : "<?php _e('remove', 'flag'); ?>",
+					"browse" : "<?php _e('Browse...', 'flag'); ?>",
+					"upload" : "<?php _e('Upload images', 'flag'); ?>"
 				},
 
 				// Debug settings
@@ -164,7 +164,7 @@ if($flag->options['swfUpload']) { ?>
 		jQuery(document).ready(function(){
 			jQuery('#imagefiles').MultiFile({
 				STRING: {
-			    	remove:'<?php _e('remove', 'flag') ;?>'
+			    	remove:'<?php _e('remove', 'flag'); ?>'
   				}
 		 	});
 		});
@@ -175,30 +175,30 @@ if($flag->options['swfUpload']) { ?>
 	<div id="slider" class="wrap">
 	
 		<ul id="tabs" class="tabs">
-			<li class="selected"><a href="#" rel="addgallery"><?php _e('Add new gallery', 'flag') ;?></a></li>
-			<li><a href="#" rel="uploadimage"><?php _e('Upload Images', 'flag') ;?></a></li>
+			<li class="selected"><a href="#" rel="addgallery"><?php _e('Add new gallery', 'flag'); ?></a></li>
+			<li><a href="#" rel="uploadimage"><?php _e('Upload Images', 'flag'); ?></a></li>
 <?php if( !IS_WPMU || current_user_can('FlAG Import folder') ) { ?>
-			<li><a href="#" rel="importfolder"><?php _e('Import image folder', 'flag') ;?></a></li>
+			<li><a href="#" rel="importfolder"><?php _e('Import image folder', 'flag'); ?></a></li>
 <?php } ?>
 		</ul>
 
 		<!-- create gallery -->
 		<div id="addgallery" class="cptab">
-			<h2><?php _e('Create a new gallery', 'flag') ;?></h2>
+			<h2><?php _e('Create a new gallery', 'flag'); ?></h2>
 			<form name="addgallery" id="addgallery_form" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
-			<?php wp_nonce_field('flag_addgallery') ?>
+			<?php wp_nonce_field('flag_addgallery'); ?>
 				<table class="form-table" style="width: auto;"> 
 				<tr>
-					<th scope="col" colspan="2" style="padding-bottom: 0;"><strong><?php _e('New Gallery', 'flag') ;?></strong></th> 
+					<th scope="col" colspan="2" style="padding-bottom: 0;"><strong><?php _e('New Gallery', 'flag'); ?></strong></th> 
 				</tr>
 				<tr valign="top"> 
 					<td><input type="text" size="65" name="galleryname" value="" /><br />
 					<?php if(!IS_WPMU) { ?>
-						<?php _e('Create a new , empty gallery below the folder', 'flag') ;?>  <strong><?php echo $defaultpath ?></strong><br />
+						<?php _e('Create a new , empty gallery below the folder', 'flag'); ?>  <strong><?php echo $defaultpath; ?></strong><br />
 					<?php } ?>
-						<i>( <?php _e('Allowed characters for file and folder names are', 'flag') ;?>: a-z, A-Z, 0-9, -, _ )</i></td>
+						<i>( <?php _e('Allowed characters for file and folder names are', 'flag'); ?>: a-z, A-Z, 0-9, -, _ )</i></td>
 					<?php do_action('flag_add_new_gallery_form'); ?>
-					<td><div class="submit" style="margin: 0; padding: 0;"><input class="button-primary" type="submit" name= "addgallery" value="<?php _e('Add gallery', 'flag') ;?>"/></div></td>
+					<td><div class="submit" style="margin: 0; padding: 0;"><input class="button-primary" type="submit" name= "addgallery" value="<?php _e('Add gallery', 'flag'); ?>"/></div></td>
 				</tr>
 				</table>
 				<p>&nbsp;</p>
@@ -206,7 +206,7 @@ if($flag->options['swfUpload']) { ?>
 		</div>
 		<!-- upload images -->
 		<div id="uploadimage" class="cptab">
-			<h2><?php _e('Upload images', 'flag') ;?></h2>
+			<h2><?php _e('Upload images', 'flag'); ?></h2>
 	<script type="text/javascript">	
 	/* <![CDATA[ */
 		jQuery(document).ready(function(){
@@ -230,16 +230,16 @@ if($flag->options['swfUpload']) { ?>
 	/* ]]> */
 	</script>
 			<form name="uploadimage" id="uploadimage_form" method="POST" enctype="multipart/form-data" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
-			<?php wp_nonce_field('flag_addgallery') ?>
+			<?php wp_nonce_field('flag_addgallery'); ?>
 				<table class="form-table"> 
 				<tr valign="top"> 
-					<th scope="row"><strong><?php _e('Upload image(s):', 'flag') ;?></strong></th>
+					<th scope="row"><strong><?php _e('Upload image(s):', 'flag'); ?></strong></th>
 					<td><span id='spanButtonPlaceholder'></span><input type="file" name="imagefiles[]" id="imagefiles" size="35" class="imagefiles"/></td>
 				</tr>
 				<tr valign="top"> 
-					<td colspan="2"><label for="galleryselect"><?php _e('in to', 'flag') ;?></label> 
+					<td colspan="2"><label for="galleryselect"><?php _e('in to', 'flag'); ?></label> 
 						<select name="galleryselect" id="galleryselect">
-							<option value="0" ><?php _e('Choose gallery', 'flag') ?></option>
+							<option value="0" ><?php _e('Choose gallery', 'flag'); ?></option>
 							<?php $ingallery = isset($_GET['gid']) ? (int) $_GET['gid'] : '';
 							foreach($gallerylist as $gallery) {
 									if ( !flagAdmin::can_manage_this_gallery($gallery->author) )
@@ -257,12 +257,12 @@ if($flag->options['swfUpload']) { ?>
 				<div class="submit">
 					<span class="useflashupload">
 					<?php if ($flag->options['swfUpload']) { ?>
-					<input type="submit" name="disable_flash" id="disable_flash" title="<?php _e('The batch upload requires Adobe Flash 10, disable it if you have problems','flag') ?>" value="<?php _e('Disable flash upload', 'flag') ;?>" />
+					<input type="submit" name="disable_flash" id="disable_flash" title="<?php _e('The batch upload requires Adobe Flash 10, disable it if you have problems','flag'); ?>" value="<?php _e('Disable flash upload', 'flag'); ?>" />
 					<?php } else { ?>
-					<input type="submit" name="enable_flash" id="enable_flash" title="<?php _e('Upload multiple files at once by ctrl/shift-selecting in dialog','flag') ?>" value="<?php _e('Enable flash based upload', 'flag') ;?>" />
+					<input type="submit" name="enable_flash" id="enable_flash" title="<?php _e('Upload multiple files at once by ctrl/shift-selecting in dialog','flag'); ?>" value="<?php _e('Enable flash based upload', 'flag'); ?>" />
 					<?php } ?>
 					</span>
-					<span id="choosegalfirst"><input class="button-primary" type="submit" name="uploadimage" id="uploadimage_btn" value="<?php _e('Upload images', 'flag') ;?>" /><span class="disabledbut" style="display: none;"></span></span>
+					<span id="choosegalfirst"><input class="button-primary" type="submit" name="uploadimage" id="uploadimage_btn" value="<?php _e('Upload images', 'flag'); ?>" /><span class="disabledbut" style="display: none;"></span></span>
 					<div class="clear"></div>
 				</div>
 			</form>
@@ -270,19 +270,19 @@ if($flag->options['swfUpload']) { ?>
 <?php if( !IS_WPMU || current_user_can('FlAG Import folder') ) { ?>
 		<!-- import folder -->
 		<div id="importfolder" class="cptab">
-		<h2><?php _e('Import image folder', 'flag') ;?></h2>
+		<h2><?php _e('Import image folder', 'flag'); ?></h2>
 			<form name="importfolder" id="importfolder_form" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
-			<?php wp_nonce_field('flag_addgallery') ?>
+			<?php wp_nonce_field('flag_addgallery'); ?>
 				<table class="form-table"> 
 				<tr valign="top"> 
-					<th scope="row"><?php _e('Import from Server path:', 'flag') ;?></th> 
+					<th scope="row"><?php _e('Import from Server path:', 'flag'); ?></th> 
 					<td><input type="text" size="35" id="galleryfolder" name="galleryfolder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Toggle DIR Browser',"flag"); ?></span>
 					<div id="file_browser"></div>
 					<div><?php echo $maxsize; ?>
-					<?php if (SAFE_MODE) {?><br /><?php _e(' Please note : For safe-mode = ON you need to add the subfolder thumbs manually', 'flag') ;?><?php }; ?></div></td> 
+					<?php if (SAFE_MODE) {?><br /><?php _e(' Please note : For safe-mode = ON you need to add the subfolder thumbs manually', 'flag'); ?><?php }; ?></div></td> 
 				</tr>
 				</table>
-				<div class="submit"><input class="button-primary" type="submit" name= "importfolder" value="<?php _e('Import folder', 'flag') ;?>"/></div>
+				<div class="submit"><input class="button-primary" type="submit" name= "importfolder" value="<?php _e('Import folder', 'flag'); ?>"/></div>
 			</form>
 		</div>
 <?php } ?>

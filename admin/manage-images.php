@@ -182,14 +182,14 @@ jQuery(document).ready( function() {
 <br style="clear: both;" />
 
 <form id="updategallery" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;mode=edit&amp;s=' . $_GET['s']; ?>" accept-charset="utf-8">
-<?php wp_nonce_field('flag_updategallery') ?>
+<?php wp_nonce_field('flag_updategallery'); ?>
 <input type="hidden" name="page" value="manage-images" />
 
 <?php else :?>
 
 <h2><?php echo _n( 'Gallery', 'Galleries', 1, 'flag' ); ?> : <?php echo flagGallery::i18n($gallery->title); ?></h2>
 <select name="select_gid" style="width:180px; float: right; margin: -20px 3px 0 0;" onchange="window.location.href=this.options[this.selectedIndex].value">
-	<option selected="selected"><?php _e('Choose another gallery', 'flag') ?></option>
+	<option selected="selected"><?php _e('Choose another gallery', 'flag'); ?></option>
 <?php 
 	foreach ($gallerylist as $gal) { 
 		if ($gal->gid != $act_gid) { 
@@ -202,7 +202,7 @@ jQuery(document).ready( function() {
 </select>
 
 <form id="updategallery" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $act_gid . '&amp;paged=' . $_GET['paged']; ?>" accept-charset="utf-8">
-<?php wp_nonce_field('flag_updategallery') ?>
+<?php wp_nonce_field('flag_updategallery'); ?>
 <input type="hidden" name="page" value="manage-images" />
 
 <div id="poststuff" class="metabox-holder">
@@ -210,19 +210,19 @@ jQuery(document).ready( function() {
 <div id="post-body"><div id="post-body-content"><div id="normal-sortables" class="meta-box-sortables ui-sortable" style="position: relative;">
 	<div id="flagalleryset" class="postbox <?php echo postbox_classes('flagalleryset', 'flag-manage-gallery'); ?>" >
 		<div class="handlediv" title="Click to toggle"><br/></div>
-		<h3 class="hndle"><span><?php _e('Gallery settings', 'flag') ?></span></h3>
+		<h3 class="hndle"><span><?php _e('Gallery settings', 'flag'); ?></span></h3>
 		<div class="inside">
 			<table class="form-table" >
 				<tr>
-					<th align="left" scope="row"><?php _e('Title', 'flag') ?>:</th>
+					<th align="left" scope="row"><?php _e('Title', 'flag'); ?>:</th>
 					<td align="left"><input type="text" size="50" name="title" value="<?php echo $gallery->title; ?>"  /></td>
 				</tr>
 				<tr>
-					<th align="left" scope="row"><?php _e('Description', 'flag') ?>:</th> 
+					<th align="left" scope="row"><?php _e('Description', 'flag'); ?>:</th> 
 					<td align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo $gallery->galdesc; ?></textarea></td>
 				</tr>
 				<tr>
-					<th align="left" scope="row"><?php _e('Path', 'flag') ?>:</th> 
+					<th align="left" scope="row"><?php _e('Path', 'flag'); ?>:</th> 
 					<td align="left"><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="50" name="path" value="<?php echo $gallery->path; ?>"  /></td>
 				</tr>
 				<tr>
@@ -319,7 +319,7 @@ if($picturelist) {
 		$time = mysql2date(get_option('time_format'), $picture->imagedate);
 
 		?>
-		<tr id="picture-<?php echo $pid ?>" class="<?php echo $alternate ?> iedit"  valign="top">
+		<tr id="picture-<?php echo $pid; ?>" class="<?php echo $alternate; ?> iedit"  valign="top">
 			<?php
 			foreach($gallery_columns as $gallery_column_key => $column_display_name) {
 				$class = "class=\"$gallery_column_key column-$gallery_column_key\"";
@@ -333,31 +333,31 @@ if($picturelist) {
 				switch ($gallery_column_key) {
 					case 'cb' :
 						?> 
-						<th <?php echo $attributes ?> scope="row"><input name="doaction[]" type="checkbox" value="<?php echo $pid ?>" /></th>
+						<th <?php echo $attributes; ?> scope="row"><input name="doaction[]" type="checkbox" value="<?php echo $pid; ?>" /></th>
 						<?php
 					break;
 					case 'id' :
 						?>
-						<td <?php echo $attributes ?>><?php echo $pid; ?>
-							<input type="hidden" name="pid[]" value="<?php echo $pid ?>" />
+						<td <?php echo $attributes; ?>><?php echo $pid; ?>
+							<input type="hidden" name="pid[]" value="<?php echo $pid; ?>" />
 						</td>
 						<?php						
 					break;
 					case 'thumbnail' :
 						?>
-						<td <?php echo $attributes ?>><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
-								<img class="thumb" src="<?php echo $picture->thumbURL; ?>" <?php echo $thumbsize ?> id="thumb-<?php echo $pid ?>" />
+						<td <?php echo $attributes; ?>><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename; ?>">
+								<img class="thumb" src="<?php echo $picture->thumbURL; ?>" <?php echo $thumbsize; ?> id="thumb-<?php echo $pid; ?>" />
 							</a>
 						</td>
 						<?php
 					break;
 					case 'filename' :
 						?>
-						<td <?php echo $attributes ?>>
-							<strong><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename ?>">
+						<td <?php echo $attributes; ?>>
+							<strong><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename; ?>">
 								<?php echo $picture->filename; ?>
 							</a></strong>
-							<br /><?php echo $date ?>
+							<br /><?php echo $date; ?>
 							<?php if ( !empty($picture->meta_data['width']) ) { 
 								echo '<br />'.__('Size: ', 'flag').$picture->meta_data['width'].'x'.$picture->meta_data['height'].' '.__('pixel', 'flag');
 							} else {
@@ -387,27 +387,27 @@ if($picturelist) {
 					break;
 					case 'alt_title_desc' :
 						?>
-						<td <?php echo $attributes ?>>
-							<input name="alttext[<?php echo $pid ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext) ?>" /><br/>
-							<textarea name="description[<?php echo $pid ?>]" style="width:95%; margin-top: 2px;" rows="2" ><?php echo stripslashes($picture->description) ?></textarea>
+						<td <?php echo $attributes; ?>>
+							<input name="alttext[<?php echo $pid; ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext); ?>" /><br/>
+							<textarea name="description[<?php echo $pid; ?>]" style="width:95%; margin-top: 2px;" rows="2" ><?php echo stripslashes($picture->description); ?></textarea>
 						</td>
 						<?php						
 					break;
 					case 'exclude' :
 						?>
-						<td <?php echo $attributes ?>><input name="exclude[<?php echo $pid ?>]" type="checkbox" value="1" <?php echo $exclude ?> /></td>
+						<td <?php echo $attributes; ?>><input name="exclude[<?php echo $pid; ?>]" type="checkbox" value="1" <?php echo $exclude; ?> /></td>
 						<?php						
 					break;
 					/* 
                     case 'views' :
 						?>
-						<td <?php echo $attributes ?>><?php echo $picture->hitcounter; ?></td>
+						<td <?php echo $attributes; ?>><?php echo $picture->hitcounter; ?></td>
 						<?php						
 					break;
                     */
 					default : 
 						?>
-						<td <?php echo $attributes ?>><?php do_action('flag_manage_gallery_custom_column', $gallery_column_key, $pid); ?></td>
+						<td <?php echo $attributes; ?>><?php do_action('flag_manage_gallery_custom_column', $gallery_column_key, $pid); ?></td>
 						<?php
 					break;
 				}
@@ -434,7 +434,7 @@ if ( $counter==0 )
 	<!-- #selectgallery -->
 	<div id="selectgallery" style="display: none;" >
 		<form id="form-select-gallery" method="POST" accept-charset="utf-8">
-		<?php wp_nonce_field('flag_thickbox_form') ?>
+		<?php wp_nonce_field('flag_thickbox_form'); ?>
 		<input type="hidden" id="selectgallery_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="selectgallery_bulkaction" name="TB_bulkaction" value="" />
 		<input type="hidden" name="page" value="manage-images" />
@@ -470,7 +470,7 @@ if ( $counter==0 )
 	<!-- #resize_images -->
 	<div id="resize_images" style="display: none;" >
 		<form id="form-resize-images" method="POST" accept-charset="utf-8">
-		<?php wp_nonce_field('flag_thickbox_form') ?>
+		<?php wp_nonce_field('flag_thickbox_form'); ?>
 		<input type="hidden" id="resize_images_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="resize_images_bulkaction" name="TB_bulkaction" value="" />
 		<input type="hidden" name="page" value="manage-images" />
@@ -481,7 +481,7 @@ if ( $counter==0 )
 				</td>
 				<td>
 					<input type="text" size="5" name="imgWidth" value="<?php echo $flag->options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $flag->options['imgHeight']; ?>" />
-					<br /><small><?php _e('Width x height (in pixel). GRAND FlAGallery will keep ratio size','flag') ?></small>
+					<br /><small><?php _e('Width x height (in pixel). GRAND FlAGallery will keep ratio size','flag'); ?></small>
 				</td>
 			</tr>
 		  	<tr align="right">
@@ -499,24 +499,24 @@ if ( $counter==0 )
 	<!-- #new_thumbnail -->
 	<div id="new_thumbnail" style="display: none;" >
 		<form id="form-new-thumbnail" method="POST" accept-charset="utf-8">
-		<?php wp_nonce_field('flag_thickbox_form') ?>
+		<?php wp_nonce_field('flag_thickbox_form'); ?>
 		<input type="hidden" id="new_thumbnail_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="new_thumbnail_bulkaction" name="TB_bulkaction" value="" />
 		<input type="hidden" name="page" value="manage-images" />
 		<table width="100%" border="0" cellspacing="3" cellpadding="3" >
 			<tr valign="top">
-				<th align="left"><?php _e('Width x height (in pixel)','flag') ?></th>
+				<th align="left"><?php _e('Width x height (in pixel)','flag'); ?></th>
 				<td><input type="text" size="5" maxlength="5" name="thumbWidth" value="<?php echo $flag->options['thumbWidth']; ?>" /> x <input type="text" size="5" maxlength="5" name="thumbHeight" value="<?php echo $flag->options['thumbHeight']; ?>" />
-				<br /><small><?php _e('These values are maximum values ','flag') ?></small></td>
+				<br /><small><?php _e('These values are maximum values ','flag'); ?></small></td>
 			</tr>
 			<tr valign="top">
-				<th align="left"><?php _e('Set fix dimension','flag') ?></th>
+				<th align="left"><?php _e('Set fix dimension','flag'); ?></th>
 				<td><input type="checkbox" name="thumbFix" value="1" <?php checked('1', $flag->options['thumbFix']); ?> />
-				<br /><small><?php _e('Ignore the aspect ratio, no portrait thumbnails','flag') ?></small></td>
+				<br /><small><?php _e('Ignore the aspect ratio, no portrait thumbnails','flag'); ?></small></td>
 			</tr>
 		  	<tr align="right">
 		    	<td colspan="2" class="submit">
-		    		<input class="button-primary" type="submit" name="TB_NewThumbnail" value="<?php _e('OK', 'flag');?>" />
+		    		<input class="button-primary" type="submit" name="TB_NewThumbnail" value="<?php _e('OK', 'flag'); ?>" />
 		    		&nbsp;
 		    		<input class="button-secondary" type="reset" value="&nbsp;<?php _e('Cancel', 'flag'); ?>&nbsp;" onclick="tb_remove()"/>
 		    	</td>

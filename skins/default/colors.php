@@ -9,16 +9,16 @@
 <?php $background = $flashBacktransparent ? '' : "0x{$flashBackcolor}"; ?>
 <color>
 	<!--graphic elements-->
-	<background color="<?=$background?>"/>
-	<buttons_bg color="0x<?=$buttonsBG?>"/>
-	<buttons mouseOver="0x<?=$buttonsMouseOver?>" mouseOut="0x<?=$buttonsMouseOut?>"/>
-	<categoryButtons mouseOver="0x<?=$catButtonsMouseOver?>" mouseOut="0x<?=$catButtonsMouseOut?>"/>
-	<categoryButtonsText mouseOver="0x<?=$catButtonsTextMouseOver?>" mouseOut="0x<?=$catButtonsTextMouseOut?>"/>
-	<thumbnail mouseOver="0x<?=$thumbMouseOver?>" mouseOut="0x<?=$thumbMouseOut?>"/>
+	<background color="<?php echo $background; ?>"/>
+	<buttons_bg color="0x<?php echo $buttonsBG; ?>"/>
+	<buttons mouseOver="0x<?php echo $buttonsMouseOver; ?>" mouseOut="0x<?php echo $buttonsMouseOut; ?>"/>
+	<categoryButtons mouseOver="0x<?php echo $catButtonsMouseOver; ?>" mouseOut="0x<?php echo $catButtonsMouseOut; ?>"/>
+	<categoryButtonsText mouseOver="0x<?php echo $catButtonsTextMouseOver; ?>" mouseOut="0x<?php echo $catButtonsTextMouseOut; ?>"/>
+	<thumbnail mouseOver="0x<?php echo $thumbMouseOver; ?>" mouseOut="0x<?php echo $thumbMouseOut; ?>"/>
 	<!--text elements-->
-	<mainTitle textColor="0x<?=$mainTitle?>"/>
-	<categoryTitle textColor="0x<?=$categoryTitle?>"/>
-	<item_bg color="0x<?=$itemBG?>"/>
-	<itemTitle textColor="0x<?=$itemTitle?>"/>
-	<itemDescription textColor="0x<?=$itemDescription?>"/>
+	<mainTitle textColor="0x<?php echo $mainTitle; ?>"/>
+	<categoryTitle textColor="0x<?php echo $categoryTitle; ?>"/>
+	<item_bg color="0x<?php echo $itemBG; ?>"/>
+	<itemTitle textColor="0x<?php echo $itemTitle; ?>"/>
+	<itemDescription textColor="0x<?php echo $itemDescription; ?>"/>
 </color>

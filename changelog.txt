@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+V0.42 - 25.03.2010 
+- Changed : Replaced all php short_open_tag from '<?=...?>' to '<?php echo ...; ?>'
+
 V0.41 - 25.03.2010 
 - Bugfix : Skin options didn't save colors
 
@@ -11,6 +14,11 @@ V0.40 - 24.03.2010
 - Added : Each skin has own color settings saved in file
 - Added : Hide image for unregistered users option
 - Added : SWFaddress for deeplinking in flash
+- Added : Meta data for Images
+- Added : Action popup for Resize image... and Create new thumbnails
+- Added : New Action - Import Meta data
+- Added : Actions on Manage Galleries page
+- Added : Search Images on Manage Galleries page
 
 V0.39pl3 - 12.02.2010 
 - Bugfix : Image uploader fix (Error 'no valid image') 
