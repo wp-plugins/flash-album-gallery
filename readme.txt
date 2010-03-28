@@ -49,6 +49,14 @@ Important Links:
  
 == Changelog ==
  
+= v0.43 - 28.03.2010 =
+
+* Added : More informative error messages on plugin upgrade
+* Bugfix : Conflicted with NGG JWPlayer
+* Bugfix : Help screen replaced on all admin pages
+* Bugfix : Wrong pager calculate
+* Changed : swfobject js for compability with older version of js library
+
 = v0.42 - 25.03.2010 =
 
 * Changed : Replaced all php short_open_tag from '<?=...?>' to '<?php echo ...; ?>'

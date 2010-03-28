@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 0.42
+Version: 0.43
 Author: Sergey Pasyuk
 Author URI: http://codeasily.com/
 
@@ -37,7 +37,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 	
-	var $version     = '0.42';
+	var $version     = '0.43';
 	var $dbversion   = '0.40';
 	var $minium_WP   = '2.8';
 	var $minium_WPMU = '2.8';
@@ -64,6 +64,7 @@ class flagLoad {
 
 		// Init options & tables during activation & deregister init option
 		register_activation_hook( $this->plugin_name, array(&$this, 'activate') );
+		add_action( 'init', array(&$this, 'wp_flag_tune_messages') );
 		register_deactivation_hook( $this->plugin_name, array(&$this, 'deactivate') );	
 
 		// Register a uninstall hook to remove all tables & option automatic
@@ -107,7 +108,25 @@ class flagLoad {
 
 		}	
 	}
-	
+
+	function wp_flag_tune_messages() {
+		if (!isset($_GET['action']) && isset($_GET['activate'])) {
+			// upgrade plugin
+			require_once(FLAG_ABSPATH . 'admin/tuning.php');
+			if( !flag_tune($show_error=false) ) {
+				add_action( 'admin_notices', array(&$this, 'flag_tuning_notice_upgrade'));
+			}
+		}
+	}
+
+	function flag_tuning_notice_upgrade(){
+		if(function_exists('admin_url')){
+			echo '<div class="error fade"><p>'.__('GRAND FlAGallery skins upgraded/installed incorrectly. Go to', "flag").' <a href="' . admin_url( 'admin.php?page=flash-album-gallery' ) . '">'.__('Overview page', "flag").'</a> '.__('and click "Reset settings" button', "flag").'.</strong></p></div>';
+		} else {
+			echo '<div class="error fade"><p>'.__('GRAND FlAGallery skins upgraded/installed incorrectly. Go to', "flag").' <a href="' . get_option('siteurl') . 'admin.php?page=flash-album-gallery' . '">'.__('Overview page', "flag").'</a> '.__('and click "Reset settings" button', "flag").'.</strong></p></div>';
+		}
+	}
+
 	function required_version() {
 		
 		global $wp_version, $wpmu_version;
@@ -240,7 +259,6 @@ class flagLoad {
 		include_once (dirname (__FILE__) . '/admin/flag_install.php');
 		// check for tables
 		flag_install();
-		
 	}
 	
 	function deactivate() {

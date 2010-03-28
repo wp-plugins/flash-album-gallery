@@ -27,14 +27,14 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	if(!is_dir($skinpath)) $skin = 'default';
 	// init the flash output
-	$swfobject = new swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , 'so' . $galleryID, $width, $height, '10.0.0', FLAG_URLPATH .'skins/expressInstall.swf');
+	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , 'so' . $galleryID, $width, $height, '10.0.0', FLAG_URLPATH .'skins/expressInstall.swf');
 	global $swfCounter;
 
 	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
 	$swfobject->add_params('wmode', $wmode);
 	$swfobject->add_params('allowfullscreen', 'true');
 	$swfobject->add_params('menu', 'false');
-	$swfobject->add_params('bgcolor', $flag_options['flashBackcolor'] );
+	$swfobject->add_params('bgcolor', '#'.$flag_options['flashBackcolor'] );
 	$swfobject->add_attributes('styleclass', 'flashalbum');
 	$swfobject->add_attributes('id', 'so' . $galleryID . '_f' . $swfCounter);
 	$swfobject->add_attributes('name', 'so' . $galleryID . '_f' . $swfCounter);
@@ -45,12 +45,13 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 	$swfobject->add_flashvars( 'galName', $name );
 	$swfobject->add_flashvars( 'width', $width );
 	$swfobject->add_flashvars( 'height', $height );	
+	// create the output
+	$out = '<div class="flashalbum">' . $swfobject->output() . '</div>';
 	// add now the script code
-   $out = "\n".'<script type="text/javascript" defer="defer">';
+	$out .= "\n".'<script type="text/javascript" defer="defer">';
+	$out .= "\nvar swfdiv=document.getElementById('so".$galleryID."_c".($swfCounter-1)."');swfdiv.style.display='none';setTimeout(function(){swfdiv.style.display='block';},3000);";
 	$out .= $swfobject->javascript();
 	$out .= "\n".'</script>';
-	// create the output
-	$out .= '<div class="flashalbum">' . $swfobject->output() . '</div>';
 
 	$out = apply_filters('flag_show_flash_content', $out);
 			

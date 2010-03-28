@@ -1,6 +1,11 @@
 <?php header("content-type:text/xml;charset=utf-8"); ?>
 <!--<?php 
-require_once( str_replace("\\","/", dirname(dirname(dirname(__FILE__))) . "/flash-album-gallery/flag-config.php") );
+// look up for the path
+if(file_exists(dirname(dirname(dirname(__FILE__))) . "/flash-album-gallery/flag-config.php")) {
+	require_once( str_replace("\\","/", dirname(dirname(dirname(__FILE__))) . "/flash-album-gallery/flag-config.php") );
+} else if(file_exists(dirname(dirname(dirname(__FILE__))) . "/flag-config.php")) {
+	require_once( str_replace("\\","/", dirname(dirname(dirname(__FILE__))) . "/flag-config.php") );
+}
 ?>-->
 <?php
 $flag_options = get_option('flag_options');

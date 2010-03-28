@@ -1,22 +1,22 @@
 <?php 
-if ( !class_exists('swfobject') ) :
+if ( !class_exists('flag_swfobject') ) :
 /**
- * swfobject - PHP class for creating dynamic content of SWFObject V2.1
+ * flag_swfobject - PHP class for creating dynamic content of SWFObject V2.1
  */
-class swfobject {
+class flag_swfobject {
 	
-	var $id;						// id of the HTML element
-	var $width;						// specifies the width of your SWF 
-	var $height; 					// specifies the height of your SWF 
-	var $skin;						// specifies the skin of your SWF 
-	var $js;						// the javascript output 
-	var $classname = 'swfobject';	// the classname for the div element 
-	var $flashvars;					// array of flashvars 
-	var $params;					// array of nested object element params 
-	var $attributes;				// array of object's attributest 
+	var $id;									// id of the HTML element
+	var $width;									// specifies the width of your SWF 
+	var $height; 								// specifies the height of your SWF 
+	var $skin;									// specifies the skin of your SWF 
+	var $js;									// the javascript output 
+	var $classname = 'flagallery_swfobject';	// the classname for the div element 
+	var $flashvars;								// array of flashvars 
+	var $params;								// array of nested object element params 
+	var $attributes;							// array of object's attributest 
 
 	/**
-	 * swfobject::swfobject()
+	 * flag_swfobject::flag_swfobject()
 	 * 
 	 * @param string $swfUrl (required) specifies the URL of your SWF
 	 * @param string $id (required) specifies the id of the HTML element (containing your alternative content) you would like to have replaced by your Flash content
@@ -29,7 +29,7 @@ class swfobject {
 	 * @param array $attributes (optional) specifies your object's attributes with name:value pairs
 	 * @return string the content
 	 */
-	function swfobject( $swfUrl, $id, $width, $height, $version, $expressInstallSwfurl = false, $flashvars = false, $params = false, $attributes = false ) {
+	function flag_swfobject( $swfUrl, $id, $width, $height, $version, $expressInstallSwfurl = false, $flashvars = false, $params = false, $attributes = false ) {
 	
 		global $swfCounter;
 		
@@ -45,7 +45,7 @@ class swfobject {
 		$this->params     = ( is_array($params) )     ? $params : array();
 		$this->attributes = ( is_array($attributes) ) ? $attributes : array();
 
-		$this->embedSWF = 'swfobject.switchOffAutoHideShow();'."\n";
+		//$this->embedSWF = 'swfobject.switchOffAutoHideShow();'."\n";
 		$this->embedSWF .= 'swfobject.embedSWF("'. $swfUrl .'", "'. $this->id .'", "'. $width .'", "'. $height .'", "'. $version .'", "'. $expressInstallSwfurl .'", this.flashvars, this.params , this.attr );' . "\n";
 		$this->embedSWF .= 'swfobject.createCSS("#'. $id . '_f' . $swfCounter .'","outline:none");' . "\n";
 	}

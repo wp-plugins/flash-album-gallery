@@ -130,15 +130,9 @@ function flag_install () {
  		flag_default_options();
  	
 	
-	// upgrade plugin
-	require_once(FLAG_ABSPATH . 'admin/tuning.php');
-	if( flag_tune() ) {
-		flagGallery::show_message(__("GRAND FlAGallery plugin - update successfull!"));
-	}
 	// if all is passed , save the DBVERSION
 	add_option("flag_db_version", FLAG_DBVERSION);
 }
-
 
 /**
  * Setup the default option array for the gallery

@@ -11,8 +11,9 @@ function flag_manage_gallery_main() {
 	if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
 		$_GET['paged'] = 1;
 	
-	$start = ( $_GET['paged'] - 1 ) * 25;
-	$gallerylist = $flagdb->find_all_galleries('gid', 'asc', TRUE, 25, $start, false);
+	$perpage = 50;
+	$start = ( $_GET['paged'] - 1 ) * $perpage;
+	$gallerylist = $flagdb->find_all_galleries('gid', 'asc', TRUE, $perpage, $start, false);
 
 	$page_links = paginate_links( array(
 		'base' => add_query_arg( 'paged', '%#%' ),
@@ -130,8 +131,8 @@ function flag_manage_gallery_main() {
 			
 		<?php if ( $page_links ) : ?>
 			<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
-				number_format_i18n( ( $_GET['paged'] - 1 ) * $flagdb->paged['objects_per_page'] + 1 ),
-				number_format_i18n( min( $_GET['paged'] * $flagdb->paged['objects_per_page'], $flagdb->paged['total_objects'] ) ),
+				number_format_i18n( ( $_GET['paged'] - 1 ) * $perpage + 1 ),
+				number_format_i18n( min( $_GET['paged'] * $perpage, $flagdb->paged['total_objects'] ) ),
 				number_format_i18n( $flagdb->paged['total_objects'] ),
 				$page_links
 			); echo $page_links_text; ?></div>

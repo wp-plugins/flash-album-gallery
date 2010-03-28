@@ -9,8 +9,8 @@ class flagAdminPanel{
 	function flagAdminPanel() {
 
 		// Add the admin menu
-		add_action( 'admin_menu', array (&$this, 'add_menu') );
-		add_action('init',array (&$this, 'wp_flag_init_messages'),2);
+		add_action( 'admin_menu', array(&$this, 'add_menu') );
+		add_action('init', array(&$this, 'wp_flag_init_messages'),2);
 
 		// Add the script and style files
 		add_action('admin_print_scripts', array(&$this, 'load_scripts') );
@@ -21,14 +21,11 @@ class flagAdminPanel{
 	}
 
 	function flag_activation_notice_upgrade(){
-		
-		// Borrowed notice code from all in one seo pack
 		if(function_exists('admin_url')){
 			echo '<div class="error fade"><p>GRAND FlAGallery v0.40 '.__('(and above) use a different database structure than in previous versions - this was to support new features. You must update your database in order for this version to work - <strong>backup your database first</strong> then', "flag").' <a href="' . admin_url( 'admin.php?page=flash-album-gallery' ) . '">'.__('click here', "flag").'</a> '.__('to run the update script', "flag").'.</strong></p></div>';
 		} else {
 			echo '<div class="error fade"><p>GRAND FlAGallery v0.40 '.__('(and above) use a different database structure than in previous versions - this was to support new features. You must update your database in order for this version to work - <strong>backup your database first</strong> then', "flag").' <a href="' . get_option('siteurl') . 'admin.php?page=flash-album-gallery' . '">'.__('click here', "flag").'</a> '.__('to run the update script', "flag").'.</strong></p></div>';
 		}
-		
 	}
 
 	function wp_flag_init_messages() {
@@ -170,24 +167,18 @@ class flagAdminPanel{
 	
 	function show_help($help, $screen) {
 
-		$link = '<a href="http://codeasily.com/wordpress-plugins/flag" target="_blank">CodEasily.com</a>';
+		$link ='';
 		// menu title is localized...
 		$i18n = strtolower  ( _n( 'Gallery', 'Galleries', 1, 'flag' ) );
 
 		switch ($screen) {
 			case 'toplevel_page_' . FLAGFOLDER :
-				$link; 
-			break;
 			case "{$i18n}_page_flag-manage-gallery" :
 			case "flag-manage-gallery":
 			case "flag-manage-images":
-				$link;
-			break;
 			case "{$i18n}_page_flag-skins" :
-				$link .= ' | <a href="http://photogallerycreator.com/" target="_blank">' . __('PhotoGalleryCreator.com', 'flag') . '</a>';
-			break;
 			case "{$i18n}_page_flag-options" :
-				$link;
+				$link = '<a href="http://codeasily.com/wordpress-plugins/flag" target="_blank">CodEasily.com</a>'; 
 			break;
 		}
 		
