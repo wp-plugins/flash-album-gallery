@@ -42,22 +42,29 @@ function upload_skin() {
 				$local_file = $uploads['basedir'] . '/' . $filename;
 
 				// Move the file to the uploads dir
-				if ( false === @ move_uploaded_file( $_FILES['skinzip']['tmp_name'], $local_file) )
+				if ( false === @move_uploaded_file( $_FILES['skinzip']['tmp_name'], $local_file) )
 					echo "<p>".sprintf( __('The uploaded file could not be moved to %s.', 'flag'), $uploads['path'])."</p>\n";
 			} else {
 				$local_file = $uploads['basedir'] . '/' . $filename;
 			}
 			if( $installed_skin = do_skin_install_local_package($local_file, $filename) ) {
-				@ rename($installed_skin.basename($installed_skin).'.png', $installed_skin.'screenshot.png');
+				if ( file_exists($installed_skin.basename($installed_skin).'.png') ) {
+					@rename($installed_skin.basename($installed_skin).'.png', $installed_skin.'screenshot.png');
+				}
 				if( !file_exists( $installed_skin.'settings.php' ) ) {
-					@ unlink($installed_skin.'colors.php');
-					@ copy(dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php');
+					if ( !@copy(dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php') ) {
+						echo "<p>".sprintf(__('Failed to copy and rename %1$s to %2$s','flag'), 
+							dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php').'</p>';
+					}
 					$content = file_get_contents($installed_skin.'xml.php');
 					$pos = strpos($content,'/../../flash-album-gallery/flag-config.php');
 					if($pos === false) {
 						$content = str_replace('/../../flag-config.php','/../../flash-album-gallery/flag-config.php',$content);
 						$fp = fopen($installed_skin.'xml.php','w');
-						fwrite($fp,$content);
+						if( fwrite($fp,$content) === FALSE ) {
+							echo "<p>".sprintf(__("Failed to search string '/../../flag-config.php' and replace with '/../../flash-album-gallery/flag-config.php' in file '%1$s'",'flag'), 
+								$installed_skin.'xml.php').'</p>';
+						}
 						fclose($fp);
 					}
 				}

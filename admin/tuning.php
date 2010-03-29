@@ -14,12 +14,9 @@ function flag_tune($show_error=true) {
 	
 	$errors = '';
 	// check for main folder
-	if ( !is_dir($skins_dir) ) {
-		if ( !wp_mkdir_p( $skins_dir ) ) {
+	if ( !wp_mkdir_p( $skins_dir ) ) {
 			$errors .= __('Directory <strong>"', 'flag').$skins_dir.__('"</strong> doesn\'t exist. Please create first the <strong>"flagallery-skins"</strong> folder!', 'flag').'<br />';
-		}
-	} 
-	if($errors == '') {
+	} else {
 		// check for permission settings, Safe mode limitations are not taken into account. 
 		if ( !is_writeable( $skins_dir ) ) {
 			$errors .= __('Directory <strong>"', 'flag').$skins_dir.__('"</strong> is not writeable!', 'flag').'<br />';
@@ -38,7 +35,6 @@ function flag_tune($show_error=true) {
 						if ( !@rename($old_skins_dir.$file, $skins_dir.$file) ) {
 							$errors .= sprintf(__('Failed to move file %1$s to %2$s','flag'), 
 								'<strong>'.$old_skins_dir.$file.'</strong>', $skins_dir.$file).'<br />';
-							continue;
 						}
 					}
 				}
@@ -62,37 +58,33 @@ function flag_tune($show_error=true) {
 										if ( !@rename($skins_dir.$file.'/'.$subfile, $skins_dir.$file.'/screenshot.png') ) {
 											$errors .= sprintf(__('Failed to rename %1$s to %2$s','flag'), 
 												'<strong>'.$skins_dir.$file.'/'.$subfile.'</strong>', $skins_dir.$file.'/screenshot.png').'<br />';
-											continue;
 										} 
 									} else {
 										$errors = 1;
 										break;
 									}
 								}
-								if( !file_exists( $skins_dir.$file.'/settings.php' ) ) {
-									if($show_error) {
-										@unlink($skins_dir.$file.'/colors.php');
-										if ( !@copy($skins_dir.'default/old_colors.php', $skins_dir.$file.'/colors.php') ) {
-											$errors .= sprintf(__('Failed to copy and rename %1$s to %2$s','flag'), 
-												$skins_dir.'<strong>default/old_colors.php</strong>', $skins_dir.'<strong>'.$file.'/colors.php</strong>').'<br />';
-											continue;
-										}
-										$content = file_get_contents($skins_dir.$file.'/xml.php');
-										$pos = strpos($content,'/../../flash-album-gallery/flag-config.php');
-										if($pos === false) {
-											$content = str_replace('/../../flag-config.php','/../../flash-album-gallery/flag-config.php',$content);
-											$fp = fopen($skins_dir.$file.'/xml.php','w');
-											if( fwrite($fp,$content) === FALSE ) {
-												$errors .= sprintf(__("Failed to search string '/../../flag-config.php' and replace with '/../../flash-album-gallery/flag-config.php' in file '%1$s'",'flag'), 
-													$skins_dir.$file.'/xml.php').'<br />';
-												continue;
-											}
-											fclose($fp);
-										}
-									} else {
-										$errors = 1;
-										break;
+							}
+							if( !file_exists( $skins_dir.$file.'/settings.php' ) ) {
+								if($show_error) {
+									if ( !@copy($skins_dir.'default/old_colors.php', $skins_dir.$file.'/colors.php') ) {
+										$errors .= sprintf(__('Failed to copy and rename %1$s to %2$s','flag'), 
+											$skins_dir.'<strong>default/old_colors.php</strong>', $skins_dir.'<strong>'.$file.'/colors.php</strong>').'<br />';
 									}
+									$content = file_get_contents($skins_dir.$file.'/xml.php');
+									$pos = strpos($content,'/../../flash-album-gallery/flag-config.php');
+									if($pos === false) {
+										$content = str_replace('/../../flag-config.php','/../../flash-album-gallery/flag-config.php',$content);
+										$fp = fopen($skins_dir.$file.'/xml.php','w');
+										if( fwrite($fp,$content) === FALSE ) {
+											$errors .= sprintf(__("Failed to search string '/../../flag-config.php' and replace with '/../../flash-album-gallery/flag-config.php' in file '%1$s'",'flag'), 
+												$skins_dir.$file.'/xml.php').'<br />';
+										}
+										fclose($fp);
+									}
+								} else {
+									$errors = 1;
+									break;
 								}
 							}
 						}
