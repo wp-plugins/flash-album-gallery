@@ -11,13 +11,15 @@ function flag_tune($show_error=true) {
 	$flag_options['skinsDirABS'] = $skins_dir;
 	$flag_options['skinsDirURL'] = WP_PLUGIN_URL . '/flagallery-skins/';
 	update_option('flag_options', $flag_options);
-
+	
+	$errors = '';
 	// check for main folder
 	if ( !is_dir($skins_dir) ) {
 		if ( !wp_mkdir_p( $skins_dir ) ) {
 			$errors .= __('Directory <strong>"', 'flag').$skins_dir.__('"</strong> doesn\'t exist. Please create first the <strong>"flagallery-skins"</strong> folder!', 'flag').'<br />';
 		}
-	} else {
+	} 
+	if($errors == '') {
 		// check for permission settings, Safe mode limitations are not taken into account. 
 		if ( !is_writeable( $skins_dir ) ) {
 			$errors .= __('Directory <strong>"', 'flag').$skins_dir.__('"</strong> is not writeable!', 'flag').'<br />';
