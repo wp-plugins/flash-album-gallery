@@ -49,6 +49,11 @@ Important Links:
  
 == Changelog ==
  
+= v0.44 - 12.04.2010 =
+
+* Added : Turkish language
+* Small fixes
+
 = v0.43 - 28.03.2010 =
 
 * Added : More informative error messages on plugin upgrade
