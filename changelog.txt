@@ -1,9 +1,13 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
-v0.44 - 12.04.2010 
+v0.45 - 22.04.2010
+- Added : WordPress MU support
+- Small bug fixes
+
+v0.44 - 12.04.2010
 - Added : Turkish language
-- Small fixes
+- Small bug fixes
 
 v0.43 - 28.03.2010
 - Added : More informative error messages on plugin upgrade

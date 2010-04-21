@@ -1,7 +1,7 @@
 === GRAND Flash Album Gallery === 
 Contributors: Sergey Pasyuk
 Donate link: 
-Tags: flash, slideshow, gallery, embed, admin, post, posts, page, rss, plugin, photo album, picture, pictures, photo, photos, image, images, multi-categories gallery, skinable gallery, skin, widget, sidebar, photo gallery, image gallery, picture gallery, manage, manage photos, thumbnail, category, categories, automatic 
+Tags: flash, slideshow, gallery, embed, admin, post, posts, page, rss, plugin, photo album, picture, pictures, photo, photos, image, images, multi-categories gallery, skinable gallery, skin, widget, sidebar, photo gallery, image gallery, picture gallery, manage, manage photos, thumbnail, category, categories, automatic, wpmu, MU, wordpress MU 
 Requires at least: 2.8 
 Tested up to: 2.9.2 
 Stable tag: trunk 
@@ -49,10 +49,15 @@ Important Links:
  
 == Changelog ==
  
+= v0.45 - 22.04.2010 =
+
+* Added : WordPress MU support
+* Small bug fixes
+
 = v0.44 - 12.04.2010 =
 
 * Added : Turkish language
-* Small fixes
+* Small bug fixes
 
 = v0.43 - 28.03.2010 =
 

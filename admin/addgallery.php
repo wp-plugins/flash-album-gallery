@@ -250,7 +250,7 @@ if($flag->options['swfUpload']) { ?>
 							} ?>
 						</select>
 						<?php echo $maxsize; ?>
-						<br /><?php if ((IS_WPMU) && wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?>
+						<br /><?php if ((IS_WPMU) && flagGallery::flag_wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?>
 					</td>
 				</tr> 
 				</table>

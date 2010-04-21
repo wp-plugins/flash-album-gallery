@@ -290,6 +290,17 @@ class flagGallery {
 		fclose ($dFile);
 		return $result;
 	}
+	
+	
+	function flag_wpmu_enable_function($value) {
+		if (IS_WPMU) {
+			$flag_options = get_site_option('flag_options');
+			return $flag_options[$value];
+		}
+		// if this is not WPMU, enable it !
+		return true;
+	}
+
 }
 
 ?>

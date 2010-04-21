@@ -438,7 +438,7 @@ class flagMeta {
 		}
 		else {
 			// if no other date available, get the filetime
-			$date_time = @ filectime($this->imagePath);
+			$date_time = @ filectime($this->image->imagePath);
 		}
 		// Return the MySQL format
 		$date_time = date('Y-m-d H:i:s', $date_time);

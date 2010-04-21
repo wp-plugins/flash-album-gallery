@@ -60,7 +60,9 @@ function flag_admin_options()  {
 		<li class="selected"><a href="#" rel="generaloptions"><?php _e('General Options', 'flag'); ?></a></li>
 		<li><a href="#" rel="images"><?php _e('Images', 'flag'); ?></a></li>
 		<li><a href="#" rel="sorting"><?php _e( 'Sorting', 'flag' ); ?></a></li>
+<?php if (flagGallery::flag_wpmu_enable_function('wpmuRoles')) : ?>
 		<li><a href="#" rel="roles"><?php _e('Roles', 'flag'); ?></a></li>
+<?php endif; ?>
 	</ul>
 
 	<!-- General Options -->
@@ -150,7 +152,7 @@ function flag_admin_options()  {
 		</form>	
 	</div>
 	
-<?php if (flag_wpmu_enable_function('wpmuRoles')) : ?>
+<?php if (flagGallery::flag_wpmu_enable_function('wpmuRoles')) : ?>
 	<div id="roles" class="cptab">
 		<form method="POST" name="addroles" id="addroles" accept-charset="utf-8">
 			<?php wp_nonce_field('flag_addroles'); ?>
@@ -274,15 +276,6 @@ function flag_set_capability($lowest_role, $capability){
 		$add_capability ? $the_role->add_cap($capability) : $the_role->remove_cap($capability) ;
 	}
 	
-}
-
-function flag_wpmu_enable_function($value) {
-	if (IS_WPMU) {
-		$flag_options = get_site_option('flag_options');
-		return $flag_options[$value];
-	}
-	// if this is not WPMU, enable it !
-	return true;
 }
 
 ?>

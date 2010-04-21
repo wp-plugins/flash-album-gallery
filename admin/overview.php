@@ -59,7 +59,7 @@ function flag_overview_server() {
 <div id="dashboard_server_settings" class="dashboard-widget-holder wp_dashboard_empty">
 	<div class="flag-dashboard-widget">
 	  <?php if (IS_WPMU) {
-	  	if (wpmu_enable_function('wpmuQuotaCheck'))
+	  	if (flagGallery::flag_wpmu_enable_function('wpmuQuotaCheck'))
 			echo flag_SpaceManager::details();
 		else {
 			//TODO:WPMU message in WP2.5 style
@@ -160,7 +160,7 @@ function flag_overview_setup(){
 				</div>
 			</div>
 		</div>
-	<?php if (!IS_WPMU || wpmu_site_admin() ) : ?>
+	<?php if (!IS_WPMU || flag_wpmu_site_admin() ) : ?>
 	<div id="major-publishing-actions">
 	<form id="resetsettings" name="resetsettings" method="post">
 		<?php wp_nonce_field('flag_uninstall'); ?>

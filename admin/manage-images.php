@@ -70,7 +70,7 @@ function flag_picturelist() {
 	$hidden_columns  = get_hidden_columns('flag-manage-images');
 	$num_columns     = count($gallery_columns) - count($hidden_columns);	
 ?>
-<!--[if IE]>
+<!--[if lt IE 8]>
 	<style type="text/css">
 		.custom_thumb {
 			display : none;
