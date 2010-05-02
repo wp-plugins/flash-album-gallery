@@ -49,6 +49,10 @@ Important Links:
  
 == Changelog ==
  
+= v0.46 - 03.05.2010 =
+
+* Added : Belorussian language
+
 = v0.45 - 22.04.2010 =
 
 * Added : WordPress MU support
