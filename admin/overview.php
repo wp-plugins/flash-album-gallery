@@ -13,11 +13,11 @@ function flag_admin_overview()  {
 	<h2><?php _e('FlAG Gallery Overview', 'flag'); ?></h2>
 	<div id="flag-overview" class="metabox-holder">
 		<div id="side-info-column" class="inner-sidebar" style="display:block;">
-				<?php do_meta_boxes(FLAGFOLDER, 'side', null); ?>
+				<?php do_meta_boxes('flag-overview', 'side', null); ?>
 		</div>
 		<div id="post-body" class="has-sidebar">
 			<div id="post-body-content" class="has-sidebar-content">
-					<?php do_meta_boxes(FLAGFOLDER, 'normal', null); ?>
+					<?php do_meta_boxes('flag-overview', 'normal', null); ?>
 			</div>
 		</div>
 	</div>
@@ -35,10 +35,10 @@ wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 	<?php
 	global $wp_version;
 	if(version_compare($wp_version,"2.7-alpha", "<")){
-		echo "add_postbox_toggles('".FLAGFOLDER."');"; //For WP2.6 and below
+		echo "add_postbox_toggles('flag-overview');"; //For WP2.6 and below
 	}
 	else{
-		echo "postboxes.add_postbox_toggles('".FLAGFOLDER."');"; //For WP2.7 and above
+		echo "postboxes.add_postbox_toggles('flag-overview');"; //For WP2.7 and above
 	}
 	?>
 		jQuery('#side-info-column #major-publishing-actions').appendTo('#dashboard_primary');
@@ -219,8 +219,8 @@ function flag_overview_right_now() {
 	$galleries = intval( $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->flaggallery") );
 ?>
 
+<div class="table table_content">
 <p class="sub"><?php _e('At a Glance', 'flag'); ?></p>
-<div class="table">
 	<table>
 		<tbody>
 			<tr class="first">
@@ -250,11 +250,11 @@ function flag_overview_right_now() {
 <?php
 }
 
-add_meta_box('dashboard_primary', __('Setup Box', 'flag'), 'flag_overview_setup', FLAGFOLDER, 'side', 'core');
-add_meta_box('dashboard_news', __('News Box', 'flag'), 'flag_news_box', FLAGFOLDER, 'side', 'core');
-add_meta_box('dashboard_right_now', __('Welcome to FlAG Gallery !', 'flag'), 'flag_overview_right_now', FLAGFOLDER, 'normal', 'core');
-add_meta_box('flag_server', __('Server Settings', 'flag'), 'flag_overview_server', FLAGFOLDER, 'normal', 'core');
-add_meta_box('flag_gd_lib', __('Graphic Library', 'flag'), 'flag_overview_graphic_lib', FLAGFOLDER, 'normal', 'core');
+add_meta_box('dashboard_primary', __('Setup Box', 'flag'), 'flag_overview_setup', 'flag-overview', 'side', 'core');
+add_meta_box('dashboard_news', __('News Box', 'flag'), 'flag_news_box', 'flag-overview', 'side', 'core');
+add_meta_box('dashboard_right_now', __('Welcome to FlAG Gallery !', 'flag'), 'flag_overview_right_now', 'flag-overview', 'normal', 'core');
+add_meta_box('flag_server', __('Server Settings', 'flag'), 'flag_overview_server', 'flag-overview', 'normal', 'core');
+add_meta_box('flag_gd_lib', __('Graphic Library', 'flag'), 'flag_overview_graphic_lib', 'flag-overview', 'normal', 'core');
 
 /**
  * Show GD Library version information

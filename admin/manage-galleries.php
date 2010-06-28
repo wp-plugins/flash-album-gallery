@@ -124,6 +124,7 @@ function flag_manage_gallery_main() {
 					<option value="new_thumbnail" ><?php _e("Create new thumbnails",'flag'); ?></option>
 					<option value="resize_images" ><?php _e("Resize images",'flag'); ?></option>
 					<option value="import_meta" ><?php _e("Import metadata",'flag'); ?></option>
+					<option value="copy_meta" ><?php _e("Metadata to description",'flag'); ?></option>
 				</select>
 				<input name="showThickbox" class="button-secondary" type="submit" value="<?php _e('Apply','flag'); ?>" onclick="if ( !checkSelected() ) return false;" />
 				<?php endif; ?>

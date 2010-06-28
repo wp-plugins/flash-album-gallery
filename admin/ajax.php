@@ -36,6 +36,9 @@ function flag_ajax_operation() {
 			case 'import_metadata' :
 				$result = flagAdmin::import_MetaData( $id );
 			break;
+			case 'copy_metadata' :
+				$result = flagAdmin::copy_MetaData( $id );
+			break;
 			case 'get_image_ids' :
 				$result = flagAdmin::get_image_ids( $id );
 			break;

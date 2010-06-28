@@ -22,9 +22,9 @@ class flagAdminPanel{
 
 	function flag_activation_notice_upgrade(){
 		if(function_exists('admin_url')){
-			echo '<div class="error fade"><p>GRAND FlAGallery v0.40 '.__('(and above) use a different database structure than in previous versions - this was to support new features. You must update your database in order for this version to work - <strong>backup your database first</strong> then', "flag").' <a href="' . admin_url( 'admin.php?page=flash-album-gallery' ) . '">'.__('click here', "flag").'</a> '.__('to run the update script', "flag").'.</strong></p></div>';
+			echo '<div class="error fade"><p>GRAND FlAGallery v0.40 '.__('(and above) use a different database structure than in previous versions - this was to support new features. You must update your database in order for this version to work - <strong>backup your database first</strong> then', "flag").' <a href="' . admin_url( 'admin.php?page=flag-overview' ) . '">'.__('click here', "flag").'</a> '.__('to run the update script', "flag").'.</strong></p></div>';
 		} else {
-			echo '<div class="error fade"><p>GRAND FlAGallery v0.40 '.__('(and above) use a different database structure than in previous versions - this was to support new features. You must update your database in order for this version to work - <strong>backup your database first</strong> then', "flag").' <a href="' . get_option('siteurl') . 'admin.php?page=flash-album-gallery' . '">'.__('click here', "flag").'</a> '.__('to run the update script', "flag").'.</strong></p></div>';
+			echo '<div class="error fade"><p>GRAND FlAGallery v0.40 '.__('(and above) use a different database structure than in previous versions - this was to support new features. You must update your database in order for this version to work - <strong>backup your database first</strong> then', "flag").' <a href="' . get_option('siteurl') . 'admin.php?page=flag-overview' . '">'.__('click here', "flag").'</a> '.__('to run the update script', "flag").'.</strong></p></div>';
 		}
 	}
 
@@ -40,11 +40,11 @@ class flagAdminPanel{
 	// integrate the menu	
 	function add_menu()  {
 		
-		add_menu_page( __('GRAND Flash Album Gallery overview','flag'), __('FlAGallery'), 'FlAG overview', FLAGFOLDER, array (&$this, 'show_menu'), FLAG_URLPATH .'admin/images/flag.png' );
-	    add_submenu_page( FLAGFOLDER , __('GRAND Flash Album Gallery overview', 'flag'), __('Overview', 'flag'), 'FlAG overview', FLAGFOLDER, array (&$this, 'show_menu'));
-	    add_submenu_page( FLAGFOLDER , __('FlAG Manage gallery', 'flag'), __('Manage Galleries', 'flag'), 'FlAG Manage gallery', 'flag-manage-gallery', array (&$this, 'show_menu'));
-	    add_submenu_page( FLAGFOLDER , __('FlAG Manage skins', 'flag'), __('Skins', 'flag'), 'FlAG Change skin', 'flag-skins', array (&$this, 'show_menu'));
-	    add_submenu_page( FLAGFOLDER , __('FlAG Change options', 'flag'), __('Options', 'flag'), 'FlAG Change options', 'flag-options', array (&$this, 'show_menu'));
+		add_menu_page( __('GRAND Flash Album Gallery overview','flag'), __('FlAGallery'), 'FlAG overview', 'flag-overview', array (&$this, 'show_menu'), FLAG_URLPATH .'admin/images/flag.png' );
+	    add_submenu_page( 'flag-overview' , __('GRAND Flash Album Gallery overview', 'flag'), __('Overview', 'flag'), 'FlAG overview', 'flag-overview', array (&$this, 'show_menu'));
+	    add_submenu_page( 'flag-overview' , __('FlAG Manage gallery', 'flag'), __('Manage Galleries', 'flag'), 'FlAG Manage gallery', 'flag-manage-gallery', array (&$this, 'show_menu'));
+	    add_submenu_page( 'flag-overview' , __('FlAG Manage skins', 'flag'), __('Skins', 'flag'), 'FlAG Change skin', 'flag-skins', array (&$this, 'show_menu'));
+	    add_submenu_page( 'flag-overview' , __('FlAG Change options', 'flag'), __('Options', 'flag'), 'FlAG Change options', 'flag-options', array (&$this, 'show_menu'));
 		if ( flag_wpmu_site_admin() )
 			add_submenu_page( 'wpmu-admin.php' , __('GRAND Flash Album Gallery', 'flag'), __('GRAND FlAGallery', 'flag'), 'activate_plugins', 'flag-wpmu', array (&$this, 'show_menu'));
 
@@ -118,7 +118,7 @@ class flagAdminPanel{
 				
 		if (isset($_GET['page'])) { 
 			switch ($_GET['page']) {
-				case FLAGFOLDER : 
+				case 'flag-overview' : 
 					wp_enqueue_script( 'postbox' );
 				case "flag-manage-gallery" :
 					print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
@@ -145,7 +145,7 @@ class flagAdminPanel{
 		
 		if (isset($_GET['page'])) { 
 			switch ($_GET['page']) {
-				case FLAGFOLDER :
+				case 'flag-overview' :
 					wp_enqueue_style( 'flagadmin', FLAG_URLPATH .'admin/css/flagadmin.css', false, '2.8.1', 'screen' );
 					wp_admin_css( 'css/dashboard' );
 				break;
@@ -172,7 +172,7 @@ class flagAdminPanel{
 		$i18n = strtolower  ( _n( 'Gallery', 'Galleries', 1, 'flag' ) );
 
 		switch ($screen) {
-			case 'toplevel_page_' . FLAGFOLDER :
+			case 'toplevel_page_' . 'flag-overview' :
 			case "{$i18n}_page_flag-manage-gallery" :
 			case "flag-manage-gallery":
 			case "flag-manage-images":

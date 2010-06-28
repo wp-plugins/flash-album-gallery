@@ -400,7 +400,7 @@ class flagAdmin{
 			
 		global $wpdb;
 		
-		require_once(FLAG_ABSPATH . '/lib/image.php');
+		require_once(FLAG_ABSPATH . 'lib/image.php');
 		
 		if (!is_array($imagesIds))
 			$imagesIds = array($imagesIds);
@@ -437,6 +437,51 @@ class flagAdmin{
 	}
 
 	/**
+	 * Copy some metadata into the image description (if avialable)
+	 * 
+	 * @class flagAdmin
+	 * @param array|int $imagesIds
+	 * @return bool
+	 */
+	function copy_MetaData($imagesIds) {
+			
+		global $wpdb;
+		
+		require_once(FLAG_ABSPATH . 'lib/meta.php');
+		require_once(FLAG_ABSPATH . 'lib/image.php');
+
+		if (!is_array($imagesIds))
+			$imagesIds = array($imagesIds);
+		
+		foreach($imagesIds as $imageID) {
+			
+			$image = flagdb::find_image($imageID);
+			if (!$image->error) {
+
+				require_once(FLAG_ABSPATH . 'admin/grab_meta.php');
+  		
+				// get the title
+				$alttext = empty( $alttext ) ? $image->alttext : $meta['title'];
+				if($alttext) $alttext = '<font size="16"><strong>'.$alttext."</strong></font>\n";
+				// get the caption / description field
+				$description = empty($description ) ? $image->description : $meta['caption'];
+				if($description) $description = $description."\n\n";
+				// get the file date/time from exif
+				$makedescription = $alttext.$description.$makedescription;
+				// update database
+				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", '', attribute_escape($makedescription), $timestamp, $image->pid) );
+				if ($result === false)
+					return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not update data base)', 'flag') . '</strong>';		
+				
+			} else
+				return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not find image)', 'flag') . '</strong>';// error check
+		}
+		
+		return '1';
+		
+	}
+
+	/**
 	 * flagAdmin::get_MetaData()
 	 * 
 	 * @class flagAdmin
@@ -446,7 +491,7 @@ class flagAdmin{
 	 */
 	function get_MetaData($id) {
 		
-		require_once(FLAG_ABSPATH . '/lib/meta.php');
+		require_once(FLAG_ABSPATH . 'lib/meta.php');
 		
 		$meta = array();
 
@@ -472,7 +517,7 @@ class flagAdmin{
 	 */
 	function maybe_import_meta( $id ) {
 				
-		require_once(FLAG_ABSPATH . '/lib/meta.php');
+		require_once(FLAG_ABSPATH . 'lib/meta.php');
 				
 		$image = new flagMeta( $id );
 		

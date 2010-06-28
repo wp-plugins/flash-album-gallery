@@ -267,6 +267,7 @@ jQuery(document).ready( function() {
 		<option value="resize_images" ><?php _e("Resize images",'flag')?></option>
 		<option value="delete_images" ><?php _e("Delete images",'flag')?></option>
 		<option value="import_meta" ><?php _e("Import metadata",'flag')?></option>
+		<option value="copy_meta" ><?php _e("Metadata to description",'flag')?></option>
 		<option value="copy_to" ><?php _e("Copy to...",'flag')?></option>
 		<option value="move_to"><?php _e("Move to...",'flag')?></option>
 	</select>

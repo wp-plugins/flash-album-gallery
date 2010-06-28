@@ -113,7 +113,7 @@ class flagManageGallery {
 		// will be called after a ajax operation
 		if (isset ($_POST['ajax_callback']))  {
 				if ($_POST['ajax_callback'] == 1)
-					flagGallery::show_message(__('Operation successful. Please clear your browser cache.',"flag"));
+					flagGallery::show_message(__('Operation successful. Please clear your browser cache.','flag'));
 		}
 	
 		if ( isset ($_POST['backToGallery']) )
@@ -144,6 +144,11 @@ class flagManageGallery {
 				// Import Metadata
 					// A prefix 'gallery_' will first fetch all ids from the selected galleries
 					flagAdmin::do_ajax_operation( 'gallery_import_metadata' , $_POST['doaction'], __('Import metadata','flag') );
+					break;
+				case 'copy_meta':
+				// Copy Metadata
+					// A prefix 'gallery_' will first fetch all ids from the selected galleries
+					flagAdmin::do_ajax_operation( 'gallery_copy_metadata' , $_POST['doaction'], __('Copy metadata to image Description','flag') );
 					break;
 			}
 		}
@@ -205,11 +210,14 @@ class flagManageGallery {
 							}
 						}
 						if($delete_pic)
-							flagGallery::show_message(__('Pictures deleted successfully ', 'flag'));
+							flagGallery::show_message(__('Pictures deleted successfully ','flag'));
 					}
 					break;
 				case 'import_meta':
-					flagAdmin::do_ajax_operation( 'import_metadata' , $_POST['doaction'], __('Import metadata', 'flag') );
+					flagAdmin::do_ajax_operation( 'import_metadata' , $_POST['doaction'], __('Import metadata','flag') );
+					break;
+				case 'copy_meta':
+					flagAdmin::do_ajax_operation( 'copy_metadata' , $_POST['doaction'], __('Copy metadata to image Description','flag') );
 					break;
 			}
 		}

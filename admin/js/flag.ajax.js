@@ -1,6 +1,5 @@
 /*
  * Ajax Plugin for Flash Album Gallery
- * Version:  1.4.0
  */ 
 (function($) {
 flagAjax = {
