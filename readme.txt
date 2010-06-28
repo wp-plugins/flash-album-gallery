@@ -51,6 +51,7 @@ Important Links:
  
 = v0.49 - 28.06.2010 =
 * Added : Bulk action: copy image metadata to image description
+* Added : Russian translation
 * Bug fixes and CSS fixes
 
 = v0.46 - 03.05.2010 =
