@@ -49,6 +49,9 @@ Important Links:
  
 == Changelog ==
  
+= v0.50 - 19.07.2010 =
+* Fixed : Metadata to description wrong tag
+
 = v0.49 - 28.06.2010 =
 * Added : Bulk action: copy image metadata to image description
 * Added : Russian translation

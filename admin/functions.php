@@ -462,10 +462,10 @@ class flagAdmin{
   		
 				// get the title
 				$alttext = empty( $alttext ) ? $image->alttext : $meta['title'];
-				if($alttext) $alttext = '<font size="16"><strong>'.$alttext."</strong></font>\n";
+				if($alttext) $alttext = '<font size="16"><b>'.$alttext."</b></font>\n";
 				// get the caption / description field
 				$description = empty($description ) ? $image->description : $meta['caption'];
-				if($description) $description = $description."\n\n";
+				if($description) $description = $description."<br>\n";
 				// get the file date/time from exif
 				$makedescription = $alttext.$description.$makedescription;
 				// update database

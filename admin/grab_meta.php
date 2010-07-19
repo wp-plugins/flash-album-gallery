@@ -8,31 +8,31 @@ $alttext = trim ( $meta->get_META('title') );
 $description = trim ( $meta->get_META('caption') );	
 $timestamp = $meta->get_date_time();
 
-$makedescription = '<strong>'.__('Meta Data','flag')."</strong>\n";
+$makedescription = '<b>'.__('Meta Data','flag')."</b><br>";
 if ($dbdata) { 
 			foreach ($dbdata as $key => $value){
 				if ( is_array($value) ) continue;
-					$makedescription .= '<strong>'.$meta->i8n_name($key)."</strong> ".$value."\n";
+					$makedescription .= '<b>'.$meta->i8n_name($key)."</b> ".$value."<br>";
 			}
 } else {
-			$makedescription .= __('No meta data saved','flag')."\n";
+			$makedescription .= __('No meta data saved','flag')."<br>";
 }
 if ($exifdata) { 
-			$makedescription .= "\n<strong>".__('EXIF Data','flag')."</strong>\n"; 
+			$makedescription .= "\n<b>".__('EXIF Data','flag')."</b><br>"; 
 			foreach ($exifdata as $key => $value){
-				$makedescription .= '<strong>'.$meta->i8n_name($key)."</strong> ".$value."\n";
+				$makedescription .= '<b>'.$meta->i8n_name($key)."</b> ".$value."<br>";
 			}
 		}
 if ($iptcdata) { 
-			$makedescription .= "\n<strong>".__('IPTC Data','flag')."</strong>\n"; 
+			$makedescription .= "\n<b>".__('IPTC Data','flag')."</b><br>"; 
 			foreach ($iptcdata as $key => $value){
-				$makedescription .= '<strong>'.$meta->i8n_name($key)."</strong> ".$value."\n";
+				$makedescription .= '<b>'.$meta->i8n_name($key)."</b> ".$value."<br>";
 			}
 }
 if ($xmpdata) {  
-			$makedescription .= "\n<strong>".__('XMP Data','flag')."</strong>\n"; 
+			$makedescription .= "\n<b>".__('XMP Data','flag')."</b><br>"; 
 			foreach ($xmpdata as $key => $value){
-				$makedescription .= '<strong>'.$meta->i8n_name($key)."</strong> ".$value."\n";
+				$makedescription .= '<b>'.$meta->i8n_name($key)."</b> ".$value."<br>";
 			}
 }
 ?>
