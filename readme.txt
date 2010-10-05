@@ -49,6 +49,9 @@ Important Links:
  
 == Changelog ==
  
+= v0.52 - 5.10.2010 =
+* Added : Polish translation
+
 = v0.50 - 19.07.2010 =
 * Fixed : Metadata to description wrong tag
 
