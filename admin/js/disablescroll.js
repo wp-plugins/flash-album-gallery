@@ -13,7 +13,8 @@ function isOverSwf(mEvent)
         elem = mEvent.target.nodeName;
     }
 
-    if (elem.toLowerCase() == "object" || elem.toLowerCase() == "embed") {
+//    if (elem.toLowerCase() == "object" || elem.toLowerCase() == "embed") {
+    if (jQuery(elem).hasClass('flashalbum')) {
         return true;
     }
     return false;
