@@ -49,6 +49,10 @@ Important Links:
  
 == Changelog ==
  
+= v0.54 - 18.01.2011 =
+* Added : javascript - flash scroll without html scroll
+* Added : Dutch language
+
 = v0.52 - 5.10.2010 =
 * Added : Polish translation
 
