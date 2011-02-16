@@ -17,15 +17,33 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 
 	if (empty($width) ) $width  = $flag_options['flashWidth'];
 	if (empty($height)) $height = (int) $flag_options['flashHeight'];
-	if($name == '') $name = 'Gallery';
+	if($name == '') $name = '';
 	if($skin == '') $skin = $flag_options['flashSkin'];
-	if($flag_options['flashBacktransparent'] == 'transparent') {
-		$wmode = 'transparent';
-	} else {
-		$wmode = 'window';
-	}
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
-	if(!is_dir($skinpath)) $skin = 'default';
+	if(!is_dir($skinpath)) {
+		$skin = 'default';
+		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+	} 
+	$wmode = '';
+	$flashBacktransparent = '';
+	$flashBackcolor = '';
+	// look up for the path
+	if(file_exists($skinpath . "/settings.xml")) {
+		$data = file_get_contents($skinpath . "/settings.xml");
+		$wmode = flagGetBetween($data,'<property0><![CDATA[',']]></property0>');
+		$flashBackcolor = flagGetBetween($data,'<property1>0x','</property1>');
+	} else if(file_exists($skinpath . "_settings.php")) {
+		include_once( $skinpath . "_settings.php");
+	} else if(file_exists($skinpath . "/settings.php")) {
+		include_once( $skinpath . "/settings.php");
+	}
+
+	if(empty($wmode)) {
+		$wmode = $flashBacktransparent? 'transparent' : 'window';
+	}
+	if(empty($flashBackcolor)) {
+		$flashBackcolor = $flag_options['$flashBackcolor'];
+	}
 	// init the flash output
 	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , 'so' . $galleryID, $width, $height, '10.0.0', FLAG_URLPATH .'skins/expressInstall.swf');
 	global $swfCounter;
@@ -34,7 +52,7 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 	$swfobject->add_params('wmode', $wmode);
 	$swfobject->add_params('allowfullscreen', 'true');
 	$swfobject->add_params('menu', 'false');
-	$swfobject->add_params('bgcolor', '#'.$flag_options['flashBackcolor'] );
+	$swfobject->add_params('bgcolor', '#'.$flashBackcolor );
 	$swfobject->add_attributes('styleclass', 'flashalbum');
 	$swfobject->add_attributes('id', 'so' . $galleryID . '_f' . $swfCounter);
 	$swfobject->add_attributes('name', 'so' . $galleryID . '_f' . $swfCounter);
@@ -58,4 +76,12 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 	return $out;	
 }
 
+function flagGetBetween($content,$start,$end){
+    $r = explode($start, $content);
+    if (isset($r[1])){
+        $r = explode($end, $r[1]);
+        return $r[0];
+    }
+    return '';
+}
 ?>

@@ -55,6 +55,9 @@
 
 #dashboard_primary .inside { margin: 0; }
 
+#photogallerycreator .theme { overflow: hidden; padding: 7px 0; border-bottom: 1px solid #000000; }
+#photogallerycreator .theme .img { margin-top: 25px; }
+#photogallerycreator .theme .txt > *:first-child { display: block; margin: 0 0 -20px; padding: 0; text-align: center; position: relative; top: -204px; }
 
 /* SETTING FOR UPLOAD PAGE */
 .useflashupload {float:left;}

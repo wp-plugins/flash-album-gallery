@@ -49,6 +49,10 @@ Important Links:
  
 == Changelog ==
  
+= v0.56 - 18.01.2011 =
+* Fixed : transparent and bg color for skins
+* Added : functionality for feature skin
+
 = v0.55 - 18.01.2011 =
 * Removed : disablescroll.js - very buggy
 

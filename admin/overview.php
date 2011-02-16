@@ -32,15 +32,7 @@ wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 	jQuery(document).ready( function() {
 		jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 	// postboxes
-	<?php
-	global $wp_version;
-	if(version_compare($wp_version,"2.7-alpha", "<")){
-		echo "add_postbox_toggles('flag-overview');"; //For WP2.6 and below
-	}
-	else{
-		echo "postboxes.add_postbox_toggles('flag-overview');"; //For WP2.7 and above
-	}
-	?>
+		postboxes.add_postbox_toggles('flag-overview');
 		jQuery('#side-info-column #major-publishing-actions').appendTo('#dashboard_primary');
 	});
 	//]]>
@@ -187,10 +179,10 @@ function flag_news_box(){
 <script type="text/javascript">
 /*<![CDATA[*/
 jQuery(document).ready(function(){
-jQuery("#photogallerycreator").load("<?php echo FLAG_URLPATH; ?>admin/news.php #flag-skin-gallery td:lt(10) > div", {want2Read:'http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/'},function(){
+jQuery("#photogallerycreator").load("<?php echo FLAG_URLPATH; ?>admin/news.php #skins", {want2Read:'http://photogallerycreator.com/grand-flagallery/'},function(){
 //Write your additional jQuery script below. Use as many functions as you like, for instance:
-jQuery("#photogallerycreator div").css({border:"1px solid #dedede", margin:"5px", padding:"10px 0"});
-jQuery("#photogallerycreator img").css({display:"block", margin:"0 auto 5px auto"});
+jQuery("#photogallerycreator a").attr('target','_blank');
+jQuery("#photogallerycreator a font").replaceWith('Download Demo');
 });
 });
 /*]]>*/
