@@ -51,6 +51,7 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
 	$swfobject->add_params('wmode', $wmode);
 	$swfobject->add_params('allowfullscreen', 'true');
+	$swfobject->add_params('allowScriptAccess', 'always');
 	$swfobject->add_params('menu', 'false');
 	$swfobject->add_params('bgcolor', '#'.$flashBackcolor );
 	$swfobject->add_attributes('styleclass', 'flashalbum');

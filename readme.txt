@@ -49,7 +49,11 @@ Important Links:
  
 == Changelog ==
  
-= v0.56 - 18.01.2011 =
+= v0.57 - 17.02.2011 =
+* Added : js for feature skin
+* Fixed : small fixes
+
+= v0.56 - 17.02.2011 =
 * Fixed : transparent and bg color for skins
 * Added : functionality for feature skin
 
