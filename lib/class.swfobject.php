@@ -50,17 +50,20 @@ class flag_swfobject {
 		$this->embedSWF .= 'swfobject.createCSS("#'. $id . '","outline:none");' . "\n";
 	}
 	
-	function output () {
+	function output ($alternate = '') {
 		
 		global $swfCounter;
 		
+		if(!$alternate) {
+			$alternate = "\n".'<h1 style="font-size:14px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a style="font-size:14px; font-weight:normal; margin:0; padding:0; background:none; border:none;" href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" title="GRAND Flash Album Gallery">'.__("GRAND Flash Album Gallery","flag").'</a></h1>';
+			$alternate .= "\n".'<h1 style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;" href="http://photogallerycreator.com" title="Skins for GRAND FlAGallery">'.__("Skins for GRAND FlAGallery, Photo Galleries, Video Galleries","flag").'</a></h1>';
+			$alternate .= "\n".'<h2 style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;" href="http://codeasily.com" title="Wordpress Flash Templates, WordPress Themes and WordPress plugins">'.__("developed by CodEasily.com - WordPress Flash Templates, WordPress Themes and WordPress plugins","flag").'</a></h2>';
+			$alternate .= "\n".__('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag');
+		}
 		// count up if we have more than one swfobject
 		$swfCounter++;
 		$out  = "\n".'<div class="'. $this->classname .'" id="'. $this->id  .'">';
-		$out .= "\n".'<h1 style="font-size:14px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a style="font-size:14px; font-weight:normal; margin:0; padding:0; background:none; border:none;" href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" title="GRAND Flash Album Gallery">'.__("GRAND Flash Album Gallery","flag").'</a></h1>';
-		$out .= "\n".'<h1 style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;" href="http://photogallerycreator.com" title="Skins for GRAND FlAGallery">'.__("Skins for GRAND FlAGallery, Photo Galleries, Video Galleries","flag").'</a></h1>';
-		$out .= "\n".'<h2 style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;"><a style="font-size:12px; font-weight:normal; margin:0; padding:0; background:none; border:none;" href="http://codeasily.com" title="Wordpress Flash Templates, WordPress Themes and WordPress plugins">'.__("developed by CodEasily.com - WordPress Flash Templates, WordPress Themes and WordPress plugins","flag").'</a></h2>';
-		$out .= "\n".__('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag');
+		$out .= $alternate;
 		$out .= "\n".'</div>';
 		
 		return $out;
