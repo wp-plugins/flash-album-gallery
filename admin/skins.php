@@ -52,11 +52,11 @@ function upload_skin() {
 					@rename($installed_skin.basename($installed_skin).'.png', $installed_skin.'screenshot.png');
 				}
 				if( !file_exists( $installed_skin.'settings.php' ) ) {
-					if ( !@copy(dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php') ) {
-						echo "<p>".sprintf(__('Failed to copy and rename %1$s to %2$s','flag'), 
-							dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php').'</p>';
-					}
 					if( file_exists( $installed_skin.'xml.php' ) ) {
+						if ( !@copy(dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php') ) {
+							echo "<p>".sprintf(__('Failed to copy and rename %1$s to %2$s','flag'), 
+								dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php').'</p>';
+						}
 						$content = file_get_contents($installed_skin.'xml.php');
 						$pos = strpos($content,'/../../flash-album-gallery/flag-config.php');
 						if($pos === false) {

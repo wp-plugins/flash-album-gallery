@@ -67,20 +67,22 @@ function flag_tune($show_error=true) {
 							}
 							if( !file_exists( $skins_dir.$file.'/settings.php' ) ) {
 								if($show_error) {
-									if ( !@copy($skins_dir.'default/old_colors.php', $skins_dir.$file.'/colors.php') ) {
-										$errors .= sprintf(__('Failed to copy and rename %1$s to %2$s','flag'), 
-											$skins_dir.'<strong>default/old_colors.php</strong>', $skins_dir.'<strong>'.$file.'/colors.php</strong>').'<br />';
-									}
-									$content = file_get_contents($skins_dir.$file.'/xml.php');
-									$pos = strpos($content,'/../../flash-album-gallery/flag-config.php');
-									if($pos === false) {
-										$content = str_replace('/../../flag-config.php','/../../flash-album-gallery/flag-config.php',$content);
-										$fp = fopen($skins_dir.$file.'/xml.php','w');
-										if( fwrite($fp,$content) === FALSE ) {
-											$errors .= sprintf(__("Failed to search string '/../../flag-config.php' and replace with '/../../flash-album-gallery/flag-config.php' in file '%1$s'",'flag'), 
-												$skins_dir.$file.'/xml.php').'<br />';
+									if( file_exists( $skins_dir.$file.'xml.php' ) ) {
+										if ( !@copy($skins_dir.'default/old_colors.php', $skins_dir.$file.'/colors.php') ) {
+											$errors .= sprintf(__('Failed to copy and rename %1$s to %2$s','flag'), 
+												$skins_dir.'<strong>default/old_colors.php</strong>', $skins_dir.'<strong>'.$file.'/colors.php</strong>').'<br />';
 										}
-										fclose($fp);
+										$content = file_get_contents($skins_dir.$file.'/xml.php');
+										$pos = strpos($content,'/../../flash-album-gallery/flag-config.php');
+										if($pos === false) {
+											$content = str_replace('/../../flag-config.php','/../../flash-album-gallery/flag-config.php',$content);
+											$fp = fopen($skins_dir.$file.'/xml.php','w');
+											if( fwrite($fp,$content) === FALSE ) {
+												$errors .= sprintf(__("Failed to search string '/../../flag-config.php' and replace with '/../../flash-album-gallery/flag-config.php' in file '%1$s'",'flag'), 
+													$skins_dir.$file.'/xml.php').'<br />';
+											}
+											fclose($fp);
+										}
 									}
 								} else {
 									$errors = 1;
