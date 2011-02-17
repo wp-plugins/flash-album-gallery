@@ -56,16 +56,18 @@ function upload_skin() {
 						echo "<p>".sprintf(__('Failed to copy and rename %1$s to %2$s','flag'), 
 							dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php').'</p>';
 					}
-					$content = file_get_contents($installed_skin.'xml.php');
-					$pos = strpos($content,'/../../flash-album-gallery/flag-config.php');
-					if($pos === false) {
-						$content = str_replace('/../../flag-config.php','/../../flash-album-gallery/flag-config.php',$content);
-						$fp = fopen($installed_skin.'xml.php','w');
-						if( fwrite($fp,$content) === FALSE ) {
-							echo "<p>".sprintf(__("Failed to search string '/../../flag-config.php' and replace with '/../../flash-album-gallery/flag-config.php' in file '%1$s'",'flag'), 
-								$installed_skin.'xml.php').'</p>';
+					if( file_exists( $installed_skin.'xml.php' ) ) {
+						$content = file_get_contents($installed_skin.'xml.php');
+						$pos = strpos($content,'/../../flash-album-gallery/flag-config.php');
+						if($pos === false) {
+							$content = str_replace('/../../flag-config.php','/../../flash-album-gallery/flag-config.php',$content);
+							$fp = fopen($installed_skin.'xml.php','w');
+							if( fwrite($fp,$content) === FALSE ) {
+								echo "<p>".sprintf(__("Failed to search string '/../../flag-config.php' and replace with '/../../flash-album-gallery/flag-config.php' in file '%1$s'",'flag'), 
+									$installed_skin.'xml.php').'</p>';
+							}
+							fclose($fp);
 						}
-						fclose($fp);
 					}
 				}
 			}
