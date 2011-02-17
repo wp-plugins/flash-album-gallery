@@ -1,11 +1,15 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
-= v0.57 - 17.02.2011 =
+= v0.58 - 17.02.2011 =
+* Changed : core files for skins swfobject
+* Notice : all feature skins require plugin v0.58 or higher
+
+= v0.57 - 16.02.2011 =
 * Added : js for feature skin
 * Fixed : small fixes
 
-= v0.56 - 17.02.2011 =
+= v0.56 - 16.02.2011 =
 * Fixed : transparent and bg color for skins
 * Added : functionality for feature skin
 

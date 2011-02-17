@@ -24,57 +24,58 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 		$skin = 'default';
 		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	} 
-	$wmode = '';
-	$flashBacktransparent = '';
-	$flashBackcolor = '';
-	// look up for the path
-	if(file_exists($skinpath . "/settings.xml")) {
-		$data = file_get_contents($skinpath . "/settings.xml");
-		$wmode = flagGetBetween($data,'<property0><![CDATA[',']]></property0>');
-		$flashBackcolor = flagGetBetween($data,'<property1>0x','</property1>');
-	} else if(file_exists($skinpath . "_settings.php")) {
-		include_once( $skinpath . "_settings.php");
-	} else if(file_exists($skinpath . "/settings.php")) {
-		include_once( $skinpath . "/settings.php");
+	include_once ( $skinpath.'/'.$skin.'.php' );
+	if(function_exists('flagShowSkin')) {
+		$out = flagShowSkin($galleryID, $name, $width, $height, $skin);
+	} else {
+		$wmode = '';
+		$flashBacktransparent = '';
+		$flashBackcolor = '';
+		// look up for the path
+		if(file_exists($skinpath . "_settings.php")) {
+			include_once( $skinpath . "_settings.php");
+		} else if(file_exists($skinpath . "/settings.php")) {
+			include_once( $skinpath . "/settings.php");
+		}
+
+		if(empty($wmode)) {
+			$wmode = $flashBacktransparent? 'transparent' : 'window';
+		}
+		if(empty($flashBackcolor)) {
+			$flashBackcolor = $flag_options['flashBackcolor'];
+		}
+		// init the flash output
+		$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , 'so' . $galleryID, $width, $height, '10.0.0', FLAG_URLPATH .'skins/expressInstall.swf');
+		global $swfCounter;
+
+		$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
+		$swfobject->add_params('wmode', $wmode);
+		$swfobject->add_params('allowfullscreen', 'true');
+		$swfobject->add_params('allowScriptAccess', 'always');
+		$swfobject->add_params('menu', 'false');
+		$swfobject->add_params('bgcolor', '#'.$flashBackcolor );
+		$swfobject->add_attributes('styleclass', 'flashalbum');
+		$swfobject->add_attributes('id', 'so' . $galleryID . '_f' . $swfCounter);
+		$swfobject->add_attributes('name', 'so' . $galleryID . '_f' . $swfCounter);
+
+		// adding the flash parameter	
+		$swfobject->add_flashvars( 'path', $flag_options['skinsDirURL'].$skin.'/' );
+		$swfobject->add_flashvars( 'gID', $galleryID );
+		$swfobject->add_flashvars( 'galName', $name );
+		$swfobject->add_flashvars( 'width', $width );
+		$swfobject->add_flashvars( 'height', $height );	
+		// create the output
+		$out = '<div class="flashalbum">' . $swfobject->output() . '</div>';
+		// add now the script code
+		$out .= "\n".'<script type="text/javascript" defer="defer">';
+		$out .= "\nvar swfdiv=document.getElementById('so".$galleryID."_c".($swfCounter-1)."');swfdiv.style.display='none';setTimeout(function(){swfdiv.style.display='block';},3000);";
+		$out .= $swfobject->javascript();
+		$out .= "\n".'</script>';
+
+		$out = apply_filters('flag_show_flash_content', $out);
 	}
-
-	if(empty($wmode)) {
-		$wmode = $flashBacktransparent? 'transparent' : 'window';
-	}
-	if(empty($flashBackcolor)) {
-		$flashBackcolor = $flag_options['$flashBackcolor'];
-	}
-	// init the flash output
-	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , 'so' . $galleryID, $width, $height, '10.0.0', FLAG_URLPATH .'skins/expressInstall.swf');
-	global $swfCounter;
-
-	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
-	$swfobject->add_params('wmode', $wmode);
-	$swfobject->add_params('allowfullscreen', 'true');
-	$swfobject->add_params('allowScriptAccess', 'always');
-	$swfobject->add_params('menu', 'false');
-	$swfobject->add_params('bgcolor', '#'.$flashBackcolor );
-	$swfobject->add_attributes('styleclass', 'flashalbum');
-	$swfobject->add_attributes('id', 'so' . $galleryID . '_f' . $swfCounter);
-	$swfobject->add_attributes('name', 'so' . $galleryID . '_f' . $swfCounter);
-
-	// adding the flash parameter	
-	$swfobject->add_flashvars( 'path', $flag_options['skinsDirURL'].$skin.'/' );
-	$swfobject->add_flashvars( 'gID', $galleryID );
-	$swfobject->add_flashvars( 'galName', $name );
-	$swfobject->add_flashvars( 'width', $width );
-	$swfobject->add_flashvars( 'height', $height );	
-	// create the output
-	$out = '<div class="flashalbum">' . $swfobject->output() . '</div>';
-	// add now the script code
-	$out .= "\n".'<script type="text/javascript" defer="defer">';
-	$out .= "\nvar swfdiv=document.getElementById('so".$galleryID."_c".($swfCounter-1)."');swfdiv.style.display='none';setTimeout(function(){swfdiv.style.display='block';},3000);";
-	$out .= $swfobject->javascript();
-	$out .= "\n".'</script>';
-
-	$out = apply_filters('flag_show_flash_content', $out);
-			
-	return $out;	
+				
+		return $out;	
 }
 
 function flagGetBetween($content,$start,$end){

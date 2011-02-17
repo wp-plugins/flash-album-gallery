@@ -49,6 +49,10 @@ Important Links:
  
 == Changelog ==
  
+= v0.58 - 17.02.2011 =
+* Changed : core files for skins swfobject
+* Notice : all feature skins require plugin v0.58 or higher
+
 = v0.57 - 17.02.2011 =
 * Added : js for feature skin
 * Fixed : small fixes

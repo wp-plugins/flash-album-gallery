@@ -81,7 +81,9 @@ function upload_skin() {
 function flag_skin_options_tab() {
 	//Get the active skin
 	$flag_options = get_option('flag_options');
-	$active_skin = $flag_options['skinsDirABS'].$flag_options['flashSkin'].'/'.$flag_options['flashSkin'].'.php';
+	$active_skin = $flag_options['skinsDirABS'].$flag_options['flashSkin'].'/settings/constructor.php';
+	if(!file_exists($active_skin))
+		$active_skin = $flag_options['skinsDirABS'].$flag_options['flashSkin'].'/'.$flag_options['flashSkin'].'.php';
 	include_once($active_skin);
 	if(function_exists('flag_skin_options')) {
 		flag_skin_options();
