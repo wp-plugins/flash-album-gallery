@@ -37,7 +37,7 @@ class flag_swfobject {
 		if ( !isset($swfCounter) )
 			$swfCounter = 1;
 		
-		$this->id = $id . '_c' . $swfCounter;
+		$this->id = $id . '_div';
 		$this->width = $width;
 		$this->height = $height;		
 		

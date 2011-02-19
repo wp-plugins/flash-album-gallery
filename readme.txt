@@ -49,6 +49,10 @@ Important Links:
  
 == Changelog ==
  
+= v0.58pl1 - 19.02.2011 =
+* Changed : Fix for compatibility with new skin
+* Notice : new skin released today
+
 = v0.58 - 17.02.2011 =
 * Changed : core files for skins swfobject
 * Notice : all feature skins require plugin v0.58 or higher

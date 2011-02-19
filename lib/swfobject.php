@@ -51,7 +51,6 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 		$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
 		$swfobject->add_params('wmode', $wmode);
 		$swfobject->add_params('allowfullscreen', 'true');
-		$swfobject->add_params('allowScriptAccess', 'always');
 		$swfobject->add_params('menu', 'false');
 		$swfobject->add_params('bgcolor', '#'.$flashBackcolor );
 		$swfobject->add_attributes('styleclass', 'flashalbum');
@@ -68,7 +67,7 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 		$out = '<div class="flashalbum">' . $swfobject->output() . '</div>';
 		// add now the script code
 		$out .= "\n".'<script type="text/javascript" defer="defer">';
-		$out .= "\nvar swfdiv=document.getElementById('so".$galleryID."_c".($swfCounter-1)."');swfdiv.style.display='none';setTimeout(function(){swfdiv.style.display='block';},3000);";
+		$out .= "\nvar swfdiv=document.getElementById('so".$galleryID."_div');swfdiv.style.display='none';setTimeout(function(){swfdiv.style.display='block';},3000);";
 		$out .= $swfobject->javascript();
 		$out .= "\n".'</script>';
 
