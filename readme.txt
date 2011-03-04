@@ -6,17 +6,17 @@ Requires at least: 2.9
 Tested up to: 3.0 
 Stable tag: trunk 
  
-GRAND Flash Album Gallery is a full integrated (flash skin based, slideshow) Image Gallery plugin with a powerfull admin back end. 
+GRAND Flash Album Gallery is a fully integrated (flash skin based, slideshow option) Image Gallery plugin with a powerful admin panel. 
  
 == Description == 
-Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin.  It provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional. You can display galleries with a beautiful flash skins integrated with GRAND Flash Album Gallery.
- 
-With GRAND FlAGallery you can: upload unlimited number of pictures for your slideshow galleries and albums; customize color of all the user controls and background for embeded flash skin to fit your blog colors; change width and height of flash or leave width 100% to fit your blog; view photo gallery in full screen mode for dramatic presentations; turn on/off image gallery media RSS feed; change role settings for each gallery; copy or move images between galleries; import images from folder and create gallery; easily insert shortcode in post with special button integrated in post editor; create custom thumbnails for image; sort pictures in drag-and-drop way.
-Make your blog nicer and your life easier!!! Code easily with <a href="http://codeasily.com/" title="CodEasily.com">codeasily.com</a>
- 
+Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin. It provides a comprehensive interface for handling photos and images. 
+You can edit photos the way you want: upload an unlimited number of images, create dozens of galleries, group pictures in slideshow, and add up to two text descriptions for each photo - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. 
+With our versatile plugin you can magically change the look and feel of your gallery, a huge selection of skins will help you embed the gallery in your posts and web pages making them feel complete. You will appreciate user friendly interface of skin control panel, making the creation of unique and contemporary style gallery an easy and funny process, and attracting increasing attention from viewers. 
+Take advantage of media RSS feed function and special button in post editor for easy insertion of shortcode in posts; please your teammates and friends with the chance to share administrative roles for any gallery you choose; enjoy your creativity when copying or moving images between galleries, sorting pictures in a drag-and-drop way, and making cool thumbnails. Make your blog nicer and your life easier!!!
+
 = IMPORTANT!!! = 
 
-If GRAND FlAGallery get an error after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
+If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
  
 Important Links: 
  
@@ -30,23 +30,24 @@ Important Links:
 = Features = 
  
 * Unlimited number of pictures in slideshow. 
-* Flash skins: You can add and change flash skins for displaying galleries. 
-* Ability to automatically play slideshow. 
-* Customize the color of all the user controls and backgrounds. 
+* Slideshow automatic mode option. 
+* Flash skins can be added and changed. 
+* Color palette adjustment, changing colors and adding background patterns available.
 * Full screen mode for dramatic presentations. 
 * Adjustable width to fit your blog. 
 * Media RSS feed. 
-* Role settings: Each gallery has a author. 
+* Role settings: providing editing rights to gallery users. 
 * AJAX based thumbnail generator: No more server limitation during the batch process. 
-* Copy/Move: Copy or move images between galleries. 
+* Copying or moving images between galleries available. 
 * TinyMCE: Button integration for easy adding the gallery tag with options. 
 * HTML Editor: Button integration for easy adding the gallery tag with options. 
 * Language support. 
 * Upload tab integration: You have access to all pictures via the upload tab. 
 * Import folder with images tab integration: You have access to all server directories via the import tab. 
-* Sort images feature. 
-* Show selected images only for registered users feature.
- 
+* Sorting of images available. 
+* Showing selected images only for registered users.
+
+
 == Changelog ==
  
 = v0.58pl1 - 19.02.2011 =
