@@ -55,6 +55,7 @@
 
 #dashboard_primary .inside { margin: 0; }
 
+#photogallerycreator .theme > p { margin: 0; padding: 0; }
 #photogallerycreator .theme { overflow: hidden; padding: 7px 0; border-bottom: 1px solid #000000; }
 #photogallerycreator .theme .img { margin-top: 25px; }
 #photogallerycreator .theme .txt > *:first-child { display: block; margin: 0 0 -20px; padding: 0; text-align: center; position: relative; top: -204px; }
@@ -89,7 +90,7 @@ p#flag-inlinebutton {
 	vertical-align: top;
 }
 
-#flag-listimages td, #flag-listimages th {
+#flag-listitems td, #flag-listitems th {
 
 }
 
@@ -181,21 +182,21 @@ div .progressbar span {
 }
 
 /* SETTINGS FOR SORT GALLERY */
-#flag-listimages .header p {
+#flag-listitems .header p {
 	background-image:url(../images/sortbg.gif);
 	background-position:right center;
 	background-repeat:no-repeat;
 	cursor:pointer;
 	margin:0;
 }
-#flag-listimages .headerSortDown p {
+#flag-listitems .headerSortDown p {
 	background-image:url(../images/desc.gif) !important;
 	background-position:right center;
 	background-repeat:no-repeat;
 	cursor:pointer;
 	margin:0;
 }
-#flag-listimages .headerSortUp p {
+#flag-listitems .headerSortUp p {
 	background-image:url(../images/asc.gif) !important;
 	background-position:right center;
 	background-repeat:no-repeat;
