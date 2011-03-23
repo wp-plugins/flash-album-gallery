@@ -41,8 +41,11 @@ $rr = round($imageInfo[0] / $resizedPreviewInfo['newWidth'], 2);
 
 if ( ($flag_options['thumbFix'] == 1) ) {
 
-	$WidthHtmlPrev  = $flag_options['thumbWidth'];
-	$HeightHtmlPrev = $flag_options['thumbHeight'];
+	$WidthHtmlPrev1  = $flag_options['thumbWidth'];
+	$HeightHtmlPrev1 = $flag_options['thumbHeight'];
+	$k  = $flag_options['thumbWidth']/150;
+	$WidthHtmlPrev  = '150';
+	$HeightHtmlPrev = round(($flag_options['thumbHeight']*150)/$flag_options['thumbWidth']);
 
 } else {
 	// H > W
@@ -60,8 +63,8 @@ if ( ($flag_options['thumbFix'] == 1) ) {
 }
 
 ?>
-<script src="<?php echo FLAG_URLPATH; ?>/admin/js/Jcrop/js/jquery.Jcrop.js"></script>
-<link rel="stylesheet" href="<?php echo FLAG_URLPATH; ?>/admin/js/Jcrop/css/jquery.Jcrop.css" type="text/css" />
+<script src="<?php echo FLAG_URLPATH; ?>admin/js/Jcrop/js/jquery.Jcrop.js"></script>
+<link rel="stylesheet" href="<?php echo FLAG_URLPATH; ?>admin/js/Jcrop/css/jquery.Jcrop.css" type="text/css" />
 
 <script language="JavaScript">
 <!--

@@ -33,3 +33,5 @@
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
+
+#actualThumb img { width: 150px; height: auto; }

@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v0.59 - 23.03.2011 =
+* Fixed : Fix for default skins - don't load empty galleries
+* Fixed : Fix for edit big thumbs
+* Notice : New skin released today
+
 = v0.58pl1 - 19.02.2011 =
 * Changed : Fix for compatibility with new skin
 * Notice : new skin released today

@@ -32,17 +32,15 @@ foreach ( $gID as $galleryID ) {
 		$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '$galleryID' {$exclude_clause} ORDER BY tt.{$flag_options['galSort']} {$flag_options['galSortDir']} ");
 	}
 
+  if (is_array ($thepictures) && count($thepictures)){
 	echo "  <category title='".attribute_escape(flagGallery::i18n(strip_tags(stripslashes($thepictures[0]->title))))."'>\n";
 	echo "    <items>\n";
-
-	if (is_array ($thepictures)){
-		foreach ($thepictures as $picture) {
-			echo "      <item image_icon='".$siteurl."/".$picture->path."/thumbs/thumbs_".$picture->filename."' image='".$siteurl."/".$picture->path."/".$picture->filename."' title ='".attribute_escape(flagGallery::i18n(strip_tags(stripslashes($picture->alttext))))."'><![CDATA[".html_entity_decode(attribute_escape(flagGallery::i18n(stripslashes($picture->description))))."]]></item>\n";
-		}
+	foreach ($thepictures as $picture) {
+		echo "      <item image_icon='".$siteurl."/".$picture->path."/thumbs/thumbs_".$picture->filename."' image='".$siteurl."/".$picture->path."/".$picture->filename."' title ='".attribute_escape(flagGallery::i18n(strip_tags(stripslashes($picture->alttext))))."'><![CDATA[".html_entity_decode(attribute_escape(flagGallery::i18n(stripslashes($picture->description))))."]]></item>\n";
 	}
-	 
 	echo "    </items>\n";
 	echo "  </category>\n";
+  }
 }
 echo "</gallery>\n";
 ?>

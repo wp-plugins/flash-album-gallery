@@ -1,9 +1,9 @@
 === GRAND Flash Album Gallery === 
 Contributors: Sergey Pasyuk
 Donate link: 
-Tags: flash, slideshow, gallery, embed, admin, post, posts, page, rss, plugin, photo album, picture, pictures, photo, photos, image, images, multi-categories gallery, skinable gallery, skin, widget, sidebar, photo gallery, image gallery, picture gallery, manage, manage photos, thumbnail, category, categories, automatic, wpmu, MU, wordpress MU 
+Tags: flash, slideshow, gallery, embed, admin, post, posts, page, rss, plugin, photo album, picture, pictures, photo, photos, image, images, multi-categories gallery, skinable gallery, skin, widget, sidebar, photo gallery, image gallery, picture gallery, manage, manage photos, thumbnail, category, categories, automatic, wpmu, MU, wordpress MU, share buttons, Facebook, Twitter, AddToAny, social buttons 
 Requires at least: 2.9 
-Tested up to: 3.0 
+Tested up to: 3.1 
 Stable tag: trunk 
  
 GRAND Flash Album Gallery is a fully integrated (flash skin based, slideshow option) Image Gallery plugin with a powerful admin panel. 
@@ -29,9 +29,11 @@ Important Links:
  
 = Features = 
  
+* With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks. 
 * Unlimited number of pictures in slideshow. 
 * Slideshow automatic mode option. 
 * Flash skins can be added and changed. 
+* jQuery alternate gallery for iPhone, iPad and browsers without flash support. 
 * Color palette adjustment, changing colors and adding background patterns available.
 * Full screen mode for dramatic presentations. 
 * Adjustable width to fit your blog. 
@@ -50,6 +52,11 @@ Important Links:
 
 == Changelog ==
  
+= v0.59 - 23.03.2011 =
+* Fixed : Fix for default skins - don't load empty galleries
+* Fixed : Fix for edit big thumbs
+* Notice : New skin released today
+
 = v0.58pl1 - 19.02.2011 =
 * Changed : Fix for compatibility with new skin
 * Notice : new skin released today
@@ -224,15 +231,16 @@ That's it ... Have fun!
  
 == Screenshots == 
  
-1. 3D Cube Gallery skin
-2. 3D Cube Gallery loading images
-3. Default skin (Midnight)
-4. Manage Gallery 
-5. Sort Gallery 
-6. Add / Change Skins 
-7. Options Page 
+1. 3D Prospect Gallery skin with Social buttons integrated
+2. 3D Cube Gallery skin
+3. 3D Cube Gallery loading images
+4. Default skin (Midnight)
+5. Manage Gallery 
+6. Sort Gallery 
+7. Add / Change Skins 
+8. Options Page 
 9. Post Editor insert shortcode popup 
-8. Post Editor buttons to help you insert shortcode 
+10. Post Editor buttons to help you insert shortcode 
  
 == Frequently Asked Questions == 
  
