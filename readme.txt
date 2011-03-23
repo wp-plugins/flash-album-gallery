@@ -9,9 +9,12 @@ Stable tag: trunk
 GRAND Flash Album Gallery is a fully integrated (flash skin based, slideshow option) Image Gallery plugin with a powerful admin panel. 
  
 == Description == 
-Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin. It provides a comprehensive interface for handling photos and images. 
-You can edit photos the way you want: upload an unlimited number of images, create dozens of galleries, group pictures in slideshow, and add up to two text descriptions for each photo - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. 
-With our versatile plugin you can magically change the look and feel of your gallery, a huge selection of skins will help you embed the gallery in your posts and web pages making them feel complete. You will appreciate user friendly interface of skin control panel, making the creation of unique and contemporary style gallery an easy and funny process, and attracting increasing attention from viewers. 
+Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin. It provides a comprehensive interface for handling photos and images.
+
+You can edit photos the way you want: upload an unlimited number of images, create dozens of galleries, group pictures in slideshow, and add up to two text descriptions for each photo - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event.
+
+With our versatile plugin you can magically change the look and feel of your gallery, a huge selection of skins will help you embed the gallery in your posts and web pages making them feel complete. You will appreciate user friendly interface of skin control panel, making the creation of unique and contemporary style gallery an easy and funny process, and attracting increasing attention from viewers.
+
 Take advantage of media RSS feed function and special button in post editor for easy insertion of shortcode in posts; please your teammates and friends with the chance to share administrative roles for any gallery you choose; enjoy your creativity when copying or moving images between galleries, sorting pictures in a drag-and-drop way, and making cool thumbnails. Make your blog nicer and your life easier!!!
 
 = IMPORTANT!!! = 
