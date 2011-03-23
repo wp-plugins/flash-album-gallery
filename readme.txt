@@ -26,7 +26,7 @@ Important Links:
 * <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" title="Demonstration page">Demonstration</a> 
 * <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/grand-flash-album-gallery-wordpress-plugin-video-tutorial" title="Video tutorial">Video tutorial</a> 
 * <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/languages" title="Translation and Language files">Language files</a> 
-* <a href="http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery" title="Additional skins">Additional skins</a> 
+* <a href="http://photogallerycreator.com/grand-flagallery/" title="Additional skins">Additional skins</a> 
 * <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq" title="GRAND Flash Album Gallery FAQ">GRAND FlAGallery FAQ</a> 
 * <a href="http://wordpress.org/tags/flash-album-gallery" title="Wordpress Support Forum">Support Forum</a> 
 * <a href="http://www.facebook.com/pages/PhotoGalleryCreator/184822641554668" title="News on Facebook">Facebook</a> 
