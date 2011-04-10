@@ -1,16 +1,16 @@
 <?php
 // include the flag function
 @ require_once (dirname(dirname(__FILE__)). '/flag-config.php');
-
-if( isset($_GET['pid']) ) {
-	$pictureID = $_GET['pid'];
-	flag_update_hitcounter($pictureID);
+if ( is_user_logged_in() ) {
+  if( isset($_GET['pid']) ) {
+  	$pictureID = intval($_GET['pid']) ;
+  	flag_update_hitcounter($pictureID);
+  }
+  if ( isset($_POST['pid']) ) {
+  	$pictureID = intval($_POST['pid']);
+  	flag_update_hitcounter($pictureID);
+  }
 }
-if ( isset($_POST['pid']) ) {
-	$pictureID = $_POST['pid'];
-	flag_update_hitcounter($pictureID);
-}
-
 /**
  * Update image hitcounter in the database
  * 

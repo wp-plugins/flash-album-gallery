@@ -57,6 +57,9 @@ Important Links:
 
 == Changelog ==
  
+= v0.60 - 11.04.2011 =
+* Fixed : Security fix in two files
+
 = v0.59 - 23.03.2011 =
 * Fixed : Fix for default skins - don't load empty galleries
 * Fixed : Fix for edit big thumbs
