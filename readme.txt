@@ -57,6 +57,13 @@ Important Links:
 
 == Changelog ==
  
+= v0.62 - ??.05.2011 =
+* Add : Music gallery 'Music Box'
+* Add : Flash Gallery for Facebook page
+
+= v0.61 - 22.05.2011 =
+* Added : Azerbaijani translation
+
 = v0.60 - 11.04.2011 =
 * Fixed : Security fix in two files
 
