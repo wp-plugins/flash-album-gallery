@@ -43,8 +43,10 @@ class flagAdminPanel{
 		add_menu_page( __('GRAND Flash Album Gallery overview','flag'), __('FlAGallery'), 'FlAG overview', 'flag-overview', array (&$this, 'show_menu'), FLAG_URLPATH .'admin/images/flag.png' );
 	    add_submenu_page( 'flag-overview' , __('GRAND Flash Album Gallery overview', 'flag'), __('Overview', 'flag'), 'FlAG overview', 'flag-overview', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Manage gallery', 'flag'), __('Manage Galleries', 'flag'), 'FlAG Manage gallery', 'flag-manage-gallery', array (&$this, 'show_menu'));
+	    add_submenu_page( 'flag-overview' , __('FlAG Music Box', 'flag'), __('Music Box', 'flag'), 'FlAG Manage gallery', 'flag-music-box', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Manage skins', 'flag'), __('Skins', 'flag'), 'FlAG Change skin', 'flag-skins', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Change options', 'flag'), __('Options', 'flag'), 'FlAG Change options', 'flag-options', array (&$this, 'show_menu'));
+	    add_submenu_page( 'flag-overview' , __('FlAG Facebook Integration', 'flag'), __('Facebook', 'flag'), 'FlAG Manage gallery', 'flag-facebook', array (&$this, 'show_menu'));
 		if ( flag_wpmu_site_admin() )
 			add_submenu_page( 'wpmu-admin.php' , __('GRAND Flash Album Gallery', 'flag'), __('GRAND FlAGallery', 'flag'), 'activate_plugins', 'flag-wpmu', array (&$this, 'show_menu'));
 
@@ -82,12 +84,19 @@ class flagAdminPanel{
 				$flag->manage_page->controller();
 				
 				break;
+			case "flag-music-box" :
+				include_once ( dirname (__FILE__) . '/music-box.php' );	// flag_music_box
+				flag_music_controler();
+				break;
 			case "flag-options" :
 				include_once ( dirname (__FILE__) . '/settings.php' );		// flag_admin_options
 				flag_admin_options();
 				break;
 			case "flag-skins" :
 				include_once ( dirname (__FILE__) . '/skins.php' );		// flag_manage_skins
+				break;
+			case "flag-facebook" :
+				include_once ( dirname(__FILE__) . '/facebook-tool.php' );		// flag_facebook
 				break;
 			case "flag-wpmu" :
 				include_once ( dirname (__FILE__) . '/wpmu.php' );			// flag_wpmu_admin
@@ -129,6 +138,10 @@ class flagAdminPanel{
 					wp_enqueue_script( 'flag-progressbar' );
 					add_thickbox();
 				break;
+				case "flag-music-box" :
+					wp_enqueue_script( 'swfobject' );
+					wp_enqueue_script( 'thickbox' );
+				break;		
 				case "flag-options" :
 					print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
 				break;		
@@ -152,9 +165,10 @@ class flagAdminPanel{
 				case "flag-options" :
 				case "flag-manage-gallery" :
 					wp_enqueue_style( 'flagtabs', FLAG_URLPATH .'admin/css/tabs.css', false, '1.0.0', 'screen' );
+				case "flag-music-box" :
+					wp_enqueue_style( 'thickbox' );
 					wp_enqueue_style( 'flagadmin', FLAG_URLPATH .'admin/css/flagadmin.css', false, '2.8.1', 'screen' );
-					wp_enqueue_style( 'thickbox');
-				break;
+				break;		
 				case "flag-skins" :
 					wp_enqueue_style( 'farbtastic' );
 					wp_enqueue_style( 'flagtabs', FLAG_URLPATH .'admin/css/tabs.css', false, '1.0.0', 'screen' );
@@ -233,7 +247,6 @@ class flagAdminPanel{
 
 	function register_columns() {
 		include_once ( dirname (__FILE__) . '/manage-images.php' );
-		
 		$this->register_column_headers('flag-manage-images', flag_manage_gallery_columns() );	
 	}
 

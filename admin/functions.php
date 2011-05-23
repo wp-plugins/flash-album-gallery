@@ -1088,7 +1088,7 @@ class flagAdmin{
 		
 		return $output;
 	}
-
+	
 } // END class flagAdmin
 
 ?>

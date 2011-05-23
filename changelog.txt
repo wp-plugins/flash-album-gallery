@@ -1,9 +1,10 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
-= v0.62 - ??.05.2011 =
-* Add : Music gallery 'Music Box'
-* Add : Flash Gallery for Facebook page
+= v0.62 - 23.05.2011 =
+* Added : Music gallery 'Music Box'
+* Added : Flash Gallery for Facebook page
+* Fixed : small fixes
 
 = v0.61 - 22.05.2011 =
 * Added : Azerbaijani translation

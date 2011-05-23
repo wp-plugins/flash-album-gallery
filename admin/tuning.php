@@ -66,8 +66,8 @@ function flag_tune($show_error=true) {
 								}
 							}
 							if( !file_exists( $skins_dir.$file.'/settings.php' ) ) {
-								if($show_error) {
-									if( file_exists( $skins_dir.$file.'xml.php' ) ) {
+								if( file_exists( $skins_dir.$file.'xml.php' ) ) {
+									if($show_error) {
 										if ( !@copy($skins_dir.'default/old_colors.php', $skins_dir.$file.'/colors.php') ) {
 											$errors .= sprintf(__('Failed to copy and rename %1$s to %2$s','flag'), 
 												$skins_dir.'<strong>default/old_colors.php</strong>', $skins_dir.'<strong>'.$file.'/colors.php</strong>').'<br />';
@@ -83,10 +83,10 @@ function flag_tune($show_error=true) {
 											}
 											fclose($fp);
 										}
+									} else {
+										$errors = 1;
+										break;
 									}
-								} else {
-									$errors = 1;
-									break;
 								}
 							}
 						}
@@ -103,9 +103,11 @@ function flag_tune($show_error=true) {
 		if($show_error)
 			flagGallery::show_error($errors); 
 			
+		echo $errors;
 		return false;
 	}
 
+		echo $errors;
 	return true;
 }
 ?>

@@ -9,7 +9,7 @@
  * @param integer $flashHeight Height of the flash container
  * @return the content
  */
-function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') {
+function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='', $playlist='', $wmode='') {
 	
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
 
@@ -26,9 +26,8 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 	} 
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	if(function_exists('flagShowSkin')) {
-		$out = flagShowSkin($galleryID, $name, $width, $height, $skin);
+		$out = flagShowSkin($galleryID, $name, $width, $height, $skin, $playlist, $wmode);
 	} else {
-		$wmode = '';
 		$flashBacktransparent = '';
 		$flashBackcolor = '';
 		// look up for the path
@@ -51,6 +50,9 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 		$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
 		$swfobject->add_params('wmode', $wmode);
 		$swfobject->add_params('allowfullscreen', 'true');
+		$swfobject->add_params('allowScriptAccess', 'always');
+		$swfobject->add_params('saling', 'lt');
+		$swfobject->add_params('scale', 'noScale');
 		$swfobject->add_params('menu', 'false');
 		$swfobject->add_params('bgcolor', '#'.$flashBackcolor );
 		$swfobject->add_attributes('styleclass', 'flashalbum');
@@ -61,6 +63,7 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 		$swfobject->add_flashvars( 'path', $flag_options['skinsDirURL'].$skin.'/' );
 		$swfobject->add_flashvars( 'gID', $galleryID );
 		$swfobject->add_flashvars( 'galName', $name );
+		$swfobject->add_flashvars( 'skinID', 'so' . $galleryID . '_f' . $swfCounter );
 		$swfobject->add_flashvars( 'width', $width );
 		$swfobject->add_flashvars( 'height', $height );	
 		// create the output
@@ -75,6 +78,25 @@ function flagShowFlashAlbum($galleryID, $name, $width='', $height='', $skin='') 
 	}
 				
 		return $out;	
+}
+
+function flagShowMPlayer($playlist, $width, $height) {
+	
+	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
+    require_once ( dirname(dirname(__FILE__)) . '/admin/playlist.functions.php');
+
+	$flag_options = get_option('flag_options');
+	$playlistPath = $flag_options['galleryPath'].'playlists/'.$playlist.'.xml';
+	$playlist_data = get_playlist_data(ABSPATH.$playlistPath);
+	$skin = $playlist_data['skin'];
+	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+	include_once ( $skinpath.'/'.$skin.'.php' );
+	$out = flagShowMusicSkin(array('playlist'=>$playlist, 'skin'=>$skin, 'width'=>$width, 'height'=>$height));
+	return $out;	
+}
+
+function flagShowMusicSkin($args) {
+	return apply_filters( 'flagShowMusicSkin', $args );
 }
 
 function flagGetBetween($content,$start,$end){

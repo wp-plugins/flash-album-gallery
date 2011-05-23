@@ -176,13 +176,15 @@ if( isset($_GET['skin']) ) {
 		flagGallery::show_message( __('Skin','flag').' \''.$set_skin.'\' '.__('activated successfully','flag') );
 	}
 }
-
+$type = isset($_GET['type'])? $_GET['type'] : '';
 ?>
 <div id="slider" class="wrap">
 	<ul id="tabs" class="tabs">
 		<li class="selected"><a href="#" rel="addskin"><?php _e('Add new skin', 'flag'); ?></a></li>
 		<li><a href="#" rel="wantmore"><?php _e('Want more skins?', 'flag'); ?></a></li>
+		<?php if(!$type) { ?>
 		<li><a href="#" rel="skinoptions"><?php _e('Skin Options', 'flag'); ?></a></li>
+		<?php } ?>
 	</ul>
 
 	<div id="addskin" class="cptab">
@@ -207,12 +209,12 @@ if( isset($_GET['skin']) ) {
 		<h2><?php _e('More skins', 'flag'); ?></h2>
 		<p><?php _e('If you want more skins, You may get it at.', 'flag'); ?> <a target="_blank" href="http://photogallerycreator.com">PhotoGalleryCreator.com</a></p>
 	</div>
-	
+	<?php if(!$type) { ?>
 	<div id="skinoptions" class="cptab">
 		<h2><?php _e('Skin Options', 'flag'); ?></h2>
 		<?php flag_skin_options_tab(); ?>
 	</div>
-	
+	<?php } ?>
 	<script type="text/javascript">	
 		/* <![CDATA[ */
 		var cptabs=new ddtabcontent("tabs");
@@ -224,10 +226,11 @@ if( isset($_GET['skin']) ) {
 </div>
 
 <div class="wrap">
-<h2><?php _e('Skins', 'flag'); ?></h2>
+<h2><?php _e('Skins', 'flag'); ?>:</h2>
+<p><a class="button<?php if(!$type) echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins'); ?>"><span style="font-size: 14px;"><?php _e('image gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;<a class="button<?php if($type) echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=m'); ?>"><span style="font-size: 14px;"><?php _e('music gallery skins', 'flag'); ?></span></a></p>
 
 <?php
-$all_skins = get_skins();
+$all_skins = get_skins(false,$type);
 $total_all_skins = count($all_skins);
 $flag_options = get_option ('flag_options');
 ?>
@@ -277,11 +280,15 @@ $flag_options = get_option ('flag_options');
 		echo implode(' | ', $skin_meta);
 		echo "</td>";
 		echo "<td class='skin-activate action-links'>";
-		if ( dirname($skin_file) != $flag_options['flashSkin'] ) {
-			echo '<strong><a href="'.admin_url('admin.php?page=flag-skins&skin='.dirname($skin_file)).'" title="' . __( 'Activate this skin', 'flag' ) . '">' . __('Activate', 'flag' ) . '</a></strong>';
- 		} else {
- 			echo "<strong>".__('Activated', 'flag' )."</strong>";
- 		}
+		if(isset($_GET['type'])) {
+			echo '<a class="thickbox" href="'.$flag_options['skinsDirURL'].dirname($skin_file).'/settings/constructor.php?show_options=1&amp;TB_iframe=1&amp;width=600&amp;height=560">' . __('Options', 'flag' ) . '</a>';
+		} else {
+			if ( dirname($skin_file) != $flag_options['flashSkin'] ) {
+				echo '<strong><a href="'.admin_url('admin.php?page=flag-skins&skin='.dirname($skin_file)).'" title="' . __( 'Activate this skin', 'flag' ) . '">' . __('Activate', 'flag' ) . '</a></strong>';
+	 		} else {
+	 			echo "<strong>".__('Activated by default', 'flag' )."</strong>";
+	 		}
+		}
 		echo "</td>";
 
 	echo "</tr>

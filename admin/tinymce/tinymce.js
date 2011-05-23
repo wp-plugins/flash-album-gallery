@@ -13,6 +13,7 @@ function insertFLAGLink() {
 	var galorder = document.getElementById('galorder').value;
 	var galexclude = document.getElementById('galexclude').value;
 	var skinname = document.getElementById('skinname').value;
+	var playlist = document.getElementById('playlist').value;
 	var gallery = document.getElementById('galleries');
 	var len = gallery.length;
 	var galleryid="";
@@ -49,9 +50,12 @@ function insertFLAGLink() {
 	if (skinname) {
 		var skinname = " skin=" + skinname;
 	} else var skinname = '';
+	if (playlist) {
+		var playlist = " play=" + playlist;
+	} else var playlist = '';
 
 	if (galleryid != 0 )
-		tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + galorderby + galorder + galexclude + skinname + ']';
+		tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + galorderby + galorder + galexclude + skinname + playlist + ']';
 	else
 		tinyMCEPopup.close();
 	

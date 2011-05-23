@@ -74,7 +74,7 @@ jQuery(document).ready(function($) {
 				jQuery("#listimages tr:odd").removeClass('alternate');
       }
     });
-		$("#flag-listimages").tablesorter({ 
+		$("#flag-listitems").tablesorter({ 
         // pass the headers argument and assing a object 
         headers: { 
             // assign the secound column (we start counting zero) 
@@ -84,7 +84,7 @@ jQuery(document).ready(function($) {
             }
         } 
     });
-		$("#flag-listimages").bind("sortEnd",function() { 
+		$("#flag-listitems").bind("sortEnd",function() { 
 				jQuery("#listimages tr:even").addClass('alternate');
 				jQuery("#listimages tr:odd").removeClass('alternate');
     }); 
@@ -92,7 +92,7 @@ jQuery(document).ready(function($) {
 });
 /*]]>*/
 </script>
-<table id="flag-listimages" class="widefat fixed" cellspacing="0" >
+<table id="flag-listitems" class="widefat fixed" cellspacing="0" >
 
 	<thead>
 	<tr>

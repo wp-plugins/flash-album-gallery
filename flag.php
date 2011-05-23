@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 0.61
+Version: 1.1
 Author: Sergey Pasyuk
 Author URI: http://codeasily.com/
 
@@ -37,7 +37,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 	
-	var $version     = '0.61';
+	var $version     = '1.1';
 	var $dbversion   = '0.40';
 	var $minium_WP   = '2.8';
 	var $minium_WPMU = '2.8';
@@ -113,17 +113,7 @@ class flagLoad {
 		if (!isset($_GET['action']) && isset($_GET['activate'])) {
 			// upgrade plugin
 			require_once(FLAG_ABSPATH . 'admin/tuning.php');
-			if( !flag_tune($show_error=false) ) {
-				add_action( 'admin_notices', array(&$this, 'flag_tuning_notice_upgrade'));
-			}
-		}
-	}
-
-	function flag_tuning_notice_upgrade(){
-		if(function_exists('admin_url')){
-			echo '<div class="error fade"><p>'.__('GRAND FlAGallery skins upgraded/installed incorrectly. Go to', "flag").' <a href="' . admin_url( 'admin.php?page=flag-overview' ) . '">'.__('Overview page', "flag").'</a> '.__('and click "Reset settings" button', "flag").'.</strong></p></div>';
-		} else {
-			echo '<div class="error fade"><p>'.__('GRAND FlAGallery skins upgraded/installed incorrectly. Go to', "flag").' <a href="' . get_option('siteurl') . 'admin.php?page=flag-overview' . '">'.__('Overview page', "flag").'</a> '.__('and click "Reset settings" button', "flag").'.</strong></p></div>';
+			$ok = flag_tune($show_error=false);
 		}
 	}
 
@@ -233,6 +223,7 @@ class flagLoad {
 	
 	function load_scripts() {
 
+		wp_enqueue_script('jquery');
 		// Let's override WP's bundled swfobject, cause as of WP 2.9, it's still using 2.1 
 		wp_deregister_script('swfobject');
 		// and register our own.

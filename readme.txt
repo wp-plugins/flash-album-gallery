@@ -1,7 +1,7 @@
 === GRAND Flash Album Gallery === 
 Contributors: Sergey Pasyuk
 Donate link: 
-Tags: flash, slideshow, gallery, embed, admin, post, posts, page, rss, plugin, photo album, picture, pictures, photo, photos, image, images, multi-categories gallery, skinable gallery, skin, widget, sidebar, photo gallery, image gallery, picture gallery, manage, manage photos, thumbnail, category, categories, automatic, wpmu, MU, wordpress MU, share buttons, Facebook, Twitter, AddToAny, social buttons 
+Tags: flash, slideshow, gallery, admin, post, posts, page, photo album, photo, photos, image, images, photo gallery, image gallery, picture gallery, flash gallery, slideshow gallery, manage images, portfolio, thumbnail, mp3, music, player, playlist, share buttons, Facebook, Twitter, AddToAny, social buttons, facebook template 
 Requires at least: 2.9 
 Tested up to: 3.1 
 Stable tag: trunk 
@@ -16,6 +16,8 @@ You can edit photos the way you want: upload an unlimited number of images, crea
 With our versatile plugin you can magically change the look and feel of your gallery, a huge selection of skins will help you embed the gallery in your posts and web pages making them feel complete. You will appreciate user friendly interface of skin control panel, making the creation of unique and contemporary style gallery an easy and funny process, and attracting increasing attention from viewers.
 
 Take advantage of media RSS feed function and special button in post editor for easy insertion of shortcode in posts; please your teammates and friends with the chance to share administrative roles for any gallery you choose; enjoy your creativity when copying or moving images between galleries, sorting pictures in a drag-and-drop way, and making cool thumbnails. Make your blog nicer and your life easier!!!
+
+Music Player: Each instance (player copy) can play different mp3 file. All the players/instances options are within the html file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
 = IMPORTANT!!! = 
 
@@ -34,6 +36,9 @@ Important Links:
  
 = Features = 
  
+* Customizable Music Player with playlist and visualization.
+* MP3 Player with Multiple Instances.
+* Facebook flash gallery template.
 * With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks. 
 * Unlimited number of pictures in slideshow. 
 * Slideshow automatic mode option. 
@@ -57,9 +62,10 @@ Important Links:
 
 == Changelog ==
  
-= v0.62 - ??.05.2011 =
-* Add : Music gallery 'Music Box'
-* Add : Flash Gallery for Facebook page
+= v0.62 - 23.05.2011 =
+* Added : Music gallery 'Music Box'
+* Added : Flash Gallery for Facebook page
+* Fixed : small fixes
 
 = v0.61 - 22.05.2011 =
 * Added : Azerbaijani translation

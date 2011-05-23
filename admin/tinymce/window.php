@@ -3,6 +3,7 @@
 // look up for the path
 require_once( dirname( dirname( dirname(__FILE__) ) ) . '/flag-config.php');
 require_once (dirname( dirname(__FILE__) ) . '/get_skin.php');
+require_once (dirname( dirname(__FILE__) ) . '/playlist.functions.php');
 
 // check for rights
 if ( !is_user_logged_in() || !current_user_can('edit_posts') ) 
@@ -11,6 +12,7 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 global $wpdb;
 
 $all_skins = get_skins();
+$all_playlists = get_playlists();
 
 if($_REQUEST['riched'] == "false") {
 ?>
@@ -44,6 +46,7 @@ if($_REQUEST['riched'] == "false") {
 			<li id="gallery_tab" class="current"><span><a href="javascript:mcTabs.displayTab('gallery_tab','gallery_panel');" onmousedown="return false;"><?php _e( 'Galleries', 'flag' ); ?></a></span></li>
 			<li id="sort_tab"><span><a href="javascript:mcTabs.displayTab('sort_tab','sort_panel');" onmousedown="return false;"><?php _e('Sort', 'flag'); ?></a></span></li>
 			<li id="custom_tab" style="display:none;"><span><a href="javascript:mcTabs.displayTab('custom_tab','custom_panel');" onmousedown="return false;"><?php _e( 'Skin', 'flag' ); ?></a></span></li>
+			<li id="music_tab"><span><a href="javascript:mcTabs.displayTab('music_tab','music_panel');" onmousedown="return false;"><?php _e( 'Music', 'flag' ); ?></a></span></li>
 		</ul>
 	</div>
 	
@@ -56,7 +59,7 @@ if($_REQUEST['riched'] == "false") {
             <td valign="middle"><input id="galleryname" name="galleryname" value="Gallery" type="text" style="width: 200px" /></td>
          </tr>
          <tr>
-            <td nowrap="nowrap" valign="top"><label for="gallerytag"><?php _e("Select galleries", 'flag'); ?>:<span style="color:red;"> *</span></label><br /><small><?php _e("(album categories)", 'flag'); ?></small></td>
+            <td nowrap="nowrap" valign="top"><label for="galleries"><?php _e("Select galleries", 'flag'); ?>:<span style="color:red;"> *</span></label><br /><small><?php _e("(album categories)", 'flag'); ?></small></td>
             <td><select id="galleries" name="galleries" style="width: 200px" size="6" multiple="multiple">
                     <option value="all" selected="selected" onclick="javascript:document.getElementById('sort_tab').style.display='block'" style="font-weight:bold">* - <?php _e("all galleries", 'flag'); ?></option>
 				<?php
@@ -92,8 +95,8 @@ if($_REQUEST['riched'] == "false") {
             </select></td>
          </tr>
 		 <tr>
-			<td valign="top"><label for="skinname"><?php _e("Skin size", 'flag'); ?>:</label><br /><span style="font-size:9px">(<?php _e("blank for default", 'flag'); ?>)</span></td>
-            <td valign="top"><?php _e("width", 'flag'); ?>: <input id="gallerywidth" type="text" name="galleryheight" style="width: 50px" /> &nbsp; <?php _e("height", 'flag'); ?>: <input id="galleryheight" type="text" name="galleryheight" style="width: 50px" /></td>
+			<td valign="top"><label><?php _e("Skin size", 'flag'); ?>:</label><br /><span style="font-size:9px">(<?php _e("blank for default", 'flag'); ?>)</span></td>
+            <td valign="top"><?php _e("width", 'flag'); ?>: <input id="gallerywidth" type="text" name="gallerywidth" style="width: 50px" /> &nbsp; <?php _e("height", 'flag'); ?>: <input id="galleryheight" type="text" name="galleryheight" style="width: 50px" /></td>
 		 </tr>
         </table>
 		</div>
@@ -124,6 +127,26 @@ if($_REQUEST['riched'] == "false") {
        </table>
 		</div>
 		<!-- /sort panel -->
+		<!-- music panel -->
+		<div id="music_panel" class="panel">
+		<table border="0" cellpadding="4" cellspacing="0">
+         <tr>
+            <td nowrap="nowrap" valign="top"><div style="display: block; width: 100px; white-space: normal;"><?php _e("Choose playlist for background music", 'flag'); ?>:</div></td>
+            <td valign="middle" valign="top"><select id="playlist" name="playlist" style="width: 200px">
+                    <option value="" selected="selected"><?php _e("choose playlist", 'flag'); ?></option>
+				<?php 
+					foreach((array)$all_playlists as $playlist_file => $playlist_data) {
+						$playlist_name = basename($playlist_file, '.xml');
+				?>
+					<option value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+				<?php 
+					}
+				?>
+            </select><p style="padding-top: 10px; margin: 0; font-size: 10px;"><?php _e('Read Skin specification for supporting this function.') ?></p></td>
+         </tr>
+        </table>
+		</div>
+		<!-- /music panel -->
 	</div>
 
 <?php if($_REQUEST['riched'] == "false") { ?>
@@ -144,6 +167,7 @@ if($_REQUEST['riched'] == "false") {
 			var galorder = document.getElementById('galorder').value;
 			var galexclude = document.getElementById('galexclude').value;
 			var skinname = document.getElementById('skinname').value;
+			var playlist = document.getElementById('playlist').value;
 			var gallery = document.getElementById('galleries');
 			var len = gallery.length;
 			var galleryid="";
@@ -180,9 +204,12 @@ if($_REQUEST['riched'] == "false") {
 			if (skinname) {
 				var skinname = " skin=" + skinname;
 			} else var skinname = '';
+			if (playlist) {
+				var skinname = " play=" + playlist;
+			} else var playlist = '';
 
 			if (galleryid != 0 ) {
-				tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + galorderby + galorder + galexclude + skinname + ']';
+				tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + galorderby + galorder + galexclude + skinname + playlist + ']';
 				win.send_to_editor(tagtext);
 				win.bind_resize();
 			} else alert('Choose at least one gallery!');

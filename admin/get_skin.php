@@ -26,7 +26,7 @@
  *
  */
 
-function get_skin_data( $skin_file ) {
+function get_skin_data( $skin_file, $type='' ) {
 	// We don't need to write to the file, so just open for reading.
 	$fp = fopen($skin_file, 'r');
 
@@ -36,25 +36,27 @@ function get_skin_data( $skin_file ) {
 	// PHP will close file handle, but we are good citizens.
 	fclose($fp);
 
-	preg_match( '|Skin Name:(.*)$|mi', $skin_data, $name );
-	preg_match( '|Skin URI:(.*)$|mi', $skin_data, $uri );
-	preg_match( '|Version:(.*)|i', $skin_data, $version );
-	preg_match( '|Description:(.*)$|mi', $skin_data, $description );
-	preg_match( '|Author:(.*)$|mi', $skin_data, $author_name );
-	preg_match( '|Author URI:(.*)$|mi', $skin_data, $author_uri );
+	preg_match( '|'.$type.'Skin Name:(.*)$|mi', $skin_data, $name );
+    if($name[1]) {
+    	preg_match( '|Skin URI:(.*)$|mi', $skin_data, $uri );
+    	preg_match( '|Version:(.*)|i', $skin_data, $version );
+    	preg_match( '|Description:(.*)$|mi', $skin_data, $description );
+    	preg_match( '|Author:(.*)$|mi', $skin_data, $author_name );
+    	preg_match( '|Author URI:(.*)$|mi', $skin_data, $author_uri );
 
-	foreach ( array( 'name', 'uri', 'version', 'description', 'author_name', 'author_uri' ) as $field ) {
-		if ( !empty( ${$field} ) )
-			${$field} = trim(${$field}[1]);
-		else
-			${$field} = '';
-	}
+    	foreach ( array( 'name', 'uri', 'version', 'description', 'author_name', 'author_uri' ) as $field ) {
+    		if ( !empty( ${$field} ) )
+    			${$field} = trim(${$field}[1]);
+    		else
+    			${$field} = '';
+    	}
 
-	$skin_data = array(
-				'Name' => $name, 'Title' => $name, 'SkinURI' => $uri, 'Description' => $description,
-				'Author' => $author_name, 'AuthorURI' => $author_uri, 'Version' => $version 
-				);
-	return $skin_data;
+    	$skin_data = array(
+    				'Name' => $name, 'Title' => $name, 'SkinURI' => $uri, 'Description' => $description,
+    				'Author' => $author_name, 'AuthorURI' => $author_uri, 'Version' => $version
+    				);
+    	return $skin_data;
+    }
 }
 
 /**
@@ -80,7 +82,7 @@ function skin_basename($file) {
  * Check the skins directory and retrieve all skin files with skin data.
  *
  */
-function get_skins($skin_folder = '') {
+function get_skins($skin_folder='', $type='') {
 
 	$flag_options = get_option('flag_options');
 	$flag_skins = array ();
@@ -121,7 +123,7 @@ function get_skins($skin_folder = '') {
 		if ( !is_readable( "$skin_root/$skin_file" ) )
 			continue;
 
-		$skin_data = get_skin_data( "$skin_root/$skin_file" );
+		$skin_data = get_skin_data( "$skin_root/$skin_file", $type );
 
 		if ( empty ( $skin_data['Name'] ) )
 			continue;
