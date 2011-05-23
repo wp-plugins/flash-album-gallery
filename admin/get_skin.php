@@ -36,7 +36,7 @@ function get_skin_data( $skin_file, $type='' ) {
 	// PHP will close file handle, but we are good citizens.
 	fclose($fp);
 
-	preg_match( '|'.$type.'Skin Name:(.*)$|mi', $skin_data, $name );
+	preg_match( '|^'.$type.'Skin Name:(.*)$|mi', $skin_data, $name );
     if($name[1]) {
     	preg_match( '|Skin URI:(.*)$|mi', $skin_data, $uri );
     	preg_match( '|Version:(.*)|i', $skin_data, $version );
