@@ -1,4 +1,13 @@
-<?php 
+<?php if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
+
+// check for correct capability
+if ( !is_user_logged_in() )
+	die('-1');
+
+// check for correct FlAG capability
+if ( !current_user_can('FlAG Facebook page') ) 
+	die('-1');	
+
 if(isset($_POST['copy_file'])) {
 	if(copy(FLAG_ABSPATH.'facebook.php',ABSPATH.'facebook.php')) {
 		flagGallery::show_message(__('Success','flag'));
@@ -58,7 +67,7 @@ jQuery(document).ready(function() {
 		l = parseInt(jQuery('#postid').val()); if(l) l = '&l='+l; else l = '';
 		fb_url(galleries,skin,h,l);
 	});
-	jQuery('#skinname option').click(function(){
+	jQuery('#skinname').change(function(){
 		var skin = jQuery(this).val();
 		if(skin) {
 			skin = '&f='+skin;
@@ -94,7 +103,7 @@ jQuery(document).ready(function() {
 		h = parseInt(jQuery('#galleryheight').val()); if(h) h = '&h='+h; else h = '';
 		fb_url(galleries,skin,h,l);
 	});
-	jQuery('#playlist option').click(function(){
+	jQuery('#playlist').change(function(){
 		var playlist = jQuery(this).val();
 		if(playlist) {
 			playlist = '?m='+playlist;

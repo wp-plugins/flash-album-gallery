@@ -35,6 +35,8 @@ function flag_install () {
 	$role->add_cap('FlAG Add skins');
 	$role->add_cap('FlAG Delete skins');
 	$role->add_cap('FlAG Change options');
+	$role->add_cap('FlAG Manage music');
+	$role->add_cap('FlAG Facebook page');
 
 	// upgrade function changed in WordPress 2.3	
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -256,6 +258,8 @@ function flag_uninstall() {
 	flag_remove_capability('FlAG Add skins');
 	flag_remove_capability('FlAG Delete skins');
 	flag_remove_capability("FlAG Change options");
+	flag_remove_capability("FlAG Manage music");
+	flag_remove_capability("FlAG Facebook page");
 }
 
 

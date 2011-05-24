@@ -43,10 +43,10 @@ class flagAdminPanel{
 		add_menu_page( __('GRAND Flash Album Gallery overview','flag'), __('FlAGallery'), 'FlAG overview', 'flag-overview', array (&$this, 'show_menu'), FLAG_URLPATH .'admin/images/flag.png' );
 	    add_submenu_page( 'flag-overview' , __('GRAND Flash Album Gallery overview', 'flag'), __('Overview', 'flag'), 'FlAG overview', 'flag-overview', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Manage gallery', 'flag'), __('Manage Galleries', 'flag'), 'FlAG Manage gallery', 'flag-manage-gallery', array (&$this, 'show_menu'));
-	    add_submenu_page( 'flag-overview' , __('FlAG Music Box', 'flag'), __('Music Box', 'flag'), 'FlAG Manage gallery', 'flag-music-box', array (&$this, 'show_menu'));
+	    add_submenu_page( 'flag-overview' , __('FlAG Music Box', 'flag'), __('Music Box', 'flag'), 'FlAG Manage music', 'flag-music-box', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Manage skins', 'flag'), __('Skins', 'flag'), 'FlAG Change skin', 'flag-skins', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Change options', 'flag'), __('Options', 'flag'), 'FlAG Change options', 'flag-options', array (&$this, 'show_menu'));
-	    add_submenu_page( 'flag-overview' , __('FlAG Facebook Integration', 'flag'), __('Facebook', 'flag'), 'FlAG Manage gallery', 'flag-facebook', array (&$this, 'show_menu'));
+	    add_submenu_page( 'flag-overview' , __('FlAG Facebook Integration', 'flag'), __('Facebook', 'flag'), 'FlAG Facebook page', 'flag-facebook', array (&$this, 'show_menu'));
 		if ( flag_wpmu_site_admin() )
 			add_submenu_page( 'wpmu-admin.php' , __('GRAND Flash Album Gallery', 'flag'), __('GRAND FlAGallery', 'flag'), 'activate_plugins', 'flag-wpmu', array (&$this, 'show_menu'));
 

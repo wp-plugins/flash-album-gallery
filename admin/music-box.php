@@ -2,6 +2,15 @@
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
 
+// check for correct capability
+if ( !is_user_logged_in() )
+	die('-1');
+
+// check for correct FlAG capability
+if ( !current_user_can('FlAG Manage music') ) 
+	die('-1');	
+
+
 require_once (dirname (__FILE__) . '/playlist.functions.php');
 
 function flag_music_controler() {

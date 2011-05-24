@@ -4,7 +4,7 @@ Donate link:
 Tags: flash, slideshow, gallery, admin, post, posts, page, photo album, photo, photos, image, images, photo gallery, image gallery, picture gallery, flash gallery, slideshow gallery, manage images, portfolio, thumbnail, mp3, music, player, playlist, share buttons, Facebook, Twitter, AddToAny, social buttons, facebook template 
 Requires at least: 2.9 
 Tested up to: 3.1 
-Stable tag: 1.11 
+Stable tag: 1.12 
  
 GRAND Flash Album Gallery is a fully integrated (flash skin based, slideshow option) Image Gallery plugin with a powerful admin panel. 
  
@@ -37,8 +37,8 @@ Important Links:
 = Features = 
  
 * Customizable Music Player with playlist and visualization.
-* MP3 Player with Multiple Instances.
-* Facebook flash gallery template.
+* <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-box/" title="MP3 Player with Multiple Instances">MP3 Player with Multiple Instances</a>.
+* <a href="http://www.facebook.com/pages/Galleries/190973767613001" title="PhotoGalleryCreator Facebook Page">Facebook flash gallery template</a>.
 * With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks. 
 * Unlimited number of pictures in slideshow. 
 * Slideshow automatic mode option. 
@@ -62,6 +62,11 @@ Important Links:
 
 == Changelog ==
  
+= v1.12 - 24.05.2011 =
+* Added : Roles for Music and Facebook pages
+* Updated : Midnight Skin v3.0
+* Fixed : Facebook generator javascript on Mac browsers
+
 = v1.11 - 23.05.2011 =
 * Added : Music gallery 'Music Box'
 * Added : Flash Gallery for Facebook page

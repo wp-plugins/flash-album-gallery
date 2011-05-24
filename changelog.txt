@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.12 - 24.05.2011 =
+* Added : Roles for Music and Facebook pages
+* Updated : Midnight Skin v3.0
+* Fixed : Facebook generator javascript on Mac browsers
+
 = v1.11 - 23.05.2011 =
 * Added : Music gallery 'Music Box'
 * Added : Flash Gallery for Facebook page

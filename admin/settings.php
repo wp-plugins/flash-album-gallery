@@ -45,6 +45,8 @@ function flag_admin_options()  {
 		flag_set_capability($_POST['add_skins'],"FlAG Add skins");
 		flag_set_capability($_POST['delete_skins'],"FlAG Delete skins");
 		flag_set_capability($_POST['change_options'],"FlAG Change options");
+		flag_set_capability($_POST['manage_music'],"FlAG Manage music");
+		flag_set_capability($_POST['facebook_page'],"FlAG Facebook page");
 		
 		flagGallery::show_message(__('Updated capabilities',"flag"));
 	}
@@ -185,6 +187,10 @@ function flag_admin_options()  {
 				<td><label for="manage_others"><select style="width: 150px;" name="manage_others" id="manage_others"><?php wp_dropdown_roles( flag_get_role('FlAG Manage others gallery') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Manage music', 'flag'); ?>:</th> 
+				<td><label for="manage_music"><select style="width: 150px;" name="manage_music" id="manage_others"><?php wp_dropdown_roles( flag_get_role('FlAG Manage music') ); ?></select></label></td>
+			</tr>
+			<tr valign="top"> 
 				<th scope="row" style="white-space: nowrap"><?php _e('Change skin', 'flag'); ?>:</th> 
 				<td><label for="change_skin"><select style="width: 150px;" name="change_skin" id="change_skin"><?php wp_dropdown_roles( flag_get_role('FlAG Change skin') ); ?></select></label></td>
 			</tr>
@@ -199,6 +205,10 @@ function flag_admin_options()  {
 			<tr valign="top"> 
 				<th scope="row" style="white-space: nowrap"><?php _e('Change options', 'flag'); ?>:</th> 
 				<td><label for="change_options"><select style="width: 150px;" name="change_options" id="change_options"><?php wp_dropdown_roles( flag_get_role('FlAG Change options') ); ?></select></label></td>
+			</tr>
+			<tr valign="top"> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Facebook page', 'flag'); ?>:</th> 
+				<td><label for="facebook_page"><select style="width: 150px;" name="facebook_page" id="change_options"><?php wp_dropdown_roles( flag_get_role('FlAG Facebook page') ); ?></select></label></td>
 			</tr>
 			</table>
 			<div class="submit"><input type="submit" class="button-primary" name= "update_cap" value="<?php _e('Update capabilities', 'flag'); ?>"/></div>
