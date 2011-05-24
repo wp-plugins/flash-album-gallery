@@ -36,8 +36,8 @@ Important Links:
  
 = Features = 
  
-* Customizable Music Player with playlist and visualization.
-* <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-box/" title="MP3 Player with Multiple Instances">MP3 Player with Multiple Instances</a>.
+* <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-box/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
+* MP3 Player with Multiple Instances.
 * <a href="http://www.facebook.com/pages/Galleries/190973767613001" title="PhotoGalleryCreator Facebook Page">Facebook flash gallery template</a>.
 * With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks. 
 * Unlimited number of pictures in slideshow. 
