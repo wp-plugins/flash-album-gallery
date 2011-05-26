@@ -76,6 +76,12 @@ function upload_skin() {
 	echo '</div>';
 }
 
+if( isset($_GET['skins_refresh']) ) {
+	// upgrade plugin
+	require_once(FLAG_ABSPATH . 'admin/tuning.php');
+	flag_tune();
+}
+
 /**
  * Get skin options
  *
@@ -178,11 +184,6 @@ if( isset($_GET['skin']) ) {
 }
 $type = isset($_GET['type'])? $_GET['type'] : '';
 
-if( isset($_POST['skins_refresh']) ) {
-	// upgrade plugin
-	require_once(FLAG_ABSPATH . 'admin/tuning.php');
-	flag_tune();
-}
 ?>
 <div id="slider" class="wrap">
 	<ul id="tabs" class="tabs">
@@ -233,7 +234,7 @@ if( isset($_POST['skins_refresh']) ) {
 
 <div class="wrap">
 <h2><?php _e('Skins', 'flag'); ?>:</h2>
-<form method="post" style="float: right"><p><input type="submit" class="button" name="skins_refresh" value="<?php _e('Refresh / Update Skins', 'flag'); ?>" /></p></form>
+<p style="float: right"><a class="button" href="<?php echo admin_url('admin.php?page=flag-skins&amp;skins_refresh=1'); ?>"><?php _e('Refresh / Update Skins', 'flag'); ?></a></p>
 <p><a class="button<?php if(!$type) echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins'); ?>"><span style="font-size: 14px;"><?php _e('image gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;<a class="button<?php if($type) echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=m'); ?>"><span style="font-size: 14px;"><?php _e('music gallery skins', 'flag'); ?></span></a></p>
 
 <?php

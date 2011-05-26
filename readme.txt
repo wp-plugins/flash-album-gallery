@@ -62,6 +62,9 @@ Important Links:
 
 == Changelog ==
  
+= v1.13 - 26.05.2011 =
+* Fixed : Refresh Skin button make aktive skin broken (reinstall broken skin please)
+
 = v1.12 - 24.05.2011 =
 * Added : Roles for Music and Facebook pages
 * Updated : Midnight Skin v3.0
