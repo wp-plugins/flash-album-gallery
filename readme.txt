@@ -4,7 +4,7 @@ Donate link:
 Tags: flash, slideshow, gallery, admin, post, posts, page, photo album, photo, photos, image, images, photo gallery, image gallery, picture gallery, flash gallery, slideshow gallery, manage images, portfolio, thumbnail, mp3, music, player, playlist, share buttons, Facebook, Twitter, AddToAny, social buttons, facebook template 
 Requires at least: 2.9 
 Tested up to: 3.1 
-Stable tag: 1.12 
+Stable tag: trunk
  
 GRAND Flash Album Gallery is a fully integrated (flash skin based, slideshow option) Image Gallery plugin with a powerful admin panel. 
  
