@@ -6,9 +6,9 @@ require_once( $_m[1] . 'wp-load.php');
 <head profile="http://gmpg.org/xfn/11">
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <title><?php bloginfo('name'); ?> <?php if ( is_single() ) { ?> &raquo; Blog Archive <?php } ?> <?php wp_title(); ?> - <?php bloginfo('description'); ?> </title>
-<?php wp_head(); ?>
 </head>
 <body style="margin: 0; padding: 0;">
+<?php wp_head(); ?>
 <div id="page">
 <?php $flag_options = get_option('flag_options');
 if(isset($_GET['l'])) {
