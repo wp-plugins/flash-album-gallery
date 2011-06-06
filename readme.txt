@@ -1,62 +1,49 @@
-=== GRAND Flash Album Gallery === 
+=== GRAND Flash Album Gallery ===
 Contributors: Sergey Pasyuk
-Donate link: 
-Tags: flash, slideshow, gallery, admin, post, posts, page, photo album, photo, photos, image, images, photo gallery, image gallery, picture gallery, flash gallery, slideshow gallery, manage images, portfolio, thumbnail, mp3, music, player, playlist, share buttons, Facebook, Twitter, AddToAny, social buttons, facebook template 
-Requires at least: 2.9 
-Tested up to: 3.1 
+Donate link:
+Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, picture, pictures, plugin, portfolio, Post, posts, presentation, slideshow, Facebook, Twitter
+Requires at least: 2.9
+Tested up to: 3.1
 Stable tag: trunk
  
-GRAND Flash Album Gallery is a fully integrated (flash skin based, slideshow option) Image Gallery plugin with a powerful admin panel. 
+GRAND Flash Album Gallery is a fully integrated (flash skin based, slideshow option) Image Gallery plugin with a powerful admin panel.
  
-== Description == 
+== Description ==
 Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin. It provides a comprehensive interface for handling photos and images.
 
 You can edit photos the way you want: upload an unlimited number of images, create dozens of galleries, group pictures in slideshow, and add up to two text descriptions for each photo - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event.
 
-With our versatile plugin you can magically change the look and feel of your gallery, a huge selection of skins will help you embed the gallery in your posts and web pages making them feel complete. You will appreciate user friendly interface of skin control panel, making the creation of unique and contemporary style gallery an easy and funny process, and attracting increasing attention from viewers.
-
-Take advantage of media RSS feed function and special button in post editor for easy insertion of shortcode in posts; please your teammates and friends with the chance to share administrative roles for any gallery you choose; enjoy your creativity when copying or moving images between galleries, sorting pictures in a drag-and-drop way, and making cool thumbnails. Make your blog nicer and your life easier!!!
-
 Music Player: Each instance (player copy) can play different mp3 file. All the players/instances options are within the html file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
-= IMPORTANT!!! = 
+= IMPORTANT!!! =
 
 If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
  
-Important Links: 
+Important Links:
  
-* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" title="Demonstration page">Demonstration</a> 
-* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/grand-flash-album-gallery-wordpress-plugin-video-tutorial" title="Video tutorial">Video tutorial</a> 
-* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/languages" title="Translation and Language files">Language files</a> 
-* <a href="http://photogallerycreator.com/grand-flagallery/" title="Additional skins">Additional skins</a> 
-* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq" title="GRAND Flash Album Gallery FAQ">GRAND FlAGallery FAQ</a> 
-* <a href="http://wordpress.org/tags/flash-album-gallery" title="Wordpress Support Forum">Support Forum</a> 
-* <a href="http://www.facebook.com/pages/PhotoGalleryCreator/184822641554668" title="News on Facebook">Facebook</a> 
-* <a href="http://twitter.com/GalleryCreator/" title="Follow us on Twitter">Twitter</a> 
+* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" title="Demonstration page">Demonstration</a>
+* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/grand-flash-album-gallery-wordpress-plugin-video-tutorial" title="Video tutorial">Video tutorial</a>
+* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/languages" title="Translation and Language files">Language files</a>
+* <a href="http://photogallerycreator.com/grand-flagallery/" title="Additional skins">Additional skins</a>
+* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq" title="GRAND Flash Album Gallery FAQ">GRAND FlAGallery FAQ</a>
+* <a href="http://wordpress.org/tags/flash-album-gallery" title="Wordpress Support Forum">Support Forum</a>
+* <a href="http://www.facebook.com/pages/PhotoGalleryCreator/184822641554668" title="News on Facebook">Facebook</a>
+* <a href="http://twitter.com/GalleryCreator/" title="Follow us on Twitter">Twitter</a>
  
-= Features = 
+= Features =
  
-* jQuery alternate gallery for iPhone, iPad and browsers without flash support. 
+* jQuery alternate gallery for iPhone, iPad and browsers without flash support.
 * <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-box/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
 * MP3 Player with Multiple Instances.
 * <a href="http://www.facebook.com/pages/Galleries/190973767613001" title="PhotoGalleryCreator Facebook Page">Facebook flash gallery template</a>.
-* With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks. 
-* Unlimited number of pictures in slideshow. 
-* Slideshow automatic mode option. 
-* Flash skins can be added and changed. 
-* Color palette adjustment, changing colors and adding background patterns available.
-* Full screen mode for dramatic presentations. 
-* Adjustable width to fit your blog. 
-* Media RSS feed. 
-* Role settings: providing editing rights to gallery users. 
-* AJAX based thumbnail generator: No more server limitation during the batch process. 
-* Copying or moving images between galleries available. 
-* TinyMCE: Button integration for easy adding the gallery tag with options. 
-* HTML Editor: Button integration for easy adding the gallery tag with options. 
-* Language support. 
-* Upload tab integration: You have access to all pictures via the upload tab. 
-* Import folder with images tab integration: You have access to all server directories via the import tab. 
-* Sorting of images available. 
+* With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks.
+* Unlimited number of pictures in slideshow.
+* Slideshow automatic mode option.
+* Flash skins can be added and changed.
+* Copying or moving images between galleries available.
+* Upload tab integration: You have access to all pictures via the upload tab.
+* Import folder with images tab integration: You have access to all server directories via the import tab.
+* Sorting of images available.
 * Showing selected images only for registered users.
 
 
