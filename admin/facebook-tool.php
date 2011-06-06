@@ -114,8 +114,8 @@ jQuery(document).ready(function() {
 		jQuery('#fb1_url').val(jQuery('#fb1_url0').val().substring(0, 99));
 	});
 });
-function fb_url(galleries,skin,h) {
-	jQuery('#fb_url0').val(url+galleries+skin+h);
+function fb_url(galleries,skin,h,l) {
+	jQuery('#fb_url0').val(url+galleries+skin+h+l);
 	jQuery('#fb_url').val(jQuery('#fb_url0').val().substring(0, 99));
 }
 /*]]>*/</script>
