@@ -1,7 +1,7 @@
 === GRAND Flash Album Gallery ===
 Contributors: Sergey Pasyuk
 Donate link:
-Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, picture, pictures, plugin, portfolio, Post, posts, presentation, slideshow, Facebook, Twitter
+Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, picture, pictures, plugin, portfolio, Post, posts, presentation, slideshow, mp3, music, player, Facebook, Twitter
 Requires at least: 2.9
 Tested up to: 3.1
 Stable tag: trunk
