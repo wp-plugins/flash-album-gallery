@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 1.13
+Version: 1.20
 Author: Sergey Pasyuk
 Author URI: http://codeasily.com/
 
@@ -37,9 +37,9 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 	
-	var $version     = '1.13';
-	var $dbversion   = '0.40';
-	var $minium_WP   = '2.8';
+	var $version     = '1.20';
+	var $dbversion   = '1.20';
+	var $minium_WP   = '3.0';
 	var $minium_WPMU = '2.8';
 	var $options     = '';
 	var $manage_page;
@@ -227,10 +227,9 @@ class flagLoad {
 		// Let's override WP's bundled swfobject, cause as of WP 2.9, it's still using 2.1 
 		wp_deregister_script('swfobject');
 		// and register our own.
-		wp_register_script('swfobject', FLAG_URLPATH .'admin/js/swfobject.js', array(), '2.2');
+		wp_register_script('swfobject', plugins_url('/admin/js/swfobject.js', __FILE__), array(), '2.2');
 		wp_enqueue_script('swfobject');
-
-		wp_register_script('swfaddress', FLAG_URLPATH .'admin/js/swfaddress.js', array(), '2.4');
+		wp_register_script('swfaddress', plugins_url('/admin/js/swfaddress.js', __FILE__), array(), '2.4');
 		wp_enqueue_script('swfaddress');
 
 	}

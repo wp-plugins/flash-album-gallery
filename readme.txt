@@ -36,6 +36,7 @@ Important Links:
  
 = Features = 
  
+* jQuery alternate gallery for iPhone, iPad and browsers without flash support. 
 * <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-box/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
 * MP3 Player with Multiple Instances.
 * <a href="http://www.facebook.com/pages/Galleries/190973767613001" title="PhotoGalleryCreator Facebook Page">Facebook flash gallery template</a>.
@@ -43,7 +44,6 @@ Important Links:
 * Unlimited number of pictures in slideshow. 
 * Slideshow automatic mode option. 
 * Flash skins can be added and changed. 
-* jQuery alternate gallery for iPhone, iPad and browsers without flash support. 
 * Color palette adjustment, changing colors and adding background patterns available.
 * Full screen mode for dramatic presentations. 
 * Adjustable width to fit your blog. 
@@ -62,6 +62,14 @@ Important Links:
 
 == Changelog ==
  
+= v1.20 - 06.06.2011 =
+* Updated : Music skin (added autoplay option)
+* Added : Alternate jQuery gallery for iPad, iPhone
+* Added : Options for alternate gallery
+* Added : additional javascript for flash
+* Changed : swfObject output for all galleries
+* Updated : cPanel.swf for skin optoins
+
 = v1.13 - 26.05.2011 =
 * Fixed : Refresh Skin button make aktive skin broken (reinstall broken skin please)
 

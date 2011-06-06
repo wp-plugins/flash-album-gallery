@@ -36,6 +36,7 @@ function flag_install () {
 	$role->add_cap('FlAG Delete skins');
 	$role->add_cap('FlAG Change options');
 	$role->add_cap('FlAG Manage music');
+	$role->add_cap('FlAG Manage video');
 	$role->add_cap('FlAG Facebook page');
 
 	// upgrade function changed in WordPress 2.3	
@@ -191,6 +192,17 @@ function flag_default_options() {
 	$flag_options['itemTitle']				= '7485c2';		
 	$flag_options['itemDescription']		= 'e0e0e0';		
 
+	// Alternative gallery colors
+	$flag_options['BarsBG']					= '292929';
+	$flag_options['CatBGColor']				= '292929';
+	$flag_options['CatBGColorOver']			= '737373';
+	$flag_options['CatColor']				= 'ffffff';
+	$flag_options['CatColorOver']			= 'ffffff';
+	$flag_options['ThumbBG']				= 'ffffff';
+	$flag_options['ThumbLoaderColor']		= '4a4a4a';
+	$flag_options['TitleColor']				= 'ff9900';
+	$flag_options['DescrColor']				= 'cfcfcf';
+
 	$flag_options['advanced']				= false;  							// Advanced options
 
 	// special overrides for WPMU	
@@ -259,6 +271,7 @@ function flag_uninstall() {
 	flag_remove_capability('FlAG Delete skins');
 	flag_remove_capability("FlAG Change options");
 	flag_remove_capability("FlAG Manage music");
+	flag_remove_capability("FlAG Manage video");
 	flag_remove_capability("FlAG Facebook page");
 }
 

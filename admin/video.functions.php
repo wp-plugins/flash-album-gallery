@@ -1,7 +1,7 @@
 <?php
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
 
-function get_playlist_data( $playlist_file ) {
+function get_v_playlist_data( $playlist_file ) {
 	global $wpdb;	
 	$playlist_content = file_get_contents($playlist_file);
 
@@ -19,11 +19,11 @@ function get_playlist_data( $playlist_file ) {
  * Check the playlists directory and retrieve all playlist files with playlist data.
  *
  */
-function get_playlists($playlist_folder = '') {
+function get_v_playlists($playlist_folder = '') {
 
 	$flag_options = get_option('flag_options');
 	$flag_playlists = array ();
-	$playlist_root = ABSPATH.$flag_options['galleryPath'].'playlists';
+	$playlist_root = ABSPATH.$flag_options['galleryPath'].'playlists/video';
 	if( !empty($playlist_folder) )
 		$playlist_root = $playlist_folder;
 
@@ -47,7 +47,7 @@ function get_playlists($playlist_folder = '') {
 		if ( !is_readable( "$playlist_root/$playlist_file" ) )
 			continue;
 
-		$playlist_data = get_playlist_data( "$playlist_root/$playlist_file" );
+		$playlist_data = get_v_playlist_data( "$playlist_root/$playlist_file" );
 
 		if ( empty ( $playlist_data['title'] ) )
 			continue;
@@ -59,7 +59,7 @@ function get_playlists($playlist_folder = '') {
 	return $flag_playlists;
 }
 
-function flagSavePlaylist($title,$descr,$data,$file='') {
+function flagSave_vPlaylist($title,$descr,$data,$file='') {
 	global $wpdb;
 	if(!trim($title)) {
 		$title = 'default';
@@ -67,6 +67,7 @@ function flagSavePlaylist($title,$descr,$data,$file='') {
 	if (!$file) {
 		$file = sanitize_title($title);
 	}
+
 	if(!is_array($data))
 		$data = explode(',', $data);
 
@@ -74,7 +75,7 @@ function flagSavePlaylist($title,$descr,$data,$file='') {
     $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'music_default';
     $skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
-	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/'.$file.'.xml';
+	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
 	if( file_exists($playlistPath) && ($skin == $skinaction) ) {
 		$settings = file_get_contents($playlistPath);
 	} else {
@@ -94,14 +95,14 @@ function flagSavePlaylist($title,$descr,$data,$file='') {
 	<items>';
 
 		foreach( (array) $data as $id) {
-			$mp3 = get_post($id);
-			if($mp3->post_mime_type == 'audio/mpeg') {
+			$flv = get_post($id);
+			if( in_array( $flv->post_mime_type, array('video/x-flv','application/x-shockwave-flash') ) ) {
 			    $thumb = get_post_meta($id, 'thumbnail', true);
 				$content .= '
-		<item id="'.$mp3->ID.'">
-          <track>'.$mp3->guid.'</track>
-          <title><![CDATA['.$mp3->post_title.']]></title>
-          <description><![CDATA['.$mp3->post_content.']]></description>
+		<item id="'.$flv->ID.'">
+          <track>'.$flv->guid.'</track>
+          <title><![CDATA['.$flv->post_title.']]></title>
+          <description><![CDATA['.$flv->post_content.']]></description>
           <thumbnail>'.$thumb.'</thumbnail>
         </item>';
 			}
@@ -112,22 +113,22 @@ function flagSavePlaylist($title,$descr,$data,$file='') {
 </gallery>';
 		// Save options
 		$flag_options = get_option('flag_options');
-		if(wp_mkdir_p(ABSPATH.$flag_options['galleryPath'].'playlists/')) {
+		if(wp_mkdir_p(ABSPATH.$flag_options['galleryPath'].'playlists/video/')) {
 			if( flagGallery::saveFile($playlistPath,$content,'w') ){
 				flagGallery::show_message(__('Playlist Saved Successfully','flag'));
 			}
 		} else {
-			flagGallery::show_message(__('Create directory please:','flag').'"/'.$flag_options['galleryPath'].'playlists/"');
+			flagGallery::show_message(__('Create directory please:','flag').'"/'.$flag_options['galleryPath'].'playlists/video/"');
 		}
 	}
 }
 
-function flagSavePlaylistSkin($file) {
+function flagSave_vPlaylistSkin($file) {
 	global $wpdb;
 	$flag_options = get_option('flag_options');
     $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'music_default';
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
-	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/'.$file.'.xml';
+	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
 	$playlist = file_get_contents($playlistPath);
 	$settings = file_get_contents($skinpath . "/settings/settings.xml");
 	//$oldproperties = flagGallery::flagGetBetween($playlist,'<properties>','</properties>');
@@ -139,9 +140,9 @@ function flagSavePlaylistSkin($file) {
 	}
 }
 
-function flag_playlist_delete($playlist) {
+function flag_v_playlist_delete($playlist) {
 	$flag_options = get_option('flag_options');
-	$playlistXML = ABSPATH.$flag_options['galleryPath'].'playlists/'.$playlist.'.xml';
+	$playlistXML = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$playlist.'.xml';
 	if(file_exists($playlistXML)){
 		if(unlink($playlistXML)) {
 			flagGallery::show_message("'".$playlist.".xml' ".__('deleted','flag'));

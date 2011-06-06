@@ -1,6 +1,14 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.20 - 06.06.2011 =
+* Updated : Music skin (added autoplay option)
+* Added : Alternate jQuery gallery for iPad, iPhone
+* Added : Options for alternate gallery
+* Added : additional javascript for flash
+* Changed : swfObject output for all galleries
+* Updated : cPanel.swf for skin optoins
+
 = v1.13 - 26.05.2011 =
 * Fixed : Refresh Skin button make aktive skin broken (reinstall broken skin please)
 

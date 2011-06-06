@@ -45,8 +45,9 @@ function do_skin_install_local_package($package, $filename = '') {
 							'activate_skin' => '<a href="'.admin_url('admin.php?page=flag-skins&skin='.$skin_file).'" title="' . __('Activate this skin', 'flag') . '" target="_parent">' . __('Activate Skin', 'flag') . '</a>',
 							'skins_page' => '<a href="#'.$skin_file.'" title="' . __('Goto skin overview', 'flag') . '" target="_parent">' . __('Skin overview', 'flag') . '</a>'
 							), array(), $skin_file);
-		if ( ! empty($install_actions) )
-			show_message('<strong>' . __('Actions:', 'flag') . '</strong> ' . implode(' | ', (array)$install_actions));
+		if ( ! empty($install_actions) ) {
+			//show_message('<strong>' . __('Actions:', 'flag') . '</strong> ' . implode(' | ', (array)$install_actions));
+		}
 		return $result;
 	}
 }

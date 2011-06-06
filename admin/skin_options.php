@@ -1,5 +1,17 @@
 <?php 
-$settingsXML =  str_replace("\\","/", dirname(__FILE__).'/settings.xml');
+require_once( dirname(dirname(__FILE__)) . '/flag-config.php');
+
+// check for correct capability
+if ( !is_user_logged_in() )
+	die('-1');
+
+// check for correct FlAG capability
+if ( !current_user_can('FlAG Change skin') ) 
+	die('-1');	
+
+$flag_options = get_option('flag_options');
+$settings = $flag_options['skinsDirABS'].$_GET['skin'].'/settings';
+$settingsXML =  $settings.'/settings.xml';
 
 if (isset($HTTP_RAW_POST_DATA) ) {
 	$flashPost = $HTTP_RAW_POST_DATA;
@@ -22,22 +34,27 @@ if($flashPost) {
 	fclose($fp);
 	echo "1";//Save
 }
+
+if(isset($_GET['show_options'])) {
+	flag_skin_options();
+}
+
 function flag_skin_options() {
-	$settingsXML =  str_replace("\\","/", dirname(__FILE__).'/settings.xml');
+	$flag_options = get_option('flag_options');
+	$settings = $flag_options['skinsDirURL'].$_GET['skin'].'/settings';
+	$settingsXML =  $flag_options['skinsDirABS'].$_GET['skin'].'/settings/settings.xml';
 	$fp = fopen($settingsXML, "r");
 	if(!$fp) {
 		echo '<p style="color:#ff0000;"><b>Error! The configuration file not be found. You need to reinstall this skin.</b></p>';
 	} else {
-		$flag_options = get_option('flag_options');
-		$settingsPath = $flag_options['skinsDirURL'].basename( dirname(dirname(__FILE__)) ).'/settings'; 
-		$cPanel = $settingsPath."/cpanel.swf";
+		$cPanel = FLAG_URLPATH."lib/cpanel.swf";
 		$swfObject = FLAG_URLPATH."admin/js/swfobject.js?ver=2.2";
 		?>
 		<div id="skinOptions">
 			<script type="text/javascript" src="<?php echo $swfObject ?>"></script>
 			<script type="text/javascript">
 				var flashvars = {
-					path : "<?php echo $settingsPath; ?>",
+					path : "<?php echo $settings; ?>",
 				};
 				var params = {
 					wmode : "transparent",
@@ -57,4 +74,5 @@ function flag_skin_options() {
 	}
 	fclose($fp);
 }
+
 ?>

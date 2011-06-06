@@ -2,13 +2,13 @@
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {	die('You are not allowed to call this page directly.');}
 
-function flag_playlist_edit() {
+function flag_v_playlist_edit() {
 	global $wpdb;
 	$filepath = admin_url() . 'admin.php?page=' . $_GET['page'];
-	$all_playlists = get_playlists();
+	$all_playlists = get_v_playlists();
 	$flag_options = get_option('flag_options');
-	$playlistPath = $flag_options['galleryPath'].'playlists/'.$_GET['playlist'].'.xml';
-	$playlist = get_playlist_data(ABSPATH.$playlistPath);
+	$playlistPath = $flag_options['galleryPath'].'playlists/video/'.$_GET['playlist'].'.xml';
+	$playlist = get_v_playlist_data(ABSPATH.$playlistPath);
 	$items_a = $playlist['items'];
 	$items = implode(',',$playlist['items']);
 ?>
@@ -78,15 +78,15 @@ function send_to_editor(html) {
 	source = source[0].replace(/^src=\"/, "").replace(/" alt$/, "");
 	//var id = html.match(/wp-image-(\d+(\.\d)*)/ig);
 	//id = id[0].match(/\d+/);
-	jQuery('#mp3thumb-'+actInp).attr('value', source);
+	jQuery('#flvthumb-'+actInp).attr('value', source);
 	jQuery('#thumb-'+actInp).attr('src', source);
 	tb_remove();
 }
 jQuery(document).ready(function(){
   jQuery('.del_thumb').click(function(){
     var id = jQuery(this).attr('data-id');
-	jQuery('#mp3thumb-'+id).attr('value', '');
-	jQuery('#thumb-'+id).attr('src', '<?php echo site_url()."/wp-includes/images/crystal/audio.png"; ?>');
+	jQuery('#flvthumb-'+id).attr('value', '');
+	jQuery('#thumb-'+id).attr('src', '<?php echo site_url()."/wp-includes/images/crystal/video.png"; ?>');
     return false;
   });
   /*jQuery('#updatePlaylistSkin').click(function(){
@@ -127,7 +127,7 @@ jQuery(document).ready(function(){
 			<table cellspacing="8" cellpadding="0" border="0">
 				<tr>
 					<th align="left" valign="middle" scope="row"><?php _e('Shortcode', 'flag'); ?>:</th>
-					<td align="left" valign="middle"><input type="text" readonly="readonly" size="50" onfocus="this.select()" value="[grandmusic playlist=<?php echo $_GET['playlist']; ?>]" /></td>
+					<td align="left" valign="middle"><input type="text" readonly="readonly" size="50" onfocus="this.select()" value="[grandvideo playlist=<?php echo $_GET['playlist']; ?>]" /></td>
 					<td rowspan="4" align="left" valign="top"><div style="font-size:11px;"><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
 						<input id="skinaction" type="hidden" name="skinaction" value="<?php echo $playlist['skin']; ?>" />
                         <select id="skinname" name="skinname" style="width: 200px; height: 24px; font-size: 11px;">
@@ -139,7 +139,7 @@ jQuery(document).ready(function(){
                             		echo '<option'.$cur.' value="'.dirname($skin_file).'">'.$skin_data['Name'].'</option>'."\n";
                             	}
                             } else {
-                                echo '<option value="music_default">'.__("No Skins", "flag").'</option>';
+                                echo '<option value="video_default">'.__("No Skins", "flag").'</option>';
                             }
                           ?>
                         </select>&nbsp;&nbsp;<a class="thickbox" href="<?php echo FLAG_URLPATH.'admin/skin_options.php?show_options=1&amp;skin='.dirname($skin_file).'&amp;TB_iframe=1&amp;width=600&amp;height=560'; ?>"><?php _e('Change Skin Options', 'flag' ); ?></a>
@@ -176,7 +176,7 @@ jQuery(document).ready(function(){
 	<input type="submit" name="updatePlaylist" class="button-primary action alignright"  value="<?php _e("Update Playlist",'flag')?>" />
 </div>
 
-<table id="flag-listmusic" class="widefat fixed" cellspacing="0" >
+<table id="flag-listvideo" class="widefat fixed" cellspacing="0" >
 
 	<thead>
 	<tr>
@@ -204,35 +204,35 @@ if(count($items_a)) {
 	$counter = 0;
     $alt = ' class="alternate"';
 	foreach($items_a as $item) {
-		$mp3 = get_post($item);
-        $thumb = $mp3thumb = get_post_meta($item, 'thumbnail', true);
+		$flv = get_post($item);
+        $thumb = $flvthumb = get_post_meta($item, 'thumbnail', true);
         if(empty($thumb)) {
-          $thumb = site_url().'/wp-includes/images/crystal/audio.png';
-          $mp3thumb = '';
+          $thumb = site_url().'/wp-includes/images/crystal/video.png';
+          $flvthumb = '';
         }
 		$alt = ( empty($alt) ) ? ' class="alternate"' : '';
 		$alt2 = ( empty($alt) ) ? '' : ' alternate';
 		$counter++;
 ?>
-		<tr id="mp3-<?php echo $mp3->ID; ?>"<?php echo $alt; ?> valign="top">
-			<th class="cb" scope="row" height="24" style="padding-bottom: 0; border-bottom: none;"><input name="doaction[]" type="checkbox" value="<?php echo $mp3->ID; ?>" /></th>
-			<td class="id" style="padding-bottom: 0; border-bottom: none;"><p style="margin-bottom: 3px; white-space: nowrap;">ID: <?php echo $mp3->ID; ?></p></td>
-			<td class="size" style="padding-bottom: 0; border-bottom: none;"><?php $uploads = wp_upload_dir();
-				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$mp3->guid);
+		<tr id="flv-<?php echo $flv->ID; ?>"<?php echo $alt; ?> valign="top">
+			<th class="cb" scope="row"><input name="doaction[]" type="checkbox" value="<?php echo $flv->ID; ?>" /></th>
+			<td class="id"><p style="white-space: nowrap;">ID: <?php echo $flv->ID; ?></p></td>
+			<td class="size"><?php $uploads = wp_upload_dir();
+				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$flv->guid);
 				$size = filesize($path);
 				echo round($size/1024/1024,2).' Mb';
 			?></td>
-			<td class="thumb" rowspan="2">
-				<img id="thumb-<?php echo $mp3->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" />
-				<input id="mp3thumb-<?php echo $mp3->ID; ?>" name="item_a[<?php echo $mp3->ID; ?>][post_thumb]" type="hidden" value="<?php echo $mp3thumb; ?>" />
+			<td class="thumb">
+				<a class="thickbox" href="<?php echo $flv->guid; ?>"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
+				<input id="flvthumb-<?php echo $flv->ID; ?>" name="item_a[<?php echo $flv->ID; ?>][post_thumb]" type="hidden" value="<?php echo $flvthumb; ?>" />
 			</td>
-			<td class="title_filename" rowspan="2">
-				<strong><a href="<?php echo $mp3->guid; ?>"><?php echo basename($mp3->guid); ?></a></strong><br />
-				<input name="item_a[<?php echo $mp3->ID; ?>][post_title]" type="text" style="width:95%; height: 25px;" value="<?php echo $mp3->post_title; ?>" /><br />
+			<td class="title_filename">
+				<strong><a href="<?php echo $flv->guid; ?>"><?php echo basename($flv->guid); ?></a></strong><br />
+				<input name="item_a[<?php echo $flv->ID; ?>][post_title]" type="text" style="width:95%; height: 25px;" value="<?php echo $flv->post_title; ?>" /><br />
     			<?php
     			$actions = array();
-    			$actions['add_thumb']   = '<a class="thickbox" onclick="actInp='.$mp3->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('add thumb', 'flag') . '</a>';
-    			$actions['del_thumb']   = '<a class="del_thumb" data-id="'.$mp3->ID.'" href="#" title="' . __('Delete an Image','flag') . '">' . __('remove thumb', 'flag') . '</a>';
+    			$actions['add_thumb']   = '<a class="thickbox" onclick="actInp='.$flv->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('add thumb', 'flag') . '</a>';
+    			$actions['del_thumb']   = '<a class="del_thumb" data-id="'.$flv->ID.'" href="#" title="' . __('Delete an Image','flag') . '">' . __('remove thumb', 'flag') . '</a>';
     			$action_count = count($actions);
     			$i = 0;
     			echo '<p class="row-actions">';
@@ -244,14 +244,10 @@ if(count($items_a)) {
     			echo '</p>';
     			?>
 			</td>
-			<td class="description" rowspan="2">
-				<textarea name="item_a[<?php echo $mp3->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo $mp3->post_content; ?></textarea>
+			<td class="description">
+				<textarea name="item_a[<?php echo $flv->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo $flv->post_content; ?></textarea>
 			</td>
 		</tr>
-        <tr class="mp3-<?php echo $mp3->ID.$alt2; ?>">
-            <td valign="top" class="player" colspan="3"><script type="text/javascript">swfobject.embedSWF("<?php echo FLAG_URLPATH; ?>lib/mini.swf", "c-<?php echo $mp3->ID; ?>", "250", "20", "10.1.52", "expressInstall.swf", {path:"<?php echo str_replace(array('http://','.mp3'), array('',''), $mp3->guid); ?>"}, {wmode:"transparent"}, {id:"f-<?php echo $mp3->ID; ?>",name:"f-<?php echo $mp3->ID; ?>"});</script>
-<div class="play" style="padding-left: 4px;"><span id="c-<?php echo $mp3->ID; ?>"></span></div></td>
-        </tr>
 		<?php
 	}
 }

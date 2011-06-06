@@ -318,6 +318,39 @@ class flagGallery {
 	    return $isCrawler;
 	}
 	
+	function flagSaveWpMedia() {
+	   	if ( !empty($_POST['item_a']) )
+	    //echo '<pre>';print_r($_POST['item_a']); echo '</pre>';
+	    foreach ( $_POST['item_a'] as $item_id => $item ) {
+			$post = $_post = get_post($item_id, ARRAY_A);
+			$postmeta = get_post_meta($item_id, 'thumbnail', true);
+			if ( isset($item['post_content']) )
+				$post['post_content'] = $item['post_content'];
+			if ( isset($item['post_title']) )
+				$post['post_title'] = $item['post_title'];
+
+			$post = apply_filters('attachment_fields_to_save', $post, $item);
+
+	        if( isset($item['post_thumb']) && $item['post_thumb'] != $postmeta ) {
+	            /*$thumb = image_resize( $item['post_thumb'], $max_w=200, $max_h=200, $crop = true, $suffix = null, $dest_path = null, $jpeg_quality = 90 );
+	            if(is_string($thumb))
+	                update_post_meta($item_id, 'thumbnail', $thumb);
+	            else*/
+	                update_post_meta($item_id, 'thumbnail', $item['post_thumb']);
+	        } /*else {
+	          delete_post_meta($item_id, 'thumbnail');
+	        }*/
+
+			if ( isset($post['errors']) ) {
+				$errors[$item_id] = $post['errors'];
+				unset($post['errors']);
+			}
+
+			if ( $post != $_post )
+				wp_update_post($post);
+		}
+	}
+
 }
 
 ?>

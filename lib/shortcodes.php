@@ -5,7 +5,8 @@
  */
 
 class FlAG_shortcodes {
-	
+	static $flag_add_script;
+	static $flag_add_mousewheel;
 	// register the new shortcodes
 	function FlAG_shortcodes() {
 	
@@ -16,12 +17,13 @@ class FlAG_shortcodes {
 		add_shortcode( 'flagallery', array(&$this, 'show_flashalbum' ) );
 		add_shortcode( 'grandmp3', array(&$this, 'grandmp3' ) );
 		add_shortcode( 'grandmusic', array(&$this, 'grandmusic' ) );
+		add_action('wp_footer', array(&$this, 'add_script'));
+
 	}
 
 	function show_flashalbum( $atts ) {
-
 		global $wpdb, $flagdb;
-	
+
 		extract(shortcode_atts(array(
 			'gid' 		=> '',
 			'name'		=> '',
@@ -66,9 +68,37 @@ class FlAG_shortcodes {
     			$out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode);
     		else
     			$out = __('[Gallery not found]','flag');
-    		}
+    	}
+		$this->flag_add_script = true;
+
+		$flag_options = get_option('flag_options');
+		if($skin == '') $skin = $flag_options['flashSkin'];
+		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+		if(!is_dir($skinpath)) {
+			$skin = 'default';
+			$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+		} 
+		$swfmousewheel = false;
+		if(file_exists($skinpath . "/settings/settings.xml")) {
+			$data = file_get_contents($skinpath . "/settings/settings.xml");
+			$swfmousewheel = flagGetBetween($data,'<swfmousewheel>','</swfmousewheel>');
+		} 
+		if($swfmousewheel == 'true') $this->flag_add_mousewheel = true;
 
         return $out;
+	}
+
+	function add_script() {
+		if ( $this->flag_add_script ) {
+			wp_register_script('flagscroll', plugins_url('/admin/js/flagscroll.js', dirname(__FILE__)), array('jquery'), '1.0', true );
+			wp_register_script('flagscript', plugins_url('/admin/js/script.js', dirname(__FILE__)), array('jquery'), '1.0', true );
+			wp_print_scripts('flagscroll');
+			wp_print_scripts('flagscript');
+		}
+		if ( $this->flag_add_mousewheel ) {
+			wp_register_script('swfmousewheel', plugins_url('/admin/js/swfmousewheel.js', dirname(__FILE__)), false, '2.0', true );
+			wp_print_scripts('swfmousewheel');
+		}
 	}
 
 	function grandmusic( $atts ) {
@@ -94,6 +124,34 @@ class FlAG_shortcodes {
 			wp_enqueue_script( 'swfobject' );
 			$mp3 = get_post(intval($id,10));
 			$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini.swf", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.str_replace(array('http://','.mp3'), array('',''), $mp3->guid).'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>
+<div id="c-'.$id.'"></div>';
+		}
+       	return $out;
+	}
+
+	function grandvideo( $atts ) {
+
+		extract(shortcode_atts(array(
+			'playlist'	=> '',
+			'w'		 	=> '',
+			'h'		 	=> '',
+		), $atts ));
+		
+		if($playlist)
+            $out = flagShowVPlayer($playlist, $w, $h);
+        return $out;
+	}
+
+	function grandflv( $atts ) {
+		global $wpdb;
+		extract(shortcode_atts(array(
+			'id'	=> '',
+		), $atts ));
+		$flag_options = get_option('flag_options');
+		if($id) {
+			wp_enqueue_script( 'swfobject' );
+			$mp3 = get_post(intval($id,10));
+			$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini_v.swf", "c-'.$id.'", "320", "240", "10.1.52", "expressInstall.swf", {path:"'.str_replace(array('http://','.flv','.swf'), array('','',''), $mp3->guid).'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>
 <div id="c-'.$id.'"></div>';
 		}
        	return $out;

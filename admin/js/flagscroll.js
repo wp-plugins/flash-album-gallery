@@ -2,14 +2,14 @@ jQuery(document).ready(function() {
 	jQuery('div.flashalbum').bind("mouseenter",function(){
 	  var obj_id = jQuery('object, embed',this).attr('id');
 	  var flash = flagFind(obj_id);
-	  flash.jsString("false");
+	  flash[obj_id]("false");
     }).bind("mouseleave",function(){
 	  var obj_id = jQuery('object, embed',this).attr('id');
 	  var flash = flagFind(obj_id);
-	  flash.jsString("true");
+	  flash[obj_id]("true");
     });
-
 });
+
 function flagFind(flagName){
 	if (window.document[flagName]){
 		return window.document[flagName];

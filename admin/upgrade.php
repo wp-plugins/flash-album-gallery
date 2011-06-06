@@ -63,6 +63,23 @@ function flag_upgrade() {
 			echo __('finished', 'flag') . "<br />\n";
 		}		
 
+		if (version_compare($installed_ver, '1.20', '<')) {
+			echo __('Adding new options to database...', 'flag');
+			$flag_options = get_option('flag_options');	
+			// Alternative gallery colors
+			$flag_options['BarsBG']					= '292929';
+			$flag_options['CatBGColor']				= '292929';
+			$flag_options['CatBGColorOver']			= '737373';
+			$flag_options['CatColor']				= 'ffffff';
+			$flag_options['CatColorOver']			= 'ffffff';
+			$flag_options['ThumbBG']				= 'ffffff';
+			$flag_options['ThumbLoaderColor']		= '4a4a4a';
+			$flag_options['TitleColor']				= 'ff9900';
+			$flag_options['DescrColor']				= 'cfcfcf';
+			update_option('flag_options', $flag_options);
+			echo __('finished', 'flag') . "<br />\n";
+		}		
+
 		return;
 	}
 }

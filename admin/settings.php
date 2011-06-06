@@ -46,6 +46,7 @@ function flag_admin_options()  {
 		flag_set_capability($_POST['delete_skins'],"FlAG Delete skins");
 		flag_set_capability($_POST['change_options'],"FlAG Change options");
 		flag_set_capability($_POST['manage_music'],"FlAG Manage music");
+		flag_set_capability($_POST['manage_video'],"FlAG Manage video");
 		flag_set_capability($_POST['facebook_page'],"FlAG Facebook page");
 		
 		flagGallery::show_message(__('Updated capabilities',"flag"));
@@ -60,6 +61,7 @@ function flag_admin_options()  {
 
 	<ul id="tabs" class="tabs">
 		<li class="selected"><a href="#" rel="generaloptions"><?php _e('General Options', 'flag'); ?></a></li>
+		<li><a href="#" rel="alternative_colors"><?php _e('Flash Alternative Colors', 'flag'); ?></a></li>
 		<li><a href="#" rel="images"><?php _e('Images', 'flag'); ?></a></li>
 		<li><a href="#" rel="sorting"><?php _e( 'Sorting', 'flag' ); ?></a></li>
 <?php if (flagGallery::flag_wpmu_enable_function('wpmuRoles')) : ?>
@@ -96,6 +98,82 @@ function flag_admin_options()  {
 					<span class="setting-description"><?php _e('A RSS feed will be added to you blog header.','flag'); ?></span></td>
 				</tr>
 			</table>
+		<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
+		</form>	
+	</div>	
+	
+	<!-- Alternative Colors -->
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	jQuery('#colors .colorPick').each( function(){
+		var inpID = jQuery(this).attr('name');
+		jQuery('#cp_'+inpID).farbtastic('#'+inpID);
+		jQuery('#'+inpID).focus( function(){
+		    jQuery('#cp_'+inpID).show();
+		});
+		jQuery('#'+inpID).blur( function(){
+		    jQuery('#cp_'+inpID).hide();
+		});
+	});
+});
+</script>
+<?php $flag_options = get_option('flag_options');
+$altColors['BarsBG'] = $flag_options['BarsBG'];
+$altColors['CatBGColor'] = $flag_options['CatBGColor'];
+$altColors['CatBGColorOver'] = $flag_options['CatBGColorOver'];
+$altColors['CatColor'] = $flag_options['CatColor'];
+$altColors['CatColorOver'] = $flag_options['CatColorOver'];
+$altColors['ThumbBG'] = $flag_options['ThumbBG'];
+$altColors['ThumbLoaderColor'] = $flag_options['ThumbLoaderColor'];
+$altColors['TitleColor'] = $flag_options['TitleColor'];
+$altColors['DescrColor'] = $flag_options['DescrColor'];
+?>
+	<div id="alternative_colors" class="cptab">
+		<h2><?php _e('General Options','flag'); ?></h2>
+		<form name="alternative_colors" method="post">
+		<?php wp_nonce_field('flag_settings'); ?>
+		<input type="hidden" name="page_options" value="BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor" />
+		<table id="colors" class="form-table flag-options">
+			<tr>
+				<th style="width: 30%;"><?php _e('Top Bar BG','flag'); ?>:</th>
+				<td><input class="colorPick" type="text" size="7" maxlength="6" id="BarsBG" name="BarsBG" value="<?php echo $altColors['BarsBG']?>" /><div id="cp_BarsBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+			</tr>
+			<tr>					
+				<th><?php _e('Category Buttons BG','flag'); ?>:</th>
+				<td>
+					<input class="colorPick" type="text" size="7" maxlength="6" id="CatBGColorOver" name="CatBGColorOver" value="<?php echo $altColors['CatBGColorOver']; ?>" /> mouseOver<br />
+					<div id="cp_CatBGColorOver" style="background:#F9F9F9;position:absolute;display:none;"></div>
+					<input class="colorPick" type="text" size="7" maxlength="6" id="CatBGColor" name="CatBGColor" value="<?php echo $altColors['CatBGColor']; ?>" /> mouseOut<br />
+					<div id="cp_CatBGColor" style="background:#F9F9F9;position:absolute;display:none;"></div>
+				</td>
+			</tr>
+			<tr>					
+				<th><?php _e('Category Buttons Color','flag'); ?>:</th>
+				<td>
+					<input class="colorPick" type="text" size="7" maxlength="6" id="CatColorOver" name="CatColorOver" value="<?php echo $altColors['CatColorOver']; ?>" /> mouseOver<br />
+					<div id="cp_CatColorOver" style="background:#F9F9F9;position:absolute;display:none;"></div>
+					<input class="colorPick" type="text" size="7" maxlength="6" id="CatColor" name="CatColor" value="<?php echo $altColors['CatColor']; ?>" /> mouseOut<br />
+					<div id="cp_CatColor" style="background:#F9F9F9;position:absolute;display:none;"></div>
+				</td>
+			</tr>
+			<tr>					
+				<th><?php _e('Thumbnail BG','flag'); ?>:</th>
+				<td><input class="colorPick" type="text" size="7" maxlength="6" id="ThumbBG" name="ThumbBG" value="<?php echo $altColors['ThumbBG']; ?>" /><div id="cp_ThumbBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+			</tr>
+			<tr>					
+				<th><?php _e('Thumbnail MouseOver BG','flag'); ?>:</th>
+				<td><input class="colorPick" type="text" size="7" maxlength="6" id="ThumbLoaderColor" name="ThumbLoaderColor" value="<?php echo $altColors['ThumbLoaderColor']; ?>" /><div id="cp_ThumbLoaderColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+			</tr>
+			<tr>					
+				<th><?php _e('Fancybox Title','flag'); ?>:</th>
+				<td><input class="colorPick" type="text" size="7" maxlength="6" id="TitleColor" name="TitleColor" value="<?php echo $altColors['TitleColor']; ?>" /><div id="cp_TitleColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+			</tr>
+			<tr>					
+				<th><?php _e('Fancybox Description Text','flag'); ?>:</th>
+				<td><input class="colorPick" type="text" size="7" maxlength="6" id="DescrColor" name="DescrColor" value="<?php echo $altColors['DescrColor']; ?>" /><div id="cp_DescrColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+			</tr>
+		</table>
 		<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
 		</form>	
 	</div>	
@@ -188,7 +266,11 @@ function flag_admin_options()  {
 			</tr>
 			<tr valign="top"> 
 				<th scope="row" style="white-space: nowrap"><?php _e('Manage music', 'flag'); ?>:</th> 
-				<td><label for="manage_music"><select style="width: 150px;" name="manage_music" id="manage_others"><?php wp_dropdown_roles( flag_get_role('FlAG Manage music') ); ?></select></label></td>
+				<td><label for="manage_music"><select style="width: 150px;" name="manage_music" id="manage_music"><?php wp_dropdown_roles( flag_get_role('FlAG Manage music') ); ?></select></label></td>
+			</tr>
+			<tr valign="top"> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Manage video', 'flag'); ?>:</th> 
+				<td><label for="manage_video"><select style="width: 150px;" name="manage_video" id="manage_video"><?php wp_dropdown_roles( flag_get_role('FlAG Manage video') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
 				<th scope="row" style="white-space: nowrap"><?php _e('Change skin', 'flag'); ?>:</th> 
