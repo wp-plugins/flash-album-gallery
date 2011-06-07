@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.21 - 07.06.2011 =
+* Fixed : javascript for Alternative gallery
+* Fixed : php4 unexpected T_STATIC error
+
 = v1.20 - 06.06.2011 =
 * Updated : Music skin (added autoplay option)
 * Added : Alternate jQuery gallery for iPad, iPhone
