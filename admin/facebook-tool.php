@@ -179,7 +179,7 @@ function fb_url(galleries,skin,h,l) {
 		</tr>
     </table>
 </fieldset></form>
-<form id="generator2"><fieldset style="padding: 20px; width: 100%; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("mp3 Gallery Facebook Page Generator", 'flag'); ?></legend>
+<form id="generator2"><fieldset style="padding: 20px; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("mp3 Gallery Facebook Page Generator", 'flag'); ?></legend>
 	<table border="0" cellpadding="4" cellspacing="0">
         <tr>
             <td nowrap="nowrap" valign="top"><p style="padding-top:3px;"><label for="skinname"><?php _e("Choose playlist", 'flag'); ?>:</label></p></td>

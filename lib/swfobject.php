@@ -9,10 +9,13 @@
  * @param integer $flashHeight Height of the flash container
  * @return the content
  */
-function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='', $playlist='', $wmode='') {
+function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='', $playlist='', $wmode='', $linkto='') {
  	global $post;	
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
 
+	if($linkto) {
+		$post = get_post($linkto);
+	} 
 	$flag_options = get_option('flag_options');
 	$skinID = 'sid_'.mt_rand();
 	if($skin == '') $skin = $flag_options['flashSkin'];

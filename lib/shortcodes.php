@@ -5,19 +5,19 @@
  */
 
 class FlAG_shortcodes {
-	static $flag_add_script;
-	static $flag_add_mousewheel;
+	var $flag_add_script;
+	var $flag_add_mousewheel;
 	// register the new shortcodes
 	function FlAG_shortcodes() {
 	
 		// do_shortcode on the_excerpt could causes several unwanted output. Uncomment it on your own risk
-		// add_filter('the_excerpt', array(__CLASS__, 'convert_shortcode'));
+		// add_filter('the_excerpt', array(&$this, 'convert_shortcode'));
 		// add_filter('the_excerpt', 'do_shortcode', 11);
 
-		add_shortcode( 'flagallery', array(__CLASS__, 'show_flashalbum' ) );
-		add_shortcode( 'grandmp3', array(__CLASS__, 'grandmp3' ) );
-		add_shortcode( 'grandmusic', array(__CLASS__, 'grandmusic' ) );
-		add_action('wp_footer', array(__CLASS__, 'add_script'));
+		add_shortcode( 'flagallery', array(&$this, 'show_flashalbum' ) );
+		add_shortcode( 'grandmp3', array(&$this, 'grandmp3' ) );
+		add_shortcode( 'grandmusic', array(&$this, 'grandmusic' ) );
+		add_action('wp_footer', array(&$this, 'add_script'));
 
 	}
 
@@ -69,7 +69,7 @@ class FlAG_shortcodes {
     		else
     			$out = __('[Gallery not found]','flag');
     	}
-		self::$flag_add_script = true;
+		$this->flag_add_script = true;
 
 		$flag_options = get_option('flag_options');
 		if($skin == '') $skin = $flag_options['flashSkin'];
@@ -83,13 +83,13 @@ class FlAG_shortcodes {
 			$data = file_get_contents($skinpath . "/settings/settings.xml");
 			$swfmousewheel = flagGetBetween($data,'<swfmousewheel>','</swfmousewheel>');
 		} 
-		if($swfmousewheel == 'true') self::$flag_add_mousewheel = true;
+		if($swfmousewheel == 'true') $this->flag_add_mousewheel = true;
 
         return $out;
 	}
 
 	function add_script() {
-		if ( self::$flag_add_script ) {
+		if ( $this->flag_add_script ) {
 			wp_register_style('fancybox', plugins_url('/admin/js/jquery.fancybox-1.3.4.css', dirname(__FILE__)) );
 			wp_register_script('fancybox', plugins_url('/admin/js/jquery.fancybox-1.3.4.pack.js', dirname(__FILE__)), array('jquery'), '1.3.4', true );
 			wp_register_script('flagscroll', plugins_url('/admin/js/flagscroll.js', dirname(__FILE__)), array('jquery'), '1.0', true );
@@ -99,7 +99,7 @@ class FlAG_shortcodes {
 			wp_print_scripts('flagscroll');
 			wp_print_scripts('flagscript');
 		}
-		if ( self::$flag_add_mousewheel ) {
+		if ( $this->flag_add_mousewheel ) {
 			wp_register_script('swfmousewheel', plugins_url('/admin/js/swfmousewheel.js', dirname(__FILE__)), false, '2.0', true );
 			wp_print_scripts('swfmousewheel');
 		}

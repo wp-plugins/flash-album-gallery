@@ -17,7 +17,7 @@ extract($altColors);
 .flag_alternate .flagcategory a:hover { background-color: #ffffff; border: 2px solid #4a4a4a; color: #4a4a4a; text-decoration: none; }
 .flag_alternate .flagcategory a.current, .flag_alternate .flagcategory a.last { border-color: #4a4a4a; }
 .flag_alternate .flagcategory a img { vertical-align: middle; display:inline-block; position: static; margin: 0 auto; padding: 0; border: none; height: 100px !important; width: 115px !important; }
-.flag_alternate { background-color: <?php echo $bg; ?>; margin: 7px 0; }
+.flag_alternate { background-color: <?php echo $bg; ?>; margin: 7px 0; display: none; }
 </style>
 <?php if($BarsBG) { 
 $bgBar = ($wmode == 'window')? '#'.$BarsBG : 'transparent'; ?>

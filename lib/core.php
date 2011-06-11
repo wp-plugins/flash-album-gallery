@@ -258,7 +258,7 @@ class flagGallery {
 					flagGallery::flagFolderDelete($path.'/'.$entry);
 				}
 			}
-			return rmdir($path);
+			return @rmdir($path);
 		} elseif (file_exists($path)) {
 			return unlink($path);
 		} else {

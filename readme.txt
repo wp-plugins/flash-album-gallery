@@ -44,6 +44,18 @@ Music Player: Each instance (player copy) can play different mp3 file. All the p
 
 == Changelog ==
 
+= Upgrade Notice =
+* After plugin update go to Skins page and update skins with 'Update skins' button.
+* If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
+* If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
+* Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
+
+= v1.22 - 11.06.2011 =
+* Fixed : Facebook template (you should copy facebook.php in the root directory again if you did it before)
+* Fixed : php4 compatibility
+* Added : Autoplay option to Music player (you should update skins)
+* Fixed : alternate gallery show only if no flash
+
 = v1.21 - 07.06.2011 =
 * Fixed : javascript for Alternative gallery
 * Fixed : php4 unexpected T_STATIC error
@@ -234,6 +246,17 @@ See more tags in the FAQ section
  
 That's it ... Have fun! 
  
+= Upgrade Notice =
+
+After plugin update go to Skins page and update skins with 'Update skins' button.
+
+If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
+
+If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
+
+Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
+
+ 
 == Upgrade Notice ==
 
 After plugin update go to Skins page and update skins with 'Update skins' button.
@@ -255,6 +278,12 @@ If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Ov
  
 == Frequently Asked Questions == 
  
+= Upgrade Notice =
+After plugin update go to Skins page and update skins with 'Update skins' button.
+If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
+If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
+Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
+
 = Read as startup : = 
 http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review/
  

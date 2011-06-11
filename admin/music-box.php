@@ -103,8 +103,12 @@ function flag_created_playlists() {
 <?php
 if($all_playlists) {
 	foreach((array)$all_playlists as $playlist_file => $playlist_data) {
+		$query_m = get_posts(array('post_type' => 'attachment', 'numberposts' => -1, 'post_status' => null, 'post_parent' => null, 'post__in' => $playlist_data['items']));
 		$class = ( !isset($class) || $class == 'class="alternate"' ) ? '' : 'class="alternate"';
 		$playlist_name = basename($playlist_file, '.xml');
+		if(count($query_m) != count($playlist_data['items'])) {
+			flagSavePlaylist($playlist_data['title'],$playlist_data['description'],$playlist_data['items'],$playlist_name);
+		}
 ?>
 		<tr id="<?php echo $playlist_name; ?>" <?php echo $class; ?> >
 			<td>
@@ -113,7 +117,7 @@ if($all_playlists) {
 				</a>
 			</td>
 			<td><?php echo $playlist_data['description']; echo '&nbsp;('.__("player", "flag").': <strong>'.$playlist_data['skin'].'</strong>)' ?></td>
-			<td><?php echo count($playlist_data['items']); ?></td>
+			<td><?php echo count($query_m); ?></td>
 			<td style="white-space: nowrap;"><input type="text" class="shortcode1" style="width: 200px; font-size: 9px;" readonly="readonly" onfocus="this.select()" value="[grandmusic playlist=<?php echo $playlist_name; ?>]" /></td>
 			<td>
 				<a href="<?php echo $filepath.'&amp;playlist='.$playlist_name."&amp;mode=delete"; ?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this playlist?",'flag')?>');if(check==false) return false;"><?php _e('Delete','flag'); ?></a>
