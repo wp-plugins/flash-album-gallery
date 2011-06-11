@@ -6,7 +6,7 @@ Requires at least: 2.9
 Tested up to: 3.1
 Stable tag: trunk
 
-GRAND Flash Album Gallery is a fully integrated (flash skin based, slideshow option) Image Gallery plugin with a powerful admin panel.
+GRAND FlAGallery is a Photo & Music Gallery with slideshow function, many skins, mp3 player with playlists and powerfull admin to manage your images and music without any program skills
 
 == Description ==
 Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin. It provides a comprehensive interface for handling photos and images.
