@@ -224,6 +224,13 @@ Music Player: Each instance (player copy) can play different mp3 file. All the p
 * Bugfix : Fix for Upload Images button on Overview page 
 * Bugfix : Fixed conflict with NextGEN Gallery (creating thumbnails cause error) 
  
+== Upgrade Notice ==
+
+* After plugin update go to Skins page and update skins with 'Update skins' button.
+* If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
+* If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
+* Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
+
 == Credits == 
 
 Copyright 2009 by Sergey Pasyuk & CodEasily.com DevTeam 
@@ -233,6 +240,12 @@ This program is free software; you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details. 
 
 You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA. 
+
+= Upgrade Notice =
+* After plugin update go to Skins page and update skins with 'Update skins' button.
+* If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
+* If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
+* Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
 
 == Installation == 
 
@@ -247,21 +260,10 @@ See more tags in the FAQ section
 That's it ... Have fun! 
  
 = Upgrade Notice =
-
-After plugin update go to Skins page and update skins with 'Update skins' button.
-
-If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
-
-If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
-
-Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
-
- 
-== Upgrade Notice ==
-
-After plugin update go to Skins page and update skins with 'Update skins' button.
-
-If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
+* After plugin update go to Skins page and update skins with 'Update skins' button.
+* If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
+* If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
+* Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
 
 == Screenshots == 
 
