@@ -6,7 +6,7 @@ Requires at least: 2.9
 Tested up to: 3.1
 Stable tag: trunk
 
-GRAND FlAGallery is a Photo & Music Gallery with slideshow function, many skins, mp3 player with playlists and powerfull admin to manage your images and music without any program skills
+GRAND FlAGallery is a Photo & Music Album with powerfull admin to manage your media content
 
 == Description ==
 Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin. It provides a comprehensive interface for handling photos and images.
@@ -249,8 +249,9 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Installation == 
 
-1. Upload the files to wp-content/plugins/flash-album-gallery. 
+1. Upload the files to 'wp-content/plugins/flash-album-gallery'. 
 2. Activate the plugin. 
+3. Be sure that after activation 'wp-content/plugins/flagallery-skins' folder (chmod 755) created successfully. If not, create it manually and install skins through admin Skins page or via ftp.
 3. Add a gallery and upload some images (the main gallery folder must have write permission). 
 4. Go to your post/page an enter the tag '[flagallery gid=X name="ALBUM TITLE"]', where X - gallery IDs separated by comma;  ALBUM TITLE - title of your album (default 'Gallery'). Easy way is click FlAGallery button on the Editor panel. 
 5. If you would like to use additional Flash Skins (only a option), go to <a href="http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/" title="Flash Skins">Flash Skins</a>, download the skin and upload the file through Skins page in Wordpress admin panel. 
@@ -267,16 +268,12 @@ That's it ... Have fun!
 
 == Screenshots == 
 
-1. 3D Prospect Gallery skin with Social buttons integrated
-2. 3D Cube Gallery skin
-3. 3D Cube Gallery loading images
-4. Default skin (Midnight)
-5. Manage Gallery 
-6. Sort Gallery 
-7. Add / Change Skins 
-8. Options Page 
-9. Post Editor insert shortcode popup 
-10. Post Editor buttons to help you insert shortcode 
+1. 3D Prospect Gallery skin with Social buttons integrated, Afflux skin, 3D Cube Gallery skin, 3D FlatWall skin
+2. Gallery in Facebook integrated with facebook template.
+3. Alternate jQuery gallery for iPhone, iPad and browsers without flash support.
+4. Admin Sort Gallery 
+5. Post Editor insert shortcode popup 
+6. Post Editor buttons to help you insert shortcode 
  
 == Frequently Asked Questions == 
  
