@@ -1,5 +1,5 @@
 === GRAND Flash Album Gallery ===
-Contributors: Sergey Pasyuk
+Contributors: Rattus
 Donate link:
 Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, plugin, portfolio, Post, posts, presentation, slideshow, mp3, music, flv, video, player, Facebook, Twitter
 Requires at least: 2.9
