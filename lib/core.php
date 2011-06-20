@@ -320,7 +320,6 @@ class flagGallery {
 	
 	function flagSaveWpMedia() {
 	   	if ( !empty($_POST['item_a']) )
-	    //echo '<pre>';print_r($_POST['item_a']); echo '</pre>';
 	    foreach ( $_POST['item_a'] as $item_id => $item ) {
 			$post = $_post = get_post($item_id, ARRAY_A);
 			$postmeta = get_post_meta($item_id, 'thumbnail', true);
@@ -337,9 +336,7 @@ class flagGallery {
 	                update_post_meta($item_id, 'thumbnail', $thumb);
 	            else*/
 	                update_post_meta($item_id, 'thumbnail', $item['post_thumb']);
-	        } /*else {
-	          delete_post_meta($item_id, 'thumbnail');
-	        }*/
+	        }
 
 			if ( isset($post['errors']) ) {
 				$errors[$item_id] = $post['errors'];

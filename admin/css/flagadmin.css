@@ -223,3 +223,5 @@ p.row-actions {
 	margin:0px;
 	padding:10px 4px 0;
 }
+
+div#TB_window iframe#TB_iframeContent { width: 100% !important; }

@@ -5,6 +5,7 @@
  */
 
 class FlAG_shortcodes {
+	var $flag_shortcode;
 	var $flag_add_script;
 	var $flag_add_mousewheel;
 	// register the new shortcodes
@@ -17,6 +18,8 @@ class FlAG_shortcodes {
 		add_shortcode( 'flagallery', array(&$this, 'show_flashalbum' ) );
 		add_shortcode( 'grandmp3', array(&$this, 'grandmp3' ) );
 		add_shortcode( 'grandmusic', array(&$this, 'grandmusic' ) );
+		add_shortcode( 'grandflv', array(&$this, 'grandflv' ) );
+		add_shortcode( 'grandvideo', array(&$this, 'grandvideo' ) );
 		add_action('wp_footer', array(&$this, 'add_script'));
 
 	}
@@ -37,6 +40,7 @@ class FlAG_shortcodes {
 			'wmode' 	=> ''
 		), $atts ));
 		
+		$out = '';
 		// make an array out of the ids
         if($gid == "all") {
 			if(!$orderby) $orderby='gid';
@@ -69,6 +73,7 @@ class FlAG_shortcodes {
     		else
     			$out = __('[Gallery not found]','flag');
     	}
+		$this->flag_shortcode = true;
 		$this->flag_add_script = true;
 
 		$flag_options = get_option('flag_options');
@@ -89,14 +94,16 @@ class FlAG_shortcodes {
 	}
 
 	function add_script() {
+		if ( $this->flag_shortcode ) {
+			wp_register_script('flagscroll', plugins_url('/admin/js/flagscroll.js', dirname(__FILE__)), array('jquery'), '1.0', true );
+			wp_print_scripts('flagscroll');
+		}
 		if ( $this->flag_add_script ) {
 			wp_register_style('fancybox', plugins_url('/admin/js/jquery.fancybox-1.3.4.css', dirname(__FILE__)) );
-			wp_register_script('fancybox', plugins_url('/admin/js/jquery.fancybox-1.3.4.pack.js', dirname(__FILE__)), array('jquery'), '1.3.4', true );
-			wp_register_script('flagscroll', plugins_url('/admin/js/flagscroll.js', dirname(__FILE__)), array('jquery'), '1.0', true );
-			wp_register_script('flagscript', plugins_url('/admin/js/script.js', dirname(__FILE__)), array('jquery'), '1.0', true );
 			wp_print_styles('fancybox');
+			wp_register_script('fancybox', plugins_url('/admin/js/jquery.fancybox-1.3.4.pack.js', dirname(__FILE__)), array('jquery'), '1.3.4', true );
 			wp_print_scripts('fancybox');
-			wp_print_scripts('flagscroll');
+			wp_register_script('flagscript', plugins_url('/admin/js/script.js', dirname(__FILE__)), array('jquery'), '1.0', true );
 			wp_print_scripts('flagscript');
 		}
 		if ( $this->flag_add_mousewheel ) {
@@ -110,22 +117,25 @@ class FlAG_shortcodes {
 		extract(shortcode_atts(array(
 			'playlist'	=> '',
 			'w'		 	=> '',
-			'h'		 	=> '',
+			'h'		 	=> ''
 		), $atts ));
-		
-		if($playlist)
+		$out = '';
+		if($playlist) {
+			$this->flag_shortcode = true;
+			$this->flag_add_mousewheel = true;
             $out = flagShowMPlayer($playlist, $w, $h);
+		}
         return $out;
 	}
 
 	function grandmp3( $atts ) {
 		global $wpdb;
 		extract(shortcode_atts(array(
-			'id'	=> '',
+			'id'	=> ''
 		), $atts ));
+		$out = '';
 		$flag_options = get_option('flag_options');
 		if($id) {
-			wp_enqueue_script( 'swfobject' );
 			$mp3 = get_post(intval($id,10));
 			$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini.swf", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.str_replace(array('http://','.mp3'), array('',''), $mp3->guid).'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>
 <div id="c-'.$id.'"></div>';
@@ -138,25 +148,28 @@ class FlAG_shortcodes {
 		extract(shortcode_atts(array(
 			'playlist'	=> '',
 			'w'		 	=> '',
-			'h'		 	=> '',
+			'h'		 	=> ''
 		), $atts ));
-		
-		if($playlist)
+		$out = '';
+		if($playlist) {
+			$this->flag_shortcode = true;
             $out = flagShowVPlayer($playlist, $w, $h);
+		}
         return $out;
 	}
 
 	function grandflv( $atts ) {
 		global $wpdb;
 		extract(shortcode_atts(array(
-			'id'	=> '',
+			'id'		=> '',
+			'w'			=> '',
+			'h'			=> '',
+			'autoplay'	=> ''
 		), $atts ));
-		$flag_options = get_option('flag_options');
+		$out = '';
 		if($id) {
-			wp_enqueue_script( 'swfobject' );
-			$mp3 = get_post(intval($id,10));
-			$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini_v.swf", "c-'.$id.'", "320", "240", "10.1.52", "expressInstall.swf", {path:"'.str_replace(array('http://','.flv','.swf'), array('','',''), $mp3->guid).'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>
-<div id="c-'.$id.'"></div>';
+			$this->flag_shortcode = true;
+            $out = flagShowVmPlayer($id, $w, $h, $autoplay);
 		}
        	return $out;
 	}

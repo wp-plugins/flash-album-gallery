@@ -11,9 +11,16 @@ if ( !current_user_can('FlAG Manage music') )
 	die('-1');	
 
 
+require_once (dirname (__FILE__) . '/functions.php');
 require_once (dirname (__FILE__) . '/playlist.functions.php');
 
 function flag_music_controler() {
+	if ($_POST['importfolder']){
+		check_admin_referer('flag_addmp3');
+		$mp3folder = $_POST['mp3folder'];
+		if ( !empty($mp3folder) )
+			flagAdmin::import_mp3($mp3folder);
+	}
 	$mode = isset($_REQUEST['mode'])? $_REQUEST['mode'] : 'main';
 	$action = isset($_REQUEST['bulkaction'])? $_REQUEST['bulkaction'] : false;
 	if($action == 'no_action') {
@@ -224,6 +231,51 @@ function send_to_editor(html) {
 //-->
 </script>
 	<div class="wrap">
+<?php if($added===false) { ?>
+<?php if( current_user_can('FlAG Import folder') ) { 
+	$defaultpath = 'wp-content/';
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.css" />
+<script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+	  jQuery(function() {								 
+	    jQuery("#file_browser").fileTree({
+	      root: "<?php echo WINABSPATH; ?>",
+	      script: "<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/connectors/jqueryFileTree.php",
+	    }, function(file) {
+	        var path = file.replace("<?php echo WINABSPATH; ?>", "");
+	        jQuery("#mp3folder").val(path);
+	    });
+	    
+	    jQuery("span.browsefiles").show().click(function(){
+	    	jQuery("#file_browser").slideToggle();
+	    });	
+	  });
+/* ]]> */
+</script>
+
+		<!-- import folder -->
+		<div id="importfolder">
+		<h2><?php _e('Import mp3 from folder', 'flag'); ?></h2>
+			<form name="importfolder" id="importfolder_form" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
+			<?php wp_nonce_field('flag_addmp3'); ?>
+				<table class="form-table"> 
+				<tr valign="top"> 
+					<th scope="row"><?php _e('Import from Server path:', 'flag'); ?></th> 
+					<td><input type="text" size="35" id="mp3folder" name="mp3folder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Toggle DIR Browser',"flag"); ?></span>
+						<div id="file_browser"></div><br />
+						<p><label><input type="checkbox" name="delete_files" value="delete" checked="checked" /> &nbsp;
+						<?php _e('delete files after import in WordPress Media Library','flag'); ?></label></p>
+					</td> 
+				</tr>
+				</table>
+				<div class="submit"><input class="button-primary" type="submit" name="importfolder" value="<?php _e('Import folder', 'flag'); ?>"/></div>
+			</form>
+		</div>
+<?php } ?>
+<?php } ?>
+
 		<h2><?php _e('WordPress Music Library', 'flag'); ?></h2>
 		<form id="musiclib" class="flagform" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8">
 		<?php wp_nonce_field('flag_bulkmusic'); ?>

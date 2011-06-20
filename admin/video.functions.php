@@ -96,7 +96,7 @@ function flagSave_vPlaylist($title,$descr,$data,$file='') {
 
 		foreach( (array) $data as $id) {
 			$flv = get_post($id);
-			if( in_array( $flv->post_mime_type, array('video/x-flv','application/x-shockwave-flash') ) ) {
+			if( in_array( $flv->post_mime_type, array('video/x-flv') ) ) {
 			    $thumb = get_post_meta($id, 'thumbnail', true);
 				$content .= '
 		<item id="'.$flv->ID.'">

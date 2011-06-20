@@ -203,6 +203,14 @@ function flag_default_options() {
 	$flag_options['TitleColor']				= 'ff9900';
 	$flag_options['DescrColor']				= 'cfcfcf';
 
+	// Alternative gallery colors
+	$flag_options['videoBG']				= '000000';
+	$flag_options['vmColor1']				= 'ffffff';
+	$flag_options['vmColor2']				= '3283A7';
+	$flag_options['vmAutoplay']				= 'true';
+	$flag_options['vmWidth']				= '520';
+	$flag_options['vmHeight']				= '304';
+
 	$flag_options['advanced']				= false;  							// Advanced options
 
 	// special overrides for WPMU	

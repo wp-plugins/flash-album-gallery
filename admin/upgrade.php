@@ -79,6 +79,18 @@ function flag_upgrade() {
 			update_option('flag_options', $flag_options);
 			echo __('finished', 'flag') . "<br />\n";
 		}		
+		if (version_compare($installed_ver, '1.21', '<')) {
+			echo __('Adding new options to database...', 'flag');
+			$flag_options = get_option('flag_options');	
+			$flag_options['videoBG']				= '000000';
+			$flag_options['vmColor1']				= 'ffffff';
+			$flag_options['vmColor2']				= '3283A7';
+			$flag_options['vmAutoplay']				= 'true';
+			$flag_options['vmWidth']				= '520';
+			$flag_options['vmHeight']				= '304';
+			update_option('flag_options', $flag_options);
+			echo __('finished', 'flag') . "<br />\n";
+		}		
 
 		return;
 	}

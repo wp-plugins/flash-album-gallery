@@ -1,19 +1,19 @@
 === GRAND Flash Album Gallery ===
 Contributors: Sergey Pasyuk
 Donate link:
-Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, picture, pictures, plugin, portfolio, Post, posts, presentation, slideshow, mp3, music, player, Facebook, Twitter
+Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, picture, pictures, plugin, portfolio, Post, posts, presentation, slideshow, mp3, music, flv, video, player, Facebook, Twitter
 Requires at least: 2.9
-Tested up to: 3.1
+Tested up to: 3.2
 Stable tag: trunk
 
-GRAND FlAGallery is a Photo & Music Album with powerfull admin to manage your media content
+GRAND FlAGallery is a Photo, Video gallery & Music Album with powerfull admin to manage your media content
 
 == Description ==
-Are you looking for a better way to manage and display photos on your blogs??? Then you must try this fantastic GRAND Flash Album Gallery plugin. It provides a comprehensive interface for handling photos and images.
+Try GRAND Flash Album Gallery - powerfull flash media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
-You can edit photos the way you want: upload an unlimited number of images, create dozens of galleries, group pictures in slideshow, and add up to two text descriptions for each photo - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event.
+You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event.
 
-Music Player: Each instance (player copy) can play different mp3 file. All the players/instances options are within the html file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
+Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
 = Important Links: =
 
@@ -31,6 +31,7 @@ Music Player: Each instance (player copy) can play different mp3 file. All the p
 * jQuery alternate gallery for iPhone, iPad and browsers without flash support.
 * <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-box/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
 * MP3 Player with Multiple Instances.
+* Customizible FLV Video Player.
 * <a href="http://www.facebook.com/pages/Galleries/190973767613001" title="PhotoGalleryCreator Facebook Page">Facebook flash gallery template</a>.
 * With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks.
 * Unlimited number of pictures in slideshow.
@@ -49,6 +50,12 @@ Music Player: Each instance (player copy) can play different mp3 file. All the p
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
+
+= v1.23 - 20.06.2011 =
+* Added : Video Box page (list of video from WP Media Library)
+* Added : FLV Video Player and shortcode for it
+* Added : Import mp3 files from server folder to WP Media Library
+* Added : Import flv files from server folder to WP Media Library
 
 = v1.22 - 11.06.2011 =
 * Fixed : Facebook template (you should copy facebook.php in the root directory again if you did it before)
@@ -337,7 +344,7 @@ it will display all galleries except ID=1 sorted by title of gallery.
 
 = [IOErrorEvent type="ioError" bubbles=false cancelable=false eventPhase=2 text="Error #2032"] =
 
-Probably you use some plugin that extend standard WordPress TinyMCE Editor. And it replace ( " ) symbol in shortcode to ( “ ). Try remove all quotes from shortcode (album name without quotes shouldn't consist spaces).
+Probably you use some plugin that extend standard WordPress TinyMCE Editor. And it replace ( " ) symbol in shortcode to ( â€œ ). Try remove all quotes from shortcode (album name without quotes shouldn't consist spaces).
 
 = I get this error code: ERROR: IMG_5879.JPG : Invalid upload. Error Code : 1. =
 

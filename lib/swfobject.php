@@ -133,6 +133,47 @@ function flagShowVPlayer($playlist, $width, $height) {
 	return $out;	
 }
 
+function flagShowVmPlayer($id, $w, $h, $autoplay) {
+
+	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
+	$flag_options = get_option('flag_options');
+	$vID = 'vid_'.mt_rand();
+	if (empty($w)) $w = $flag_options['vWidth'];
+	if (empty($h)) $h = $flag_options['vHeight'];
+	if (empty($autoplay)) $autoplay = $flag_options['vAutoplay'];
+
+	// init the flash output
+	$swfobject = new flag_swfobject( FLAG_URLPATH.'lib/video_mini.swf' , $vID, $w, $h, '10.1.52', FLAG_URLPATH .'skins/expressInstall.swf');
+
+	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
+
+	$swfobject->add_params('wmode', 'transparent');
+	$swfobject->add_params('allowfullscreen', 'true');
+	$swfobject->add_params('allowScriptAccess', 'always');
+	$swfobject->add_params('saling', 'lt');
+	$swfobject->add_params('scale', 'noScale');
+	$swfobject->add_params('menu', 'false');
+	$swfobject->add_params('bgcolor', '#'.$flag_options['videoBG']);
+	$swfobject->add_attributes('styleclass', 'grandflv');
+	$swfobject->add_attributes('id', $vID);
+
+	// adding the flash parameter	
+	$swfobject->add_flashvars( 'path', FLAG_URLPATH.'lib/' );
+	$swfobject->add_flashvars( 'vID', $id );
+	$swfobject->add_flashvars( 'flashID', $vID );
+	$swfobject->add_flashvars( 'autoplay', $autoplay );
+	// create the output
+	$out = '<div class="grandflv">' . $swfobject->output() . '</div>';
+	// add now the script code
+	$out .= "\n".'<script type="text/javascript" defer="defer">';
+	$out .= $swfobject->javascript();
+	$out .= "\n".'</script>';
+
+	$out = apply_filters('flag_flv_mini', $out);
+			
+	return $out;
+}
+
 function flagGetBetween($content,$start,$end){
     $r = explode($start, $content);
     if (isset($r[1])){

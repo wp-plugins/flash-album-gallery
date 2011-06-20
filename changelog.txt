@@ -1,6 +1,12 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.23 - 20.06.2011 =
+* Added : Video Box page (list of video from WP Media Library)
+* Added : FLV Video Player and shortcode for it
+* Added : Import mp3 files from server folder to WP Media Library
+* Added : Import flv files from server folder to WP Media Library
+
 = v1.22 - 11.06.2011 =
 * Fixed : Facebook template (you should copy facebook.php in the root directory again if you did it before)
 * Fixed : php4 compatibility

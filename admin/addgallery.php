@@ -282,7 +282,7 @@ if($flag->options['swfUpload']) { ?>
 					<?php if (SAFE_MODE) {?><br /><?php _e(' Please note : For safe-mode = ON you need to add the subfolder thumbs manually', 'flag'); ?><?php }; ?></div></td> 
 				</tr>
 				</table>
-				<div class="submit"><input class="button-primary" type="submit" name= "importfolder" value="<?php _e('Import folder', 'flag'); ?>"/></div>
+				<div class="submit"><input class="button-primary" type="submit" name="importfolder" value="<?php _e('Import folder', 'flag'); ?>"/></div>
 			</form>
 		</div>
 <?php } ?>

@@ -205,15 +205,205 @@ class flagAdmin{
 	}
 
 	/**
+	 * flagAdmin::import_video()
+	 * 
+	 * @class flagAdmin
+	 * @param string $folder contains relative path
+	 * @return
+	 */
+	function import_video($folder) {
+		global $wpdb, $user_ID;
+		
+		$created_msg = '';
+		// remove trailing slash at the end, if somebody use it
+		$folder = rtrim($folder, '/');
+		$path = WINABSPATH . $folder;
+		if (!is_dir($path)) {
+			flagGallery::show_error(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag'));
+			return ;
+		}
+		// read list of files
+		$ext = array('flv');
+		$new_filelist = flagAdmin::scandir($path, $ext);
+		if (empty($new_filelist)) {
+			flagGallery::show_message(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('does not contain flv files', 'flag'));
+			return;
+		}
+		$i=0;
+		foreach($new_filelist as $key => $file) {
+			//$new_filelist[$key] = $path . '/' . $file;
+			$filename = $path . '/' . $file;
+			$id = flagAdmin::handle_import_file($filename);
+			if ( is_wp_error($id) ) {
+				$created_msg .= '<p>' . sprintf(__('<em>%s</em> was <strong>not</strong> imported due to an error: %s', 'flag'), $file, $id->get_error_message() ) . '</p>';
+			} else {
+				$i++;
+				$created_msg .= '<p>' . sprintf(__('<em>%s</em> has been added to Media library', 'flag'), $file) . '</p>';
+			}
+		}
+		flagGallery::show_message( $created_msg.'<p>'.$i.__(' file(s) successfully added','flag').'</p>' );
+
+	}
+
+	/**
+	 * flagAdmin::import_mp3()
+	 * 
+	 * @class flagAdmin
+	 * @param string $folder contains relative path
+	 * @return
+	 */
+	function import_mp3($folder) {
+		global $wpdb, $user_ID;
+		
+		$created_msg = '';
+		// remove trailing slash at the end, if somebody use it
+		$folder = rtrim($folder, '/');
+		$path = WINABSPATH . $folder;
+		if (!is_dir($path)) {
+			flagGallery::show_error(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag'));
+			return ;
+		}
+		// read list of files
+		$ext = array('mp3');
+		$new_filelist = flagAdmin::scandir($path, $ext);
+		if (empty($new_filelist)) {
+			flagGallery::show_message(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('does not contain mp3 files', 'flag'));
+			return;
+		}
+		$i=0;
+		foreach($new_filelist as $key => $file) {
+			//$new_filelist[$key] = $path . '/' . $file;
+			$filename = $path . '/' . $file;
+			$id = flagAdmin::handle_import_file($filename);
+			if ( is_wp_error($id) ) {
+				$created_msg .= '<p>' . sprintf(__('<em>%s</em> was <strong>not</strong> imported due to an error: %s', 'flag'), $file, $id->get_error_message() ) . '</p>';
+			} else {
+				$i++;
+				$created_msg .= '<p>' . sprintf(__('<em>%s</em> has been added to Media library', 'flag'), $file) . '</p>';
+			}
+		}
+		flagGallery::show_message( $created_msg.'<p>'.$i.__(' file(s) successfully added','flag').'</p>' );
+
+	}
+
+	//Handle an individual file import.
+	function handle_import_file($file, $post_id = 0) {
+		set_time_limit(120);
+		$time = current_time('mysql');
+		if ( $post = get_post($post_id) ) {
+			if ( substr( $post->post_date, 0, 4 ) > 0 )
+				$time = $post->post_date;
+		}
+
+		// A writable uploads dir will pass this test. Again, there's no point overriding this one.
+		if ( ! ( ( $uploads = wp_upload_dir($time) ) && false === $uploads['error'] ) )
+			return new WP_Error($uploads['error']);
+
+		$wp_filetype = wp_check_filetype( $file, null );
+
+		extract( $wp_filetype );
+		
+		if ( ( !$type || !$ext ) && !current_user_can( 'unfiltered_upload' ) )
+			return new WP_Error('wrong_file_type', __( 'File type does not meet security guidelines. Try another.' ) ); //A WP-core string..
+		
+		$match = preg_match('|^' . preg_quote(str_replace('\\', '/', $uploads['basedir'])) . '(.*)$|i', $file, $mat);
+		//Is the file allready in the uploads folder?
+		if( $match ) {
+
+			$filename = basename($file);
+			$new_file = $file;
+
+			$url = $uploads['baseurl'] . $mat[1];
+
+			$attachment = get_posts(array( 'post_type' => 'attachment', 'meta_key' => '_wp_attached_file', 'meta_value' => $uploads['subdir'] . '/' . $filename ));
+			if ( !empty($attachment) )
+				return $attachments[0]->ID;
+
+			//Ok, Its in the uploads folder, But NOT in WordPress's media library.
+			if ( preg_match("|(\d+)/(\d+)|", $mat[1], $datemat) ) //So lets set the date of the import to the date folder its in, IF its in a date folder.
+				$time = mktime(0, 0, 0, $datemat[2], 1, $datemat[1]);
+			else //Else, set the date based on the date of the files time.
+				$time = @filemtime($file);
+
+			if ( $time ) {
+				$post_date = date( 'Y-m-d H:i:s', $time);
+				$post_date_gmt = gmdate( 'Y-m-d H:i:s', $time);
+			}
+		} else {	
+			$filename = wp_unique_filename( $uploads['path'], basename($file));
+
+			// copy the file to the uploads dir
+			$new_file = $uploads['path'] . '/' . $filename;
+			if ( false === @copy( $file, $new_file ) )
+				wp_die(sprintf( __('The selected file could not be copied to %s.', 'flag'), $uploads['path']));
+
+			// Set correct file permissions
+			$stat = stat( dirname( $new_file ));
+			$perms = $stat['mode'] & 0000666;
+			@ chmod( $new_file, $perms );
+			// Compute the URL
+			$url = $uploads['url'] . '/' . rawurlencode($filename);
+		}
+
+		// Compute the URL
+		//Apply upload filters
+		$return = apply_filters( 'wp_handle_upload', array( 'file' => $new_file, 'url' => $url, 'type' => $type ) );
+		$new_file = $return['file'];
+		$url = $return['url'];
+		$type = $return['type'];
+
+		$title = preg_replace('!\.[^.]+$!', '', basename($file));
+		$content = '';
+
+		// use image exif/iptc data for title and caption defaults if possible
+		if ( $image_meta = @wp_read_image_metadata($new_file) ) {
+			if ( '' != trim($image_meta['title']) )
+				$title = trim($image_meta['title']);
+			if ( '' != trim($image_meta['caption']) )
+				$content = trim($image_meta['caption']);
+		}
+
+		if ( empty($post_date) )
+			$post_date = current_time('mysql');
+		if ( empty($post_date_gmt) )
+			$post_date_gmt = current_time('mysql', 1);
+
+		// Construct the attachment array
+		$attachment = array(
+			'post_mime_type' => $type,
+			'guid' => $url,
+			'post_parent' => $post_id,
+			'post_title' => $title,
+			'post_name' => $title,
+			'post_content' => $content,
+			'post_date' => $post_date,
+			'post_date_gmt' => $post_date_gmt
+		);
+
+		// Save the data
+		$id = wp_insert_attachment($attachment, $new_file, $post_id);
+		if ( !is_wp_error($id) ) {
+			$data = wp_generate_attachment_metadata( $id, $new_file );
+			wp_update_attachment_metadata( $id, $data );
+			if( !$match && isset($_POST['delete_files']) ) {
+				@unlink($file);				
+			}
+		}
+
+		return $id;
+	}
+
+	/**
 	 * flagAdmin::scandir()
 	 * 
 	 * @class flagAdmin
 	 * @param string $dirname
 	 * @return array
 	 */
-	function scandir($dirname = '.') { 
+	function scandir($dirname = '.', $ext = array()) { 
 		// thx to php.net :-)
-		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
+		if(empty($ext))
+			$ext = array('jpeg', 'jpg', 'png', 'gif'); 
 		$files = array(); 
 		if($handle = opendir($dirname)) { 
 		   while(false !== ($file = readdir($handle))) 

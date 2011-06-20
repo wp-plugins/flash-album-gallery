@@ -11,9 +11,16 @@ if ( !current_user_can('FlAG Manage video') )
 	die('-1');	
 
 
+require_once (dirname (__FILE__) . '/functions.php');
 require_once (dirname (__FILE__) . '/video.functions.php');
 
 function flag_video_controler() {
+	if ($_POST['importfolder']){
+		check_admin_referer('flag_addvideo');
+		$videofolder = $_POST['videofolder'];
+		if ( !empty($videofolder) )
+			flagAdmin::import_video($videofolder);
+	}
 	$mode = isset($_REQUEST['mode'])? $_REQUEST['mode'] : 'main';
 	$action = isset($_REQUEST['bulkaction'])? $_REQUEST['bulkaction'] : false;
 	if($action == 'no_action') {
@@ -55,7 +62,7 @@ function flag_video_controler() {
 				include_once (dirname (__FILE__) . '/manage-video.php');
 				flag_v_playlist_edit($_GET['playlist']);
 			} else {
-				flag_created_v_playlists();
+				//flag_created_v_playlists();
 				flag_video_wp_media_lib();
 			}
 		break;
@@ -70,7 +77,7 @@ function flag_video_controler() {
 				flagGallery::flagSaveWpMedia();
 			}
 		default:
-			flag_created_v_playlists();
+			//flag_created_v_playlists();
 			flag_video_wp_media_lib();
 		break;
 	}
@@ -129,10 +136,9 @@ if($all_playlists) {
 		</table>
 	</div>
 
-<?php } 
+<?php } ?>
 
-
-// *** show media list
+<?php // *** show media list
 function flag_video_wp_media_lib($added=false) {
 	global $wpdb;
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
@@ -220,6 +226,50 @@ function send_to_editor(html) {
 //-->
 </script>
 	<div class="wrap">
+
+<?php if( current_user_can('FlAG Import folder') ) { 
+	$defaultpath = 'wp-content/';
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.css" />
+<script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+	  jQuery(function() {								 
+	    jQuery("#file_browser").fileTree({
+	      root: "<?php echo WINABSPATH; ?>",
+	      script: "<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/connectors/jqueryFileTree.php",
+	    }, function(file) {
+	        var path = file.replace("<?php echo WINABSPATH; ?>", "");
+	        jQuery("#videofolder").val(path);
+	    });
+	    
+	    jQuery("span.browsefiles").show().click(function(){
+	    	jQuery("#file_browser").slideToggle();
+	    });	
+	  });
+/* ]]> */
+</script>
+
+		<!-- import folder -->
+		<div id="importfolder">
+		<h2><?php _e('Import video from folder', 'flag'); ?></h2>
+			<form name="importfolder" id="importfolder_form" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
+			<?php wp_nonce_field('flag_addvideo'); ?>
+				<table class="form-table"> 
+				<tr valign="top"> 
+					<th scope="row"><?php _e('Import from Server path:', 'flag'); ?></th> 
+					<td><input type="text" size="35" id="videofolder" name="videofolder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Toggle DIR Browser',"flag"); ?></span>
+						<div id="file_browser"></div><br />
+						<p><label><input type="checkbox" name="delete_files" value="delete" checked="checked" /> &nbsp;
+						<?php _e('delete files after import in WordPress Media Library','flag'); ?></label></p>
+					</td> 
+				</tr>
+				</table>
+				<div class="submit"><input class="button-primary" type="submit" name="importfolder" value="<?php _e('Import folder', 'flag'); ?>"/></div>
+			</form>
+		</div>
+<?php } ?>
+
 		<h2><?php _e('WordPress Video Library', 'flag'); ?></h2>
 		<form id="videolib" class="flagform" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8">
 		<?php wp_nonce_field('flag_bulkvideo'); ?>
@@ -230,7 +280,7 @@ function send_to_editor(html) {
 			<div class="actions">
 <?php if($added===false) { ?>
 				<input name="updateMedia" class="button-primary" style="float: right;" type="submit" value="<?php _e('Update Media','flag'); ?>" />
-
+<!--
 				<?php if ( function_exists('json_encode') ) { ?>
 				<select name="bulkaction" id="bulkaction">
 					<option value="no_action" ><?php _e("No action",'flag'); ?></option>
@@ -238,6 +288,7 @@ function send_to_editor(html) {
 				</select>
 				<input name="showThickbox" class="button-secondary" type="submit" value="<?php _e('Apply','flag'); ?>" onclick="if ( !checkSelected() ) return false;" />
 				<?php } ?>
+-->
                 <a href="<?php echo admin_url( 'media-new.php'); ?>" class="button"><?php _e('Upload Video','flag'); ?></a>
 				<input type="hidden" id="items_array" name="items_array" value="" />
 <?php } else { ?>
@@ -279,8 +330,10 @@ function send_to_editor(html) {
     'orderby'         => 'title',
     'order'           => 'ASC',
     'post_type'       => 'attachment',
-    'post_mime_type'  => array('video/x-flv','application/x-shockwave-flash') ) 
+    'post_mime_type'  => array('video/x-flv') ) 
 ); 
+$uploads = wp_upload_dir();
+$flag_options = get_option('flag_options');	
 if($videolist) {
     //echo '<pre>';print_r($videolist); echo '</pre>';
 	foreach($videolist as $flv) {
@@ -305,18 +358,18 @@ if($videolist) {
 		<tr id="flv-<?php echo $flv->ID; ?>"<?php echo $class.$ex; ?>>
 			<th class="cb" scope="row" height="24" style="padding-bottom: 0; border-bottom: none;"><input name="doaction[]" type="checkbox"<?php echo $checked; ?> value="<?php echo $flv->ID; ?>" /></th>
 			<td class="id" style="padding-bottom: 0; border-bottom: none;"><p style="margin-bottom: 3px; white-space: nowrap;">ID: <?php echo $flv->ID; ?></p></td>
-			<td class="size" style="padding-bottom: 0; border-bottom: none;"><?php $uploads = wp_upload_dir();
-				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$flv->guid);
+			<td class="size" style="padding-bottom: 0; border-bottom: none;"><?php $url = wp_get_attachment_url($flv->ID);
+				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$url);
 				$size = filesize($path);
 				echo round($size/1024/1024,2).' Mb';
 			?></td>
 			<td class="thumb" rowspan="2">
-				<a class="thickbox" href="<?php echo $flv->guid; ?>"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
+				<a class="thickbox" title="<?php echo basename($flv->guid); ?>" href="<?php echo FLAG_URLPATH; ?>admin/flv_preview.php?vid=<?php echo $flv->ID; ?>&amp;TB_iframe=1&amp;width=490&amp;height=293"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
 				<input id="flvthumb-<?php echo $flv->ID; ?>" name="item_a[<?php echo $flv->ID; ?>][post_thumb]" type="hidden" value="<?php echo $flvthumb; ?>" />
 			</td>
 			<td class="title_filename" rowspan="2">
 				<strong><a href="<?php echo $flv->guid; ?>"><?php echo basename($flv->guid); ?></a></strong><br />
-				<input name="item_a[<?php echo $flv->ID; ?>][post_title]" type="text" style="width:95%; height: 25px;" value="<?php echo $flv->post_title; ?>" /><br />
+				<textarea name="item_a[<?php echo $flv->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $flv->post_title; ?></textarea><br />
     			<?php
     			$actions = array();
     			$actions['add_thumb']   = '<a class="thickbox" onclick="actInp='.$flv->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('add thumb', 'flag') . '</a>';
@@ -338,7 +391,7 @@ if($videolist) {
 			</td>
 		</tr>
         <tr class="flv-<?php echo $flv->ID.$class2; ?>"<?php echo $ex; ?>>
-            <td valign="top" class="player" colspan="3"><p style="padding: 7px 3px;">Shortcode:&nbsp;<input type="text" class="shortcode1" readonly="readonly" onfocus="this.select()" value="[grandflv id=<?php echo $flv->ID; ?>]" /></p></td>
+            <td valign="top" class="player" colspan="3"><p style="padding: 7px 3px;">Shortcode:<br /><input type="text" style="width: 240px; font-size: 9px;" class="shortcode1" readonly="readonly" onfocus="this.select()" value="[grandflv id=<?php echo $flv->ID; ?> w=<?php echo $flag_options['vmWidth']; ?> h=<?php echo $flag_options['vmHeight']; ?> autoplay=<?php echo $flag_options['vmAutoplay']; ?>]" /></p></td>
         </tr>
 		<?php
 	}
