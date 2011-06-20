@@ -31,7 +31,7 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 * jQuery alternate gallery for iPhone, iPad and browsers without flash support.
 * <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-box/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
 * MP3 Player with Multiple Instances.
-* Customizible <a href="http://photogallerycreator.com/flv-video-players/flv-video-player-for-wordpress/" title="FLV Video Player with customizible colors">FLV Video Player.
+* Customizible <a href="http://photogallerycreator.com/flv-video-players/flv-video-player-for-wordpress/" title="FLV Video Player with customizible colors">FLV Video Player</a>.
 * <a href="http://www.facebook.com/pages/Galleries/190973767613001" title="PhotoGalleryCreator Facebook Page">Facebook flash gallery template</a>.
 * With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks.
 * Unlimited number of pictures in slideshow.
