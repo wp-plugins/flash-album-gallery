@@ -1,7 +1,7 @@
 === GRAND Flash Album Gallery ===
 Contributors: Sergey Pasyuk
 Donate link:
-Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, picture, pictures, plugin, portfolio, Post, posts, presentation, slideshow, mp3, music, flv, video, player, Facebook, Twitter
+Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, plugin, portfolio, Post, posts, presentation, slideshow, mp3, music, flv, video, player, Facebook, Twitter
 Requires at least: 2.9
 Tested up to: 3.2
 Stable tag: trunk
@@ -31,7 +31,7 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 * jQuery alternate gallery for iPhone, iPad and browsers without flash support.
 * <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-box/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
 * MP3 Player with Multiple Instances.
-* Customizible FLV Video Player.
+* Customizible <a href="http://photogallerycreator.com/flv-video-players/flv-video-player-for-wordpress/" title="FLV Video Player with customizible colors">FLV Video Player.
 * <a href="http://www.facebook.com/pages/Galleries/190973767613001" title="PhotoGalleryCreator Facebook Page">Facebook flash gallery template</a>.
 * With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks.
 * Unlimited number of pictures in slideshow.
