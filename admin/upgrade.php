@@ -79,7 +79,7 @@ function flag_upgrade() {
 			update_option('flag_options', $flag_options);
 			echo __('finished', 'flag') . "<br />\n";
 		}		
-		if (version_compare($installed_ver, '1.21', '<')) {
+		if (version_compare($installed_ver, '1.22', '<')) {
 			echo __('Adding new options to database...', 'flag');
 			$flag_options = get_option('flag_options');	
 			$flag_options['videoBG']				= '000000';
