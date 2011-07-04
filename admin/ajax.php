@@ -113,5 +113,63 @@ function flagCreateNewThumb() {
 	exit();
 	
 }
+
+add_action('wp_ajax_flag_save_album', 'flag_save_album');
+	
+function flag_save_album() {
+	
+	global $wpdb;
+	
+	// check for correct capability
+	if ( !is_user_logged_in() )
+		die('-1');
+	// check for correct FlAG capability
+	if ( !current_user_can('FlAG Manage gallery') ) 
+		die('-1');	
+		
+	$g = array();
+	if(isset($_POST['form']))
+		parse_str($_POST['form']);
+	if($album_name && $album_id) {
+		if(count($g))
+			$galstring = implode(',', $g);
+		else
+			$g = '';
+		$name = $wpdb->escape($album_name);
+		$result = $wpdb->query( "UPDATE $wpdb->flagalbum SET name = '{$name}', categories = '{$galstring}' WHERE id = $album_id" );
+	}
+
+	if($result) {
+		_e('Success','flag');
+	}
+	
+	exit();
+	
+}
+	
+add_action('wp_ajax_flag_delete_album', 'flag_delete_album');
+	
+function flag_delete_album() {
+	
+	global $wpdb;
+	
+	// check for correct capability
+	if ( !is_user_logged_in() )
+		die('-1');
+	// check for correct FlAG capability
+	if ( !current_user_can('FlAG Manage gallery') ) 
+		die('-1');	
+		
+	if(isset($_POST['post'])) {
+		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->flagalbum WHERE id = %d", $_POST['post']) );
+	}
+	
+	if($result) {
+		_e('Success','flag');
+	}
+
+	exit();
+	
+}
 	
 ?>

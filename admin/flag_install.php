@@ -55,6 +55,7 @@ function flag_install () {
     $flagpictures					= $wpdb->prefix . 'flag_pictures';
 	$flaggallery					= $wpdb->prefix . 'flag_gallery';
 	$flagcomments					= $wpdb->prefix . 'flag_comments';
+	$flagalbum						= $wpdb->prefix . 'flag_album';
    
 	if($wpdb->get_var("show tables like '$flagpictures'") != $flagpictures) {
 
@@ -118,11 +119,25 @@ function flag_install () {
 		) $charset_collate;";
 	
       dbDelta($sql);
-   }
+	}
+
+	if( !$wpdb->get_var( "SHOW TABLES LIKE '$flagalbum'" )) {
+      
+		$sql = "CREATE TABLE " . $flagalbum . " (
+		id BIGINT(20) NOT NULL AUTO_INCREMENT ,
+		name VARCHAR(255) NOT NULL ,
+		previewpic BIGINT(20) DEFAULT '0' NOT NULL ,
+		albumdesc MEDIUMTEXT NULL ,
+		categories LONGTEXT NOT NULL,
+		PRIMARY KEY id (id)
+		) $charset_collate;";
+	
+      dbDelta($sql);
+    }
 
 
 	// check one table again, to be sure
-	if($wpdb->get_var("show tables like '$flagpictures'")!= $flagpictures) {
+	if( !$wpdb->get_var( "SHOW TABLES LIKE '$flagpictures'" ) ) {
 		update_option( "flag_init_check", __('Flash Album Gallery : Tables could not created, please check your database settings','flag') );
 		return;
 	}
@@ -147,6 +162,24 @@ function flag_default_options() {
 	
 	global $blog_id, $flag;
 
+	$flag_options = flag_list_options();
+	// special overrides for WPMU	
+	if (IS_WPMU) {
+		// get the site options
+		$flag_wpmu_options = get_site_option('flag_options');
+		// get the default value during installation
+		if (!is_array($flag_wpmu_options)) {
+			$flag_wpmu_options['galleryPath'] = 'wp-content/blogs.dir/%BLOG_ID%/files/';
+			update_site_option('flag_options', $flag_wpmu_options);
+		}
+		$flag_options['galleryPath']  		= str_replace("%BLOG_ID%", $blog_id , $flag_wpmu_options['galleryPath']);
+	} 
+
+	update_option('flag_options', $flag_options);
+
+}
+
+function flag_list_options() {
 	$flag_options['galleryPath']			= 'wp-content/flagallery/';  		// set default path to the gallery
 	$flag_options['swfUpload']				= true;								// activate the batch upload
 	$flag_options['deleteImg']				= true;								// delete Images
@@ -203,7 +236,7 @@ function flag_default_options() {
 	$flag_options['TitleColor']				= 'ff9900';
 	$flag_options['DescrColor']				= 'cfcfcf';
 
-	// Alternative gallery colors
+	// Single player colors
 	$flag_options['videoBG']				= '000000';
 	$flag_options['vmColor1']				= 'ffffff';
 	$flag_options['vmColor2']				= '3283A7';
@@ -211,22 +244,13 @@ function flag_default_options() {
 	$flag_options['vmWidth']				= '520';
 	$flag_options['vmHeight']				= '304';
 
+	$flag_options['mpBG']					= '4f4f4f';
+	$flag_options['mpColor1']				= 'ffffff';
+	$flag_options['mpColor2']				= '3283A7';
+
 	$flag_options['advanced']				= false;  							// Advanced options
-
-	// special overrides for WPMU	
-	if (IS_WPMU) {
-		// get the site options
-		$flag_wpmu_options = get_site_option('flag_options');
-		// get the default value during installation
-		if (!is_array($flag_wpmu_options)) {
-			$flag_wpmu_options['galleryPath'] = 'wp-content/blogs.dir/%BLOG_ID%/files/';
-			update_site_option('flag_options', $flag_wpmu_options);
-		}
-		$flag_options['galleryPath']  		= str_replace("%BLOG_ID%", $blog_id , $flag_wpmu_options['galleryPath']);
-	} 
-
-	update_option('flag_options', $flag_options);
-
+	
+	return $flag_options;
 }
 
 /**

@@ -72,7 +72,7 @@ function flagSave_vPlaylist($title,$descr,$data,$file='') {
 		$data = explode(',', $data);
 
 	$flag_options = get_option('flag_options');
-    $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'music_default';
+    $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'video_default';
     $skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
@@ -100,7 +100,7 @@ function flagSave_vPlaylist($title,$descr,$data,$file='') {
 			    $thumb = get_post_meta($id, 'thumbnail', true);
 				$content .= '
 		<item id="'.$flv->ID.'">
-          <track>'.$flv->guid.'</track>
+          <track>'.wp_get_attachment_url($flv->ID).'</track>
           <title><![CDATA['.$flv->post_title.']]></title>
           <description><![CDATA['.$flv->post_content.']]></description>
           <thumbnail>'.$thumb.'</thumbnail>
@@ -126,7 +126,7 @@ function flagSave_vPlaylist($title,$descr,$data,$file='') {
 function flagSave_vPlaylistSkin($file) {
 	global $wpdb;
 	$flag_options = get_option('flag_options');
-    $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'music_default';
+    $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'video_default';
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
 	$playlist = file_get_contents($playlistPath);

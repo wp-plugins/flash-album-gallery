@@ -10,7 +10,7 @@ class flagAdminPanel{
 
 		// Add the admin menu
 		add_action( 'admin_menu', array(&$this, 'add_menu') );
-		add_action('init', array(&$this, 'wp_flag_init_messages'),2);
+		add_action('init', array(&$this, 'wp_flag_check_options'),2);
 
 		// Add the script and style files
 		add_action('admin_print_scripts', array(&$this, 'load_scripts') );
@@ -20,21 +20,14 @@ class flagAdminPanel{
 		add_filter('screen_meta_screen', array(&$this, 'edit_screen_meta'));
 	}
 
-	function flag_activation_notice_upgrade(){
-		if(function_exists('admin_url')){
-			echo '<div class="error fade"><p>GRAND FlAGallery: '.__('You must update your database in order for this version to work.', "flag").' <a href="' . admin_url( 'admin.php?page=flag-overview&upgrade=now' ) . '">'.__('Click here', "flag").'</a> '.__('to run the update script', "flag").'.</strong></p></div>';
-		} else {
-			echo '<div class="error fade"><p>GRAND FlAGallery: '.__('You must update your database in order for this version to work.', "flag").' <a href="' . admin_url( 'admin.php?page=flag-overview&upgrade=now' ) . '">'.__('Click here', "flag").'</a> '.__('to run the update script', "flag").'.</strong></p></div>';
-		}
-	}
-
-	function wp_flag_init_messages() {
+	function wp_flag_check_options() {
 		global $flag;
-		if( get_option( 'flag_db_version' ) != FLAG_DBVERSION ) {
-			if (!isset($_GET['action'])) {
-				add_action( 'admin_notices', array(&$this, 'flag_activation_notice_upgrade'));
-			}
-		}
+		require_once(dirname (__FILE__) . '/flag_install.php' );
+		$default_options = flag_list_options();
+		$flag_db_options = get_option('flag_options');
+		$flag_new_options = array_diff_key($default_options, $flag_db_options);
+		$flag_options = array_merge($flag_db_options, $flag_new_options);
+		update_option('flag_options', $flag_options);
 	}
 
 	// integrate the menu	
@@ -66,7 +59,7 @@ class flagAdminPanel{
 			include_once ( dirname (__FILE__) . '/functions.php' );
 			include_once ( dirname (__FILE__) . '/upgrade.php' );
 			flag_upgrade_page();
-			return;			
+			return;
 		}
 		
 		// Set installation date
@@ -136,8 +129,12 @@ class flagAdminPanel{
 					wp_enqueue_script( 'postbox' );
 				case "flag-manage-gallery" :
 					print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
+					wp_enqueue_script( 'jquery-ui-core' );
+					wp_enqueue_script( 'jquery-ui-draggable' );
+					wp_enqueue_script( 'jquery-ui-droppable' );
 					wp_enqueue_script( 'multifile', FLAG_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.4.6' );
 					wp_enqueue_script( 'flag-swfupload-handler', FLAG_URLPATH .'admin/js/swfupload.handler.js', array('swfupload_f10'), '2.2.0' );
+					wp_enqueue_script('dataset', FLAG_URLPATH .'admin/js/jquery.dataset.js', array('jquery'), '0.1.0');
 					wp_enqueue_script( 'postbox' );
 					wp_enqueue_script( 'flag-ajax' );
 					wp_enqueue_script( 'flag-progressbar' );

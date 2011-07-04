@@ -199,6 +199,104 @@ if($gallerylist) {
 		</table>
 		</form>
 	</div>
+<script type="text/javascript">
+/*<![CDATA[*/
+jQuery(document).ready(function(){
+	jQuery(".albums_table .album_categoties").sortable({ opacity: 0.6, cursor: 'move', connectWith: ".album_categoties", update: function() {
+		//jQuery.post("updateDB.php", order, function(theResponse){
+		//	jQuery("#contentRight").html(theResponse);
+		//}); 															 
+	}								  
+	}).disableSelection();
+	jQuery( "#draggable .acat" ).draggable({
+		connectToSortable: ".album_categoties",
+		helper: "clone",
+		revert: "invalid"
+	}).disableSelection();
+	jQuery( ".album_categoties" ).droppable({
+		accept: ".acat",
+		hoverClass: "active",
+		drop: function( event, ui ) {
+			jQuery( this )
+				.addClass( "highlight" )
+				.find( "p" )
+					.remove();
+		}
+	});
+	jQuery( ".album_categoties .drop" ).live('click',function(){
+		jQuery(this).parent().remove();
+	});
+	jQuery('.flag-ajax-post').click(function(e){
+		var form = jQuery(this).attr('data-form');
+		var edata = jQuery(this).dataset();
+		edata.form = jQuery('#'+form).serialize()+'&'+jQuery(this).parents('.album').find('.album_categoties').sortable("serialize"); 
+;
+		jQuery.post( ajaxurl, edata,
+			function( response ) {
+				jQuery(e.target).parent().find('.alb_msg').show().html(response).fadeOut(1200);
+				if(jQuery(e.target).hasClass('del')) {
+					jQuery(e.target).parent().parent().parent().remove();
+				}
+			}
+		);
+		return false;
+	});
+});
+/*]]>*/
+</script>
+	<div class="wrap">
+		<h2><?php _e('Albums', 'flag'); ?></h2>
+		<form method="post" style="width: 658px; float: left;"><?php wp_nonce_field('flag_album'); ?>
+		<p><input type="text" id="album_name" name="album_name" value="" /> &nbsp; <input type="submit" value="<?php _e('Create New Album','flag'); ?>" class="button-primary" /></p></form>
+		<h2><?php _e('Categories', 'flag'); ?></h2>
+		<div class="floatholder clear">
+			<div class="albums_table">
+<?php $albumlist = $flagdb->find_all_albums();
+$nonce = wp_create_nonce( 'wpMediaLib' );
+if($albumlist) {
+	foreach($albumlist as $album) {
+?>
+				<div class="album">
+					<div class="album_name"><span class="albID"><?php echo $album->id; ?>.</span> <form method="post" id="albName_<?php echo $album->id; ?>" name="albName_<?php echo $album->id; ?>"><input type="text" name="album_name" value="<?php echo $album->name; ?>" /><input type="hidden" name="album_id" value="<?php echo $album->id; ?>" /></form> <span class="album_actions"><span class="alb_msg"></span>&nbsp;&nbsp;&nbsp;<span class="del flag-ajax-post" data-action="flag_delete_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-post="<?php echo $album->id; ?>"><?php _e('Delete', 'flag'); ?></span>&nbsp;<span class="album_save flag-ajax-post" data-action="flag_save_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-form="albName_<?php echo $album->id; ?>"><?php _e('Save', 'flag'); ?></span></span></div>
+					<div class="album_categoties">
+					<?php $galids = explode(',',$album->categories); 
+						if($album->categories) {
+							foreach($galids as $galid) { 
+								$acat = $flagdb->find_gallery($galid);
+					?>
+								
+						<div class="acat" id="g_<?php echo $acat->gid; ?>"><?php echo $acat->title; ?><span class="drop">x</span></div>
+						<?php }
+						} else {
+							echo '<p style="text-align:center; padding: 7px 0; margin: 0;">'.__('Drag&Drop Categories Here','flag').'</p>';
+						}
+					?>
+					</div>
+				</div>
+<?php }
+} else {
+	echo '<p style="text-align:center; padding: 20px 0; margin: 0;">'.__('No Albums','flag').'</p>';
+}
+?>
+			</div>
+			<div class="all_galleries" id="draggable">
+<?php
+if($gallerylist) {
+	foreach($gallerylist as $gallery) {
+		$gid = $gallery->gid;
+		$name = (empty($gallery->title) ) ? $gallery->name : $gallery->title;
+		$author_user = get_userdata( (int) $gallery->author );
+		if (flagAdmin::can_manage_this_gallery($gallery->author)) {
+?>
+				<div class="acat" id="g_<?php echo $gid; ?>"><?php echo $name; ?><span class="drop">x</span></div>
+<?php 
+		}
+	}
+}
+?>				
+			</div>
+		</div>
+	</div>
 
 	<!-- #resize_images -->
 	<div id="resize_images" style="display: none;" >

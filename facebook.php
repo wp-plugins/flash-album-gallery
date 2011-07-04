@@ -56,7 +56,7 @@ if(isset($_GET['i'])) {
 if(isset($_GET['m'])) {
 	$playlistpath = $flag_options['galleryPath'].'playlists/'.$_GET['m'].'.xml';
 	if(file_exists($playlistpath))
-		echo flagShowMPlayer($playlist=$_GET['m'], $width='', $height='');
+		echo flagShowMPlayer($playlist=$_GET['m'], $width='', $height='', $wmode='opaque');
 	else
 		_e("Can't find playlist");
 }

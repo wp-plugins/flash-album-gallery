@@ -118,6 +118,35 @@ class flagdb {
 		
 		return $this->galleries;
 	}
+
+	/**
+	 * Get all the Albums
+	 * 
+	 * @param string $order_by
+	 * @param string $order_dir
+	 * @return object $albums
+	 */
+    function find_all_albums($order_by = 'id', $order_dir = 'DESC') {
+		global $wpdb; 
+		
+		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
+		$albums = $wpdb->get_results( "SELECT * FROM $wpdb->flagalbum ORDER BY {$order_by} {$order_dir}", OBJECT_K );
+		return $albums;
+	}
+	
+	/**
+	 * Get all galleries from Album
+	 * 
+	 * @param string $order_by
+	 * @param string $order_dir
+	 * @return object $albums
+	 */
+    function get_album($id) {
+		global $wpdb; 
+		$id = $wpdb->escape($id);
+		$albums = $wpdb->get_var( "SELECT categories FROM $wpdb->flagalbum WHERE id = '{$id}'" );
+		return $albums;
+	}
 	
 	/**
 	 * Get a gallery given its ID

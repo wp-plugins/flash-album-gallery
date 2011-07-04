@@ -91,7 +91,15 @@ function flag_upgrade() {
 			update_option('flag_options', $flag_options);
 			echo __('finished', 'flag') . "<br />\n";
 		}		
-
+		if (version_compare($installed_ver, '1.24', '<')) {
+			echo __('Adding new options to database...', 'flag');
+			$flag_options = get_option('flag_options');	
+			$flag_options['mpBG']			= '000000';
+			$flag_options['mpColor1']		= 'ffffff';
+			$flag_options['mpColor2']		= '3283A7';
+			update_option('flag_options', $flag_options);
+			echo __('finished', 'flag') . "<br />\n";
+		}		
 		return;
 	}
 }

@@ -10,7 +10,8 @@ if ( !current_user_can('FlAG Change skin') )
 	die('-1');	
 
 $flag_options = get_option('flag_options');
-$settings = $flag_options['skinsDirABS'].$_GET['skin'].'/settings';
+$act_skin = isset($_GET['skin'])? $_GET['skin'] : $flag_options['flashSkin'];
+$settings = $flag_options['skinsDirABS'].$act_skin.'/settings';
 $settingsXML =  $settings.'/settings.xml';
 
 if (isset($HTTP_RAW_POST_DATA) ) {
@@ -41,8 +42,9 @@ if(isset($_GET['show_options'])) {
 
 function flag_skin_options() {
 	$flag_options = get_option('flag_options');
-	$settings = $flag_options['skinsDirURL'].$_GET['skin'].'/settings';
-	$settingsXML =  $flag_options['skinsDirABS'].$_GET['skin'].'/settings/settings.xml';
+	$act_skin = isset($_GET['skin'])? $_GET['skin'] : $flag_options['flashSkin'];
+	$settings = $flag_options['skinsDirURL'].$act_skin.'/settings';
+	$settingsXML =  $flag_options['skinsDirABS'].$act_skin.'/settings/settings.xml';
 	$fp = fopen($settingsXML, "r");
 	if(!$fp) {
 		echo '<p style="color:#ff0000;"><b>Error! The configuration file not be found. You need to reinstall this skin.</b></p>';

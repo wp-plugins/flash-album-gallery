@@ -57,13 +57,15 @@ function flag_admin_options()  {
 	// message windows
 	if(!empty($messagetext)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$messagetext.'</p></div>'; }
 	
+	$flag_options = get_option('flag_options');
 	?>
 	
 <div id="slider" class="wrap">
 
 	<ul id="tabs" class="tabs">
 		<li class="selected"><a href="#" rel="imageoptions"><?php _e('Image Gallery Options', 'flag'); ?></a></li>
-		<li><a href="#" rel="vPlayer"><?php _e('Video Player Options', 'flag'); ?></a></li>
+		<li><a href="#" rel="vPlayer"><?php _e('FLV Single Player Options', 'flag'); ?></a></li>
+		<li><a href="#" rel="mPlayer"><?php _e('MP3 Single Player Options', 'flag'); ?></a></li>
 <?php if (flagGallery::flag_wpmu_enable_function('wpmuRoles')) : ?>
 		<li><a href="#" rel="roles"><?php _e('Roles', 'flag'); ?></a></li>
 <?php endif; ?>
@@ -93,22 +95,22 @@ jQuery(document).ready(function() {
 			<table class="form-table flag-options">
 				<tr valign="top">
 					<th align="left" width="200"><?php _e('Gallery path','flag'); ?></th>
-					<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="galleryPath" value="<?php echo $flag->options['galleryPath']; ?>" />
+					<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="galleryPath" value="<?php echo $flag_options['galleryPath']; ?>" />
 					<span class="setting-description"><?php _e('This is the default path for all galleries','flag'); ?></span></td>
 				</tr>
 				<tr valign="top">
 					<th><?php _e('Default flash size (W x H)','flag'); ?>:</th>
-					<td><input type="text" size="4" maxlength="4" name="flashWidth" value="<?php echo $flag->options['flashWidth']; ?>" /> x
-					<input type="text" size="4" maxlength="4" name="flashHeight" value="<?php echo $flag->options['flashHeight']; ?>" /></td>
+					<td><input type="text" size="4" maxlength="4" name="flashWidth" value="<?php echo $flag_options['flashWidth']; ?>" /> x
+					<input type="text" size="4" maxlength="4" name="flashHeight" value="<?php echo $flag_options['flashHeight']; ?>" /></td>
 				</tr>					
 				<tr valign="top">
 					<th align="left"><?php _e('Delete image files','flag'); ?></th>
-					<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $flag->options['deleteImg']); ?> />
+					<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $flag_options['deleteImg']); ?> />
 					<?php _e('Delete files, when removing a gallery in the database','flag'); ?></td>
 				</tr>
 				<tr>
 					<th align="left"><?php _e('Activate Media RSS feed','flag'); ?></th>
-					<td><input type="checkbox" name="useMediaRSS" value="1" <?php checked('1', $flag->options['useMediaRSS']); ?> />
+					<td><input type="checkbox" name="useMediaRSS" value="1" <?php checked('1', $flag_options['useMediaRSS']); ?> />
 					<span class="setting-description"><?php _e('A RSS feed will be added to you blog header.','flag'); ?></span></td>
 				</tr>
 			</table>
@@ -117,41 +119,41 @@ jQuery(document).ready(function() {
 			<table class="flag_colors form-table flag-options">
 				<tr>
 					<th width="200"><?php _e('Top Bar BG','flag'); ?>:</th>
-					<td><input class="colorPick" type="text" size="7" maxlength="6" id="BarsBG" name="BarsBG" value="<?php echo $flag->options['BarsBG']?>" /><div id="cp_BarsBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+					<td><input class="colorPick" type="text" size="7" maxlength="6" id="BarsBG" name="BarsBG" value="<?php echo $flag_options['BarsBG']?>" /><div id="cp_BarsBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
 				<tr>					
 					<th><?php _e('Category Buttons BG','flag'); ?>:</th>
 					<td>
-						<input class="colorPick" type="text" size="7" maxlength="6" id="CatBGColorOver" name="CatBGColorOver" value="<?php echo $flag->options['CatBGColorOver']; ?>" /> mouseOver<br />
+						<input class="colorPick" type="text" size="7" maxlength="6" id="CatBGColorOver" name="CatBGColorOver" value="<?php echo $flag_options['CatBGColorOver']; ?>" /> mouseOver<br />
 						<div id="cp_CatBGColorOver" style="background:#F9F9F9;position:absolute;display:none;"></div>
-						<input class="colorPick" type="text" size="7" maxlength="6" id="CatBGColor" name="CatBGColor" value="<?php echo $flag->options['CatBGColor']; ?>" /> mouseOut<br />
+						<input class="colorPick" type="text" size="7" maxlength="6" id="CatBGColor" name="CatBGColor" value="<?php echo $flag_options['CatBGColor']; ?>" /> mouseOut<br />
 						<div id="cp_CatBGColor" style="background:#F9F9F9;position:absolute;display:none;"></div>
 					</td>
 				</tr>
 				<tr>					
 					<th><?php _e('Category Buttons Color','flag'); ?>:</th>
 					<td>
-						<input class="colorPick" type="text" size="7" maxlength="6" id="CatColorOver" name="CatColorOver" value="<?php echo $flag->options['CatColorOver']; ?>" /> mouseOver<br />
+						<input class="colorPick" type="text" size="7" maxlength="6" id="CatColorOver" name="CatColorOver" value="<?php echo $flag_options['CatColorOver']; ?>" /> mouseOver<br />
 						<div id="cp_CatColorOver" style="background:#F9F9F9;position:absolute;display:none;"></div>
-						<input class="colorPick" type="text" size="7" maxlength="6" id="CatColor" name="CatColor" value="<?php echo $flag->options['CatColor']; ?>" /> mouseOut<br />
+						<input class="colorPick" type="text" size="7" maxlength="6" id="CatColor" name="CatColor" value="<?php echo $flag_options['CatColor']; ?>" /> mouseOut<br />
 						<div id="cp_CatColor" style="background:#F9F9F9;position:absolute;display:none;"></div>
 					</td>
 				</tr>
 				<tr>					
 					<th><?php _e('Thumbnail BG','flag'); ?>:</th>
-					<td><input class="colorPick" type="text" size="7" maxlength="6" id="ThumbBG" name="ThumbBG" value="<?php echo $flag->options['ThumbBG']; ?>" /><div id="cp_ThumbBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+					<td><input class="colorPick" type="text" size="7" maxlength="6" id="ThumbBG" name="ThumbBG" value="<?php echo $flag_options['ThumbBG']; ?>" /><div id="cp_ThumbBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
 				<tr>					
 					<th><?php _e('Thumbnail MouseOver BG','flag'); ?>:</th>
-					<td><input class="colorPick" type="text" size="7" maxlength="6" id="ThumbLoaderColor" name="ThumbLoaderColor" value="<?php echo $flag->options['ThumbLoaderColor']; ?>" /><div id="cp_ThumbLoaderColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+					<td><input class="colorPick" type="text" size="7" maxlength="6" id="ThumbLoaderColor" name="ThumbLoaderColor" value="<?php echo $flag_options['ThumbLoaderColor']; ?>" /><div id="cp_ThumbLoaderColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
 				<tr>					
 					<th><?php _e('Fancybox Title','flag'); ?>:</th>
-					<td><input class="colorPick" type="text" size="7" maxlength="6" id="TitleColor" name="TitleColor" value="<?php echo $flag->options['TitleColor']; ?>" /><div id="cp_TitleColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+					<td><input class="colorPick" type="text" size="7" maxlength="6" id="TitleColor" name="TitleColor" value="<?php echo $flag_options['TitleColor']; ?>" /><div id="cp_TitleColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
 				<tr>					
 					<th><?php _e('Fancybox Description Text','flag'); ?>:</th>
-					<td><input class="colorPick" type="text" size="7" maxlength="6" id="DescrColor" name="DescrColor" value="<?php echo $flag->options['DescrColor']; ?>" /><div id="cp_DescrColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+					<td><input class="colorPick" type="text" size="7" maxlength="6" id="DescrColor" name="DescrColor" value="<?php echo $flag_options['DescrColor']; ?>" /><div id="cp_DescrColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
 			</table>
 
@@ -159,13 +161,13 @@ jQuery(document).ready(function() {
 			<table class="form-table flag-options">
 				<tr valign="top">
 					<th scope="row" width="200"><label for="fixratio"><?php _e('Resize Images','flag'); ?></label><br /><small>(Manage Gallery -> 'Resize Images' action)</small></th>
-					<td><input type="hidden" name="imgResize" value="1" <?php checked('1', $flag->options['imgResize']); ?> />
-					<input type="text" size="5" name="imgWidth" value="<?php echo $flag->options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $flag->options['imgHeight']; ?>" />
+					<td><input type="hidden" name="imgResize" value="1" <?php checked('1', $flag_options['imgResize']); ?> />
+					<input type="text" size="5" name="imgWidth" value="<?php echo $flag_options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $flag_options['imgHeight']; ?>" />
 					<span class="setting-description"><?php _e('Width x Height (in pixel). Flash Album Gallery will keep ratio size','flag'); ?></span></td>
 				</tr>
 				<tr valign="top">
 					<th align="left"><?php _e('Image quality','flag'); ?></th>
-					<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $flag->options['imgQuality']; ?>" /> %</td>
+					<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $flag_options['imgQuality']; ?>" /> %</td>
 				</tr>
 			</table>
 
@@ -174,17 +176,17 @@ jQuery(document).ready(function() {
 				<tr>
 					<th valign="top" width="200"><?php _e('Sort thumbnails','flag'); ?>:</th>
 					<td>
-					<label><input name="galSort" type="radio" value="sortorder" <?php checked('sortorder', $flag->options['galSort']); ?> /> <?php _e('Custom order', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="pid" <?php checked('pid', $flag->options['galSort']); ?> /> <?php _e('Image ID', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="filename" <?php checked('filename', $flag->options['galSort']); ?> /> <?php _e('File name', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="alttext" <?php checked('alttext', $flag->options['galSort']); ?> /> <?php _e('Alt / Title text', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="imagedate" <?php checked('imagedate', $flag->options['galSort']); ?> /> <?php _e('Date / Time', 'flag'); ?></label>
+					<label><input name="galSort" type="radio" value="sortorder" <?php checked('sortorder', $flag_options['galSort']); ?> /> <?php _e('Custom order', 'flag'); ?></label><br />
+					<label><input name="galSort" type="radio" value="pid" <?php checked('pid', $flag_options['galSort']); ?> /> <?php _e('Image ID', 'flag'); ?></label><br />
+					<label><input name="galSort" type="radio" value="filename" <?php checked('filename', $flag_options['galSort']); ?> /> <?php _e('File name', 'flag'); ?></label><br />
+					<label><input name="galSort" type="radio" value="alttext" <?php checked('alttext', $flag_options['galSort']); ?> /> <?php _e('Alt / Title text', 'flag'); ?></label><br />
+					<label><input name="galSort" type="radio" value="imagedate" <?php checked('imagedate', $flag_options['galSort']); ?> /> <?php _e('Date / Time', 'flag'); ?></label>
 					</td>
 				</tr>
 				<tr>
 					<th valign="top"><?php _e('Sort direction','flag'); ?>:</th>
-					<td><label><input name="galSortDir" type="radio" value="ASC" <?php checked('ASC', $flag->options['galSortDir']); ?> /> <?php _e('Ascending', 'flag'); ?></label><br />
-					<label><input name="galSortDir" type="radio" value="DESC" <?php checked('DESC', $flag->options['galSortDir']); ?> /> <?php _e('Descending', 'flag'); ?></label>
+					<td><label><input name="galSortDir" type="radio" value="ASC" <?php checked('ASC', $flag_options['galSortDir']); ?> /> <?php _e('Ascending', 'flag'); ?></label><br />
+					<label><input name="galSortDir" type="radio" value="DESC" <?php checked('DESC', $flag_options['galSortDir']); ?> /> <?php _e('Descending', 'flag'); ?></label>
 					</td>
 				</tr>
 			</table>
@@ -200,29 +202,53 @@ jQuery(document).ready(function() {
 			<table class="flag_colors form-table flag-options">
 				<tr>
 					<th width="200"><?php _e('Video BG','flag'); ?>:</th>
-					<td><input class="colorPick" type="text" size="7" maxlength="6" id="videoBG" name="videoBG" value="<?php echo $flag->options['videoBG']?>" /><div id="cp_videoBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+					<td><input class="colorPick" type="text" size="7" maxlength="6" id="videoBG" name="videoBG" value="<?php echo $flag_options['videoBG']?>" /><div id="cp_videoBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
 				<tr>
 					<th><?php _e('Color 1','flag'); ?>:</th>
-					<td><input class="colorPick" type="text" size="7" maxlength="6" id="vmColor1" name="vmColor1" value="<?php echo $flag->options['vmColor1']?>" /><div id="cp_vmColor1" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+					<td><input class="colorPick" type="text" size="7" maxlength="6" id="vmColor1" name="vmColor1" value="<?php echo $flag_options['vmColor1']?>" /><div id="cp_vmColor1" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
 				<tr>					
 					<th><?php _e('Color 2','flag'); ?>:</th>
 					<td>
-						<input class="colorPick" type="text" size="7" maxlength="6" id="vmColor2" name="vmColor2" value="<?php echo $flag->options['vmColor2']; ?>" /><div id="cp_vmColor2" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+						<input class="colorPick" type="text" size="7" maxlength="6" id="vmColor2" name="vmColor2" value="<?php echo $flag_options['vmColor2']; ?>" /><div id="cp_vmColor2" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
 				<tr>					
 					<th><?php _e('Autoplay','flag'); ?>:</th>
 					<td>
-						<label><input name="vmAutoplay" type="radio" value="true" <?php checked('true', $flag->options['vmAutoplay']); ?> /> <?php _e('True', 'flag'); ?></label><br />
-						<label><input name="vmAutoplay" type="radio" value="false" <?php checked('false', $flag->options['vmAutoplay']); ?> /> <?php _e('False', 'flag'); ?></label><br />
+						<label><input name="vmAutoplay" type="radio" value="true" <?php checked('true', $flag_options['vmAutoplay']); ?> /> <?php _e('True', 'flag'); ?></label><br />
+						<label><input name="vmAutoplay" type="radio" value="false" <?php checked('false', $flag_options['vmAutoplay']); ?> /> <?php _e('False', 'flag'); ?></label><br />
 					</td>
 				</tr>
 				<tr>					
 					<th><?php _e('Default Size','flag'); ?>:<br /><small>(width x height)</small></th>
 					<td>
-						<input name="vmWidth" type="text" size="3" maxlength="3" value="<?php echo $flag->options['vmWidth']; ?>" /> x <input name="vmHeight" type="text" size="3" maxlength="3" value="<?php echo $flag->options['vmHeight']; ?>" />
+						<input name="vmWidth" type="text" size="3" maxlength="3" value="<?php echo $flag_options['vmWidth']; ?>" /> x <input name="vmHeight" type="text" size="3" maxlength="3" value="<?php echo $flag_options['vmHeight']; ?>" />
 					</td>
+				</tr>
+			</table>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
+		</form>
+	</div>
+	
+	<div id="mPlayer" class="cptab">
+		<form name="mPlayer"  method="post">
+			<?php wp_nonce_field('flag_settings'); ?>
+			<input type="hidden" name="page_options" value="mpBG,mpColor1,mpColor2" />
+			<h2><?php _e('MP3 Player Colors','flag'); ?></h2>
+			<table class="flag_colors form-table flag-options">
+				<tr>
+					<th width="200"><?php _e('Player BG','flag'); ?>:</th>
+					<td><input class="colorPick" type="text" size="7" maxlength="6" id="mpBG" name="mpBG" value="<?php echo $flag_options['mpBG']?>" /><div id="cp_mpBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+				</tr>
+				<tr>
+					<th><?php _e('Color 1','flag'); ?>:</th>
+					<td><input class="colorPick" type="text" size="7" maxlength="6" id="mpColor1" name="mpColor1" value="<?php echo $flag_options['mpColor1']?>" /><div id="cp_mpColor1" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+				</tr>
+				<tr>					
+					<th><?php _e('Color 2','flag'); ?>:</th>
+					<td>
+						<input class="colorPick" type="text" size="7" maxlength="6" id="mpColor2" name="mpColor2" value="<?php echo $flag_options['mpColor2']; ?>" /><div id="cp_mpColor2" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
 			</table>
 			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>

@@ -101,7 +101,7 @@ jQuery(document).ready(function(){
 <div class="wrap">
 <h2><?php _e( 'Playlist', 'flag' ); ?>: <?php echo $playlist['title']; ?></h2>
 <div style="float: right; margin: -20px 3px 0 0;">
-<span><a href="<?php echo $filepath; ?>"><?php _e('Back to Music Box', 'flag'); ?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span><a href="<?php echo $filepath; ?>"><?php _e('Back to Video Box', 'flag'); ?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 <select name="select_playlist" onchange="window.location.href=this.options[this.selectedIndex].value">
 	<option selected="selected"><?php _e('Choose another playlist', 'flag'); ?></option>
 <?php 
@@ -128,11 +128,11 @@ jQuery(document).ready(function(){
 				<tr>
 					<th align="left" valign="middle" scope="row"><?php _e('Shortcode', 'flag'); ?>:</th>
 					<td align="left" valign="middle"><input type="text" readonly="readonly" size="50" onfocus="this.select()" value="[grandvideo playlist=<?php echo $_GET['playlist']; ?>]" /></td>
-					<td rowspan="4" align="left" valign="top"><div style="font-size:11px;"><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
+					<td rowspan="3" align="left" valign="top"><div style="font-size:11px;"><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
 						<input id="skinaction" type="hidden" name="skinaction" value="<?php echo $playlist['skin']; ?>" />
                         <select id="skinname" name="skinname" style="width: 200px; height: 24px; font-size: 11px;">
                           <?php require_once (dirname(__FILE__) . '/get_skin.php');
-                            $all_skins = get_skins($skin_folder='', $type='m');
+                            $all_skins = get_skins($skin_folder='', $type='v');
                             if(count($all_skins)) {
                             	foreach ( (array)$all_skins as $skin_file => $skin_data) {
 	                            	$cur = ($playlist['skin'] == dirname($skin_file))? ' selected="selected"' : '';
@@ -155,10 +155,10 @@ jQuery(document).ready(function(){
 					<th align="left" valign="top" scope="row"><?php _e('Description', 'flag'); ?>:</th> 
 					<td align="left" valign="top"><textarea name="playlist_descr" cols="60" rows="2" style="width: 95%" ><?php echo $playlist['description']; ?></textarea></td>
 				</tr>
-				<tr>
+				<!--<tr>
 					<th align="left" valign="top" scope="row"><?php _e('Path', 'flag'); ?>:</th> 
-					<td align="left" valign="top"><?php echo $playlistPath; ?></td>
-				</tr>
+					<td align="left" colspan="2" valign="top"><?php echo $playlistPath; ?></td>
+				</tr>-->
 			</table>
 			<div class="clear"></div>
 		</div>
@@ -172,7 +172,7 @@ jQuery(document).ready(function(){
 	</select>
 	<input class="button-secondary alignleft" style="margin-right:10px;" type="submit" name="updatePlaylist" value="<?php _e("OK",'flag')?>" onclick="if ( !checkSelected() ) return false;" />
 	<a href="<?php echo $filepath."&amp;playlist=".$_GET['playlist']."&amp;mode=sort"; ?>" class="button-secondary alignleft" style="margin:1px 10px 0 0;"><?php _e("Sort Playlist",'flag')?></a>
-	<a href="<?php echo $filepath."&amp;playlist=".$_GET['playlist']."&amp;mode=add"; ?>" onClick="jQuery('#form_listitems').submit();return false;" class="button-secondary alignleft" style="margin:1px 10px 0 0;"><?php _e("Add/Remove Music",'flag')?></a>
+	<a href="<?php echo $filepath."&amp;playlist=".$_GET['playlist']."&amp;mode=add"; ?>" onClick="jQuery('#form_listitems').submit();return false;" class="button-secondary alignleft" style="margin:1px 10px 0 0;"><?php _e("Add/Remove Items from Playlist",'flag')?></a>
 	<input type="submit" name="updatePlaylist" class="button-primary action alignright"  value="<?php _e("Update Playlist",'flag')?>" />
 </div>
 
@@ -203,6 +203,7 @@ jQuery(document).ready(function(){
 if(count($items_a)) {
 	$counter = 0;
     $alt = ' class="alternate"';
+	$uploads = wp_upload_dir();	
 	foreach($items_a as $item) {
 		$flv = get_post($item);
         $thumb = $flvthumb = get_post_meta($item, 'thumbnail', true);
@@ -213,22 +214,23 @@ if(count($items_a)) {
 		$alt = ( empty($alt) ) ? ' class="alternate"' : '';
 		$alt2 = ( empty($alt) ) ? '' : ' alternate';
 		$counter++;
+		$url = wp_get_attachment_url($flv->ID);
 ?>
 		<tr id="flv-<?php echo $flv->ID; ?>"<?php echo $alt; ?> valign="top">
 			<th class="cb" scope="row"><input name="doaction[]" type="checkbox" value="<?php echo $flv->ID; ?>" /></th>
 			<td class="id"><p style="white-space: nowrap;">ID: <?php echo $flv->ID; ?></p></td>
-			<td class="size"><?php $uploads = wp_upload_dir();
-				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$flv->guid);
+			<td class="size"><?php 
+				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$url);
 				$size = filesize($path);
 				echo round($size/1024/1024,2).' Mb';
 			?></td>
 			<td class="thumb">
-				<a class="thickbox" href="<?php echo $flv->guid; ?>"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
+				<a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo FLAG_URLPATH; ?>admin/flv_preview.php?vid=<?php echo $flv->ID; ?>&amp;TB_iframe=1&amp;width=490&amp;height=293"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
 				<input id="flvthumb-<?php echo $flv->ID; ?>" name="item_a[<?php echo $flv->ID; ?>][post_thumb]" type="hidden" value="<?php echo $flvthumb; ?>" />
 			</td>
 			<td class="title_filename">
-				<strong><a href="<?php echo $flv->guid; ?>"><?php echo basename($flv->guid); ?></a></strong><br />
-				<input name="item_a[<?php echo $flv->ID; ?>][post_title]" type="text" style="width:95%; height: 25px;" value="<?php echo $flv->post_title; ?>" /><br />
+				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
+				<textarea name="item_a[<?php echo $flv->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $flv->post_title; ?></textarea><br />
     			<?php
     			$actions = array();
     			$actions['add_thumb']   = '<a class="thickbox" onclick="actInp='.$flv->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('add thumb', 'flag') . '</a>';

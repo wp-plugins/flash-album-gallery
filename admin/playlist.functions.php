@@ -99,7 +99,7 @@ function flagSavePlaylist($title,$descr,$data,$file='') {
 			    $thumb = get_post_meta($id, 'thumbnail', true);
 				$content .= '
 		<item id="'.$mp3->ID.'">
-          <track>'.$mp3->guid.'</track>
+          <track>'.wp_get_attachment_url($mp3->ID).'</track>
           <title><![CDATA['.$mp3->post_title.']]></title>
           <description><![CDATA['.$mp3->post_content.']]></description>
           <thumbnail>'.$thumb.'</thumbnail>

@@ -11,7 +11,7 @@ GRAND FlAGallery is a Photo, Video gallery & Music Album with powerfull admin to
 == Description ==
 Try GRAND Flash Album Gallery - powerfull flash media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
-You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event.
+You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with = photo gallery =, = mp3 player = or = video player =.
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
@@ -50,6 +50,12 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
+
+= v1.31 - 04.07.2011 =
+* Added : Creating Multicategorized albums
+* Added : Options for Single MP3 Player
+* Fixed : Skins settings changing
+* Fixed : Bug with Database capitalized prefix
 
 = v1.23 - 20.06.2011 =
 * Added : Video Box page (list of video from WP Media Library)

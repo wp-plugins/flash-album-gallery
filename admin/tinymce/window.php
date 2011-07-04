@@ -9,7 +9,7 @@ require_once (dirname( dirname(__FILE__) ) . '/playlist.functions.php');
 if ( !is_user_logged_in() || !current_user_can('edit_posts') ) 
 	wp_die(__("You are not allowed to be here"));
 
-global $wpdb;
+global $flag, $flagdb, $wp_query;
 
 $all_skins = get_skins();
 $all_playlists = get_playlists();
@@ -44,9 +44,10 @@ if($_REQUEST['riched'] == "false") {
 	<div class="tabs" style="position:relative; overflow:hidden; margin-bottom:-1px;">
 		<ul>
 			<li id="gallery_tab" class="current"><span><a href="javascript:mcTabs.displayTab('gallery_tab','gallery_panel');" onmousedown="return false;"><?php _e( 'Galleries', 'flag' ); ?></a></span></li>
+			<li id="album_tab"><span><a href="javascript:mcTabs.displayTab('album_tab','album_panel');" onmousedown="return false;"><?php _e( 'Albums', 'flag' ); ?></a></span></li>
 			<li id="sort_tab"><span><a href="javascript:mcTabs.displayTab('sort_tab','sort_panel');" onmousedown="return false;"><?php _e('Sort', 'flag'); ?></a></span></li>
-			<li id="custom_tab" style="display:none;"><span><a href="javascript:mcTabs.displayTab('custom_tab','custom_panel');" onmousedown="return false;"><?php _e( 'Skin', 'flag' ); ?></a></span></li>
-			<li id="music_tab"><span><a href="javascript:mcTabs.displayTab('music_tab','music_panel');" onmousedown="return false;"><?php _e( 'Music', 'flag' ); ?></a></span></li>
+			<li id="custom_tab"><span><a href="javascript:mcTabs.displayTab('custom_tab','custom_panel');" onmousedown="return false;"><?php _e( 'Skin', 'flag' ); ?></a></span></li>
+			<li id="music_tab" style="display:none;"><span><a href="javascript:mcTabs.displayTab('music_tab','music_panel');" onmousedown="return false;"><?php _e( 'Music', 'flag' ); ?></a></span></li>
 		</ul>
 	</div>
 	
@@ -73,13 +74,30 @@ if($_REQUEST['riched'] == "false") {
 				?>
             </select></td>
          </tr>
-         <tr>
-            <td nowrap="nowrap" valign="middle" colspan="2">
-				<input id="gallerycustom" name="gallerycustom" type="checkbox" style="vertical-align:middle;" onclick="setVisibility()" /> <label for="gallerycustom" onclick="setVisibility()"><?php _e("custom settings", 'flag'); ?></label></td>
-         </tr>
         </table>
 		</div>
 		<!-- /gallery panel -->
+		<!-- album panel -->
+		<div id="album_panel" class="panel">
+		<table border="0" cellpadding="4" cellspacing="0">
+         <tr>
+            <td nowrap="nowrap" valign="top"><label for="album"><?php _e("Select album", 'flag'); ?>:</label></td>
+            <td><select id="album" name="album" style="width: 200px" size="8">
+                    <option value="" selected="selected"><?php _e("choose album", 'flag'); ?></option>
+				<?php
+					$albumlist = $flagdb->find_all_albums('id', 'ASC');
+					if(is_array($albumlist)) {
+						foreach($albumlist as $album) {
+							$name = $album->name;
+							echo '<option value="' . $album->id . '" >' . $name . '</option>' . "\n";
+						}
+					}
+				?>
+            </select></td>
+         </tr>
+        </table>
+		</div>
+		<!-- /album panel -->
 		<!-- skin panel -->
 		<div id="custom_panel" class="panel">
 		<table border="0" cellpadding="4" cellspacing="0">
@@ -169,17 +187,23 @@ if($_REQUEST['riched'] == "false") {
 			var skinname = document.getElementById('skinname').value;
 			var playlist = document.getElementById('playlist').value;
 			var gallery = document.getElementById('galleries');
+			var album = jQuery('#album').val();
 			var len = gallery.length;
 			var galleryid="";
-			for(i=0;i<len;i++)
-			{
-				if(gallery.options[i].selected) {
-					if(galleryid=="") {
-						galleryid = galleryid + gallery.options[i].value;
-					} else {
-						galleryid = galleryid + "," + gallery.options[i].value;
+			if(!album){
+				for(i=0;i<len;i++)
+				{
+					if(gallery.options[i].selected) {
+						if(galleryid=="") {
+							galleryid = " gid=" + galleryid + gallery.options[i].value;
+						} else {
+							galleryid = galleryid + "," + gallery.options[i].value;
+						}
 					}
 				}
+			} else {
+				galleryname = jQuery('#album option:selected').text();
+				album = ' album='+album;
 			}
 			if (gallerywidth && galleryheight)
 				var gallerysize = " w=" + gallerywidth + " h=" + galleryheight;
@@ -208,8 +232,8 @@ if($_REQUEST['riched'] == "false") {
 				var skinname = " play=" + playlist;
 			} else var playlist = '';
 
-			if (galleryid != 0 ) {
-				tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + galorderby + galorder + galexclude + skinname + playlist + ']';
+			if (galleryid || album ) {
+				tagtext = '[flagallery' + galleryid + album + ' name="' + galleryname + '"' + gallerysize + galorderby + galorder + galexclude + skinname + playlist + ']';
 				win.send_to_editor(tagtext);
 				win.bind_resize();
 			} else alert('Choose at least one gallery!');
@@ -228,9 +252,9 @@ if($_REQUEST['riched'] == "false") {
 <?php } ?>
 	<script type="text/javascript">
 	/* <![CDATA[ */
-	function setVisibility(){
+	/*function setVisibility(){
 	  jQuery('#custom_tab').css('display',(document.getElementById('gallerycustom').checked) ? 'block':'none');
-	}
+	}*/
 	jQuery('#galleries').change(function(){
 		jQuery('#sort_tab').hide();
 		if(jQuery('#galleries option[value=all]:selected')) {

@@ -75,6 +75,7 @@ function flag_music_controler() {
 	  	case 'main':
 			if(isset($_POST['updateMedia'])) {
 				flagGallery::flagSaveWpMedia();
+				flagGallery::show_message( __('Media updated','flag') );
 			}
 		default:
 			flag_created_playlists();
@@ -332,13 +333,14 @@ function send_to_editor(html) {
 			<tbody>
 <?php $musiclist = get_posts( $args = array(
     'numberposts'     => -1,
-    'orderby'         => 'title',
-    'order'           => 'ASC',
+    'orderby'         => 'ID',
+    'order'           => 'DESC',
     'post_type'       => 'attachment',
     'post_mime_type'  => 'audio/mpeg' ) 
 ); 
+$uploads = wp_upload_dir();
+$flag_options = get_option('flag_options');
 if($musiclist) {
-    //echo '<pre>';print_r($musiclist); echo '</pre>';
 	foreach($musiclist as $mp3) {
 		$list[] = $mp3->ID;
 	}
@@ -357,12 +359,13 @@ if($musiclist) {
           $thumb = site_url().'/wp-includes/images/crystal/audio.png';
           $mp3thumb = '';
         }
+		$url = wp_get_attachment_url($mp3->ID);
 ?>
 		<tr id="mp3-<?php echo $mp3->ID; ?>"<?php echo $class.$ex; ?>>
 			<th class="cb" scope="row" height="24" style="padding-bottom: 0; border-bottom: none;"><input name="doaction[]" type="checkbox"<?php echo $checked; ?> value="<?php echo $mp3->ID; ?>" /></th>
 			<td class="id" style="padding-bottom: 0; border-bottom: none;"><p style="margin-bottom: 3px; white-space: nowrap;">ID: <?php echo $mp3->ID; ?></p></td>
-			<td class="size" style="padding-bottom: 0; border-bottom: none;"><?php $uploads = wp_upload_dir();
-				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$mp3->guid);
+			<td class="size" style="padding-bottom: 0; border-bottom: none;"><?php 
+				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$url);
 				$size = filesize($path);
 				echo round($size/1024/1024,2).' Mb';
 			?></td>
@@ -371,8 +374,8 @@ if($musiclist) {
 				<input id="mp3thumb-<?php echo $mp3->ID; ?>" name="item_a[<?php echo $mp3->ID; ?>][post_thumb]" type="hidden" value="<?php echo $mp3thumb; ?>" />
 			</td>
 			<td class="title_filename" rowspan="2">
-				<strong><a href="<?php echo $mp3->guid; ?>"><?php echo basename($mp3->guid); ?></a></strong><br />
-				<input name="item_a[<?php echo $mp3->ID; ?>][post_title]" type="text" style="width:95%; height: 25px;" value="<?php echo $mp3->post_title; ?>" /><br />
+				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
+				<textarea name="item_a[<?php echo $mp3->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $mp3->post_title; ?></textarea><br />
     			<?php
     			$actions = array();
     			$actions['add_thumb']   = '<a class="thickbox" onclick="actInp='.$mp3->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('add thumb', 'flag') . '</a>';
@@ -394,7 +397,7 @@ if($musiclist) {
 			</td>
 		</tr>
         <tr class="mp3-<?php echo $mp3->ID.$class2; ?>"<?php echo $ex; ?>>
-            <td valign="top" class="player" colspan="3"><script type="text/javascript">swfobject.embedSWF("<?php echo FLAG_URLPATH; ?>lib/mini.swf", "c-<?php echo $mp3->ID; ?>", "250", "20", "10.1.52", "expressInstall.swf", {path:"<?php echo str_replace(array('http://','.mp3'), array('',''), $mp3->guid); ?>"}, {wmode:"transparent"}, {id:"f-<?php echo $mp3->ID; ?>",name:"f-<?php echo $mp3->ID; ?>"});</script>
+            <td valign="top" class="player" colspan="3"><script type="text/javascript">swfobject.embedSWF("<?php echo FLAG_URLPATH; ?>lib/mini.swf", "c-<?php echo $mp3->ID; ?>", "250", "20", "10.1.52", "expressInstall.swf", {path:"<?php echo str_replace(array('.mp3'), array(''), $url); ?>",bgcolor:"<?php echo $flag_options['mpBG'] ?>",color1:"<?php echo $flag_options['mpColor1'] ?>",color2:"<?php echo $flag_options['mpColor2'] ?>"}, {wmode:"transparent"}, {id:"f-<?php echo $mp3->ID; ?>",name:"f-<?php echo $mp3->ID; ?>"});</script>
 <div class="play" style="padding-left: 4px;"><span id="c-<?php echo $mp3->ID; ?>"></span></div>
 <p style="padding: 7px 3px;">Shortcode:&nbsp;<input type="text" class="shortcode1" readonly="readonly" onfocus="this.select()" value="[grandmp3 id=<?php echo $mp3->ID; ?>]" /></p></td>
         </tr>

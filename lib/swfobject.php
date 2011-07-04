@@ -36,9 +36,9 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 		$flashBackcolor = flagGetBetween($data,'<property1>0x','</property1>');
 		$swfmousewheel = flagGetBetween($data,'<swfmousewheel>','</swfmousewheel>');
 	} else if(file_exists($skinpath . "_settings.php")) {
-		include_once( $skinpath . "_settings.php");
+		include( $skinpath . "_settings.php");
 	} else if(file_exists($skinpath . "/settings.php")) {
-		include_once( $skinpath . "/settings.php");
+		include( $skinpath . "/settings.php");
 	}
 	if(empty($wmode)) $wmode = $flashBacktransparent? 'transparent' : 'opaque';
 	if(empty($flashBackcolor)) $flashBackcolor = $flag_options['flashBackcolor'];
@@ -91,7 +91,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	return $out;	
 }
 
-function flagShowMPlayer($playlist, $width, $height) {
+function flagShowMPlayer($playlist, $width, $height, $wmode='') {
 	
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
     require_once ( dirname(dirname(__FILE__)) . '/admin/playlist.functions.php');
@@ -106,7 +106,8 @@ function flagShowMPlayer($playlist, $width, $height) {
 		'playlist' 	=> $playlist, 
 		'skin' 		=> $skin, 
 		'width' 	=> $width, 
-		'height' 	=> $height
+		'height' 	=> $height,
+		'wmode' 	=> $wmode
 	);
 	$out = apply_filters( 'flagShowMusicSkin', $args );
 	return $out;	

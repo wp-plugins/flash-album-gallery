@@ -83,10 +83,13 @@ function upload_skin() {
 function flag_skin_options_tab() {
 	//Get the active skin
 	$flag_options = get_option('flag_options');
-	$active_skin = $flag_options['skinsDirABS'].$flag_options['flashSkin'].'/settings/constructor.php';
-	if(!file_exists($active_skin))
+	$active_skin_settings = $flag_options['skinsDirABS'].$flag_options['flashSkin'].'/settings/settings.xml';
+	if(!file_exists($active_skin_settings)) {
 		$active_skin = $flag_options['skinsDirABS'].$flag_options['flashSkin'].'/'.$flag_options['flashSkin'].'.php';
-	include_once($active_skin);
+		include_once($active_skin);
+	} else {
+		include_once(dirname(__FILE__).'/skin_options.php');
+	}
 	if(function_exists('flag_skin_options')) {
 		flag_skin_options();
 	} else {
@@ -181,13 +184,14 @@ $type = isset($_GET['type'])? $_GET['type'] : '';
 if( isset($_GET['skins_refresh']) ) {
 	// upgrade plugin
 	require_once(FLAG_ABSPATH . 'admin/tuning.php');
-	flag_tune();
+	$ok = flag_tune();
+	if($ok)
+		flagGallery::show_message( __('Skins refreshed successfully','flag') );
 }
 ?>
 <div id="slider" class="wrap">
 	<ul id="tabs" class="tabs">
 		<li class="selected"><a href="#" rel="addskin"><?php _e('Add new skin', 'flag'); ?></a></li>
-		<li><a href="#" rel="wantmore"><?php _e('Want more skins?', 'flag'); ?></a></li>
 		<li><a href="#" rel="skinoptions"><?php _e('Active Skin Options', 'flag'); ?></a></li>
 	</ul>
 
@@ -209,10 +213,6 @@ if( isset($_GET['skins_refresh']) ) {
 <?php } ?>
 	</div>
 	
-	<div id="wantmore" class="cptab">
-		<h2><?php _e('More skins', 'flag'); ?></h2>
-		<p><?php _e('If you want more skins, You may get it at.', 'flag'); ?> <a target="_blank" href="http://photogallerycreator.com">PhotoGalleryCreator.com</a></p>
-	</div>
 	<div id="skinoptions" class="cptab">
 		<h2><?php _e('Active Skin Options', 'flag'); ?></h2>
 		<?php flag_skin_options_tab(); ?>
@@ -232,7 +232,7 @@ if( isset($_GET['skins_refresh']) ) {
 <p style="float: right"><a class="button" href="<?php echo admin_url('admin.php?page=flag-skins&amp;skins_refresh=1'); ?>"><?php _e('Refresh / Update Skins', 'flag'); ?></a></p>
 <p><a class="button<?php if(!$type) echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins'); ?>"><span style="font-size: 14px;"><?php _e('image gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
 <a class="button<?php if($type == 'm') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=m'); ?>"><span style="font-size: 14px;"><?php _e('music gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
-<a class="button<?php if($type == 'v') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=v'); ?>"><span style="font-size: 14px;"><?php _e('video gallery skins', 'flag'); ?></span></a></p>
+<!--<a class="button<?php if($type == 'v') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=v'); ?>"><span style="font-size: 14px;"><?php _e('video gallery skins', 'flag'); ?></span></a>--></p>
 
 <?php
 $all_skins = get_skins(false,$type);

@@ -128,7 +128,7 @@ jQuery(document).ready(function(){
 				<tr>
 					<th align="left" valign="middle" scope="row"><?php _e('Shortcode', 'flag'); ?>:</th>
 					<td align="left" valign="middle"><input type="text" readonly="readonly" size="50" onfocus="this.select()" value="[grandmusic playlist=<?php echo $_GET['playlist']; ?>]" /></td>
-					<td rowspan="4" align="left" valign="top"><div style="font-size:11px;"><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
+					<td rowspan="3" align="left" valign="top"><div style="font-size:11px;"><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
 						<input id="skinaction" type="hidden" name="skinaction" value="<?php echo $playlist['skin']; ?>" />
                         <select id="skinname" name="skinname" style="width: 200px; height: 24px; font-size: 11px;">
                           <?php require_once (dirname(__FILE__) . '/get_skin.php');
@@ -155,10 +155,10 @@ jQuery(document).ready(function(){
 					<th align="left" valign="top" scope="row"><?php _e('Description', 'flag'); ?>:</th> 
 					<td align="left" valign="top"><textarea name="playlist_descr" cols="60" rows="2" style="width: 95%" ><?php echo $playlist['description']; ?></textarea></td>
 				</tr>
-				<tr>
+				<!--<tr>
 					<th align="left" valign="top" scope="row"><?php _e('Path', 'flag'); ?>:</th> 
-					<td align="left" valign="top"><?php echo $playlistPath; ?></td>
-				</tr>
+					<td align="left" colspan="2" valign="top"><?php echo $playlistPath; ?></td>
+				</tr>-->
 			</table>
 			<div class="clear"></div>
 		</div>
@@ -172,7 +172,7 @@ jQuery(document).ready(function(){
 	</select>
 	<input class="button-secondary alignleft" style="margin-right:10px;" type="submit" name="updatePlaylist" value="<?php _e("OK",'flag')?>" onclick="if ( !checkSelected() ) return false;" />
 	<a href="<?php echo $filepath."&amp;playlist=".$_GET['playlist']."&amp;mode=sort"; ?>" class="button-secondary alignleft" style="margin:1px 10px 0 0;"><?php _e("Sort Playlist",'flag')?></a>
-	<a href="<?php echo $filepath."&amp;playlist=".$_GET['playlist']."&amp;mode=add"; ?>" onClick="jQuery('#form_listitems').submit();return false;" class="button-secondary alignleft" style="margin:1px 10px 0 0;"><?php _e("Add/Remove Music",'flag')?></a>
+	<a href="<?php echo $filepath."&amp;playlist=".$_GET['playlist']."&amp;mode=add"; ?>" onClick="jQuery('#form_listitems').submit();return false;" class="button-secondary alignleft" style="margin:1px 10px 0 0;"><?php _e("Add/Remove Items from Playlist",'flag')?></a>
 	<input type="submit" name="updatePlaylist" class="button-primary action alignright"  value="<?php _e("Update Playlist",'flag')?>" />
 </div>
 
@@ -203,6 +203,8 @@ jQuery(document).ready(function(){
 if(count($items_a)) {
 	$counter = 0;
     $alt = ' class="alternate"';
+	$flag_options = get_option('flag_options');
+	$uploads = wp_upload_dir();
 	foreach($items_a as $item) {
 		$mp3 = get_post($item);
         $thumb = $mp3thumb = get_post_meta($item, 'thumbnail', true);
@@ -212,13 +214,14 @@ if(count($items_a)) {
         }
 		$alt = ( empty($alt) ) ? ' class="alternate"' : '';
 		$alt2 = ( empty($alt) ) ? '' : ' alternate';
+		$url = wp_get_attachment_url($mp3->ID);
 		$counter++;
 ?>
 		<tr id="mp3-<?php echo $mp3->ID; ?>"<?php echo $alt; ?> valign="top">
 			<th class="cb" scope="row" height="24" style="padding-bottom: 0; border-bottom: none;"><input name="doaction[]" type="checkbox" value="<?php echo $mp3->ID; ?>" /></th>
 			<td class="id" style="padding-bottom: 0; border-bottom: none;"><p style="margin-bottom: 3px; white-space: nowrap;">ID: <?php echo $mp3->ID; ?></p></td>
-			<td class="size" style="padding-bottom: 0; border-bottom: none;"><?php $uploads = wp_upload_dir();
-				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$mp3->guid);
+			<td class="size" style="padding-bottom: 0; border-bottom: none;"><?php 
+				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$url);
 				$size = filesize($path);
 				echo round($size/1024/1024,2).' Mb';
 			?></td>
@@ -227,8 +230,8 @@ if(count($items_a)) {
 				<input id="mp3thumb-<?php echo $mp3->ID; ?>" name="item_a[<?php echo $mp3->ID; ?>][post_thumb]" type="hidden" value="<?php echo $mp3thumb; ?>" />
 			</td>
 			<td class="title_filename" rowspan="2">
-				<strong><a href="<?php echo $mp3->guid; ?>"><?php echo basename($mp3->guid); ?></a></strong><br />
-				<input name="item_a[<?php echo $mp3->ID; ?>][post_title]" type="text" style="width:95%; height: 25px;" value="<?php echo $mp3->post_title; ?>" /><br />
+				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
+				<textarea name="item_a[<?php echo $mp3->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $mp3->post_title; ?></textarea><br />
     			<?php
     			$actions = array();
     			$actions['add_thumb']   = '<a class="thickbox" onclick="actInp='.$mp3->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('add thumb', 'flag') . '</a>';
@@ -249,7 +252,7 @@ if(count($items_a)) {
 			</td>
 		</tr>
         <tr class="mp3-<?php echo $mp3->ID.$alt2; ?>">
-            <td valign="top" class="player" colspan="3"><script type="text/javascript">swfobject.embedSWF("<?php echo FLAG_URLPATH; ?>lib/mini.swf", "c-<?php echo $mp3->ID; ?>", "250", "20", "10.1.52", "expressInstall.swf", {path:"<?php echo str_replace(array('http://','.mp3'), array('',''), $mp3->guid); ?>"}, {wmode:"transparent"}, {id:"f-<?php echo $mp3->ID; ?>",name:"f-<?php echo $mp3->ID; ?>"});</script>
+            <td valign="top" class="player" colspan="3"><script type="text/javascript">swfobject.embedSWF("<?php echo FLAG_URLPATH; ?>lib/mini.swf", "c-<?php echo $mp3->ID; ?>", "250", "20", "10.1.52", "expressInstall.swf", {path:"<?php echo str_replace(array('.mp3'), array(''), $url); ?>",bgcolor:"<?php echo $flag_options['mpBG'] ?>",color1:"<?php echo $flag_options['mpColor1'] ?>",color2:"<?php echo $flag_options['mpColor2'] ?>"}, {wmode:"transparent"}, {id:"f-<?php echo $mp3->ID; ?>",name:"f-<?php echo $mp3->ID; ?>"});</script>
 <div class="play" style="padding-left: 4px;"><span id="c-<?php echo $mp3->ID; ?>"></span></div></td>
         </tr>
 		<?php

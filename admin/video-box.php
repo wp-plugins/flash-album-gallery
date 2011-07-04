@@ -75,6 +75,7 @@ function flag_video_controler() {
 	  	case 'main':
 			if(isset($_POST['updateMedia'])) {
 				flagGallery::flagSaveWpMedia();
+				flagGallery::show_message( __('Media updated','flag') );
 			}
 		default:
 			//flag_created_v_playlists();
@@ -280,15 +281,13 @@ function send_to_editor(html) {
 			<div class="actions">
 <?php if($added===false) { ?>
 				<input name="updateMedia" class="button-primary" style="float: right;" type="submit" value="<?php _e('Update Media','flag'); ?>" />
-<!--
 				<?php if ( function_exists('json_encode') ) { ?>
 				<select name="bulkaction" id="bulkaction">
 					<option value="no_action" ><?php _e("No action",'flag'); ?></option>
-					<option value="new_playlist" ><?php _e("Create new playlist",'flag'); ?></option>
+					<!--<option value="new_playlist" ><?php _e("Create new playlist",'flag'); ?></option>-->
 				</select>
 				<input name="showThickbox" class="button-secondary" type="submit" value="<?php _e('Apply','flag'); ?>" onclick="if ( !checkSelected() ) return false;" />
 				<?php } ?>
--->
                 <a href="<?php echo admin_url( 'media-new.php'); ?>" class="button"><?php _e('Upload Video','flag'); ?></a>
 				<input type="hidden" id="items_array" name="items_array" value="" />
 <?php } else { ?>
@@ -327,8 +326,8 @@ function send_to_editor(html) {
 			<tbody>
 <?php $videolist = get_posts( $args = array(
     'numberposts'     => -1,
-    'orderby'         => 'title',
-    'order'           => 'ASC',
+    'orderby'         => 'ID',
+    'order'           => 'DESC',
     'post_type'       => 'attachment',
     'post_mime_type'  => array('video/x-flv') ) 
 ); 
@@ -354,21 +353,22 @@ if($videolist) {
           $thumb = site_url().'/wp-includes/images/crystal/video.png';
           $flvthumb = '';
         }
+		$url = wp_get_attachment_url($flv->ID);
 ?>
 		<tr id="flv-<?php echo $flv->ID; ?>"<?php echo $class.$ex; ?>>
 			<th class="cb" scope="row" height="24" style="padding-bottom: 0; border-bottom: none;"><input name="doaction[]" type="checkbox"<?php echo $checked; ?> value="<?php echo $flv->ID; ?>" /></th>
 			<td class="id" style="padding-bottom: 0; border-bottom: none;"><p style="margin-bottom: 3px; white-space: nowrap;">ID: <?php echo $flv->ID; ?></p></td>
-			<td class="size" style="padding-bottom: 0; border-bottom: none;"><?php $url = wp_get_attachment_url($flv->ID);
+			<td class="size" style="padding-bottom: 0; border-bottom: none;"><?php 
 				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$url);
 				$size = filesize($path);
 				echo round($size/1024/1024,2).' Mb';
 			?></td>
 			<td class="thumb" rowspan="2">
-				<a class="thickbox" title="<?php echo basename($flv->guid); ?>" href="<?php echo FLAG_URLPATH; ?>admin/flv_preview.php?vid=<?php echo $flv->ID; ?>&amp;TB_iframe=1&amp;width=490&amp;height=293"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
+				<a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo FLAG_URLPATH; ?>admin/flv_preview.php?vid=<?php echo $flv->ID; ?>&amp;TB_iframe=1&amp;width=490&amp;height=293"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
 				<input id="flvthumb-<?php echo $flv->ID; ?>" name="item_a[<?php echo $flv->ID; ?>][post_thumb]" type="hidden" value="<?php echo $flvthumb; ?>" />
 			</td>
 			<td class="title_filename" rowspan="2">
-				<strong><a href="<?php echo $flv->guid; ?>"><?php echo basename($flv->guid); ?></a></strong><br />
+				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
 				<textarea name="item_a[<?php echo $flv->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $flv->post_title; ?></textarea><br />
     			<?php
     			$actions = array();

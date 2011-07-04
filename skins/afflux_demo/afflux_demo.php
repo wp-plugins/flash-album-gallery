@@ -5,7 +5,7 @@ Skin URI:
 Description: Afflux Skin for Flash Album Gallery with SlideShow and transaction delay option. <br />Alternate jQuery gallery for iPhone / iPad and devices without flash player. SEO optimized and support feed RSS2. <br /><b style="color:red;">Worked only with GRAND FlAGallery v0.58 or higher.</b><br /><br />Details: bottom custom size thumbnails, unlimited categories, nice scrollbar, jQuery alternative gallery.
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 1.2
+Version: 1.3
 */
 
 function flagShowSkin($galleryID, $name, $width, $height, $skin) {

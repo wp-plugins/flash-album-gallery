@@ -29,6 +29,7 @@ class FlAG_shortcodes {
 
 		extract(shortcode_atts(array(
 			'gid' 		=> '',
+			'album'		=> '',
 			'name'		=> '',
 			'w'		 	=> '',
 			'h'		 	=> '',
@@ -42,7 +43,19 @@ class FlAG_shortcodes {
 		
 		$out = '';
 		// make an array out of the ids
-        if($gid == "all") {
+        if($album) {
+        	$gallerylist = $flagdb->get_album($album);
+            $ids = explode( ',', $gallerylist );
+			$gids = str_replace(',','_',$gallerylist);
+    		foreach ($ids as $id) {
+    			$galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->flaggallery WHERE gid = '$id' ");
+    			if(!$galleryID) return $out =  sprintf(__('[Gallery %s not found]','flag'),$id);
+    		}
+
+    		if( $galleryID )
+    			$out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode);
+
+        } elseif($gid == "all") {
 			if(!$orderby) $orderby='gid';
 			if(!$order) $order='DESC';
             $gallerylist = $flagdb->find_all_galleries($orderby, $order);
@@ -136,8 +149,9 @@ class FlAG_shortcodes {
 		$out = '';
 		$flag_options = get_option('flag_options');
 		if($id) {
-			$mp3 = get_post(intval($id,10));
-			$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini.swf", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.str_replace(array('http://','.mp3'), array('',''), $mp3->guid).'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>
+			$url = wp_get_attachment_url($id);
+			$url = str_replace(array('.mp3'), array(''), $url);
+			$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini.swf", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.$url.'",bgcolor:"'.$flag_options["mpBG"].'",color1:"'.$flag_options["mpColor1"].'",color2:"'.$flag_options["mpColor2"].'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>
 <div id="c-'.$id.'"></div>';
 		}
        	return $out;

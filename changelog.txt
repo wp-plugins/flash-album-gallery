@@ -1,6 +1,12 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.31 - 04.07.2011 =
+* Added : Creating Multicategorized albums
+* Added : Options for Single MP3 Player
+* Fixed : Skins settings changing
+* Fixed : Bug with Database capitalized prefix
+
 = v1.23 - 20.06.2011 =
 * Added : Video Box page (list of video from WP Media Library)
 * Added : FLV Video Player and shortcode for it

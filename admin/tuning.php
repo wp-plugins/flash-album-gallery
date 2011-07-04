@@ -46,12 +46,8 @@ function flag_tune($show_error=true) {
 	if ( $errors != '') { 
 		if($show_error)
 			flagGallery::show_error($errors); 
-			
-		//echo $errors;
 		return false;
 	}
-
-		echo $errors;
 	return true;
 }
 ?>

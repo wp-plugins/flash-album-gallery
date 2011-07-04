@@ -94,12 +94,13 @@ if(count($items_a)) {
 		$alternate = ( !isset($alternate) || $alternate == 'alternate' ) ? '' : 'alternate';	
 		$counter++;
 		$bg = ( !isset($alternate) || $alternate == 'alternate' ) ? 'f9f9f9' : 'ffffff';
+		$url = wp_get_attachment_url($flv->ID);
 		?>
 		<tr id="$flv-<?php echo $flv->ID; ?>" class="<?php echo $alternate; ?> iedit"  valign="top">
-				<td scope="row"><strong><?php echo $flv->ID; ?></strong></td>
-				<td><a class="thickbox" href="<?php echo $flv->guid; ?>"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="20" height="20" alt="" /></a></td>
-				<td><?php echo basename($flv->guid); ?></td>
-				<td><input type="hidden" name="item_a[<?php echo $flv->ID; ?>][post_title]" value="<?php echo $flv->post_title; ?>" /></td>
+				<td scope="row"><input type="hidden" name="item_a[<?php echo $flv->ID; ?>]" value="<?php echo $flv->ID; ?>" /><strong><?php echo $flv->ID; ?></strong></td>
+				<td width="50"><a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo FLAG_URLPATH; ?>admin/flv_preview.php?vid=<?php echo $flv->ID; ?>&amp;TB_iframe=1&amp;width=490&amp;height=293"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="20" height="20" alt="" /></a></td>
+				<td><?php echo basename($url); ?></td>
+				<td><?php echo $flv->post_title; ?></td>
 		</tr>
 		<?php
 	}
