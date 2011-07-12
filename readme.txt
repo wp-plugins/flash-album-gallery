@@ -52,9 +52,9 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 * Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
 
 = v1.32 - 12.07.2011 =
+* Updated : Wordpress v.3.2 compatibility 
 * Fixed : Bug with Shortcode insertion via TinyMCE button
 * Updated : video player (new version)
-* Updated : Wordpress v.3.2 compatibility 
 
 = v1.31 - 04.07.2011 =
 * Added : Creating Multicategorized albums
