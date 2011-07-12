@@ -11,7 +11,7 @@ GRAND FlAGallery is a Photo, Video gallery & Music Album with powerfull admin to
 == Description ==
 Try GRAND Flash Album Gallery - powerfull flash media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
-You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **photo gallery, mp3 player or video player.**
+You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with = photo gallery =, = mp3 player = or = video player =.
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
@@ -29,7 +29,7 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 = Features =
 
 * jQuery alternate gallery for iPhone, iPad and browsers without flash support.
-* <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-box/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
+* <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-player-wordpress/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
 * MP3 Player with Multiple Instances.
 * Customizible <a href="http://photogallerycreator.com/flv-video-players/flv-video-player-for-wordpress/" title="FLV Video Player with customizible colors">FLV Video Player</a>.
 * <a href="http://www.facebook.com/pages/Galleries/190973767613001" title="PhotoGalleryCreator Facebook Page">Facebook flash gallery template</a>.
@@ -50,6 +50,11 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
+
+= v1.32 - 12.07.2011 =
+* Fixed : Bug with Shortcode insertion via TinyMCE button
+* Updated : video player (new version)
+* Updated : Wordpress v.3.2 compatibility 
 
 = v1.31 - 04.07.2011 =
 * Added : Creating Multicategorized albums

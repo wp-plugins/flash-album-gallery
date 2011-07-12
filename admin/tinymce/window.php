@@ -21,7 +21,7 @@ if($_REQUEST['riched'] == "false") {
 	<title><?php _e("Insert Flash Album with one or more galleries", 'flag'); ?></title>
 	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php echo get_option('blog_charset'); ?>" />
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl'); ?>/wp-includes/js/jquery/jquery.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl'); ?>/wp-includes/js/tinymce/utils/mctabs.js"></script>
+	<script language="javascript" type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/tabs.js"></script>
 	<link rel="stylesheet" type="text/css" href="<?php echo FLAG_URLPATH; ?>admin/tinymce/popup.css" />
 <base target="_self" />
 </head>
@@ -41,6 +41,18 @@ if($_REQUEST['riched'] == "false") {
 <body id="link" onload="tinyMCEPopup.executeOnLoad('init();');document.body.style.display='';document.getElementById('galleries').focus();" style="display: none">
 <?php } ?>
 <form name="FlAG" action="#">
+<?php 
+if($_REQUEST['riched'] == "false") {
+?>
+	<div class="cptabs_wrapper">
+		<ul id="tabs" class="tabs">
+			<li class="selected"><a href="#" rel="gallery_panel"><span><?php _e( 'Galleries', 'flag' ); ?></span></a></li>
+			<li><a href="#" rel="album_panel"><span><?php _e( 'Albums', 'flag' ); ?></span></a></li>
+			<li><a href="#" rel="sort_panel"><span><?php _e('Sort', 'flag'); ?></span></a></li>
+			<li><a href="#" rel="custom_panel"><span><?php _e( 'Skin', 'flag' ); ?></span></a></li>
+			<li style="display:none;"><a href="#" rel="music_panel"><span><?php _e( 'Music', 'flag' ); ?></span></a></li>
+		</ul>
+<?php } else { ?>
 	<div class="tabs" style="position:relative; overflow:hidden; margin-bottom:-1px;">
 		<ul>
 			<li id="gallery_tab" class="current"><span><a href="javascript:mcTabs.displayTab('gallery_tab','gallery_panel');" onmousedown="return false;"><?php _e( 'Galleries', 'flag' ); ?></a></span></li>
@@ -50,10 +62,11 @@ if($_REQUEST['riched'] == "false") {
 			<li id="music_tab" style="display:none;"><span><a href="javascript:mcTabs.displayTab('music_tab','music_panel');" onmousedown="return false;"><?php _e( 'Music', 'flag' ); ?></a></span></li>
 		</ul>
 	</div>
-	
 	<div class="panel_wrapper" style="border:1px solid #919B9C; height:130px;">
+<?php } ?>
+	
 		<!-- gallery panel -->
-		<div id="gallery_panel" class="panel current">
+		<div id="gallery_panel" class="panel cptab current">
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
             <td nowrap="nowrap" valign="middle"><label for="galleryname"><?php _e("Album Name", 'flag'); ?>:<span style="color:red;"> *</span></label></td>
@@ -78,7 +91,7 @@ if($_REQUEST['riched'] == "false") {
 		</div>
 		<!-- /gallery panel -->
 		<!-- album panel -->
-		<div id="album_panel" class="panel">
+		<div id="album_panel" class="panel cptab">
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
             <td nowrap="nowrap" valign="top"><label for="album"><?php _e("Select album", 'flag'); ?>:</label></td>
@@ -99,7 +112,7 @@ if($_REQUEST['riched'] == "false") {
 		</div>
 		<!-- /album panel -->
 		<!-- skin panel -->
-		<div id="custom_panel" class="panel">
+		<div id="custom_panel" class="panel cptab">
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
             <td nowrap="nowrap" valign="middle"><label for="skinname"><?php _e("Choose skin", 'flag'); ?>:</label></td>
@@ -120,7 +133,7 @@ if($_REQUEST['riched'] == "false") {
 		</div>
 		<!-- /custom panel -->
 		<!-- sort panel -->
-		<div id="sort_panel" class="panel">
+		<div id="sort_panel" class="panel cptab">
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
             <td nowrap="nowrap" valign="middle"><label for="galorderby"><?php _e("Order by", 'flag'); ?>:</label></td>
@@ -146,7 +159,7 @@ if($_REQUEST['riched'] == "false") {
 		</div>
 		<!-- /sort panel -->
 		<!-- music panel -->
-		<div id="music_panel" class="panel">
+		<div id="music_panel" class="panel cptab">
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
             <td nowrap="nowrap" valign="top"><div style="display: block; width: 100px; white-space: normal;"><?php _e("Choose playlist for background music", 'flag'); ?>:</div></td>
@@ -165,14 +178,22 @@ if($_REQUEST['riched'] == "false") {
         </table>
 		</div>
 		<!-- /music panel -->
-	</div>
 
 <?php if($_REQUEST['riched'] == "false") { ?>
+	</div>
 	<div class="mceActionPanel">
 		<div style="float: right">
 			<input type="button" id="insert" name="insert" value="<?php _e("Insert", 'flag'); ?>" />
 		</div>
 	</div>
+	<script type="text/javascript">	
+		/* <![CDATA[ */
+		var cptabs=new ddtabcontent("tabs");
+		cptabs.setpersist(false);
+		cptabs.setselectedClassTarget("linkparent");
+		cptabs.init();
+		/* ]]> */
+	</script>
 	<script type="text/javascript">
 		/* <![CDATA[ */
 		var win = window.dialogArguments || opener || parent || top;
@@ -244,6 +265,7 @@ if($_REQUEST['riched'] == "false") {
 		/* ]]> */
 	</script>
 <?php } else { ?>
+	</div>
 	<div class="mceActionPanel">
 		<div style="float: right">
 			<input type="submit" id="insert" name="insert" value="<?php _e("Insert", 'flag'); ?>" onclick="insertFLAGLink();" />

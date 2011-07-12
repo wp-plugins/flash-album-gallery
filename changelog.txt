@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.32 - 12.07.2011 =
+* Fixed : Bug with Shortcode insertion via TinyMCE button
+* Updated : video player (new version)
+* Updated : Wordpress v.3.2 compatibility 
+
 = v1.31 - 04.07.2011 =
 * Added : Creating Multicategorized albums
 * Added : Options for Single MP3 Player

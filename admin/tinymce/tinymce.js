@@ -15,17 +15,23 @@ function insertFLAGLink() {
 	var skinname = document.getElementById('skinname').value;
 	var playlist = document.getElementById('playlist').value;
 	var gallery = document.getElementById('galleries');
+	var album = jQuery('#album').val();
 	var len = gallery.length;
 	var galleryid="";
-	for(i=0;i<len;i++)
-	{
-		if(gallery.options[i].selected) {
-			if(galleryid=="") {
-				galleryid = galleryid + gallery.options[i].value;
-			} else {
-				galleryid = galleryid + "," + gallery.options[i].value;
+	if(!album){
+		for(i=0;i<len;i++)
+		{
+			if(gallery.options[i].selected) {
+				if(galleryid=="") {
+					galleryid = galleryid + gallery.options[i].value;
+				} else {
+					galleryid = galleryid + "," + gallery.options[i].value;
+				}
 			}
 		}
+	} else {
+		galleryname = jQuery('#album option:selected').text();
+		album = ' album='+album;
 	}
 	if (gallerywidth && galleryheight)
 		var gallerysize = " w=" + gallerywidth + " h=" + galleryheight;
@@ -54,8 +60,8 @@ function insertFLAGLink() {
 		var playlist = " play=" + playlist;
 	} else var playlist = '';
 
-	if (galleryid != 0 )
-		tagtext = '[flagallery gid=' + galleryid + ' name="' + galleryname + '"' + gallerysize + galorderby + galorder + galexclude + skinname + playlist + ']';
+	if (galleryid || album )
+		tagtext = '[flagallery' + galleryid + album + ' name="' + galleryname + '"' + gallerysize + galorderby + galorder + galexclude + skinname + playlist + ']';
 	else
 		tinyMCEPopup.close();
 	
