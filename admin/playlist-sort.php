@@ -91,10 +91,10 @@ if(count($items_a)) {
 		$alternate = ( !isset($alternate) || $alternate == 'alternate' ) ? '' : 'alternate';	
 		$counter++;
 		$bg = ( !isset($alternate) || $alternate == 'alternate' ) ? 'f9f9f9' : 'ffffff';
-		$url = wp_get_attachment_url($flv->ID);
+		$url = wp_get_attachment_url($mp3->ID);
 		?>
 		<tr id="$mp3-<?php echo $mp3->ID; ?>" class="<?php echo $alternate; ?> iedit"  valign="top">
-				<td scope="row"><input type="hidden" name="item_a[<?php echo $mp3->ID; ?>]" value="<?php echo $mp3->ID; ?>" /><strong><?php echo $mp3->ID; ?></strong></td>
+				<td scope="row"><input type="hidden" name="item_a[<?php echo $mp3->ID; ?>][ID]" value="<?php echo $mp3->ID; ?>" /><strong><?php echo $mp3->ID; ?></strong></td>
 				<td><script type="text/javascript">swfobject.embedSWF("<?php echo FLAG_URLPATH; ?>lib/mini.swf", "c-<?php echo $mp3->ID; ?>", "250", "20", "10.1.52", "expressInstall.swf", {path:"<?php echo str_replace(array('.mp3'), array(''), $url); ?>",bgcolor:"<?php echo $flag_options['mpBG'] ?>",color1:"<?php echo $flag_options['mpColor1'] ?>",color2:"<?php echo $flag_options['mpColor2'] ?>"}, {wmode:"transparent"}, {id:"f-<?php echo $mp3->ID; ?>",name:"f-<?php echo $mp3->ID; ?>"});</script>
 <div class="play"><span id="c-<?php echo $mp3->ID; ?>"></span></div></td>
 				<td><?php echo basename($url); ?></td>
