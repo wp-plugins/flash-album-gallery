@@ -52,7 +52,7 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 * Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
 
 = v1.33 - 13.07.2011 = 
-Major Update:
+* Major Update
 * Fixed : Bug with music and video sorting in playlists
 
 = v1.32 - 12.07.2011 =
