@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.33 - 13.07.2011 =
+* Fixed : Bug with music and video sorting in playlists
+
 = v1.32 - 12.07.2011 =
 * Fixed : Bug with Shortcode insertion via TinyMCE button
 * Updated : video player (new version)

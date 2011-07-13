@@ -51,10 +51,14 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
 
+= v1.33 - 13.07.2011 = 
+Major Update:
+* Fixed : Bug with music and video sorting in playlists
+
 = v1.32 - 12.07.2011 =
-* Updated : Wordpress v.3.2 compatibility 
 * Fixed : Bug with Shortcode insertion via TinyMCE button
 * Updated : video player (new version)
+* Updated : Wordpress v.3.2 compatibility 
 
 = v1.31 - 04.07.2011 =
 * Added : Creating Multicategorized albums
