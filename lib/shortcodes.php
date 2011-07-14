@@ -151,7 +151,7 @@ class FlAG_shortcodes {
 		if($id) {
 			$url = wp_get_attachment_url($id);
 			$url = str_replace(array('.mp3'), array(''), $url);
-			$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini.swf", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.$url.'",bgcolor:"'.$flag_options["mpBG"].'",color1:"'.$flag_options["mpColor1"].'",color2:"'.$flag_options["mpColor2"].'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>
+			$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini.swf", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.$url.'",bgcolor:"'.$flag_options["mpBG"].'",color1:"'.$flag_options["mpColor1"].'",color2:"'.$flag_options["mpColor2"].'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'",styleclass:"singleton"});</script>
 <div id="c-'.$id.'"></div>';
 		}
        	return $out;
