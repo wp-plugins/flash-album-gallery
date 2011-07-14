@@ -3,7 +3,7 @@ Contributors: Rattus
 Donate link:
 Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, plugin, portfolio, Post, posts, presentation, slideshow, mp3, music, flv, video, player, Facebook, Twitter
 Requires at least: 2.9
-Tested up to: 3.2
+Tested up to: 3.2.1
 Stable tag: trunk
 
 GRAND FlAGallery is a Photo, Video gallery & Music Album with powerfull admin to manage your media content
