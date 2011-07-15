@@ -1,15 +1,15 @@
-=== GRAND Flash Album Gallery ===
+=== GRAND FlAGallery ===
 Contributors: Rattus
 Donate link:
 Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, plugin, portfolio, Post, posts, presentation, slideshow, mp3, music, flv, video, player, Facebook, Twitter
 Requires at least: 2.9
-Tested up to: 3.2.1
+Tested up to: 3.2
 Stable tag: trunk
 
 GRAND FlAGallery is a Photo, Video gallery & Music Album with powerfull admin to manage your media content
 
 == Description ==
-Try GRAND Flash Album Gallery - powerfull flash media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
+Try GRAND FlAGallery - powerfull flash media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
 You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with = photo gallery =, = mp3 player = or = video player =.
 
@@ -21,7 +21,7 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 * <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/grand-flash-album-gallery-wordpress-plugin-video-tutorial" title="Video tutorial">Video tutorial</a>
 * <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/languages" title="Translation and Language files">Language files</a>
 * <a href="http://photogallerycreator.com/grand-flagallery/" title="Additional skins">Additional skins</a>
-* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq" title="GRAND Flash Album Gallery FAQ">GRAND FlAGallery FAQ</a>
+* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq" title="GRAND FlAGallery FAQ">GRAND FlAGallery FAQ</a>
 * <a href="http://wordpress.org/tags/flash-album-gallery" title="Wordpress Support Forum">Support Forum</a>
 * <a href="http://www.facebook.com/pages/PhotoGalleryCreator/184822641554668" title="News on Facebook">Facebook</a>
 * <a href="http://twitter.com/GalleryCreator/" title="Follow us on Twitter">Twitter</a>
@@ -318,7 +318,7 @@ That line would go in between your <HEAD> </HEAD> tags
 
 = When I try to activate the plugin I get the message : "Plugin could not be activated because it triggered a fatal error." =
 
-This problem could happened if you have a low memory_limit in your php environment and a lot of plugins installed. For a simple test deactivate all other plugins and try then to activate GRAND Flash Album Gallery again. Please check also if you have a minimum memory_limit of 16Mbyte (as much as possible).
+This problem could happened if you have a low memory_limit in your php environment and a lot of plugins installed. For a simple test deactivate all other plugins and try then to activate GRAND FlAGallery again. Please check also if you have a minimum memory_limit of 16Mbyte (as much as possible).
 
 = I get the message "Fatal error: Allowed memory size of xxx bytes exhausted" or get the "Error: Exceed Memory limit.". What does this means? =
 
