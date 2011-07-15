@@ -9,7 +9,7 @@ Stable tag: trunk
 GRAND FlAGallery is a Photo, Video gallery & Music Album with powerfull admin to manage your media content
 
 == Description ==
-Try GRAND FlAGallery - powerfull flash media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
+Try GRAND FlAGallery - powerfull flash & jQuery media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
 You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with = photo gallery =, = mp3 player = or = video player =.
 
