@@ -18,8 +18,12 @@ if(isset($_POST['copy_file'])) {
 global $flagdb;
 require_once (dirname(__FILE__) . '/get_skin.php');
 require_once (dirname(__FILE__) . '/playlist.functions.php');
+require_once (dirname(__FILE__) . '/video.functions.php');
+require_once (dirname(__FILE__) . '/banner.functions.php');
 $i_skins = get_skins();
-$all_playlists = get_playlists();
+$all_m_playlists = get_playlists();
+$all_v_playlists = get_v_playlists();
+$all_b_playlists = get_b_playlists();
 $fb_url = FLAG_URLPATH.'facebook.php';
 if(file_exists(ABSPATH.'facebook.php')) {
 	$fb_url = home_url().'/facebook.php';
@@ -103,20 +107,40 @@ jQuery(document).ready(function() {
 		h = parseInt(jQuery('#galleryheight').val()); if(h) h = '&h='+h; else h = '';
 		fb_url(galleries,skin,h,l);
 	});
-	jQuery('#playlist').change(function(){
+	jQuery('#m_playlist').change(function(){
 		var playlist = jQuery(this).val();
 		if(playlist) {
 			playlist = '?m='+playlist;
 		} else {
 			playlist = '?m=';
 		}
-		jQuery('#fb1_url0').val(url+playlist);
-		jQuery('#fb1_url').val(jQuery('#fb1_url0').val().substring(0, 99));
+		jQuery('#fb2_url0').val(url+playlist);
+		jQuery('#fb2_url').val(jQuery('#fb2_url0').val().substring(0, 99));
+	});
+	jQuery('#v_playlist').change(function(){
+		var playlist = jQuery(this).val();
+		if(playlist) {
+			playlist = '?v='+playlist;
+		} else {
+			playlist = '?v=';
+		}
+		jQuery('#fb3_url0').val(url+playlist);
+		jQuery('#fb3_url').val(jQuery('#fb3_url0').val().substring(0, 99));
+	});
+	jQuery('#b_playlist').change(function(){
+		var playlist = jQuery(this).val();
+		if(playlist) {
+			playlist = '?b='+playlist;
+		} else {
+			playlist = '?b=';
+		}
+		jQuery('#fb4_url0').val(url+playlist);
+		jQuery('#fb4_url').val(jQuery('#fb4_url0').val().substring(0, 99));
 	});
 });
 function fb_url(galleries,skin,h,l) {
-	jQuery('#fb_url0').val(url+galleries+skin+h+l);
-	jQuery('#fb_url').val(jQuery('#fb_url0').val().substring(0, 99));
+	jQuery('#fb1_url0').val(url+galleries+skin+h+l);
+	jQuery('#fb1_url').val(jQuery('#fb1_url0').val().substring(0, 99));
 }
 /*]]>*/</script>
 <div class="wrap">
@@ -174,19 +198,19 @@ function fb_url(galleries,skin,h,l) {
 		<tr>
 			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
             <td valign="top"><div style="position: relative; width: 590px;">
-				<input id="fb_url0" type="text" style="width: 780px; font-size: 10px; color: #cc0000;" value="<?php echo $fb_url.'?i=all'; ?>" />
-				<input id="fb_url" type="text" readonly="readonly" onfocus="this.select()" style="width: 780px; font-size: 10px; position: absolute; left: 0; top: 0; background: transparent;" maxlength="100" value="<?php echo $fb_url.'?i=all'; ?>" /><span style="font-size:9px;display:block;">(<?php _e("limit 100 characters", 'flag'); ?>)</span></div></td>
+				<input id="fb1_url0" type="text" style="width: 780px; font-size: 10px; color: #cc0000;" value="<?php echo $fb_url.'?i=all'; ?>" />
+				<input id="fb1_url" type="text" readonly="readonly" onfocus="this.select()" style="width: 780px; font-size: 10px; position: absolute; left: 0; top: 0; background: transparent;" maxlength="100" value="<?php echo $fb_url.'?i=all'; ?>" /><span style="font-size:9px;display:block;">(<?php _e("limit 100 characters", 'flag'); ?>)</span></div></td>
 		</tr>
     </table>
 </fieldset></form>
-<form id="generator2"><fieldset style="padding: 20px; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("mp3 Gallery Facebook Page Generator", 'flag'); ?></legend>
+<form id="generator2"><fieldset style="padding: 20px; margin:0 0 20px 0; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("mp3 Gallery Facebook Page Generator", 'flag'); ?></legend>
 	<table border="0" cellpadding="4" cellspacing="0">
         <tr>
-            <td nowrap="nowrap" valign="top"><p style="padding-top:3px;"><label for="skinname"><?php _e("Choose playlist", 'flag'); ?>:</label></p></td>
-            <td valign="top"><p><select id="playlist" style="width: 214px;">
+            <td nowrap="nowrap" valign="top"><p style="padding-top:3px;"><label><?php _e("Choose playlist", 'flag'); ?>:</label></p></td>
+            <td valign="top"><p><select id="m_playlist" style="width: 214px;">
 					<option value="" selected="selected"><?php _e('Choose playlist', 'flag'); ?></option>
 				<?php 
-					foreach((array)$all_playlists as $playlist_file => $playlist_data) {
+					foreach((array)$all_m_playlists as $playlist_file => $playlist_data) {
 						$playlist_name = basename($playlist_file, '.xml');
 				?>
 					<option value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
@@ -198,8 +222,56 @@ function fb_url(galleries,skin,h,l) {
 		<tr>
 			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
             <td valign="top"><div style="position: relative; width: 590px;">
-				<input id="fb1_url0" type="text" style="width: 600px; font-size: 10px; color: #cc0000;" value="<?php echo $fb_url.'?m='; ?>" />
-				<input id="fb1_url" type="text" readonly="readonly" onfocus="this.select()" style="width: 600px; font-size: 10px; position: absolute; left: 0; top: 0; background: transparent;" maxlength="100" value="<?php echo $fb_url.'?m='; ?>" /><span style="font-size:9px;display:block;">(<?php _e("limit 100 characters", 'flag'); ?>)</span></div></td>
+				<input id="fb2_url0" type="text" style="width: 600px; font-size: 10px; color: #cc0000;" value="<?php echo $fb_url.'?m='; ?>" />
+				<input id="fb2_url" type="text" readonly="readonly" onfocus="this.select()" style="width: 600px; font-size: 10px; position: absolute; left: 0; top: 0; background: transparent;" maxlength="100" value="<?php echo $fb_url.'?m='; ?>" /><span style="font-size:9px;display:block;">(<?php _e("limit 100 characters", 'flag'); ?>)</span></div></td>
+		</tr>
+    </table>
+</fieldset></form>
+<form id="generator3"><fieldset style="padding: 20px; margin:0 0 20px 0; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("Video Blog Gallery Facebook Page Generator", 'flag'); ?></legend>
+	<table border="0" cellpadding="4" cellspacing="0">
+        <tr>
+            <td nowrap="nowrap" valign="top"><p style="padding-top:3px;"><label><?php _e("Choose playlist", 'flag'); ?>:</label></p></td>
+            <td valign="top"><p><select id="v_playlist" style="width: 214px;">
+					<option value="" selected="selected"><?php _e('Choose playlist', 'flag'); ?></option>
+				<?php 
+					foreach((array)$all_v_playlists as $playlist_file => $playlist_data) {
+						$playlist_name = basename($playlist_file, '.xml');
+				?>
+					<option value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+				<?php 
+					}
+				?>
+            </select></p></td>
+        </tr>
+		<tr>
+			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
+            <td valign="top"><div style="position: relative; width: 590px;">
+				<input id="fb3_url0" type="text" style="width: 600px; font-size: 10px; color: #cc0000;" value="<?php echo $fb_url.'?v='; ?>" />
+				<input id="fb3_url" type="text" readonly="readonly" onfocus="this.select()" style="width: 600px; font-size: 10px; position: absolute; left: 0; top: 0; background: transparent;" maxlength="100" value="<?php echo $fb_url.'?v='; ?>" /><span style="font-size:9px;display:block;">(<?php _e("limit 100 characters", 'flag'); ?>)</span></div></td>
+		</tr>
+    </table>
+</fieldset></form>
+<form id="generator4"><fieldset style="padding: 20px; margin:0 0 20px 0; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("Banner Box Facebook Page Generator", 'flag'); ?></legend>
+	<table border="0" cellpadding="4" cellspacing="0">
+        <tr>
+            <td nowrap="nowrap" valign="top"><p style="padding-top:3px;"><label><?php _e("Choose xml", 'flag'); ?>:</label></p></td>
+            <td valign="top"><p><select id="b_playlist" style="width: 214px;">
+					<option value="" selected="selected"><?php _e('Choose XML', 'flag'); ?></option>
+				<?php 
+					foreach((array)$all_b_playlists as $playlist_file => $playlist_data) {
+						$playlist_name = basename($playlist_file, '.xml');
+				?>
+					<option value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+				<?php 
+					}
+				?>
+            </select></p></td>
+        </tr>
+		<tr>
+			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
+            <td valign="top"><div style="position: relative; width: 590px;">
+				<input id="fb4_url0" type="text" style="width: 600px; font-size: 10px; color: #cc0000;" value="<?php echo $fb_url.'?b='; ?>" />
+				<input id="fb4_url" type="text" readonly="readonly" onfocus="this.select()" style="width: 600px; font-size: 10px; position: absolute; left: 0; top: 0; background: transparent;" maxlength="100" value="<?php echo $fb_url.'?b='; ?>" /><span style="font-size:9px;display:block;">(<?php _e("limit 100 characters", 'flag'); ?>)</span></div></td>
 		</tr>
     </table>
 </fieldset></form>

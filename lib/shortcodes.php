@@ -20,6 +20,7 @@ class FlAG_shortcodes {
 		add_shortcode( 'grandmusic', array(&$this, 'grandmusic' ) );
 		add_shortcode( 'grandflv', array(&$this, 'grandflv' ) );
 		add_shortcode( 'grandvideo', array(&$this, 'grandvideo' ) );
+		add_shortcode( 'grandbanner', array(&$this, 'grandbanner' ) );
 		add_action('wp_footer', array(&$this, 'add_script'));
 
 	}
@@ -151,7 +152,7 @@ class FlAG_shortcodes {
 		if($id) {
 			$url = wp_get_attachment_url($id);
 			$url = str_replace(array('.mp3'), array(''), $url);
-			$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini.swf", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.$url.'",bgcolor:"'.$flag_options["mpBG"].'",color1:"'.$flag_options["mpColor1"].'",color2:"'.$flag_options["mpColor2"].'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'",styleclass:"singleton"});</script>
+			$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini.swf", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.$url.'",bgcolor:"'.$flag_options["mpBG"].'",color1:"'.$flag_options["mpColor1"].'",color2:"'.$flag_options["mpColor2"].'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>
 <div id="c-'.$id.'"></div>';
 		}
        	return $out;
@@ -166,6 +167,11 @@ class FlAG_shortcodes {
 		), $atts ));
 		$out = '';
 		if($playlist) {
+			$flag_options = get_option('flag_options');
+			$swfmousewheel = false;
+			$data = file_get_contents($flag_options['galleryPath'].'playlists/video/'.$playlist.'.xml');
+			$swfmousewheel = flagGetBetween($data,'<swfmousewheel>','</swfmousewheel>');
+			if($swfmousewheel == 'true') $this->flag_add_mousewheel = true;
 			$this->flag_shortcode = true;
             $out = flagShowVPlayer($playlist, $w, $h);
 		}
@@ -188,6 +194,21 @@ class FlAG_shortcodes {
        	return $out;
 	}
 	
+	function grandbanner( $atts ) {
+
+		extract(shortcode_atts(array(
+			'xml'	=> '',
+			'w'		=> '',
+			'h'		=> ''
+		), $atts ));
+		$out = '';
+		if($xml) {
+			//$this->flag_shortcode = true;
+            $out = flagShowBanner($xml, $w, $h);
+		}
+        return $out;
+	}
+
 }
 
 // let's use it

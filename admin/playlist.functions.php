@@ -126,6 +126,7 @@ function flagSavePlaylistSkin($file) {
 	global $wpdb;
 	$flag_options = get_option('flag_options');
     $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'music_default';
+    $skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/'.$file.'.xml';
 	$playlist = file_get_contents($playlistPath);
@@ -134,8 +135,16 @@ function flagSavePlaylistSkin($file) {
 	$newproperties = flagGallery::flagGetBetween($settings,'<properties>','</properties>');
 	$content = preg_replace("|<properties>.*?</properties>|si", '<properties>'.$newproperties.'</properties>', $playlist, 1);
 	// Save options
-	if( flagGallery::saveFile($playlistPath,$content,'w') ){
-		flagGallery::show_message(__('Playlist Skin Options Saved Successfully','flag'));
+	if($skin == $skinaction)
+		flagGallery::saveFile($playlistPath,$content,'w');
+	else {
+		$title = $_POST['playlist_title'];
+		$descr = $_POST['playlist_descr'];
+		foreach($_POST['item_a'] as $item_id => $item) {
+			$data[] = $item_id;
+		}
+		$file = $_REQUEST['playlist'];
+		flagSavePlaylist($title,$descr,$data,$file,$skinaction='update');
 	}
 }
 

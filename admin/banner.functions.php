@@ -1,7 +1,7 @@
 <?php
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
 
-function get_v_playlist_data( $playlist_file ) {
+function get_b_playlist_data( $playlist_file ) {
 	global $wpdb;	
 	$playlist_content = file_get_contents($playlist_file);
 
@@ -19,11 +19,11 @@ function get_v_playlist_data( $playlist_file ) {
  * Check the playlists directory and retrieve all playlist files with playlist data.
  *
  */
-function get_v_playlists($playlist_folder = '') {
+function get_b_playlists($playlist_folder = '') {
 
 	$flag_options = get_option('flag_options');
 	$flag_playlists = array ();
-	$playlist_root = ABSPATH.$flag_options['galleryPath'].'playlists/video';
+	$playlist_root = ABSPATH.$flag_options['galleryPath'].'playlists/banner';
 	if( !empty($playlist_folder) )
 		$playlist_root = $playlist_folder;
 
@@ -47,7 +47,7 @@ function get_v_playlists($playlist_folder = '') {
 		if ( !is_readable( "$playlist_root/$playlist_file" ) )
 			continue;
 
-		$playlist_data = get_v_playlist_data( "$playlist_root/$playlist_file" );
+		$playlist_data = get_b_playlist_data( "$playlist_root/$playlist_file" );
 
 		if ( empty ( $playlist_data['title'] ) )
 			continue;
@@ -59,30 +59,34 @@ function get_v_playlists($playlist_folder = '') {
 	return $flag_playlists;
 }
 
-function flagSave_vPlaylist($title,$descr,$data,$file='') {
+function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
 	global $wpdb;
+	require_once(ABSPATH . '/wp-admin/includes/image.php');
 	if(!trim($title)) {
 		$title = 'default';
 	}
 	if (!$file) {
 		$file = sanitize_title($title);
 	}
-
 	if(!is_array($data))
 		$data = explode(',', $data);
 
 	$flag_options = get_option('flag_options');
-    $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'video_default';
-    $skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
+    $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'banner_default';
+	if(!$skinaction) {
+    	$skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
+	}
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
-	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
+	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/banner/'.$file.'.xml';
 	if( file_exists($playlistPath) && ($skin == $skinaction) ) {
 		$settings = file_get_contents($playlistPath);
 	} else {
 		$settings = file_get_contents($skinpath . "/settings/settings.xml");
 	}
 	$properties = flagGallery::flagGetBetween($settings,'<properties>','</properties>');
-
+	$w = flagGallery::flagGetBetween($properties,'<width><![CDATA[',']]></width>');
+	$h = flagGallery::flagGetBetween($properties,'<height><![CDATA[',']]></height>');
+	$suffix = $w.'x'.$h;
 	if(count($data)) {
 		$content = '<gallery>
 <properties>'.$properties.'</properties>
@@ -95,15 +99,38 @@ function flagSave_vPlaylist($title,$descr,$data,$file='') {
 	<items>';
 
 		foreach( (array) $data as $id) {
-			$flv = get_post($id);
-			if( in_array( $flv->post_mime_type, array('video/x-flv') ) ) {
-			    $thumb = get_post_meta($id, 'thumbnail', true);
+			$ban = get_post($id);
+			if($ban->ID) {
+				$url = wp_get_attachment_url($ban->ID);
+				$path = get_attached_file($ban->ID);
+				$info = pathinfo($path);
+				$dir = $info['dirname'];
+				$ext = $info['extension'];
+				$name = wp_basename($path, ".$ext");
+				$img_file = "{$dir}/{$name}-{$suffix}.{$ext}";
+				if(!file_exists($img_file)){
+				    $thumb = image_resize($path,$w,$h,$cut=true,$suffix);
+					if(is_string($thumb)) {
+				    	$img = substr($thumb, strpos($thumb, 'wp-content'));
+						$track = get_bloginfo('wpurl') . '/' .  $img;
+					} else {
+						$track = $url;
+					}
+				    
+				} else {
+					$track = dirname($url)."/{$name}-{$suffix}.{$ext}";
+				}
+			    $thumbnail = get_post_meta($id, 'thumbnail', true);
+			    $link = get_post_meta($id, 'link', true);
+			    $preview = get_post_meta($id, 'preview', true);
 				$content .= '
-		<item id="'.$flv->ID.'">
-          <track>'.wp_get_attachment_url($flv->ID).'</track>
-          <title><![CDATA['.$flv->post_title.']]></title>
-          <description><![CDATA['.$flv->post_content.']]></description>
-          <thumbnail>'.$thumb.'</thumbnail>
+		<item id="'.$ban->ID.'">
+          <track>'.$track.'</track>
+          <title><![CDATA['.$ban->post_title.']]></title>
+          <link>'.$link.'</link>
+          <preview>'.$preview.'</preview>
+          <description><![CDATA['.$ban->post_content.']]></description>
+          <thumbnail>'.$thumbnail.'</thumbnail>
         </item>';
 			}
 		}
@@ -113,30 +140,33 @@ function flagSave_vPlaylist($title,$descr,$data,$file='') {
 </gallery>';
 		// Save options
 		$flag_options = get_option('flag_options');
-		if(wp_mkdir_p(ABSPATH.$flag_options['galleryPath'].'playlists/video/')) {
+		if(wp_mkdir_p(ABSPATH.$flag_options['galleryPath'].'playlists/banner/')) {
 			if( flagGallery::saveFile($playlistPath,$content,'w') ){
 				flagGallery::show_message(__('Playlist Saved Successfully','flag'));
 			}
 		} else {
-			flagGallery::show_message(__('Create directory please:','flag').'"/'.$flag_options['galleryPath'].'playlists/video/"');
+			flagGallery::show_message(__('Create directory please:','flag').'"/'.$flag_options['galleryPath'].'playlists/banner/"');
 		}
 	}
 }
 
-function flagSave_vPlaylistSkin($file) {
+function flagSave_bPlaylistSkin($file) {
 	global $wpdb;
 	$flag_options = get_option('flag_options');
-    $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'video_default';
+    $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'banner_default';
     $skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
-	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
+	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/banner/'.$file.'.xml';
 	$playlist = file_get_contents($playlistPath);
 	$settings = file_get_contents($skinpath . "/settings/settings.xml");
-	//$oldproperties = flagGallery::flagGetBetween($playlist,'<properties>','</properties>');
+	$w0 = flagGallery::flagGetBetween($playlist,'<width><![CDATA[',']]></width>');
+	$h0 = flagGallery::flagGetBetween($playlist,'<height><![CDATA[',']]></height>');
+	$w1 = flagGallery::flagGetBetween($settings,'<width><![CDATA[',']]></width>');
+	$h1 = flagGallery::flagGetBetween($settings,'<height><![CDATA[',']]></height>');
 	$newproperties = flagGallery::flagGetBetween($settings,'<properties>','</properties>');
 	$content = preg_replace("|<properties>.*?</properties>|si", '<properties>'.$newproperties.'</properties>', $playlist, 1);
 	// Save options
-	if($skin == $skinaction)
+	if($w0 == $w1 && $h0 == $h1 && $skin == $skinaction)
 		flagGallery::saveFile($playlistPath,$content,'w');
 	else {
 		$title = $_POST['playlist_title'];
@@ -145,13 +175,13 @@ function flagSave_vPlaylistSkin($file) {
 			$data[] = $item_id;
 		}
 		$file = $_REQUEST['playlist'];
-		flagSave_vPlaylist($title,$descr,$data,$file,$skinaction='update');
+		flagSave_bPlaylist($title,$descr,$data,$file,$skinaction='update');
 	}
 }
 
-function flag_v_playlist_delete($playlist) {
+function flag_b_playlist_delete($playlist) {
 	$flag_options = get_option('flag_options');
-	$playlistXML = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$playlist.'.xml';
+	$playlistXML = ABSPATH.$flag_options['galleryPath'].'playlists/banner/'.$playlist.'.xml';
 	if(file_exists($playlistXML)){
 		if(unlink($playlistXML)) {
 			flagGallery::show_message("'".$playlist.".xml' ".__('deleted','flag'));

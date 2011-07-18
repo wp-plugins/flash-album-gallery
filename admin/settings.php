@@ -49,6 +49,7 @@ function flag_admin_options()  {
 		flag_set_capability($_POST['change_options'],"FlAG Change options");
 		flag_set_capability($_POST['manage_music'],"FlAG Manage music");
 		flag_set_capability($_POST['manage_video'],"FlAG Manage video");
+		flag_set_capability($_POST['manage_banners'],"FlAG Manage banners");
 		flag_set_capability($_POST['facebook_page'],"FlAG Facebook page");
 		
 		flagGallery::show_message(__('Updated capabilities',"flag"));
@@ -89,7 +90,7 @@ jQuery(document).ready(function() {
 	<div id="imageoptions" class="cptab">
 		<form name="generaloptions" method="post">
 		<?php wp_nonce_field('flag_settings'); ?>
-			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,useMediaRSS,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgResize,imgWidth,imgHeight,imgQuality,galSort,galSortDir" />
+			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,useMediaRSS,jAlterGal,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgResize,imgWidth,imgHeight,imgQuality,galSort,galSortDir" />
 			<h2><?php _e('Image Gallery Options','flag'); ?></h2>
 			<h3><?php _e('General Options','flag'); ?></h3>
 			<table class="form-table flag-options">
@@ -115,8 +116,12 @@ jQuery(document).ready(function() {
 				</tr>
 			</table>
 			
-			<h3><?php _e('Flash Alternative Colors','flag'); ?></h3>
+			<h3><?php _e('Flash Alternative Options','flag'); ?></h3>
 			<table class="flag_colors form-table flag-options">
+				<tr>
+					<th align="left"><?php _e('Show jQuery gallery for browsers without flashplayer','flag'); ?></th>
+					<td><input type="checkbox" name="jAlterGal" value="1" <?php checked('1', $flag_options['jAlterGal']); ?> /></td>
+				</tr>
 				<tr>
 					<th width="200"><?php _e('Top Bar BG','flag'); ?>:</th>
 					<td><input class="colorPick" type="text" size="7" maxlength="6" id="BarsBG" name="BarsBG" value="<?php echo $flag_options['BarsBG']?>" /><div id="cp_BarsBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
@@ -293,6 +298,10 @@ jQuery(document).ready(function() {
 			<tr valign="top"> 
 				<th scope="row" style="white-space: nowrap"><?php _e('Manage video', 'flag'); ?>:</th> 
 				<td><label for="manage_video"><select style="width: 150px;" name="manage_video" id="manage_video"><?php wp_dropdown_roles( flag_get_role('FlAG Manage video') ); ?></select></label></td>
+			</tr>
+			<tr valign="top"> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Manage banners', 'flag'); ?>:</th> 
+				<td><label for="manage_banners"><select style="width: 150px;" name="manage_banners" id="manage_banners"><?php wp_dropdown_roles( flag_get_role('FlAG Manage banners') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
 				<th scope="row" style="white-space: nowrap"><?php _e('Change skin', 'flag'); ?>:</th> 

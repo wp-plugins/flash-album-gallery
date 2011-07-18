@@ -286,6 +286,46 @@ class flagAdmin{
 
 	}
 
+	/**
+	 * flagAdmin::import_banner()
+	 * 
+	 * @class flagAdmin
+	 * @param string $folder contains relative path
+	 * @return
+	 */
+	function import_banner($folder) {
+		global $wpdb, $user_ID;
+		
+		$created_msg = '';
+		// remove trailing slash at the end, if somebody use it
+		$folder = rtrim($folder, '/');
+		$path = WINABSPATH . $folder;
+		if (!is_dir($path)) {
+			flagGallery::show_error(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag'));
+			return ;
+		}
+		// read list of files
+		$new_filelist = flagAdmin::scandir($path);
+		if (empty($new_filelist)) {
+			flagGallery::show_message(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('does not contain image files', 'flag'));
+			return;
+		}
+		$i=0;
+		foreach($new_filelist as $key => $file) {
+			//$new_filelist[$key] = $path . '/' . $file;
+			$filename = $path . '/' . $file;
+			$id = flagAdmin::handle_import_file($filename);
+			if ( is_wp_error($id) ) {
+				$created_msg .= '<p>' . sprintf(__('<em>%s</em> was <strong>not</strong> imported due to an error: %s', 'flag'), $file, $id->get_error_message() ) . '</p>';
+			} else {
+				$i++;
+				$created_msg .= '<p>' . sprintf(__('<em>%s</em> has been added to Media library', 'flag'), $file) . '</p>';
+			}
+		}
+		flagGallery::show_message( $created_msg.'<p>'.$i.__(' file(s) successfully added','flag').'</p>' );
+
+	}
+
 	//Handle an individual file import.
 	function handle_import_file($file, $post_id = 0) {
 		set_time_limit(120);

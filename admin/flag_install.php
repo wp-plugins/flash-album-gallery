@@ -37,6 +37,7 @@ function flag_install () {
 	$role->add_cap('FlAG Change options');
 	$role->add_cap('FlAG Manage music');
 	$role->add_cap('FlAG Manage video');
+	$role->add_cap('FlAG Manage banners');
 	$role->add_cap('FlAG Facebook page');
 
 	// upgrade function changed in WordPress 2.3	
@@ -226,6 +227,7 @@ function flag_list_options() {
 	$flag_options['itemDescription']		= 'e0e0e0';		
 
 	// Alternative gallery colors
+	$flag_options['jAlterGal']				= true;
 	$flag_options['BarsBG']					= '292929';
 	$flag_options['CatBGColor']				= '292929';
 	$flag_options['CatBGColorOver']			= '737373';
@@ -304,6 +306,7 @@ function flag_uninstall() {
 	flag_remove_capability("FlAG Change options");
 	flag_remove_capability("FlAG Manage music");
 	flag_remove_capability("FlAG Manage video");
+	flag_remove_capability("FlAG Manage banners");
 	flag_remove_capability("FlAG Facebook page");
 }
 

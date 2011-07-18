@@ -1,20 +1,20 @@
 <?php
 /*
-mSkin Name: Default Player
+vSkin Name: Default Mini VideoBlog
 Skin URI:
 Description:
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 1.1
+Version: 1.0
 */
 
-function flagShowSkin_music_default($args) {
+function flagShowSkin_video_default($args) {
 	extract($args);
 	$flag_options = get_option('flag_options');
 
 	$skinID = 'id_'.mt_rand();
 	// look up for the path
-	$playlistpath = $flag_options['galleryPath'].'playlists/'.$playlist.'.xml';
+	$playlistpath = $flag_options['galleryPath'].'playlists/video/'.$playlist.'.xml';
 	$data = file_get_contents($playlistpath);
 	$flashBackcolor = flagGetBetween($data,'<property1>0x','</property1>');
 	if(empty($width)) {
@@ -51,16 +51,16 @@ function flagShowSkin_music_default($args) {
 	$swfobject->add_flashvars( 'skinID', $skinID );
 	$swfobject->add_flashvars('playlist', $playlist);
 	// create the output
-	$out = '<div class="grandmusic">' . $swfobject->output($alternate) . '</div>';
+	$out = '<div class="grandvideo">' . $swfobject->output($alternate) . '</div>';
 	// add now the script code
 	$out .= "\n".'<script type="text/javascript" defer="defer">';
 	$out .= $swfobject->javascript();
 	$out .= "\n".'</script>';
 
-	$out = apply_filters('flag_show_flash_content', $out);	
+	$out = apply_filters('flag_show_flash_v_content', $out);	
 			
 	return $out;	
 }
-remove_all_filters( 'flagShowMusicSkin' );
-add_filter( 'flagShowMusicSkin', 'flagShowSkin_music_default' );
+remove_all_filters( 'flagShowVideoSkin' );
+add_filter( 'flagShowVideoSkin', 'flagShowSkin_video_default' );
 ?>

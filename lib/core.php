@@ -323,6 +323,8 @@ class flagGallery {
 	    foreach ( $_POST['item_a'] as $item_id => $item ) {
 			$post = $_post = get_post($item_id, ARRAY_A);
 			$postmeta = get_post_meta($item_id, 'thumbnail', true);
+			$postlink = get_post_meta($item_id, 'link', true);
+			$postpreview = get_post_meta($item_id, 'preview', true);
 			if ( isset($item['post_content']) )
 				$post['post_content'] = $item['post_content'];
 			if ( isset($item['post_title']) )
@@ -337,12 +339,16 @@ class flagGallery {
 	            else*/
 	                update_post_meta($item_id, 'thumbnail', $item['post_thumb']);
 	        }
-
+	        if( isset($item['link']) && $item['link'] != $postlink ) {
+                update_post_meta($item_id, 'link', $item['link']);
+	        }
+	        if( isset($item['preview']) && $item['preview'] != $postpreview ) {
+                update_post_meta($item_id, 'preview', $item['preview']);
+	        }
 			if ( isset($post['errors']) ) {
 				$errors[$item_id] = $post['errors'];
 				unset($post['errors']);
 			}
-
 			if ( $post != $_post )
 				wp_update_post($post);
 		}

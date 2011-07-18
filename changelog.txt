@@ -1,7 +1,18 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.40 - 18.07.2011 = 
+* Added : Video playlist creation
+* Added : Video blog skin
+* Added : Banner box page
+* Added : Banner Rotator skin
+* Added : Facebook link generator for Video and Banner
+* Added : Album creation
+* Added : Option to disable jQuery alternative gallery for iPad/iPhone
+* Updated : swf files for skin options, mp3 mini.swf, video_mini.swf
+
 = v1.33 - 13.07.2011 =
+* Major Update
 * Fixed : Bug with music and video sorting in playlists
 
 = v1.32 - 12.07.2011 =

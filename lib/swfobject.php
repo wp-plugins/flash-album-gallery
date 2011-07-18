@@ -55,12 +55,16 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	$altColors['TitleColor'] = $flag_options['TitleColor'];
 	$altColors['DescrColor'] = $flag_options['DescrColor'];
 	
-	$alternate = get_include_contents(FLAG_ABSPATH."admin/jgallery.php", $galleryID, $skin, $skinID, $width, $height, $altColors);
+	if($flag_options['jAlterGal']) {
+		$alternate = get_include_contents(FLAG_ABSPATH."admin/jgallery.php", $galleryID, $skin, $skinID, $width, $height, $altColors);
+	} else {
+		$alternate = '';
+	}
 
 	// init the flash output
 	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , $skinID, $width, $height, '10.1.52', FLAG_URLPATH .'skins/expressInstall.swf');
 
-	//$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
+	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
 
 	$swfobject->add_params('wmode', $wmode);
 	$swfobject->add_params('allowfullscreen', 'true');
@@ -113,13 +117,13 @@ function flagShowMPlayer($playlist, $width, $height, $wmode='') {
 	return $out;	
 }
 
-function flagShowVPlayer($playlist, $width, $height) {
+function flagShowVPlayer($playlist, $width, $height, $wmode='') {
 	
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
     require_once ( dirname(dirname(__FILE__)) . '/admin/video.functions.php');
 
 	$flag_options = get_option('flag_options');
-	$playlistPath = $flag_options['galleryPath'].'playlists/'.$playlist.'.xml';
+	$playlistPath = $flag_options['galleryPath'].'playlists/video/'.$playlist.'.xml';
 	$playlist_data = get_v_playlist_data(ABSPATH.$playlistPath);
 	$skin = $playlist_data['skin'];
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
@@ -128,7 +132,8 @@ function flagShowVPlayer($playlist, $width, $height) {
 		'playlist'	=> $playlist, 
 		'skin' 		=> $skin, 
 		'width' 	=> $width, 
-		'height' 	=> $height
+		'height' 	=> $height,
+		'wmode' 	=> $wmode
 	);
 	$out = apply_filters( 'flagShowVideoSkin', $args );
 	return $out;	
@@ -173,6 +178,30 @@ function flagShowVmPlayer($id, $w, $h, $autoplay) {
 	$out = apply_filters('flag_flv_mini', $out);
 			
 	return $out;
+}
+
+function flagShowBanner($xml, $width, $height, $wmode='') {
+	
+	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
+    require_once ( dirname(dirname(__FILE__)) . '/admin/banner.functions.php');
+
+	$flag_options = get_option('flag_options');
+	$playlistPath = $flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml';
+	$playlist_data = get_b_playlist_data(ABSPATH.$playlistPath);
+	$skin = $playlist_data['skin'];
+	$items = $playlist_data['items'];
+	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+	include_once ( $skinpath.'/'.$skin.'.php' );
+	$args = array(
+		'xml'		=> $xml, 
+		'skin' 		=> $skin, 
+		'items' 	=> $items, 
+		'width' 	=> $width, 
+		'height' 	=> $height,
+		'wmode' 	=> $wmode
+	);
+	$out = apply_filters( 'flagShowBannerSkin', $args );
+	return $out;	
 }
 
 function flagGetBetween($content,$start,$end){

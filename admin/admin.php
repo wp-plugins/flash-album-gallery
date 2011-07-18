@@ -38,6 +38,7 @@ class flagAdminPanel{
 	    add_submenu_page( 'flag-overview' , __('FlAG Manage gallery', 'flag'), __('Manage Galleries', 'flag'), 'FlAG Manage gallery', 'flag-manage-gallery', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Music Box', 'flag'), __('Music Box', 'flag'), 'FlAG Manage music', 'flag-music-box', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Video Box', 'flag'), __('Video Box', 'flag'), 'FlAG Manage video', 'flag-video-box', array (&$this, 'show_menu'));
+	    add_submenu_page( 'flag-overview' , __('FlAG Banner Box', 'flag'), __('Banner Box', 'flag'), 'FlAG Manage banners', 'flag-banner-box', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Manage skins', 'flag'), __('Skins', 'flag'), 'FlAG Change skin', 'flag-skins', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Change options', 'flag'), __('Options', 'flag'), 'FlAG Change options', 'flag-options', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Facebook Integration', 'flag'), __('Facebook', 'flag'), 'FlAG Facebook page', 'flag-facebook', array (&$this, 'show_menu'));
@@ -83,8 +84,12 @@ class flagAdminPanel{
 				flag_music_controler();
 				break;
 			case "flag-video-box" :
-				include_once ( dirname (__FILE__) . '/video-box.php' );	// flag_music_box
+				include_once ( dirname (__FILE__) . '/video-box.php' );	// flag_video_box
 				flag_video_controler();
+				break;
+			case "flag-banner-box" :
+				include_once ( dirname (__FILE__) . '/banner-box.php' );	// flag_banner_box
+				flag_banner_controler();
 				break;
 			case "flag-options" :
 				include_once ( dirname (__FILE__) . '/settings.php' );		// flag_admin_options
@@ -148,6 +153,9 @@ class flagAdminPanel{
 					wp_enqueue_script( 'swfobject' );
 					wp_enqueue_script( 'thickbox' );
 				break;		
+				case "flag-banner-box" :
+					wp_enqueue_script( 'thickbox' );
+				break;		
 				case "flag-options" :
 					wp_enqueue_script('farbtastic-nosharp', FLAG_URLPATH.'admin/js/farbtastic-nosharp.js', array('jquery'), '1.2');
 					print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
@@ -175,10 +183,8 @@ class flagAdminPanel{
 				case "flag-manage-gallery" :
 					wp_enqueue_style( 'flagtabs', FLAG_URLPATH .'admin/css/tabs.css', false, '1.0.0', 'screen' );
 				case "flag-music-box" :
-					wp_enqueue_style( 'thickbox' );
-					wp_enqueue_style( 'flagadmin', FLAG_URLPATH .'admin/css/flagadmin.css', false, '2.8.1', 'screen' );
-				break;		
 				case "flag-video-box" :	
+				case "flag-banner-box" :	
 					wp_enqueue_style( 'thickbox' );
 					wp_enqueue_style( 'flagadmin', FLAG_URLPATH .'admin/css/flagadmin.css', false, '2.8.1', 'screen' );
 				break;		

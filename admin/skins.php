@@ -232,7 +232,8 @@ if( isset($_GET['skins_refresh']) ) {
 <p style="float: right"><a class="button" href="<?php echo admin_url('admin.php?page=flag-skins&amp;skins_refresh=1'); ?>"><?php _e('Refresh / Update Skins', 'flag'); ?></a></p>
 <p><a class="button<?php if(!$type) echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins'); ?>"><span style="font-size: 14px;"><?php _e('image gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
 <a class="button<?php if($type == 'm') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=m'); ?>"><span style="font-size: 14px;"><?php _e('music gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
-<!--<a class="button<?php if($type == 'v') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=v'); ?>"><span style="font-size: 14px;"><?php _e('video gallery skins', 'flag'); ?></span></a>--></p>
+<a class="button<?php if($type == 'v') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=v'); ?>"><span style="font-size: 14px;"><?php _e('video gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
+<a class="button<?php if($type == 'b') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=b'); ?>"><span style="font-size: 14px;"><?php _e('banner skins', 'flag'); ?></span></a></p>
 
 <?php
 $all_skins = get_skins(false,$type);

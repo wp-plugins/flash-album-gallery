@@ -67,6 +67,7 @@ function flag_upgrade() {
 			echo __('Adding new options to database...', 'flag');
 			$flag_options = get_option('flag_options');	
 			// Alternative gallery colors
+			$flag_options['jAlterGal']				= true;
 			$flag_options['BarsBG']					= '292929';
 			$flag_options['CatBGColor']				= '292929';
 			$flag_options['CatBGColorOver']			= '737373';

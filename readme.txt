@@ -6,12 +6,12 @@ Requires at least: 2.9
 Tested up to: 3.2
 Stable tag: trunk
 
-GRAND FlAGallery is a Photo, Video gallery & Music Album with powerfull admin to manage your media content
+GRAND FlAGallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
 
 == Description ==
 Try GRAND FlAGallery - powerfull flash & jQuery media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
-You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with = photo gallery =, = mp3 player = or = video player =.
+You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **photo gallery, mp3 player or video player.**
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
@@ -28,10 +28,12 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 
 = Features =
 
+* Banner Rotator based on jQuery NivoSlider.
+* Video Blog with playlist.
+* Customizible <a href="http://photogallerycreator.com/flv-video-players/flv-video-player-for-wordpress/" title="FLV Video Player with customizible colors">FLV Video Player</a>.
 * jQuery alternate gallery for iPhone, iPad and browsers without flash support.
 * <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-player-wordpress/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
 * <a href="http://photogallerycreator.com/mp3-music-players/singleton-mp3-music-player-for-wordpress/" title="MP3 Player with Multiple Instances">MP3 Player with Multiple Instances</a>.
-* Customizible <a href="http://photogallerycreator.com/flv-video-players/flv-video-player-for-wordpress/" title="FLV Video Player with customizible colors">FLV Video Player</a>.
 * <a href="http://www.facebook.com/pages/Galleries/190973767613001" title="PhotoGalleryCreator Facebook Page">Facebook flash gallery template</a>.
 * With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks.
 * Unlimited number of pictures in slideshow.
@@ -49,10 +51,20 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 * After plugin update go to Skins page and update skins with 'Update skins' button.
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
-* Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
+* Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
+
+= v1.40 - 18.07.2011 = 
+* Added : Video playlist creation
+* Added : Video blog skin
+* Added : Banner box page
+* Added : Banner Rotator skin
+* Added : Facebook link generator for Video and Banner
+* Added : Album creation
+* Added : Option to disable jQuery alternative gallery for iPad/iPhone
+* Updated : swf files for skin options, mp3 mini.swf, video_mini.swf
 
 = v1.33 - 13.07.2011 = 
-Major Update:
+* Major Update
 * Fixed : Bug with music and video sorting in playlists
 
 = v1.32 - 12.07.2011 =
@@ -251,7 +263,7 @@ Major Update:
 * After plugin update go to Skins page and update skins with 'Update skins' button.
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
-* Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
+* Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
 == Credits == 
 
@@ -286,7 +298,8 @@ That's it ... Have fun!
 * After plugin update go to Skins page and update skins with 'Update skins' button.
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
-* Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
+* Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
+
 
 == Screenshots == 
 
@@ -296,14 +309,16 @@ That's it ... Have fun!
 4. Admin Sort Gallery 
 5. Post Editor insert shortcode popup 
 6. Post Editor buttons to help you insert shortcode 
+7. Mini Video Blog Flash skin
+8. Banner Rotator
  
 == Frequently Asked Questions == 
  
 = Upgrade Notice =
-After plugin update go to Skins page and update skins with 'Update skins' button.
-If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
-If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
-Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
+* After plugin update go to Skins page and update skins with 'Update skins' button.
+* If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
+* If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
+* Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
 = Read as startup : = 
 http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review/
