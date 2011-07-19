@@ -62,9 +62,9 @@ jQuery(window).load(function() {
 </script>';
 		$marginBot = $keyboardNav? '55px' : '0';
 		$out .= '
-<div class="slider-wrapper theme-default">
+<div class="slider-wrapper theme-default" style="width:'.$width.'px; margin-bottom:'.$marginBot.'">
     <div class="ribbon"></div>
-    <div id="slider_'.$skinID.'" class="nivoSlider" style="width:'.$width.'px; height:'.$height.'px; margin-bottom:'.$marginBot.'">';
+    <div id="slider_'.$skinID.'" class="nivoSlider" style="width:'.$width.'px; height:'.$height.'px;">';
 		$suffix = $width.'x'.$height;
 		foreach( $items as $id ) {
 			$ban = get_post($id);
