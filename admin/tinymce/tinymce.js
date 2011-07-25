@@ -23,7 +23,7 @@ function insertFLAGLink() {
 		{
 			if(gallery.options[i].selected) {
 				if(galleryid=="") {
-					galleryid = galleryid + gallery.options[i].value;
+					galleryid = " gid=" + galleryid + gallery.options[i].value;
 				} else {
 					galleryid = galleryid + "," + gallery.options[i].value;
 				}

@@ -1,6 +1,12 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.41 - 25.07.2011 = 
+* Fixed : Bug fix for WP v3.0.*
+* Fixed : Shortcode generator in Visual Editor mode
+* Fixed : Banner Rotator skin for WP v3.0
+* Added : Ukrainian translation
+
 = v1.40 - 18.07.2011 = 
 * Added : Video playlist creation
 * Added : Video blog skin

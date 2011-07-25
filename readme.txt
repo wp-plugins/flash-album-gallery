@@ -2,7 +2,7 @@
 Contributors: Rattus
 Donate link:
 Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, plugin, portfolio, Post, posts, presentation, slideshow, mp3, music, flv, video, player, Facebook, Twitter
-Requires at least: 2.9
+Requires at least: 3.0
 Tested up to: 3.2
 Stable tag: trunk
 
@@ -28,8 +28,8 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 
 = Features =
 
-* Banner Rotator based on jQuery NivoSlider.
-* Video Blog with playlist.
+* <a href="http://photogallerycreator.com/grand-flagallery/banner-rotator-jquery-nivoslider/" title="Banner Rotator Demo">Banner Rotator based on jQuery NivoSlider</a>.
+* <a href="http://photogallerycreator.com/flv-video-players/mini-flv-video-gallery-for-wordpress/" title="Demo of Video Blog with playlist">Video Blog with playlist</a>.
 * Customizible <a href="http://photogallerycreator.com/flv-video-players/flv-video-player-for-wordpress/" title="FLV Video Player with customizible colors">FLV Video Player</a>.
 * jQuery alternate gallery for iPhone, iPad and browsers without flash support.
 * <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-player-wordpress/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
@@ -52,6 +52,12 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
+
+= v1.41 - 25.07.2011 = 
+* Fixed : Bug fix for WP v3.0.*
+* Fixed : Shortcode generator in Visual Editor mode
+* Fixed : Banner Rotator skin for WP v3.0
+* Added : Ukrainian translation
 
 = v1.40 - 18.07.2011 = 
 * Added : Video playlist creation

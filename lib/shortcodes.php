@@ -133,8 +133,12 @@ class FlAG_shortcodes {
 			'w'		 	=> '',
 			'h'		 	=> ''
 		), $atts ));
-		$out = '';
+		$out = sprintf(__('[Playlist %s not found]','flag'),$playlist);
 		if($playlist) {
+			$flag_options = get_option('flag_options');
+			if(!file_exists($flag_options['galleryPath'].'playlists/'.$playlist.'.xml')) { 
+				return $out;
+			}
 			$this->flag_shortcode = true;
 			$this->flag_add_mousewheel = true;
             $out = flagShowMPlayer($playlist, $w, $h);
@@ -165,15 +169,19 @@ class FlAG_shortcodes {
 			'w'		 	=> '',
 			'h'		 	=> ''
 		), $atts ));
-		$out = '';
+		$out = sprintf(__('[Playlist %s not found]','flag'),$playlist);
 		if($playlist) {
 			$flag_options = get_option('flag_options');
-			$swfmousewheel = false;
+			if(!file_exists($flag_options['galleryPath'].'playlists/video/'.$playlist.'.xml')) { 
+				return $out;
+			}
 			$data = file_get_contents($flag_options['galleryPath'].'playlists/video/'.$playlist.'.xml');
+			$swfmousewheel = false;
 			$swfmousewheel = flagGetBetween($data,'<swfmousewheel>','</swfmousewheel>');
 			if($swfmousewheel == 'true') $this->flag_add_mousewheel = true;
 			$this->flag_shortcode = true;
             $out = flagShowVPlayer($playlist, $w, $h);
+			
 		}
         return $out;
 	}
@@ -201,8 +209,12 @@ class FlAG_shortcodes {
 			'w'		=> '',
 			'h'		=> ''
 		), $atts ));
-		$out = '';
+		$out = sprintf(__('[XML %s not found]','flag'),$xml);
 		if($xml) {
+			$flag_options = get_option('flag_options');
+			if(!file_exists($flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml')) { 
+				return $out;
+			}
 			//$this->flag_shortcode = true;
             $out = flagShowBanner($xml, $w, $h);
 		}
