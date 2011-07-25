@@ -35,7 +35,7 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 * <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-player-wordpress/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
 * <a href="http://photogallerycreator.com/mp3-music-players/singleton-mp3-music-player-for-wordpress/" title="MP3 Player with Multiple Instances">MP3 Player with Multiple Instances</a>.
 * <a href="http://www.facebook.com/pages/Galleries/190973767613001" title="PhotoGalleryCreator Facebook Page">Facebook flash gallery template</a>.
-* With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks.
+* With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks. :)
 * Unlimited number of pictures in slideshow.
 * Slideshow automatic mode option.
 * Flash skins can be added and changed.
