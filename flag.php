@@ -110,10 +110,14 @@ class flagLoad {
 	}
 
 	function wp_flag_tune_messages() {
-		if (!isset($_GET['action']) && isset($_GET['activate'])) {
+		if($this->options['flagVersion'] != $this->version) {
 			// upgrade plugin
 			require_once(FLAG_ABSPATH . 'admin/tuning.php');
 			$ok = flag_tune($show_error=false);
+
+			include_once (dirname (__FILE__) . '/admin/flag_install.php');
+			// check for tables
+			flag_install();
 		}
 	}
 

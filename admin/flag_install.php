@@ -149,8 +149,9 @@ function flag_install () {
  		flag_default_options();
  	
 	
-	// if all is passed , save the DBVERSION
+	// if all is passed , save the VERSIONs
 	add_option("flag_db_version", FLAG_DBVERSION);
+	add_option("flagVersion", FLAGVERSION);
 }
 
 /**
@@ -292,6 +293,7 @@ function flag_uninstall() {
 	// then remove all options
 	delete_option( 'flag_options' );
 	delete_option( 'flag_db_version' );
+	delete_option( 'flagVersion' );
 
 	// now remove the capability
 	flag_remove_capability("FlAG overview");

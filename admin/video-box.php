@@ -134,7 +134,7 @@ if($all_playlists) {
 		<?php
 	}
 } else {
-	echo '<tr><td colspan="4" align="center"><strong>'.__('No playlists found','flag').'</strong></td></tr>';
+	echo '<tr><td colspan="5" align="center"><strong>'.__('No playlists found','flag').'</strong></td></tr>';
 }
 ?>			
 			</tbody>
@@ -397,7 +397,7 @@ if($videolist) {
 		<?php
 	}
 } else {
-	echo '<tr><td colspan="3" align="center"><strong>'.__('No video in WordPress Media Library.','flag').'</strong></td></tr>';
+	echo '<tr><td colspan="6" align="center"><strong>'.__('No video in WordPress Media Library.','flag').'</strong></td></tr>';
 }
 ?>			
 			</tbody>

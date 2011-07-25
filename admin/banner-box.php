@@ -133,7 +133,7 @@ if($all_playlists) {
 		<?php
 	}
 } else {
-	echo '<tr><td colspan="4" align="center"><strong>'.__('No playlists found','flag').'</strong></td></tr>';
+	echo '<tr><td colspan="5" align="center"><strong>'.__('No playlists found','flag').'</strong></td></tr>';
 }
 ?>			
 			</tbody>
@@ -387,7 +387,7 @@ if($bannerlist) {
 		<?php
 	}
 } else {
-	echo '<tr><td colspan="3" align="center"><strong>'.__('No images in WordPress Media Library.','flag').'</strong></td></tr>';
+	echo '<tr><td colspan="5" align="center"><strong>'.__('No images in WordPress Media Library.','flag').'</strong></td></tr>';
 }
 ?>			
 			</tbody>
