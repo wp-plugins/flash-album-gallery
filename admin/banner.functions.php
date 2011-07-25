@@ -106,7 +106,7 @@ function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
 				$info = pathinfo($path);
 				$dir = $info['dirname'];
 				$ext = $info['extension'];
-				$name = wp_basename($path, ".$ext");
+				$name = urldecode( basename( str_replace( '%2F', '/', urlencode( $path ) ), ".$ext" ) );
 				$img_file = "{$dir}/{$name}-{$suffix}.{$ext}";
 				if(!file_exists($img_file)){
 				    $thumb = image_resize($path,$w,$h,$cut=true,$suffix);
