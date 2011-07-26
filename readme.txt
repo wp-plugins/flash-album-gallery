@@ -1,7 +1,7 @@
 === GRAND FlAGallery ===
 Contributors: Rattus
 Donate link:
-Tags: admin, album, flash, gallery, image, image gallery, images, media, page, photo, photo albums, photo gallery, photos, plugin, portfolio, Post, posts, presentation, slideshow, mp3, music, flv, video, player, Facebook, Twitter
+Tags: admin, album, flash, gallery, image, image gallery, page, photo, photo gallery, plugin, portfolio, Post, posts, slideshow, mp3, music, video, player, Facebook, Twitter
 Requires at least: 3.0
 Tested up to: 3.2
 Stable tag: trunk
@@ -15,35 +15,8 @@ You can edit your media content the way you want: upload images, import music an
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
-= Important Links: =
+For more information review [photo gallery demos](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page"), created with "GRAND FlAGallery" WordPress Plugin.
 
-* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" title="Demonstration page">Demonstration</a>
-* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/grand-flash-album-gallery-wordpress-plugin-video-tutorial" title="Video tutorial">Video tutorial</a>
-* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/languages" title="Translation and Language files">Language files</a>
-* <a href="http://photogallerycreator.com/grand-flagallery/" title="Additional skins">Additional skins</a>
-* <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq" title="GRAND FlAGallery FAQ">GRAND FlAGallery FAQ</a>
-* <a href="http://wordpress.org/tags/flash-album-gallery" title="Wordpress Support Forum">Support Forum</a>
-* <a href="http://www.facebook.com/pages/PhotoGalleryCreator/184822641554668" title="News on Facebook">Facebook</a>
-* <a href="http://twitter.com/GalleryCreator/" title="Follow us on Twitter">Twitter</a>
-
-= Features =
-
-* <a href="http://photogallerycreator.com/grand-flagallery/banner-rotator-jquery-nivoslider/" title="Banner Rotator Demo">Banner Rotator based on jQuery NivoSlider</a>.
-* <a href="http://photogallerycreator.com/flv-video-players/mini-flv-video-gallery-for-wordpress/" title="Demo of Video Blog with playlist">Video Blog with playlist</a>.
-* Customizible <a href="http://photogallerycreator.com/flv-video-players/flv-video-player-for-wordpress/" title="FLV Video Player with customizible colors">FLV Video Player</a>.
-* jQuery alternate gallery for iPhone, iPad and browsers without flash support.
-* <a href="http://photogallerycreator.com/mp3-music-players/mp3-music-player-wordpress/" title="Music Player with playlist and visualization">Customizable Music Player with playlist and visualization</a>.
-* <a href="http://photogallerycreator.com/mp3-music-players/singleton-mp3-music-player-for-wordpress/" title="MP3 Player with Multiple Instances">MP3 Player with Multiple Instances</a>.
-* <a href="http://www.facebook.com/pages/Galleries/190973767613001" title="PhotoGalleryCreator Facebook Page">Facebook flash gallery template</a>.
-* With new 3D Prospect skin you can share each photo to Facebook, Twitter and other social networks. :)
-* Unlimited number of pictures in slideshow.
-* Slideshow automatic mode option.
-* Flash skins can be added and changed.
-* Copying or moving images between galleries available.
-* Upload tab integration: You have access to all pictures via the upload tab.
-* Import folder with images tab integration: You have access to all server directories via the import tab.
-* Sorting of images available.
-* Showing selected images only for registered users.
 
 == Changelog ==
 
