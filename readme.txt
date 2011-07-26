@@ -1,4 +1,4 @@
-=== GRAND FlAGallery ===
+=== GRAND FlAGallery - Best Media Gallery ===
 Contributors: Rattus
 Donate link:
 Tags: admin,album,flash,gallery,image,images,image gallery,page,photo,photo gallery,plugin,portfolio,Post,posts,slideshow,mp3,music,video,player,Facebook,Twitter
