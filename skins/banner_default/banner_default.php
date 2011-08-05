@@ -14,7 +14,7 @@ function flagShowSkin_banner_default($args) {
 
 	$skinID = mt_rand();
 	// look up for the path
-	$playlistpath = $flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml';
+	$playlistpath = ABSPATH.$flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml';
 	$data = file_get_contents($playlistpath);
 	if(empty($width)) {
 		$width = flagGetBetween($data,'<width><![CDATA[',']]></width>');
@@ -94,6 +94,7 @@ jQuery(window).load(function() {
 	}
 	$out .= '
     </div>
+	<div class="grandlovelink"><a href="http://wordpress.org/extend/plugins/flash-album-gallery/">GRAND FlAGallery WordPress plugin</a></div>
 </div>';
 
 	$out = apply_filters('flag_show_flash_b_content', $out);	
