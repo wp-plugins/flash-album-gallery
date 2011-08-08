@@ -15,13 +15,15 @@ require_once (dirname (__FILE__) . '/functions.php');
 require_once (dirname (__FILE__) . '/banner.functions.php');
 
 function flag_banner_controler() {
+	$mode = isset($_REQUEST['mode'])? $_REQUEST['mode'] : 'main';
 	if ($_POST['importfolder']){
 		check_admin_referer('flag_addbanner');
 		$bannerfolder = $_POST['bannerfolder'];
-		if ( !empty($bannerfolder) )
-			flagAdmin::import_banner($bannerfolder);
+		if ( !empty($bannerfolder) ) {
+			$crunch_list = flagAdmin::import_banner($bannerfolder);
+			$mode = 'import';
+		}
 	}
-	$mode = isset($_REQUEST['mode'])? $_REQUEST['mode'] : 'main';
 	$action = isset($_REQUEST['bulkaction'])? $_REQUEST['bulkaction'] : false;
 	if($action == 'no_action') {
 		$action = false;
@@ -72,6 +74,8 @@ function flag_banner_controler() {
 		break;
 		case 'delete':
 			flag_b_playlist_delete($_GET['playlist']);
+	  	case 'import':
+			flag_crunch($crunch_list);
 	  	case 'main':
 			if(isset($_POST['updateMedia'])) {
 				flagGallery::flagSaveWpMedia();
@@ -84,6 +88,48 @@ function flag_banner_controler() {
 	}
 
 }
+function flag_crunch($crunch_list) {
+	$crunch_string = implode(',', $crunch_list); 
+	$folder = rtrim($_POST['bannerfolder'], '/');
+	$path = WINABSPATH . $folder.'/';
+?>
+<script type="text/javascript"> 
+<!--
+jQuery(document).ready(function(){
+	var crunch_string = '<?php echo $crunch_string; ?>';
+	var bannerfolder = '<?php echo $path; ?>';
+	var crunch_list = crunch_string.split(',');
+	var parts = crunch_list.length;
+	function flag_crunch() {
+		if(crunch_list.length) {
+			jQuery.post( 
+				ajaxurl, 
+				{
+					action: "flag_banner_crunch",
+					_wpnonce: "<?php echo wp_create_nonce( 'flag-ajax' ); ?>",
+					path: encodeURI(bannerfolder + crunch_list[0])
+				},
+				function( response ) {
+					crunch_list.shift()
+					var parts_done = parts - crunch_list.length;
+					jQuery(".flag_crunching .flag_progress .flag_complete").animate({width:parts_done*(100/parts)+'%'}, 400);
+					jQuery(".flag_crunching").append(response);
+					flag_crunch();
+				}
+			);
+		} else {
+			var refpage = window.location.href;
+			jQuery(".flag_crunching .txt").html('<a href="'+refpage+'"><?php _e("Import folder is complete. The page reloads after 5 seconds.", "flag"); ?></a>');
+			//alert('<?php _e("Import folder complete. Refresh page.", "flag"); ?>');
+			setTimeout(function(){ window.location.href=window.location.href }, 5000);
+		}
+	}
+	flag_crunch();
+});
+//-->
+</script>
+
+<?php }
 
 function flag_created_b_playlists() {
 
@@ -195,7 +241,7 @@ function checkAll(form)	{
 // this function check for a the number of selected images, sumbmit false when no one selected
 function checkSelected() {
 	if(!jQuery('.cb input:checked')) { 
-		alert('<?php echo js_escape(__('No items selected', 'flag')); ?>');
+		alert('<?php echo js_escape(__("No items selected", "flag")); ?>');
 		return false; 
 	} 
 	actionId = jQuery('#bulkaction').val();

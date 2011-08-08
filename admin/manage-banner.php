@@ -97,6 +97,10 @@ jQuery(document).ready(function(){
     jQuery('#preview_txt-'+id).attr('src', '#none').text('');
     return false;
   });
+  jQuery('#skinname').change(function(){
+  	var skin = jQuery(this).val();
+	jQuery('#skinOptions').attr("href","<?php echo FLAG_URLPATH; ?>admin/skin_options.php?show_options=1&amp;skin="+skin+"&amp;TB_iframe=1&amp;width=600&amp;height=560");
+  });
 })
 //]]>
 </script>
@@ -145,7 +149,7 @@ jQuery(document).ready(function(){
                                 echo '<option value="banner_default">'.__("No Skins", "flag").'</option>';
                             }
                           ?>
-                        </select>&nbsp;&nbsp;<a class="thickbox" href="<?php echo FLAG_URLPATH.'admin/skin_options.php?show_options=1&amp;skin='.dirname($skin_file).'&amp;TB_iframe=1&amp;width=600&amp;height=560'; ?>"><?php _e('Change Skin Options', 'flag' ); ?></a>
+                        </select>&nbsp;&nbsp;<a id="skinOptions" class="thickbox" href="<?php echo FLAG_URLPATH.'admin/skin_options.php?show_options=1&amp;skin='.$playlist["skin"].'&amp;TB_iframe=1&amp;width=600&amp;height=560'; ?>"><?php _e('Change Skin Options', 'flag' ); ?></a>
                     </div>
 					<p style="margin:10px 0 0 100px;"><input type="submit" id="updatePlaylistSkin" name="updatePlaylistSkin" class="button-primary action"  value="<?php _e('Update skin options for this playlist', 'flag'); ?>" /></p>
 					</td>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel title="3D Pprospect Gallery v1.4 DEMO">
 	<item type="numericSteper" name="property2">
-		<title><![CDATA[Thumbnail Rows]]></title>
+		<title><![CDATA[The number of images in a row]]></title>
 		<description><![CDATA[]]></description>
 		<maximum>7</maximum>
 		<minimum>1</minimum>

@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.42 - 08.08.2011 = 
+* Major Bugfix
+* Fixed : Banner Rotator (update skins, please)
+
 = v1.41 - 25.07.2011 = 
 * Fixed : Bug fix for WP v3.0.*
 * Fixed : Shortcode generator in Visual Editor mode

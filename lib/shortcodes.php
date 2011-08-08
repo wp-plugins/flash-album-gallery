@@ -215,7 +215,11 @@ class FlAG_shortcodes {
 			if(!file_exists($flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml')) { 
 				return $out;
 			}
-			//$this->flag_shortcode = true;
+			$data = file_get_contents($flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml');
+			$swfmousewheel = false;
+			$swfmousewheel = flagGetBetween($data,'<swfmousewheel>','</swfmousewheel>');
+			if($swfmousewheel == 'true') $this->flag_add_mousewheel = true;
+			$this->flag_shortcode = true;
             $out = flagShowBanner($xml, $w, $h);
 		}
         return $out;

@@ -172,4 +172,31 @@ function flag_delete_album() {
 	
 }
 	
+add_action('wp_ajax_flag_banner_crunch', 'flag_banner_crunch');
+	
+function flag_banner_crunch() {
+	
+	global $wpdb;
+	
+	// check for correct capability
+	if ( !is_user_logged_in() )
+		die('-1');
+	// check for correct FlAG capability
+	if ( !current_user_can('FlAG Manage gallery') ) 
+		die('-1');	
+		
+	if(isset($_POST['path'])) {
+		include_once (dirname (__FILE__). '/functions.php');
+		$id = flagAdmin::handle_import_file($_POST['path']);
+		$file = basename($_POST['path']);
+		if ( is_wp_error($id) ) {
+			echo '<p class="error">' . sprintf(__('<em>%s</em> was <strong>not</strong> imported due to an error: %s', 'flag'), $file, $id->get_error_message() ) . '</p>';
+		} else {
+			echo '<p class="success">' . sprintf(__('<em>%s</em> has been added to Media library', 'flag'), $file) . '</p>';
+		}
+	}
+	
+	exit();
+}
+
 ?>

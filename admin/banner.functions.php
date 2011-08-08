@@ -102,23 +102,27 @@ function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
 			$ban = get_post($id);
 			if($ban->ID) {
 				$url = wp_get_attachment_url($ban->ID);
-				$path = get_attached_file($ban->ID);
-				$info = pathinfo($path);
-				$dir = $info['dirname'];
-				$ext = $info['extension'];
-				$name = urldecode( basename( str_replace( '%2F', '/', urlencode( $path ) ), ".$ext" ) );
-				$img_file = "{$dir}/{$name}-{$suffix}.{$ext}";
-				if(!file_exists($img_file)){
-				    $thumb = image_resize($path,$w,$h,$cut=true,$suffix);
-					if(is_string($thumb)) {
-				    	$img = substr($thumb, strpos($thumb, 'wp-content'));
-						$track = get_bloginfo('wpurl') . '/' .  $img;
+				if($skin == 'banner_default') {
+					$path = get_attached_file($ban->ID);
+					$info = pathinfo($path);
+					$dir = $info['dirname'];
+					$ext = $info['extension'];
+					$name = urldecode( basename( str_replace( '%2F', '/', urlencode( $path ) ), ".$ext" ) );
+					$img_file = "{$dir}/{$name}-{$suffix}.{$ext}";
+					if(!file_exists($img_file)){
+					    $thumb = image_resize($path,$w,$h,$cut=true,$suffix);
+						if(is_string($thumb)) {
+					    	$img = substr($thumb, strpos($thumb, 'wp-content'));
+							$track = get_bloginfo('wpurl') . '/' .  $img;
+						} else {
+							$track = $url;
+						}
+					    
 					} else {
-						$track = $url;
+						$track = dirname($url)."/{$name}-{$suffix}.{$ext}";
 					}
-				    
 				} else {
-					$track = dirname($url)."/{$name}-{$suffix}.{$ext}";
+					$track = $url;
 				}
 			    $thumbnail = get_post_meta($id, 'thumbnail', true);
 			    $link = get_post_meta($id, 'link', true);
@@ -154,21 +158,20 @@ function flagSave_bPlaylistSkin($file) {
 	global $wpdb;
 	$flag_options = get_option('flag_options');
     $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'banner_default';
-    $skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
+    //$skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/banner/'.$file.'.xml';
 	$playlist = file_get_contents($playlistPath);
 	$settings = file_get_contents($skinpath . "/settings/settings.xml");
-	$w0 = flagGallery::flagGetBetween($playlist,'<width><![CDATA[',']]></width>');
-	$h0 = flagGallery::flagGetBetween($playlist,'<height><![CDATA[',']]></height>');
-	$w1 = flagGallery::flagGetBetween($settings,'<width><![CDATA[',']]></width>');
-	$h1 = flagGallery::flagGetBetween($settings,'<height><![CDATA[',']]></height>');
+	//$w0 = flagGallery::flagGetBetween($playlist,'<width><![CDATA[',']]></width>');
+	//$h0 = flagGallery::flagGetBetween($playlist,'<height><![CDATA[',']]></height>');
+	//$w1 = flagGallery::flagGetBetween($settings,'<width><![CDATA[',']]></width>');
+	//$h1 = flagGallery::flagGetBetween($settings,'<height><![CDATA[',']]></height>');
 	$newproperties = flagGallery::flagGetBetween($settings,'<properties>','</properties>');
 	$content = preg_replace("|<properties>.*?</properties>|si", '<properties>'.$newproperties.'</properties>', $playlist, 1);
 	// Save options
-	if($w0 == $w1 && $h0 == $h1 && $skin == $skinaction)
-		flagGallery::saveFile($playlistPath,$content,'w');
-	else {
+	//if($skin != 'banner_default' && ($w0 == $w1 && $h0 == $h1 && $skin == $skinaction))
+	if($skin == 'banner_default') {
 		$title = $_POST['playlist_title'];
 		$descr = $_POST['playlist_descr'];
 		foreach($_POST['item_a'] as $item_id => $item) {
@@ -176,6 +179,8 @@ function flagSave_bPlaylistSkin($file) {
 		}
 		$file = $_REQUEST['playlist'];
 		flagSave_bPlaylist($title,$descr,$data,$file,$skinaction='update');
+	} else {
+		flagGallery::saveFile($playlistPath,$content,'w');
 	}
 }
 

@@ -219,14 +219,14 @@ class flagAdmin{
 		$folder = rtrim($folder, '/');
 		$path = WINABSPATH . $folder;
 		if (!is_dir($path)) {
-			flagGallery::show_error(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag'));
+			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag').'</p>';
 			return ;
 		}
 		// read list of files
 		$ext = array('flv');
 		$new_filelist = flagAdmin::scandir($path, $ext);
 		if (empty($new_filelist)) {
-			flagGallery::show_message(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('does not contain flv files', 'flag'));
+			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('does not contain flv files', 'flag').'</p>';
 			return;
 		}
 		$i=0;
@@ -241,8 +241,8 @@ class flagAdmin{
 				$created_msg .= '<p>' . sprintf(__('<em>%s</em> has been added to Media library', 'flag'), $file) . '</p>';
 			}
 		}
-		flagGallery::show_message( $created_msg.'<p>'.$i.__(' file(s) successfully added','flag').'</p>' );
-
+		$created_msg .= '<p class="message">'.$i.__(' file(s) successfully added','flag').'</p><div class="hidden">'.$created_msg.'</div>';
+		echo $created_msg;
 	}
 
 	/**
@@ -260,14 +260,14 @@ class flagAdmin{
 		$folder = rtrim($folder, '/');
 		$path = WINABSPATH . $folder;
 		if (!is_dir($path)) {
-			flagGallery::show_error(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag'));
+			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag').'</p>';
 			return ;
 		}
 		// read list of files
 		$ext = array('mp3');
 		$new_filelist = flagAdmin::scandir($path, $ext);
 		if (empty($new_filelist)) {
-			flagGallery::show_message(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('does not contain mp3 files', 'flag'));
+			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('does not contain mp3 files', 'flag').'</p>';
 			return;
 		}
 		$i=0;
@@ -282,8 +282,8 @@ class flagAdmin{
 				$created_msg .= '<p>' . sprintf(__('<em>%s</em> has been added to Media library', 'flag'), $file) . '</p>';
 			}
 		}
-		flagGallery::show_message( $created_msg.'<p>'.$i.__(' file(s) successfully added','flag').'</p>' );
-
+		$created_msg .= '<p class="message">'.$i.__(' file(s) successfully added','flag').'</p><div class="hidden">'.$created_msg.'</div>';
+		echo $created_msg;
 	}
 
 	/**
@@ -301,29 +301,18 @@ class flagAdmin{
 		$folder = rtrim($folder, '/');
 		$path = WINABSPATH . $folder;
 		if (!is_dir($path)) {
-			flagGallery::show_error(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag'));
+			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag').'</p>';
 			return ;
 		}
 		// read list of files
 		$new_filelist = flagAdmin::scandir($path);
 		if (empty($new_filelist)) {
-			flagGallery::show_message(__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('does not contain image files', 'flag'));
+			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('does not contain image files', 'flag').'</p>';
 			return;
 		}
-		$i=0;
-		foreach($new_filelist as $key => $file) {
-			//$new_filelist[$key] = $path . '/' . $file;
-			$filename = $path . '/' . $file;
-			$id = flagAdmin::handle_import_file($filename);
-			if ( is_wp_error($id) ) {
-				$created_msg .= '<p>' . sprintf(__('<em>%s</em> was <strong>not</strong> imported due to an error: %s', 'flag'), $file, $id->get_error_message() ) . '</p>';
-			} else {
-				$i++;
-				$created_msg .= '<p>' . sprintf(__('<em>%s</em> has been added to Media library', 'flag'), $file) . '</p>';
-			}
-		}
-		flagGallery::show_message( $created_msg.'<p>'.$i.__(' file(s) successfully added','flag').'</p>' );
-
+		$created_msg .= '<div class="message"><p>'.count($new_filelist).' '.__('image(s) in the folder','flag').':</p><div class="flag_crunching"><div class="flag_progress"><span class="flag_complete"></span><span class="txt">'.__('Crunching...','flag').'</span></div></div></div>';
+		echo $created_msg;
+		return $new_filelist;
 	}
 
 	//Handle an individual file import.

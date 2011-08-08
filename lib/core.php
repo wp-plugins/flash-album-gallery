@@ -260,7 +260,7 @@ class flagGallery {
 			}
 			return @rmdir($path);
 		} elseif (file_exists($path)) {
-			return unlink($path);
+			return @unlink($path);
 		} else {
 			return false;
 		}

@@ -11,35 +11,14 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 **/
 
 function flag_install () {
-	global $wpdb, $wp_roles, $wp_version;
+	global $wpdb, $wp_version;
 
 	// Check for capability
 	if ( !current_user_can('activate_plugins') ) 
 		return;
 
-	// Set the capabilities for the administrator
-	$role = get_role('administrator');
-	// We need this role, no other chance
-	if ( empty($role) ) {
-		update_option( "flag_init_check", __('Sorry, Flash Album Gallery works only with a role called administrator','flag') );
-		return;
-	}
+	flag_capabilities();
 	
-	$role->add_cap('FlAG overview');
-	$role->add_cap('FlAG Use TinyMCE');
-	$role->add_cap('FlAG Upload images');
-	$role->add_cap('FlAG Import folder');
-	$role->add_cap('FlAG Manage gallery');
-	$role->add_cap('FlAG Manage others gallery');
-	$role->add_cap('FlAG Change skin');
-	$role->add_cap('FlAG Add skins');
-	$role->add_cap('FlAG Delete skins');
-	$role->add_cap('FlAG Change options');
-	$role->add_cap('FlAG Manage music');
-	$role->add_cap('FlAG Manage video');
-	$role->add_cap('FlAG Manage banners');
-	$role->add_cap('FlAG Facebook page');
-
 	// upgrade function changed in WordPress 2.3	
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
@@ -152,6 +131,34 @@ function flag_install () {
 	// if all is passed , save the VERSIONs
 	add_option("flag_db_version", FLAG_DBVERSION);
 	add_option("flagVersion", FLAGVERSION);
+}
+
+function flag_capabilities() {
+	global $wp_roles;
+
+	// Set the capabilities for the administrator
+	$role = get_role('administrator');
+	// We need this role, no other chance
+	if ( empty($role) ) {
+		update_option( "flag_init_check", __('Sorry, Flash Album Gallery works only with a role called administrator','flag') );
+		return;
+	}
+	
+	$role->add_cap('FlAG overview');
+	$role->add_cap('FlAG Use TinyMCE');
+	$role->add_cap('FlAG Upload images');
+	$role->add_cap('FlAG Import folder');
+	$role->add_cap('FlAG Manage gallery');
+	$role->add_cap('FlAG Manage others gallery');
+	$role->add_cap('FlAG Change skin');
+	$role->add_cap('FlAG Add skins');
+	$role->add_cap('FlAG Delete skins');
+	$role->add_cap('FlAG Change options');
+	$role->add_cap('FlAG Manage music');
+	$role->add_cap('FlAG Manage video');
+	$role->add_cap('FlAG Manage banners');
+	$role->add_cap('FlAG Facebook page');
+
 }
 
 /**
@@ -289,6 +296,7 @@ function flag_uninstall() {
 	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}flag_pictures");
 	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}flag_gallery");
 	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}flag_comments");
+	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}flag_album");
 	
 	// then remove all options
 	delete_option( 'flag_options' );
