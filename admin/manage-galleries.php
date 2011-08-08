@@ -249,7 +249,8 @@ jQuery(document).ready(function(){
 		<form method="post" style="width: 658px; float: left;"><?php wp_nonce_field('flag_album'); ?>
 		<p><input type="text" id="album_name" name="album_name" value="" /> &nbsp; <input type="submit" value="<?php _e('Create New Album','flag'); ?>" class="button-primary" /></p></form>
 		<h2><?php _e('Categories', 'flag'); ?></h2>
-		<div class="floatholder clear">
+		<div class="clear"></div>
+		<div class="floatholder">
 			<div class="albums_table">
 <?php $albumlist = $flagdb->find_all_albums();
 $nonce = wp_create_nonce( 'wpMediaLib' );
