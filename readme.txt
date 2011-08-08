@@ -32,31 +32,31 @@ For more information review [photo gallery demos](http://codeasily.com/wordpress
 
 = v1.41 - 25.07.2011 = 
 * Fixed : Bug fix for WP v3.0.*
-* Fixed : Shortcode generator in Visual Editor mode
+* Fixed : Photo Gallery shortcode generator in Visual Editor mode
 * Fixed : Banner Rotator skin for WP v3.0
 * Added : Ukrainian translation
 
 = v1.40 - 18.07.2011 = 
-* Added : Video playlist creation
+* Added : Video gallery playlist creation
 * Added : Video blog skin
-* Added : Banner box page
+* Added : Banner box page to create banner rotators and 3d content galleries
 * Added : Banner Rotator skin
-* Added : Facebook link generator for Video and Banner
-* Added : Album creation
-* Added : Option to disable jQuery alternative gallery for iPad/iPhone
+* Added : Facebook link generator for Video gallery and Banner rotator
+* Added : Album of galleries creation
+* Added : Option to disable alternative jQuery gallery for iPad/iPhone
 * Updated : swf files for skin options, mp3 mini.swf, video_mini.swf
 
 = v1.33 - 13.07.2011 = 
-* Major Update
+* Major Update for Flash Album Gallery
 * Fixed : Bug with music and video sorting in playlists
 
 = v1.32 - 12.07.2011 =
-* Fixed : Bug with Shortcode insertion via TinyMCE button
-* Updated : video player (new version)
+* Fixed : Bug with Image Gallery Shortcode insertion via TinyMCE button
+* Updated : Video player (new version)
 * Updated : Wordpress v.3.2 compatibility 
 
 = v1.31 - 04.07.2011 =
-* Added : Creating Multicategorized albums
+* Added : Creating Multicategorized photo albums with galleries
 * Added : Options for Single MP3 Player
 * Fixed : Skins settings changing
 * Fixed : Bug with Database capitalized prefix
@@ -68,19 +68,19 @@ For more information review [photo gallery demos](http://codeasily.com/wordpress
 * Added : Import flv files from server folder to WP Media Library
 
 = v1.22 - 11.06.2011 =
-* Fixed : Facebook template (you should copy facebook.php in the root directory again if you did it before)
+* Fixed : Facebook gallery template (you should copy facebook.php in the root directory again if you did it before)
 * Fixed : php4 compatibility
 * Added : Autoplay option to Music player (you should update skins)
-* Fixed : alternate gallery show only if no flash
+* Fixed : alternate jQuery gallery show only if no flash
 
 = v1.21 - 07.06.2011 =
-* Fixed : javascript for Alternative gallery
+* Fixed : javascript for alternative jQuery gallery
 * Fixed : php4 unexpected T_STATIC error
 
 = v1.20 - 06.06.2011 =
-* Updated : Music skin (added autoplay option)
+* Updated : Music player skin (added autoplay option)
 * Added : Alternate jQuery gallery for iPad, iPhone
-* Added : Options for alternate gallery
+* Added : Options for alternate jQuery gallery
 * Added : additional javascript for flash
 * Changed : swfObject output for all galleries
 * Updated : cPanel.swf for skin optoins
@@ -90,8 +90,8 @@ For more information review [photo gallery demos](http://codeasily.com/wordpress
 
 = v1.12 - 24.05.2011 =
 * Added : Roles for Music and Facebook pages
-* Updated : Midnight Skin v3.0
-* Fixed : Facebook generator javascript on Mac browsers
+* Updated : Midnight Skin v3.0 for photo gallery
+* Fixed : Facebook image gallery generator javascript on Mac browsers
 
 = v1.11 - 23.05.2011 =
 * Added : Music gallery 'Music Box'
@@ -105,25 +105,25 @@ For more information review [photo gallery demos](http://codeasily.com/wordpress
 * Fixed : Security fix in two files
 
 = v0.59 - 23.03.2011 =
-* Fixed : Fix for default skins - don't load empty galleries
+* Fixed : Fix for default skins - don't load empty photo galleries
 * Fixed : Fix for edit big thumbs
-* Notice : New skin released today
+* Notice : New photo gallery flash skin released today
 
 = v0.58pl1 - 19.02.2011 =
 * Changed : Fix for compatibility with new skin
-* Notice : new skin released today
+* Notice : New photo gallery flash skin released today
 
 = v0.58 - 17.02.2011 =
 * Changed : core files for skins swfobject
-* Notice : all feature skins require plugin v0.58 or higher
+* Notice : all feature photo gallery skins require plugin v0.58 or higher
 
 = v0.57 - 17.02.2011 =
 * Added : js for feature skin
 * Fixed : small fixes
 
 = v0.56 - 17.02.2011 =
-* Fixed : transparent and bg color for skins
-* Added : functionality for feature skin
+* Fixed : transparent and bg color for image gallery skins
+* Added : functionality for feature  flash photo gallery skin
 
 = v0.55 - 18.01.2011 =
 * Removed : disablescroll.js - very buggy
@@ -165,13 +165,13 @@ For more information review [photo gallery demos](http://codeasily.com/wordpress
 * Changed : Replaced all php short_open_tag from '<?=...?>' to '<?php echo ...; ?>'
 
 = v0.41 - 25.03.2010 =
-* Bugfix : Skin options didn't save colors
+* Bugfix : Photo gallery Skin options didn't save colors
 
 = v0.40 - 24.03.2010 =
 * Change : DataBase structure 
-* Change : Skin options now on skins page 
-* Change : Skins now in separate folder outside of plugin folder 
-* Added : Each skin has own color settings saved in file
+* Change : Photo gallery Skin options now on skins page 
+* Change : Skins now in separate folder outside of Flash Album Gallery plugin folder 
+* Added : Each image gallery skin has own color settings saved in file
 * Added : Hide image for unregistered users option
 * Added : SWFaddress for deeplinking in flash
 * Added : Meta data for Images
@@ -185,7 +185,7 @@ For more information review [photo gallery demos](http://codeasily.com/wordpress
 * Added : German translation
 
 = v0.39pl2 - 04.02.2010 =
-* Bugfix : TinyMCE button insert wrong shortcode 
+* Bugfix : TinyMCE button insert wrong shortcode for flash photo gallery
 * Bugfix : Color tab and color settings not showing 
 
 = v0.39pl1 - 31.01.2010 =
@@ -197,7 +197,7 @@ For more information review [photo gallery demos](http://codeasily.com/wordpress
 * Bugfix : bugfixes for WP2.9  
 
 = v0.38 - 08.12.2009 =
-* Added : Shortcode parameters (orderby=gid | title | random, order=DESC | ASC, exclude, skin) 
+* Added : Photo gallery shortcode parameters (orderby=gid | title | random, order=DESC | ASC, exclude, skin) 
 * Added : Popup tabs for additional shortcode parameters 
 * Added : Ability to add more flash albums in post/posts with different skins 
 * Added : Ability set default skin colors or leave your own 
@@ -205,7 +205,7 @@ For more information review [photo gallery demos](http://codeasily.com/wordpress
 
 = v0.37 - 13.11.2009 =
 * Added : French translation 
-* Bugfix : Fix for Skin page (blank page)  
+* Bugfix : Fix for GRAND Flash Album Gallery Skin page (blank page)  
 
 = v0.36 - 5.11.2009 =
 * Added : Italian translation 
@@ -226,7 +226,7 @@ For more information review [photo gallery demos](http://codeasily.com/wordpress
 * Bugfix : Fix editor buttons in IE 
 
 = v0.32 - 30.09.2009 =
-* Added : Skin "PhotoGallery PRO 1.0 DEMO" 
+* Added : Skin "Photo Gallery PRO 1.0 DEMO" 
 * Bugfix : Fix for image date & time 
 * Bugfix : Fixed html special chars in description of image 
 * Changed : Database structure 
