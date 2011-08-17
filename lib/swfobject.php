@@ -136,7 +136,7 @@ function flagShowVPlayer($playlist, $width, $height, $wmode='') {
 		'wmode' 	=> $wmode
 	);
 	$out = apply_filters( 'flagShowVideoSkin', $args );
-	return $out;	
+	return $out;
 }
 
 function flagShowVmPlayer($id, $w, $h, $autoplay) {
@@ -181,7 +181,7 @@ function flagShowVmPlayer($id, $w, $h, $autoplay) {
 }
 
 function flagShowBanner($xml, $width, $height, $wmode='') {
-	
+
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
     require_once ( dirname(dirname(__FILE__)) . '/admin/banner.functions.php');
 
@@ -193,15 +193,41 @@ function flagShowBanner($xml, $width, $height, $wmode='') {
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	$args = array(
-		'xml'		=> $xml, 
-		'skin' 		=> $skin, 
-		'items' 	=> $items, 
-		'width' 	=> $width, 
+		'xml'		=> $xml,
+		'skin' 		=> $skin,
+		'items' 	=> $items,
+		'width' 	=> $width,
 		'height' 	=> $height,
 		'wmode' 	=> $wmode
 	);
 	$out = apply_filters( 'flagShowBannerSkin', $args );
-	return $out;	
+	return $out;
+}
+
+function flagShowWidgetBanner($xml, $width, $height, $skin, $wmode='') {
+
+	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
+    require_once ( dirname(dirname(__FILE__)) . '/admin/banner.functions.php');
+
+	$flag_options = get_option('flag_options');
+	$playlistPath = $flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml';
+	$playlist_data = get_b_playlist_data(ABSPATH.$playlistPath);
+	if(!$skin) {
+		$skin = $playlist_data['skin'];
+	}
+	$items = $playlist_data['items'];
+	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+	include_once ( $skinpath.'/'.$skin.'.php' );
+	$args = array(
+		'xml'		=> $xml,
+		'skin' 		=> $skin,
+		'items' 	=> $items,
+		'width' 	=> $width,
+		'height' 	=> $height,
+		'wmode' 	=> $wmode
+	);
+	$out = apply_filters( 'flagShowWidgetBannerSkin', $args );
+	return $out;
 }
 
 function flagGetBetween($content,$start,$end){

@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 1.42
+Version: 1.43
 Author: Sergey Pasyuk
 Author URI: http://codeasily.com/
 
@@ -37,7 +37,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 	
-	var $version     = '1.42';
+	var $version     = '1.43';
 	var $dbversion   = '1.24';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '2.8';
@@ -196,7 +196,7 @@ class flagLoad {
 		require_once (dirname (__FILE__) . '/lib/core.php'); 
 		require_once (dirname (__FILE__) . '/lib/flag-db.php');
 		require_once (dirname (__FILE__) . '/lib/image.php');
-		//require_once (dirname (__FILE__) . '/widgets/widgets.php');
+		require_once (dirname (__FILE__) . '/widgets/widgets.php');
 
 		// We didn't need all stuff during a AJAX operation
 		if ( defined('DOING_AJAX') )

@@ -4,213 +4,330 @@
 */
 
 /**
- * flagWidget - The widget control for GRAND FlAGallery ( require WP2.5 or higher)
+ * flagSlideshowWidget - The slideshow widget control for GRAND FlAGallery ( require WP2.8 or higher)
  *
  * @package GRAND FlAGallery
- * @version 1.0
  * @access public
  */
-if (!class_exists('flagWidget')) { 
-class flagWidget {
-	
-	function flagWidget() {
-	
-		// Run our code later in case this loads prior to any required plugins.
-		add_action('widgets_init', array(&$this, 'flag_widget_register'));
-		
+class flagSlideshowWidget extends WP_Widget {
+
+	function flagSlideshowWidget() {
+		$widget_ops = array('classname' => 'widget_slideshow', 'description' => __( 'Show a GRAND FlAGallery Slideshow', 'flag') );
+		$this->WP_Widget('flag-slideshow', __('FLAGallery Slideshow', 'flag'), $widget_ops);
 	}
-	
-	function flag_widget_register() {
 
-		if ( !$options = get_option('flag_widget') )
-			$options = array();
-		
-		$widget_ops = array('classname' => 'flag_images', 'description' => __( 'Add recent or random images from the galleries','flag' ));
-		$control_ops = array('width' => 250, 'height' => 200, 'id_base' => 'flag-images');
-		$name = __('FlAGallery Widget','flag');
-		$id = false;
+	function widget( $args, $instance ) {
+		extract( $args );
 
-		foreach ( array_keys($options) as $o ) {
-			// Old widgets can have null values for some reason
-			if ( !isset($options[$o]['title']) )
-				continue;
-				
-			$id = "flag-images-$o"; // Never never never translate an id
-			wp_register_sidebar_widget($id, $name, array(&$this, 'flag_widget_output'), $widget_ops, array( 'number' => $o ) );
-			wp_register_widget_control($id, $name, array(&$this, 'flag_widget_control'), $control_ops, array( 'number' => $o ));
+		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __('Slideshow', 'flag') : $instance['title'], $instance, $this->id_base);
+
+		$out = $this->render_slideshow($instance['galleryid'] , $instance['width'] , $instance['height'] , $instance['skin']);
+
+		if ( !empty( $out ) ) {
+			echo $before_widget;
+			if ( $title)
+				echo $before_title . $title . $after_title;
+		?>
+		<div class="flag_slideshow widget">
+			<?php echo $out; ?>
+		</div>
+		<?php
+			echo $after_widget;
 		}
 
-		// If there are none, we register the widget's existance with a generic template
-		if ( !$id ) {
-			wp_register_sidebar_widget( 'flag-images-1', $name, array(&$this, 'flag_widget_output'), $widget_ops, array( 'number' => -1 ) );
-			wp_register_widget_control( 'flag-images-1', $name, array(&$this, 'flag_widget_control'), $control_ops, array( 'number' => -1 ) );
-		}
+	}
 
-	 }
+	function render_slideshow($gid, $w = '100%', $h = '200', $skin = 'default') {
+        $out = do_shortcode('[flagallery gid='.$gid.' name=\' \' w='.$w.' h='.$h.' skin='.$skin.']');
+		return $out;
+	}
 
-	function flag_widget_control($widget_args = 1) {
-		
-		global $wp_registered_widgets;
-		static $updated = false;
-		
-		// Get the widget ID
-		if (is_numeric($widget_args))
-			$widget_args = array('number' => $widget_args);
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
 
-		$widget_args = wp_parse_args($widget_args, array('number' => -1));
-		extract($widget_args, EXTR_SKIP);
+		$instance['title'] = strip_tags($new_instance['title']);
+		$instance['galleryid'] = (int) $new_instance['galleryid'];
+		$instance['height'] = (int) $new_instance['height'];
+		$instance['width'] = $new_instance['width'];
+		$instance['skin'] = $new_instance['skin'];
 
-		$options = get_option('flag_widget');
-		if ( !is_array($options) )
-			$options = array();
-	
-		if (!$updated && !empty($_POST['sidebar'])) {
-			$sidebar = (string) $_POST['sidebar'];
+		return $instance;
+	}
 
-			$sidebars_widgets = wp_get_sidebars_widgets();
-			if ( isset($sidebars_widgets[$sidebar]) )
-				$this_sidebar = &$sidebars_widgets[$sidebar];
-			else
-				$this_sidebar = array();
+	function form( $instance ) {
 
-			foreach ( $this_sidebar as $_widget_id ) {
-				// Remove all widgets of this type from the sidebar.  We'll add the new data in a second.  This makes sure we don't get any duplicate data
-				// since widget ids aren't necessarily persistent across multiple updates
-				if ( 'flag_images' == $wp_registered_widgets[$_widget_id]['classname'] 
-					&& 	isset($wp_registered_widgets[$_widget_id]['params'][0]['number']) ) {
-					
-					$widget_number = $wp_registered_widgets[$_widget_id]['params'][0]['number'];
-					if (!in_array( "flag-images-$widget_number", $_POST['widget-id'])) // the widget has been removed.
-						unset($options[$widget_number]);
+		global $wpdb;
+
+		require_once (dirname( dirname(__FILE__) ) . '/admin/get_skin.php');
+
+		//Defaults
+		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Slideshow', 'galleryid' => '0', 'height' => '200', 'width' => '100%', 'skin' => 'default') );
+		$title  = esc_attr( $instance['title'] );
+		$height = esc_attr( $instance['height'] );
+		$width  = esc_attr( $instance['width'] );
+		$skin  = esc_attr( $instance['skin'] );
+		$tables = $wpdb->get_results("SELECT * FROM $wpdb->flaggallery ORDER BY 'name' ASC ");
+		$all_skins = get_skins();
+?>
+		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('galleryid'); ?>"><?php _e('Select Gallery:', 'flag'); ?></label>
+				<select size="1" name="<?php echo $this->get_field_name('galleryid'); ?>" id="<?php echo $this->get_field_id('galleryid'); ?>" class="widefat">
+<?php
+				if($tables) {
+					foreach($tables as $table) {
+					echo '<option value="'.$table->gid.'" ';
+					if ($table->gid == $instance['galleryid']) echo "selected='selected' ";
+					echo '>'.$table->gid.' - '.$table->name.'</option>'."\n\t";
+					}
 				}
-			}
+?>
+				</select>
+		</p>
+		<p><label for="<?php echo $this->get_field_id('height'); ?>"><?php _e('Height:', 'flag'); ?></label> <input id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" style="padding: 3px; width: 45px;" value="<?php echo $height; ?>" /></p>
+		<p><label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width:', 'flag'); ?></label> <input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" style="padding: 3px; width: 45px;" value="<?php echo $width; ?>" /></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('skin'); ?>"><?php _e('Select Skin:', 'flag'); ?></label>
+				<select size="1" name="<?php echo $this->get_field_name('skin'); ?>" id="<?php echo $this->get_field_id('skin'); ?>" class="widefat">
+					<option value="" <?php if (0 == $instance['skin']) echo "selected='selected' "; ?> ><?php _e('Choose Skin', 'flag'); ?></option>
+<?php
+				if($all_skins) {
+					foreach ( (array)$all_skins as $skin_file => $skin_data) {
+						echo '<option value="'.dirname($skin_file).'"';
+						if (dirname($skin_file) == $instance['skin']) echo ' selected="selected"';
+						echo '>'.$skin_data['Name'].'</option>'."\n";
+					}
+				}
+?>
+				</select>
+		</p>
+<?php
+	}
 
-			foreach ( (array) $_POST['widget_flag_images'] as $widget_number => $widget_flag_images ) {
-				if ( !isset($widget_flag_images['width']) && isset($options[$widget_number]) ) // user clicked cancel
-					continue;
-					
-				$widget_flag_images = stripslashes_deep( $widget_flag_images );
-				$options[$widget_number]['title']	= $widget_flag_images['title'];
-				$options[$widget_number]['items']	= (int) $widget_flag_images['items'];
-				$options[$widget_number]['type']	= $widget_flag_images['type'];
-				$options[$widget_number]['show']	= $widget_flag_images['show'];
-				$options[$widget_number]['width']	= (int) $widget_flag_images['width'];
-				$options[$widget_number]['height']	= (int) $widget_flag_images['height'];
-				$options[$widget_number]['exclude']	= $widget_flag_images['exclude'];
-				$options[$widget_number]['list']	= $widget_flag_images['list'];
-				$options[$widget_number]['webslice']= (bool) $widget_flag_images['webslice'];
+}
 
-			}
+// register it
+//add_action('widgets_init', create_function('', 'return register_widget("flagSlideshowWidget");'));
 
-			update_option('flag_widget', $options);
-			$updated = true;
+
+class flagBannerWidget extends WP_Widget {
+
+	function flagBannerWidget() {
+		$widget_ops = array('classname' => 'widget_banner', 'description' => __( 'Show a GRAND FlAGallery Banner', 'flag') );
+		$this->WP_Widget('flag-banner', __('FLAGallery Banner', 'flag'), $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+
+		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __('Banner', 'flag') : $instance['title'], $instance, $this->id_base);
+
+		$out = $this->render_slideshow($instance['xml'] , $instance['width'] , $instance['height'] , $instance['skin']);
+
+		if ( !empty( $out ) ) {
+			echo $before_widget;
+			if ( $title)
+				echo $before_title . $title . $after_title;
+		?>
+		<div class="flag_banner widget">
+			<?php echo $out; ?>
+		</div>
+		<?php
+			echo $after_widget;
 		}
+
+	}
+
+	function render_slideshow($xml, $w = '100%', $h = '200', $skin = '') {
+        $out = do_shortcode('[grandbannerwidget xml='.$xml.' w='.$w.' h='.$h.' skin='.$skin.']');
+		return $out;
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+
+		$instance['title'] = strip_tags($new_instance['title']);
+		$instance['xml'] = $new_instance['xml'];
+		$instance['height'] = (int) $new_instance['height'];
+		$instance['width'] = $new_instance['width'];
+		$instance['skin'] = $new_instance['skin'];
+
+		return $instance;
+	}
+
+	function form( $instance ) {
+
+		global $wpdb;
+
+		require_once (dirname( dirname(__FILE__) ) . '/admin/get_skin.php');
+		require_once (dirname( dirname(__FILE__) ) . '/admin/banner.functions.php');
+
+		//Defaults
+		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Banner', 'xml' => '', 'width' => '100%', 'height' => '200', 'skin' => 'banner_widget_default') );
+		$title  = esc_attr( $instance['title'] );
+		$width  = esc_attr( $instance['width'] );
+		$height = esc_attr( $instance['height'] );
+		$skin  = esc_attr( $instance['skin'] );
+		$all_playlists = get_b_playlists();
+		$all_skins = get_skins(false,'w');
+?>
+		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('xml'); ?>"><?php _e('Select XML:', 'flag'); ?></label>
+				<select size="1" name="<?php echo $this->get_field_name('xml'); ?>" id="<?php echo $this->get_field_id('xml'); ?>" class="widefat">
+<?php
+	foreach((array)$all_playlists as $playlist_file => $playlist_data) {
+		$playlist_name = basename($playlist_file, '.xml');
+?>
+					<option <?php selected($playlist_name , $instance['xml']); ?> value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+<?php
+	}
+?>
+				</select>
+		</p>
+		<p><label for="<?php echo $this->get_field_id('height'); ?>"><?php _e('Height:', 'flag'); ?></label> <input id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" style="padding: 3px; width: 45px;" value="<?php echo $height; ?>" /></p>
+		<p><label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width:', 'flag'); ?></label> <input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" style="padding: 3px; width: 45px;" value="<?php echo $width; ?>" /></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('skin'); ?>"><?php _e('Select Skin:', 'flag'); ?></label>
+				<select size="1" name="<?php echo $this->get_field_name('skin'); ?>" id="<?php echo $this->get_field_id('skin'); ?>" class="widefat">
+<?php
+				if($all_skins) {
+					foreach ( (array)$all_skins as $skin_file => $skin_data) {
+						echo '<option value="'.dirname($skin_file).'"';
+						if (dirname($skin_file) == $instance['skin']) echo ' selected="selected"';
+						echo '>'.$skin_data['Name'].'</option>'."\n";
+					}
+				}
+?>
+				</select>
+		</p>
+<?php
+	}
+
+}
+
+// register it
+add_action('widgets_init', create_function('', 'return register_widget("flagBannerWidget");'));
+
+
+/**
+ * flagWidget - The widget control for GRAND FlAGallery
+ *
+ * @package GRAND FlAGallery
+ * @access public
+ */
+class flagWidget extends WP_Widget {
+    
+   	function flagWidget() {
+		$widget_ops = array('classname' => 'flag_images', 'description' => __( 'Add recent or random images from the galleries', 'flag') );
+		$this->WP_Widget('flag-images', __('FLAGallery Widget', 'flag'), $widget_ops);
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
 		
-		if ( -1 == $number ) {
-			// Init parameters check
-			$title = 'Gallery';
-			$items = 4;
-			$type = 'random';
-			$show= 'thumbnail';
-			$width = 75;
-			$height = 50;
-			$exclude = 'all';
-			$list = '';
-			$number = '%i%';
-			$webslice = true;
-		} else {
-			extract( (array) $options[$number] );
-		}
+		$instance['title']	= strip_tags($new_instance['title']);
+		$instance['items']	= (int) $new_instance['items'];
+		$instance['type']	= $new_instance['type'];
+		$instance['width']	= (int) $new_instance['width'];
+		$instance['height']	= (int) $new_instance['height'];
+		$instance['exclude'] = $new_instance['exclude'];
+		$instance['list']	 = $new_instance['list'];
+		$instance['webslice']= (bool) $new_instance['webslice'];
 
-		// The form has inputs with names like widget-many[$number][something] so that all data for that instance of
-		// the widget are stored in one $_POST variable: $_POST['widget-many'][$number]
+		return $instance;
+	}
+
+	function form( $instance ) {
+		
+		//Defaults
+		$instance = wp_parse_args( (array) $instance, array( 
+            'title' => 'Gallery', 
+            'items' => '4',
+            'type'  => 'random',
+            'height' => '50', 
+            'width' => '75',
+            'exclude' => 'all',
+            'list'  =>  '',
+            'webslice'  => true ) );
+		$title  = esc_attr( $instance['title'] );
+		$items  = intval  ( $instance['items'] );
+        $height = esc_attr( $instance['height'] );
+		$width  = esc_attr( $instance['width'] );
+
 		?>
 
 		<p>
-			<label for="flag_images-title-<?php echo $number; ?>"><?php _e('Title :','flag'); ?>
-			<input id="flag_images-title-<?php echo $number; ?>" name="widget_flag_images[<?php echo $number; ?>][title]; ?>" type="text" class="widefat" value="<?php echo $title; ?>" />
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title :','flag'); ?>
+			<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title');?>" type="text" class="widefat" value="<?php echo $title; ?>" />
 			</label>
 		</p>
 			
 		<p>
-			<label for="flag_images-items-<?php echo $number; ?>"><?php _e('Show :','flag'); ?><br />
-			<select id="flag_images-items-<?php echo $number; ?>" name="widget_flag_images[<?php echo $number; ?>][items]">
-				<?php for ( $i = 1; $i <= 10; ++$i ) echo "<option value='$i' ".($items==$i ? "selected='selected'" : '').">$i</option>"; ?>
-			</select>
-			<select id="flag_images-show-<?php echo $number; ?>" name="widget_flag_images[<?php echo $number; ?>][show]" >
-				<option <?php selected("thumbnail" , $show); ?> value="thumbnail"><?php _e('Thumbnails','flag'); ?></option>
-				<option <?php selected("original" , $show); ?> value="original"><?php _e('Original images','flag'); ?></option>
-			</select>
+			<?php _e('Show :','flag'); ?><br />
+			<label for="<?php echo $this->get_field_id('items'); ?>">
+			<input style="width: 50px;" id="<?php echo $this->get_field_id('items'); ?>" name="<?php echo $this->get_field_name('items');?>" type="text" value="<?php echo $items; ?>" />
+			</label>
+			<?php _e('Thumbnails','flag'); ?>
+		</p>
+
+		<p>
+			<label for="<?php echo $this->get_field_id('type'); ?>_random">
+			<input id="<?php echo $this->get_field_id('type'); ?>_random" name="<?php echo $this->get_field_name('type'); ?>" type="radio" value="random" <?php checked("random" , $instance['type']); ?> /> <?php _e('random','flag'); ?>
+			</label>
+            <label for="<?php echo $this->get_field_id('type'); ?>_recent">
+            <input id="<?php echo $this->get_field_id('type'); ?>_recent" name="<?php echo $this->get_field_name('type'); ?>" type="radio" value="recent" <?php checked("recent" , $instance['type']); ?> /> <?php _e('recent added ','flag'); ?>
 			</label>
 		</p>
 
 		<p>
-			<label for="widget_flag_images<?php echo $number; ?>">&nbsp;
-			<input name="widget_flag_images[<?php echo $number; ?>][type]" type="radio" value="random" <?php checked("random" , $type); ?> /> <?php _e('random','flag'); ?>
-			<input name="widget_flag_images[<?php echo $number; ?>][type]" type="radio" value="recent" <?php checked("recent" , $type); ?> /> <?php _e('recent added ','flag'); ?>
+			<label for="<?php echo $this->get_field_id('webslice'); ?>">
+			<input id="<?php echo $this->get_field_id('webslice'); ?>" name="<?php echo $this->get_field_name('webslice'); ?>" type="checkbox" value="1" <?php checked(true , $instance['webslice']); ?> /> <?php _e('Enable IE8 Web Slices','flag'); ?>
 			</label>
 		</p>
 
 		<p>
-			<label for="flag_webslice<?php echo $number; ?>">&nbsp;
-			<input id="flag_webslice<?php echo $number; ?>" name="widget_flag_images[<?php echo $number; ?>][webslice]" type="checkbox" value="1" <?php checked(true , $webslice); ?> /> <?php _e('Enable IE8 Web Slices','flag'); ?>
-			</label>
+			<?php _e('Width x Height :','flag'); ?><br />
+			<input style="width: 50px; padding:3px;" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo $width; ?>" /> x
+			<input style="width: 50px; padding:3px;" id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo $height; ?>" /> (px)
 		</p>
 
 		<p>
-			<label for="flag_images-width-<?php echo $number; ?>"><?php _e('Width x Height :','flag'); ?><br />
-			<input style="width: 50px; padding:3px;" id="flag_images-width-<?php echo $number; ?>" name="widget_flag_images[<?php echo $number; ?>][width]" type="text" value="<?php echo $width; ?>" /> x
-			<input style="width: 50px; padding:3px;" id="flag_images-height-<?php echo $number; ?>" name="widget_flag_images[<?php echo $number; ?>][height]" type="text" value="<?php echo $height; ?>" /> (px)
-			</label>
-		</p>
-
-		<p>
-			<label for="flag_images-exclude-<?php echo $number; ?>"><?php _e('Select :','flag'); ?>
-			<select id="flag_images-exclude-<?php echo $number; ?>" name="widget_flag_images[<?php echo $number; ?>][exclude]" class="widefat">
-				<option <?php selected("all" , $exclude); ?>  value="all" ><?php _e('All galleries','flag'); ?></option>
-				<option <?php selected("denied" , $exclude); ?> value="denied" ><?php _e('Only which are not listed','flag'); ?></option>
-				<option <?php selected("allow" , $exclude); ?>  value="allow" ><?php _e('Only which are listed','flag'); ?></option>
+			<label for="<?php echo $this->get_field_id('exclude'); ?>"><?php _e('Select :','flag'); ?>
+			<select id="<?php echo $this->get_field_id('exclude'); ?>" name="<?php echo $this->get_field_name('exclude'); ?>" class="widefat">
+				<option <?php selected("all" , $instance['exclude']); ?>  value="all" ><?php _e('All galleries','flag'); ?></option>
+				<option <?php selected("denied" , $instance['exclude']); ?> value="denied" ><?php _e('Only which are not listed','flag'); ?></option>
+				<option <?php selected("allow" , $instance['exclude']); ?>  value="allow" ><?php _e('Only which are listed','flag'); ?></option>
 			</select>
 			</label>
 		</p>
 
 		<p>
-			<label for="flag_images-list-<?php echo $number; ?>"><?php _e('Gallery ID :','flag'); ?>
-			<input id="flag_images-list-<?php echo $number; ?>" name="widget_flag_images[<?php echo $number; ?>][list]" type="text" class="widefat" value="<?php echo $list; ?>" />
-			<br/><small><?php _e('Gallery IDs, separated by commas.','flag'); ?></small>
+			<label for="<?php echo $this->get_field_id('list'); ?>"><?php _e('Gallery ID :','flag'); ?>
+			<input id="<?php echo $this->get_field_id('list'); ?>" name="<?php echo $this->get_field_name('list'); ?>" type="text" class="widefat" value="<?php echo $instance['list']; ?>" />
+			<br /><small><?php _e('Gallery IDs, separated by commas.','flag'); ?></small>
 			</label>
 		</p>
-
-		<input type="hidden" id="flag_images-submit-<?php echo $number; ?>" name="widget_flag_images[<?php echo $number; ?>][submit]" value="1" />
 		
 	<?php
 	
 	}
 
-	function flag_widget_output($args, $widget_args = 1 , $options = false) {
+	function widget( $args, $instance ) {
+		extract( $args );
+        
+        $title = apply_filters('widget_title', empty($instance['title']) ? '&nbsp;' : $instance['title'], $instance, $this->id_base);
 
 		global $wpdb;
 				
-		extract($args, EXTR_SKIP);
-		if ( is_numeric($widget_args) )
-			$widget_args = array( 'number' => $widget_args );
-		
-		$widget_args = wp_parse_args( $widget_args, array( 'number' => -1 ) );
-		extract($widget_args, EXTR_SKIP);
-
-		// We could get this also as parameter
-		if (!$options)				
-			$options = get_option('flag_widget');
-			
-		$title = $options[$number]['title'];
-		$items 	= $options[$number]['items'];
-		$exclude = $options[$number]['exclude'];
-		$list = $options[$number]['list'];
-		$webslice = $options[$number]['webslice'];
+		$items 	= $instance['items'];
+		$exclude = $instance['exclude'];
+		$list = $instance['list'];
+		$webslice = $instance['webslice'];
 
 		$count = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->flagpictures WHERE exclude != 1 ");
-		if ($count < $options[$number]['items']) 
-			$options[$number]['items'] = $count;
+		if ($count < $instance['items']) 
+			$instance['items'] = $count;
 
 		$exclude_list = '';
 
@@ -225,18 +342,22 @@ class flagWidget {
 
 			if ($exclude == 'allow')	
 				$exclude_list = "AND t.gid IN ($list)";
+            
+            // Limit the output to the current author, can be used on author template pages
+            if ($exclude == 'user_id' )
+                $exclude_list = "AND t.author IN ($list)";                
 		}
 		
-		if ( $options[$number]['type'] == 'random' ) 
+		if ( $instance['type'] == 'random' ) 
 			$imageList = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 $exclude_list ORDER by rand() limit {$items}");
 		else
 			$imageList = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 $exclude_list ORDER by pid DESC limit 0,$items");
 		
+        // IE8 webslice support if needed
 		if ( $webslice ) {
-			//TODO:  If you change the title, it will not show up in widget admin panel
-			$before_title  = "\n" . '<div class="hslice" id="flag-webslice" >' . "\n";
-			$before_title .= '<h2 class="widgettitle entry-title">';
-			$after_title   = '</h2>';
+			$before_widget .= "\n" . '<div class="hslice" id="flag-webslice" >' . "\n";
+            //the headline needs to have the class enty-title
+            $before_title  = str_replace( 'class="' , 'class="entry-title ', $before_title);
 			$after_widget  =  '</div>'."\n" . $after_widget;			
 		}	
 		                      
@@ -248,20 +369,16 @@ class flagWidget {
 				// get the URL constructor
 				$image = new flagImage($image);
 
+				// get the effect code
+				$thumbcode = 'class="flag_fancybox" rel="flag_widget"';
+				
 				// enable i18n support for alttext and description
-				$alttext      =  htmlspecialchars( stripslashes( flagGallery::i18n($image->alttext) ));
-				$description  =  htmlspecialchars( stripslashes( flagGallery::i18n($image->description) ));
+				$alttext      =  htmlspecialchars( stripslashes( flagGallery::i18n($image->alttext, 'pic_' . $image->pid . '_alttext') ));
+				$description  =  htmlspecialchars( stripslashes( flagGallery::i18n($image->description, 'pic_' . $image->pid . '_description') ));
 				
 				//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
-				$out = '<a href="' . $image->imageURL . '" title="' . $description . '">';
-				// Typo fix for the next updates (happend until 1.0.2)
-				$options[$number]['show'] = ( $options[$number]['show'] == 'orginal' ) ? 'original' : $options[$number]['show'];
-				
-				if ( $options[$number]['show'] == 'original' )
-					$out .= '<img src="'.FLAG_URLPATH.'flagshow.php?pid='.$image->pid.'&amp;width='.$options[$number]['width'].'&amp;height='.$options[$number]['height']. '" title="'.$alttext.'" alt="'.$alttext.'" />';
-				else	
-					$out .= '<img src="'.$image->thumbURL.'" width="'.$options[$number]['width'].'" height="'.$options[$number]['height'].'" title="'.$alttext.'" alt="'.$alttext.'" />';			
-				
+				$out = '<a href="' . $image->imageURL . '" title="' . $description . '" ' . $thumbcode .'>';
+				$out .= '<img src="'.$image->thumbURL.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$alttext.'" />';			
 				echo $out . '</a>'."\n";
 				
 			}
@@ -273,9 +390,30 @@ class flagWidget {
 	}
 
 }// end widget class
+
+// register it
+//add_action('widgets_init', create_function('', 'return register_widget("flagWidget");'));
+
+/**
+ * flagSlideshowWidget($galleryID, $width, $height)
+ * Function for templates without widget support
+ * 
+ * @param integer $galleryID 
+ * @param string $width
+ * @param string $height
+ * @return echo the widget content
+ */
+function flagSlideshowWidget($gid, $w = '100%', $h = '200', $skin = 'default') {
+
+	echo flagSlideshowWidget::render_slideshow($gid, $w, $h, $skin);
+
 }
-// let's show it
-$flagWidget = new flagWidget;	
+
+function flagBannerWidget($xml, $w = '100%', $h = '200', $skin = 'default') {
+
+	echo flagBannerWidget::render_slideshow($xml, $w, $h, $skin);
+
+}
 
 /**
  * flagDisplayRandomImages($number,$width,$height,$exclude,$list,$show)
@@ -285,16 +423,18 @@ $flagWidget = new flagWidget;
  */
 function flagDisplayRandomImages($number, $width = '75', $height = '50', $exclude = 'all', $list = '', $show = 'thumbnail') {
 	
-	$options[1] = array('title'=>'', 
-						'items'=>$number,
-						'show'=>$show ,
-						'type'=>'random',
-						'width'=>$width, 
-						'height'=>$height, 
-						'exclude'=>$exclude,
-						'list'=>$list   );
-	
-	flagWidget::flag_widget_output($args = array(), 1, $options);
+	$options = array(   'title'    => false, 
+						'items'    => $number,
+						'show'     => $show ,
+						'type'     => 'random',
+						'width'    => $width, 
+						'height'   => $height, 
+						'exclude'  => $exclude,
+						'list'     => $list,
+                        'webslice' => false );
+                        
+	$flag_widget = new flagWidget();
+	$flag_widget->widget($args = array( 'widget_id'=> 'sidebar_1' ), $options);
 }
 
 /**
@@ -305,16 +445,18 @@ function flagDisplayRandomImages($number, $width = '75', $height = '50', $exclud
  */
 function flagDisplayRecentImages($number, $width = '75', $height = '50', $exclude = 'all', $list = '', $show = 'thumbnail') {
 
-	$options[1] = array('title'=>'', 
-						'items'=>$number,
-						'show'=>$show ,
-						'type'=>'recent',
-						'width'=>$width, 
-						'height'=>$height, 
-						'exclude'=>$exclude,
-						'list'=>$list   );
-	
-	flagWidget::flag_widget_output($args = array(), 1, $options);
+	$options = array(   'title'    => false, 
+						'items'    => $number,
+						'show'     => $show ,
+						'type'     => 'recent',
+						'width'    => $width, 
+						'height'   => $height, 
+						'exclude'  => $exclude,
+						'list'     => $list,
+                        'webslice' => false );
+                        
+	$flag_widget = new flagWidget();
+	$flag_widget->widget($args = array( 'widget_id'=> 'sidebar_1' ), $options);
 }
 
 ?>

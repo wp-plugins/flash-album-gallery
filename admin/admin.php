@@ -25,11 +25,28 @@ class flagAdminPanel{
 		require_once(dirname (__FILE__) . '/flag_install.php' );
 		$default_options = flag_list_options();
 		$flag_db_options = get_option('flag_options');
-		$flag_new_options = array_diff_key($default_options, $flag_db_options);
+		if(function_exists('array_diff_key')) {
+			$flag_new_options = array_diff_key($default_options, $flag_db_options);
+		} else {
+			$flag_new_options = $this->PHP4_array_diff_key($default_options, $flag_db_options);
+		}
 		$flag_options = array_merge($flag_db_options, $flag_new_options);
 		update_option('flag_options', $flag_options);
 	}
 
+	function PHP4_array_diff_key() {
+		$arrs = func_get_args();
+		$result = array_shift($arrs);
+		foreach ($arrs as $array) {
+			foreach ($result as $key => $v) {
+				if (array_key_exists($key, $array)) {
+					unset($result[$key]);
+				}
+			}
+		}
+		return $result;
+	}
+	
 	// integrate the menu	
 	function add_menu()  {
 		

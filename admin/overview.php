@@ -10,7 +10,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 function flag_admin_overview()  {	
 ?>
 <div class="wrap flag-wrap">
-	<h2><?php _e('FlAG Gallery Overview', 'flag'); echo ' v'.FLAGVERSION; ?></h2>
+	<h2><?php _e('GRAND FlAGallery Overview', 'flag'); echo ' v'.FLAGVERSION; ?></h2>
 	<div id="flag-overview" class="metabox-holder">
 		<div id="side-info-column" class="inner-sidebar" style="display:block;">
 				<?php do_meta_boxes('flag-overview', 'side', null); ?>

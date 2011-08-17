@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.43 - 17.08.2011 =
+* Added : Widget for Banner Rotator
+* Fixed : Change playlist options
+* Fixed : PHP4 Compatibility
+
 = v1.42 - 08.08.2011 = 
 * Major Bugfix
 * Fixed : Banner Rotator (update skins, please)

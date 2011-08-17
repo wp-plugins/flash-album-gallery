@@ -8,12 +8,12 @@ if ( !is_user_logged_in() )
 	die('-1');
 
 // check for correct FlAG capability
-if ( !current_user_can('FlAG Change skin') ) 
-	die('-1');	
+if ( !current_user_can('FlAG Change skin') )
+	die('-1');
 
 require_once (dirname (__FILE__) . '/get_skin.php');
 
-if( isset($_POST['installskin']) ) { 
+if( isset($_POST['installskin']) ) {
 	require_once (dirname (__FILE__) . '/skin_install.php');
 }
 add_action('install_skins_upload', 'upload_skin');
@@ -54,7 +54,7 @@ function upload_skin() {
 				if( !file_exists( $installed_skin.'settings.php' ) ) {
 					if( file_exists( $installed_skin.'xml.php' ) ) {
 						if ( !@copy(dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php') ) {
-							echo "<p>".sprintf(__('Failed to copy and rename %1$s to %2$s','flag'), 
+							echo "<p>".sprintf(__('Failed to copy and rename %1$s to %2$s','flag'),
 								dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php').'</p>';
 						}
 						$content = file_get_contents($installed_skin.'xml.php');
@@ -63,7 +63,7 @@ function upload_skin() {
 							$content = str_replace('/../../flag-config.php','/../../flash-album-gallery/flag-config.php',$content);
 							$fp = fopen($installed_skin.'xml.php','w');
 							if( fwrite($fp,$content) === FALSE ) {
-								echo "<p>".sprintf(__("Failed to search string '/../../flag-config.php' and replace with '/../../flash-album-gallery/flag-config.php' in file '%1$s'",'flag'), 
+								echo "<p>".sprintf(__("Failed to search string '/../../flag-config.php' and replace with '/../../flash-album-gallery/flag-config.php' in file '%1$s'",'flag'),
 									$installed_skin.'xml.php').'</p>';
 							}
 							fclose($fp);
@@ -99,7 +99,7 @@ function flag_skin_options_tab() {
 }
 
 
-if ( isset($_POST['updateskinoption']) ) {	
+if ( isset($_POST['updateskinoption']) ) {
 	check_admin_referer('skin_settings');
 	// get the hidden option fields, taken from WP core
 	if ( $_POST['skin_options'] )
@@ -115,7 +115,7 @@ if ( isset($_POST['updateskinoption']) ) {
 			$settings_content .= '$'.$option.' = \''.str_replace('#','',$value)."';\n";
 		}
 		$settings_content .= '?>'."\n";
-		// the path should always end with a slash	
+		// the path should always end with a slash
 		$flag->options['galleryPath']    = trailingslashit($flag->options['galleryPath']);
 	}
 	// Save options
@@ -126,10 +126,10 @@ if ( isset($_POST['updateskinoption']) ) {
 	}
 }
 
-if ( isset($_POST['updateoption']) ) {	
+if ( isset($_POST['updateoption']) ) {
 	check_admin_referer('flag_settings');
 	// get the hidden option fields, taken from WP core
-	if ( $_POST['page_options'] )	
+	if ( $_POST['page_options'] )
 		$options = explode(',', stripslashes($_POST['page_options']));
 	if ($options) {
 		foreach ($options as $option) {
@@ -137,13 +137,13 @@ if ( isset($_POST['updateoption']) ) {
 			$value = trim($_POST[$option]);
 			$flag->options[$option] = $value;
 		}
-		// the path should always end with a slash	
+		// the path should always end with a slash
 		$flag->options['galleryPath']    = trailingslashit($flag->options['galleryPath']);
 	}
 	// Save options
 	update_option('flag_options', $flag->options);
  	flagGallery::show_message(__('Update Successfully','flag'));
-}		
+}
 
 
 if ( isset($_GET['delete']) ) {
@@ -205,19 +205,19 @@ if( isset($_GET['skins_refresh']) ) {
 			<p><input type="file" name="skinzip" />
 			<input type="submit" class="button" name="installskin" value="<?php _e('Install Now', 'flag'); ?>" /></p>
 		</form>
-		<?php if( isset($_POST['installskin']) ) { 
-			do_action('install_skins_upload'); 
+		<?php if( isset($_POST['installskin']) ) {
+			do_action('install_skins_upload');
 		} ?>
 <?php } else { ?>
 		<p><?php _e('You do not have sufficient permissions to install skin through admin page. You can install it by uploading via ftp to /flagallery-skins/ folder.', 'flag'); ?></p>
 <?php } ?>
 	</div>
-	
+
 	<div id="skinoptions" class="cptab">
 		<h2><?php _e('Active Skin Options', 'flag'); ?></h2>
 		<?php flag_skin_options_tab(); ?>
 	</div>
-	<script type="text/javascript">	
+	<script type="text/javascript">
 		/* <![CDATA[ */
 		var cptabs=new ddtabcontent("tabs");
 		cptabs.setpersist(false);
@@ -233,7 +233,9 @@ if( isset($_GET['skins_refresh']) ) {
 <p><a class="button<?php if(!$type) echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins'); ?>"><span style="font-size: 14px;"><?php _e('image gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
 <a class="button<?php if($type == 'm') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=m'); ?>"><span style="font-size: 14px;"><?php _e('music gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
 <a class="button<?php if($type == 'v') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=v'); ?>"><span style="font-size: 14px;"><?php _e('video gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
-<a class="button<?php if($type == 'b') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=b'); ?>"><span style="font-size: 14px;"><?php _e('banner skins', 'flag'); ?></span></a></p>
+<a class="button<?php if($type == 'b') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=b'); ?>"><span style="font-size: 14px;"><?php _e('banner skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
+<a class="button<?php if($type == 'w') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=w'); ?>"><span style="font-size: 14px;"><?php _e('widget skins', 'flag'); ?></span></a>
+</p>
 
 <?php
 $all_skins = get_skins(false,$type);

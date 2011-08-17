@@ -126,27 +126,13 @@ function flagSave_vPlaylist($title,$descr,$data,$file='') {
 function flagSave_vPlaylistSkin($file) {
 	global $wpdb;
 	$flag_options = get_option('flag_options');
-    $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'video_default';
-    $skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
-	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
-	$playlist = file_get_contents($playlistPath);
-	$settings = file_get_contents($skinpath . "/settings/settings.xml");
-	//$oldproperties = flagGallery::flagGetBetween($playlist,'<properties>','</properties>');
-	$newproperties = flagGallery::flagGetBetween($settings,'<properties>','</properties>');
-	$content = preg_replace("|<properties>.*?</properties>|si", '<properties>'.$newproperties.'</properties>', $playlist, 1);
 	// Save options
-	if($skin == $skinaction)
-		flagGallery::saveFile($playlistPath,$content,'w');
-	else {
-		$title = $_POST['playlist_title'];
-		$descr = $_POST['playlist_descr'];
-		foreach($_POST['item_a'] as $item_id => $item) {
-			$data[] = $item_id;
-		}
-		$file = $_REQUEST['playlist'];
-		flagSave_vPlaylist($title,$descr,$data,$file,$skinaction='update');
-	}
+	$title = $_POST['playlist_title'];
+	$descr = $_POST['playlist_descr'];
+	$items = get_v_playlist_data($playlistPath);
+	$data = $items['items'];
+	flagSave_vPlaylist($title,$descr,$data,$file,$skinaction='update');
 }
 
 function flag_v_playlist_delete($playlist) {

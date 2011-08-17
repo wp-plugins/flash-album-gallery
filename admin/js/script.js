@@ -53,7 +53,7 @@ function waitFB() {
 			}
 			return false;
 		});
-
+		
 		alternate_flag_e('.flagcategory:first');
 	  });
 	}
@@ -92,3 +92,6 @@ function alternate_flag_e(t){
 if(fv.major<10) {
 	new FlAGClass(ExtendVar);
 }
+jQuery(document).ready(function() {
+	jQuery('a.flag_fancybox').fancybox();
+});

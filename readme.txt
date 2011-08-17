@@ -1,7 +1,7 @@
 === GRAND FlAGallery - Best Photo & Media Gallery ===
 Contributors: Rattus
 Donate link:
-Tags: admin,album,flash,gallery,image,images,image gallery,page,photo,photo gallery,plugin,portfolio,Post,posts,slideshow,mp3,music,video,player,Facebook,Twitter 
+Tags: admin,album,flash,gallery,image,images,image gallery,page,photo,photo gallery,plugin,portfolio,Post,posts,slideshow,mp3,music,video,player,Facebook,Twitter
 Requires at least: 3.0
 Tested up to: 3.2
 Stable tag: trunk
@@ -26,11 +26,16 @@ For more information review [photo gallery demos](http://codeasily.com/wordpress
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
-= v1.42 - 08.08.2011 = 
+= v1.43 - 17.08.2011 =
+* Added : Widget for Banner Rotator
+* Fixed : Change playlist options
+* Fixed : PHP4 Compatibility
+
+= v1.42 - 08.08.2011 =
 * Major Bugfix
 * Fixed : Banner Rotator (update skins, please)
 
-= v1.41 - 25.07.2011 = 
+= v1.41 - 25.07.2011 =
 * Fixed : Bug fix for WP v3.0.*
 * Fixed : Photo Gallery shortcode generator in Visual Editor mode
 * Fixed : Banner Rotator skin for WP v3.0

@@ -21,6 +21,7 @@ class FlAG_shortcodes {
 		add_shortcode( 'grandflv', array(&$this, 'grandflv' ) );
 		add_shortcode( 'grandvideo', array(&$this, 'grandvideo' ) );
 		add_shortcode( 'grandbanner', array(&$this, 'grandbanner' ) );
+		add_shortcode( 'grandbannerwidget', array(&$this, 'grandbannerwidget' ) );
 		add_action('wp_footer', array(&$this, 'add_script'));
 
 	}
@@ -212,7 +213,7 @@ class FlAG_shortcodes {
 		$out = sprintf(__('[XML %s not found]','flag'),$xml);
 		if($xml) {
 			$flag_options = get_option('flag_options');
-			if(!file_exists($flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml')) { 
+			if(!file_exists($flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml')) {
 				return $out;
 			}
 			$data = file_get_contents($flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml');
@@ -221,6 +222,30 @@ class FlAG_shortcodes {
 			if($swfmousewheel == 'true') $this->flag_add_mousewheel = true;
 			$this->flag_shortcode = true;
             $out = flagShowBanner($xml, $w, $h);
+		}
+        return $out;
+	}
+
+	function grandbannerwidget( $atts ) {
+
+		extract(shortcode_atts(array(
+			'xml'	=> '',
+			'w'		=> '',
+			'h'		=> '',
+			'skin'	=> ''
+		), $atts ));
+		$out = sprintf(__('[XML %s not found]','flag'),$xml);
+		if($xml) {
+			$flag_options = get_option('flag_options');
+			if(!file_exists($flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml')) {
+				return $out;
+			}
+			$data = file_get_contents($flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml');
+			$swfmousewheel = false;
+			$swfmousewheel = flagGetBetween($data,'<swfmousewheel>','</swfmousewheel>');
+			if($swfmousewheel == 'true') $this->flag_add_mousewheel = true;
+			$this->flag_shortcode = true;
+            $out = flagShowWidgetBanner($xml, $w, $h, $skin);
 		}
         return $out;
 	}
