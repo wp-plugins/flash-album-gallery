@@ -8,7 +8,7 @@ $isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']); // check if is a crowl
 #<?php echo $skinID ?>_jq { display: none; }
 <?php } ?>
 div#<?php echo $skinID; ?>_jq { position: relative; width: <?php echo $width; if(strpos($width, '%') === false) echo 'px'; ?>; height: <?php echo $height; ?>px; overflow: hidden; }
-div#<?php echo $skinID; ?>_next { position: absolute; padding: 3px 6px; right: 10px; bottom: 10px; background: #000; color: #fff; font: bold 14px/14px Arial; border: 1px solid #000; z-index: 100; cursor: pointer;
+div#<?php echo $skinID; ?>_next { position: absolute; padding: 5px 9px; right: 10px; bottom: 10px; background: #000; color: #fff; font: bold 20px/20px Arial; border: 1px solid #000; z-index: 100; cursor: pointer; 
 -webkit-border-radius:16px;
 -khtml-border-radius:16px;
 -moz-border-radius:16px;
@@ -17,7 +17,7 @@ opacity: 0.7;
 filter:alpha(opacity=70);
 -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
 }
-div#<?php echo $skinID; ?>_prev { position: absolute; padding: 3px 6px; left: 10px; bottom: 10px; background: #000; color: #fff; font: bold 14px/14px Arial; border: 1px solid #000; z-index: 100; cursor: pointer;
+div#<?php echo $skinID; ?>_prev { position: absolute; padding: 5px 9px; left: 10px; bottom: 10px; background: #000; color: #fff; font: bold 20px/20px Arial; border: 1px solid #000; z-index: 100; cursor: pointer;
 -webkit-border-radius:16px;
 -khtml-border-radius:16px;
 -moz-border-radius:16px;
@@ -41,7 +41,8 @@ filter:alpha(opacity=90);
 .grandBannerAlternative div img { width: 100%; max-width: 100%; height: auto; }
 .grandBannerAlternative > div:first-child { display: block; }
 .grandBannerAlternative a { display: block; width: <?php echo $width; if(strpos($width, '%') === false) echo 'px'; ?>; height: <?php echo $height; ?>px; overflow: hidden; }
-.grandBannerAlternative span { display: block; position: absolute; left: 0px; top: 5px; padding: 3px 5px; background: #000000; color: #ffffff; font-size: 11px; }
+.grandBannerAlternative span { display: block; position: absolute; left: 0px; top: 10px; padding: 5px 10px; background: #000000; color: #ffffff; font-size: 12px; }
+.grandBannerAlternative span strong { font-size: 14px; margin-bottom: 3px; }
 </style>
 <script type="text/javascript">
 //<![CDATA[
@@ -116,7 +117,7 @@ if(count($playlist['items'])) {
 				$content .= '[img src="'.$track.'" alt=""]';
 			}
 			if($link){ $content .= '</a>'; }
-          	$content .= '<span class="gban-title">'.$ban->post_title.'</span></div>';
+          	$content .= '<span class="gban-title"><strong>'.$ban->post_title.'</strong><br />'.$ban->post_content.'</span></div>';
 		}
 	}
 }

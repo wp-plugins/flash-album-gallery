@@ -26,6 +26,9 @@ For more information review [photo gallery demos](http://codeasily.com/wordpress
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.44 - 18.08.2011 =
+* Fixed : Widget for Banner Rotator
+
 = v1.43 - 17.08.2011 =
 * Added : Widget for Banner Rotator
 * Fixed : Change playlist options

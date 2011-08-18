@@ -204,7 +204,7 @@ function flagShowBanner($xml, $width, $height, $wmode='') {
 	return $out;
 }
 
-function flagShowWidgetBanner($xml, $width, $height, $skin, $wmode='') {
+function flagShowWidgetBanner($xml, $width, $height, $skin) {
 
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
     require_once ( dirname(dirname(__FILE__)) . '/admin/banner.functions.php');
@@ -223,8 +223,7 @@ function flagShowWidgetBanner($xml, $width, $height, $skin, $wmode='') {
 		'skin' 		=> $skin,
 		'items' 	=> $items,
 		'width' 	=> $width,
-		'height' 	=> $height,
-		'wmode' 	=> $wmode
+		'height' 	=> $height
 	);
 	$out = apply_filters( 'flagShowWidgetBannerSkin', $args );
 	return $out;
