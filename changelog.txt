@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.45 - 23.08.2011 =
+* Added : Widget for Album Gallery
+* Added : Lithuanian language
+* Fixed : Minor bugs
+
 = v1.44 - 18.08.2011 =
 * Fixed : Widget for Banner Rotator
 

@@ -235,12 +235,13 @@ class FlAG_shortcodes {
 			'skin'	=> ''
 		), $atts ));
 		$out = sprintf(__('[XML %s not found]','flag'),$xml);
-		if($xml) {
+		if($xml && $skin) {
 			$flag_options = get_option('flag_options');
-			if(!file_exists($flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml')) {
+			$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+			if(!file_exists($skinpath)) {
 				return $out;
 			}
-			$data = file_get_contents($flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml');
+			$data = @file_get_contents($skinpath);
 			$swfmousewheel = false;
 			$swfmousewheel = flagGetBetween($data,'<swfmousewheel>','</swfmousewheel>');
 			if($swfmousewheel == 'true') $this->flag_add_mousewheel = true;

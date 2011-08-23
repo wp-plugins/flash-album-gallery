@@ -146,7 +146,7 @@
 		<selectedColor>0xcfcfcf</selectedColor>
 	</item>
 <properties>
-  <property0><![CDATA[opaque]]></property0>
+  <property0><![CDATA[window]]></property0>
   <swfmousewheel>true</swfmousewheel>
   <property1>0x000000</property1>
   <property2>3</property2>

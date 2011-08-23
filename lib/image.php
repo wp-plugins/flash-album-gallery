@@ -23,8 +23,8 @@ class flagImage{
 	var $galleryid		=	0;			// Gallery ID
 	var $pid			=	0;			// Image ID	
 	var $filename		=	'';			// Image filename
-	var $description	=	'';			// Image description	
-	var $alttext		=	'';			// Image alttext	
+	var $description	=	'';			// Image description
+	var $alttext		=	'';			// Image alttext
 	var $imagedate		=	'';			// Image date/time	
 
 	/**** Gallery Data ****/
@@ -53,7 +53,10 @@ class flagImage{
 		$this->path			= $gallery->path;
 		$this->title		= $gallery->title;
 		$this->previewpic	= $gallery->previewpic;
-	
+		$this->galleryid	= $gallery->galleryid;
+		$this->alttext		= $gallery->alttext;
+		$this->description	= $gallery->description;
+
 		// set urls and paths
 		$this->imageURL		= get_option ('siteurl') . '/' . $this->path . '/' . $this->filename;
 		$this->thumbURL 	= get_option ('siteurl') . '/' . $this->path . '/thumbs/thumbs_' . $this->filename;
