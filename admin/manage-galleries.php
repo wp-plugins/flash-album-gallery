@@ -258,9 +258,9 @@ if($albumlist) {
 	foreach($albumlist as $album) {
 ?>
 				<div class="album">
-					<div class="album_name"><span class="albID"><?php echo $album->id; ?>.</span> <form method="post" id="albName_<?php echo $album->id; ?>" name="albName_<?php echo $album->id; ?>"><input type="text" name="album_name" value="<?php echo $album->name; ?>" /><input type="hidden" name="album_id" value="<?php echo $album->id; ?>" /></form> <span class="album_actions"><span class="alb_msg"></span>&nbsp;&nbsp;&nbsp;<span class="del flag-ajax-post" data-action="flag_delete_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-post="<?php echo $album->id; ?>"><?php _e('Delete', 'flag'); ?></span>&nbsp;<span class="album_save flag-ajax-post" data-action="flag_save_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-form="albName_<?php echo $album->id; ?>"><?php _e('Save', 'flag'); ?></span></span></div>
+					<div class="album_name"><span class="albID"><?php echo $album->id; ?>.</span> <form method="post" id="albName_<?php echo $album->id; ?>" name="albName_<?php echo $album->id; ?>"><input type="text" name="album_name" value="<?php echo $album->name; ?>" /><input type="hidden" name="album_id" value="<?php echo $album->id; ?>" /></form> <span class="album_actions"><span class="alb_msg"></span>&nbsp;&nbsp;&nbsp;<span class="del flag-ajax-post" data-action="flag_delete_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-post="<?php echo $album->id; ?>"><?php _e('Delete', 'flag'); ?></span>&nbsp;<span class="album_save flag-ajax-post button" data-action="flag_save_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-form="albName_<?php echo $album->id; ?>"><strong><?php _e('Save', 'flag'); ?></strong></span></span></div>
 					<div class="album_categoties">
-					<?php $galids = explode(',',$album->categories); 
+					<?php $galids = explode(',',$album->categories);
 						if($album->categories) {
 							foreach($galids as $galid) { 
 								$acat = $flagdb->find_gallery($galid);
