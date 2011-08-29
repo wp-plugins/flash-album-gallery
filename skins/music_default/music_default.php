@@ -30,12 +30,26 @@ function flagShowSkin_music_default($args) {
 	if(empty($flashBackcolor)) {
 		$flashBackcolor = $flag_options['flashBackcolor'];
 	}
-	$alternate = '';
+
+	require_once( FLAG_ABSPATH.'admin/playlist.functions.php');
+	$playlist_data = get_playlist_data($playlistpath);
+	$alternative = '';
+	if(count($playlist_data['items'])) {
+		foreach( $playlist_data['items'] as $id ) {
+			$mp3Object = get_post($id);
+			$url = wp_get_attachment_url($mp3Object->ID);
+			$thumb = get_post_meta($mp3Object->ID, 'thumbnail', true);
+			$aimg = $thumb? '<img src="'.$thumb.'" style="float:left;margin-right:10px;width:150px;height:auto;" alt="" />' : '';
+			$atitle = $mp3Object->post_title? '<strong style="display:block;">'.$mp3Object->post_title.'</strong>' : '';
+			$acontent = $mp3Object->post_content? '<div style="padding:4px 0;">'.$mp3Object->post_content.'</div>' : '';
+			$alternative .= '<div id="video_'.$mp3Object->ID.'" style="overflow:hidden;padding:7px 0;">'.$aimg.$atitle.'<audio src="'.$url.'" controls preload="none" autobuffer="false"></audio>'.$acontent.'</div>';
+		}
+	}
+
 	// init the flash output
 	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , $skinID, $width, $height, '10.1.52', FLAG_URLPATH .'skins/expressInstall.swf');
 	global $swfCounter;
 
-	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
 	$swfobject->add_params('wmode', $wmode);
 	$swfobject->add_params('allowfullscreen', 'true');
 	$swfobject->add_params('allowScriptAccess', 'always');

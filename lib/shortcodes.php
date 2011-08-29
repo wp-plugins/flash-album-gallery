@@ -158,7 +158,7 @@ class FlAG_shortcodes {
 			$url = wp_get_attachment_url($id);
 			$url = str_replace(array('.mp3'), array(''), $url);
 			$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini.swf", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.$url.'",bgcolor:"'.$flag_options["mpBG"].'",color1:"'.$flag_options["mpColor1"].'",color2:"'.$flag_options["mpColor2"].'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>
-<div id="c-'.$id.'"></div>';
+<div id="c-'.$id.'"><audio src="'.$url.'.mp3" controls preload="none" autobuffer="false"></audio></div>';
 		}
        	return $out;
 	}

@@ -230,6 +230,8 @@ class flagWidget extends WP_Widget {
 		$instance['type']	= $new_instance['type'];
 		$instance['width']	= (int) $new_instance['width'];
 		$instance['height']	= (int) $new_instance['height'];
+		$instance['fwidth']	= (int) $new_instance['fwidth'];
+		$instance['fheight']	= (int) $new_instance['fheight'];
 		$instance['album']	= (int) $new_instance['album'];
 		$instance['skin']	= $new_instance['skin'];
 
@@ -247,13 +249,17 @@ class flagWidget extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, array( 
             'title' => 'Galleries',
             'type'  => 'random',
-            'height'=> '50',
             'width' => '75',
+            'height'=> '50',
+            'fwidth' => '640',
+            'fheight'=> '480',
             'album' =>  '',
 			'skin'	=> '' ) );
 		$title  = esc_attr( $instance['title'] );
-        $height = esc_attr( $instance['height'] );
 		$width  = esc_attr( $instance['width'] );
+        $height = esc_attr( $instance['height'] );
+		$fwidth  = esc_attr( $instance['fwidth'] );
+        $fheight = esc_attr( $instance['fheight'] );
 
 		?>
 
@@ -276,6 +282,12 @@ class flagWidget extends WP_Widget {
 			<?php _e('Width x Height of thumbs:','flag'); ?><br />
 			<input style="width: 50px; padding:3px;" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo $width; ?>" /> x
 			<input style="width: 50px; padding:3px;" id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo $height; ?>" /> (px)
+		</p>
+
+		<p>
+			<?php _e('Width x Height of popup:','flag'); ?><br />
+			<input style="width: 50px; padding:3px;" id="<?php echo $this->get_field_id('fwidth'); ?>" name="<?php echo $this->get_field_name('fwidth'); ?>" type="text" value="<?php echo $fwidth; ?>" /> x
+			<input style="width: 50px; padding:3px;" id="<?php echo $this->get_field_id('fheight'); ?>" name="<?php echo $this->get_field_name('fheight'); ?>" type="text" value="<?php echo $fheight; ?>" /> (px)
 		</p>
 
 		<p>
@@ -347,7 +359,7 @@ class flagWidget extends WP_Widget {
 				$description  =  htmlspecialchars( stripslashes( flagGallery::i18n($image->description, 'pic_' . $image->pid . '_description') ));
 
 				//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
-				$out = '<a href="'.home_url().'/wp-content/plugins/flash-album-gallery/facebook.php?i='.$image->galleryid.'&amp;f='.$instance['skin'].'&amp;h=480" title="' . $image->title . '" ' . $thumbcode .'>';
+				$out = '<a href="'.home_url().'/wp-content/plugins/flash-album-gallery/facebook.php?i='.$image->galleryid.'&amp;f='.$instance['skin'].'&amp;h='.$instance['fheight'].'" title="' . $image->title . '" ' . $thumbcode .'>';
 				$out .= '<img src="'.$image->thumbURL.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$alttext.'" />';
 				echo $out . '</a>'."\n";
 
@@ -356,7 +368,7 @@ class flagWidget extends WP_Widget {
 
 		echo '</div>'."\n";
 		echo '<style type="text/css">.flag_fancybox img { border: 1px solid #A9A9A9; margin: 0 2px 2px 0; padding: 1px; }</style>'."\n";
-		echo '<script type="text/javascript">var FBVar = "'.FLAG_URLPATH.'"; waitJQ(FBVar);</script>'."\n";
+		echo '<script type="text/javascript">var fbVar = "'.FLAG_URLPATH.'"; var fbW = '.$instance['fwidth'].', fbH = '.$instance['fheight'].'; waitJQ(fbVar,fbW,fbH);</script>'."\n";
 		echo $after_widget;
 		
 	}

@@ -151,7 +151,13 @@ function flagShowVmPlayer($id, $w, $h, $autoplay) {
 	// init the flash output
 	$swfobject = new flag_swfobject( FLAG_URLPATH.'lib/video_mini.swf' , $vID, $w, $h, '10.1.52', FLAG_URLPATH .'skins/expressInstall.swf');
 
-	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
+	$videoObject = get_post($id);
+	$url = wp_get_attachment_url($videoObject->ID);
+	$thumb = get_post_meta($videoObject->ID, 'thumbnail', true);
+	$aimg = $thumb? '<img src="'.$thumb.'" style="float:left;margin-right:10px;width:150px;height:auto;" alt="" />' : '';
+	$atitle = $videoObject->post_title? '<strong>'.$videoObject->post_title.'</strong>' : '';
+	$acontent = $videoObject->post_content? '<div style="padding:4px 0;">'.$videoObject->post_content.'</div>' : '';
+	$alternative = '<div id="video_'.$videoObject->ID.'" style="overflow:hidden;padding:7px 0;">'.$aimg.$atitle.$acontent.'<div style="font-size:80%;">This browser does not support flash! You can <a href="'.$url.'">download the video</a> instead.</div></div>';
 
 	$swfobject->add_params('wmode', 'transparent');
 	$swfobject->add_params('allowfullscreen', 'true');
@@ -169,7 +175,7 @@ function flagShowVmPlayer($id, $w, $h, $autoplay) {
 	$swfobject->add_flashvars( 'flashID', $vID );
 	$swfobject->add_flashvars( 'autoplay', $autoplay );
 	// create the output
-	$out = '<div class="grandflv">' . $swfobject->output() . '</div>';
+	$out = '<div class="grandflv">' . $swfobject->output($alternative) . '</div>';
 	// add now the script code
 	$out .= "\n".'<script type="text/javascript" defer="defer">';
 	$out .= $swfobject->javascript();

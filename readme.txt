@@ -1,6 +1,6 @@
 === GRAND FlAGallery - Best Photo & Media Gallery ===
 Contributors: Rattus
-Donate link:
+Donate link: Buy Skin
 Tags: admin,album,flash,gallery,image,images,image gallery,page,photo,photo gallery,plugin,widget,portfolio,Post,posts,slideshow,mp3,music,video,player,Facebook,Twitter
 Requires at least: 3.0
 Tested up to: 3.2
@@ -18,8 +18,11 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
 Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
+
 Demo [Video Galleries](http://photogallerycreator.com/flv-video-players/)
+
 Demo [mp3 Music Players](http://photogallerycreator.com/mp3-music-players/)
+
 Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
 
 
@@ -30,6 +33,12 @@ Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
+
+= v1.47 - 29.08.2011 =
+* Added : Support mp3 for iPhone/iPad
+* Added : Alternative for video and music for non-flash browsers
+* Added : Widget Option for fancybox size
+* Fixed : music and video default players
 
 = v1.45 - 23.08.2011 =
 * Added : Widget for Album Gallery

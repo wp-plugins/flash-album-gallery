@@ -1,6 +1,12 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.47 - 29.08.2011 =
+* Added : Support mp3 for iPhone/iPad
+* Added : Alternative for video and music for non-flash browsers
+* Added : Widget Option for fancybox size
+* Fixed : music and video default players
+
 = v1.45 - 23.08.2011 =
 * Added : Widget for Album Gallery
 * Added : Lithuanian language
