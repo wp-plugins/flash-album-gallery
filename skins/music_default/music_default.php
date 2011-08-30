@@ -42,7 +42,7 @@ function flagShowSkin_music_default($args) {
 			$aimg = $thumb? '<img src="'.$thumb.'" style="float:left;margin-right:10px;width:150px;height:auto;" alt="" />' : '';
 			$atitle = $mp3Object->post_title? '<strong style="display:block;">'.$mp3Object->post_title.'</strong>' : '';
 			$acontent = $mp3Object->post_content? '<div style="padding:4px 0;">'.$mp3Object->post_content.'</div>' : '';
-			$alternative .= '<div id="video_'.$mp3Object->ID.'" style="overflow:hidden;padding:7px 0;">'.$aimg.$atitle.'<audio src="'.$url.'" controls preload="none" autobuffer="false"></audio>'.$acontent.'</div>';
+			$alternative .= '<div id="video_'.$mp3Object->ID.'" style="overflow:hidden;padding:7px 0;">'.$aimg.$atitle.$acontent.'<p><audio src="'.$url.'" controls preload="none" autobuffer="false"></audio></p></div>';
 		}
 	}
 
@@ -65,7 +65,7 @@ function flagShowSkin_music_default($args) {
 	$swfobject->add_flashvars( 'skinID', $skinID );
 	$swfobject->add_flashvars('playlist', $playlist);
 	// create the output
-	$out = '<div class="grandmusic">' . $swfobject->output($alternate) . '</div>';
+	$out = '<div class="grandmusic">' . $swfobject->output($alternative) . '</div>';
 	// add now the script code
 	$out .= "\n".'<script type="text/javascript" defer="defer">';
 	$out .= $swfobject->javascript();
