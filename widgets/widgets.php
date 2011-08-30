@@ -250,7 +250,7 @@ class flagWidget extends WP_Widget {
             'title' => 'Galleries',
             'type'  => 'random',
             'width' => '75',
-            'height'=> '50',
+            'height'=> '65',
             'fwidth' => '640',
             'fheight'=> '480',
             'album' =>  '',
