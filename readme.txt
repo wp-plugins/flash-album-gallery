@@ -34,6 +34,9 @@ Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.48 - 30.08.2011 =
+* Fixed : iPhone/iPad alternative for music and video default players
+
 = v1.47 - 29.08.2011 =
 * Added : Support mp3 for iPhone/iPad
 * Added : Alternative for video and music for non-flash browsers
