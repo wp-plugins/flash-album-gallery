@@ -15,15 +15,14 @@ You can edit your media content the way you want: upload images, import music an
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
+New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery.
+
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
-Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
-
-Demo [Video Galleries](http://photogallerycreator.com/flv-video-players/)
-
-Demo [mp3 Music Players](http://photogallerycreator.com/mp3-music-players/)
-
-Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
+* Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
+* Demo [Video Galleries](http://photogallerycreator.com/flv-video-players/)
+* Demo [mp3 Music Players](http://photogallerycreator.com/mp3-music-players/)
+* Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
 
 
 == Changelog ==
