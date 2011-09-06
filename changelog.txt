@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.49 - 06.09.2011 =
+* Added : Widget for Video Playlists
+* Fixed : Minor Bugs
+
 = v1.48 - 30.08.2011 =
 * Fixed : iPhone/iPad alternative for music and video default players
 

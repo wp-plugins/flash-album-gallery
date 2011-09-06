@@ -109,6 +109,23 @@ class flagSlideshowWidget extends WP_Widget {
 // register it
 //add_action('widgets_init', create_function('', 'return register_widget("flagSlideshowWidget");'));
 
+/**
+ * flagSlideshowWidget($galleryID, $width, $height)
+ * Function for templates without widget support
+ *
+ * @param integer $galleryID
+ * @param string $width
+ * @param string $height
+ * @return echo the widget content
+
+
+function flagSlideshowWidget($gid, $w = '100%', $h = '200', $skin = 'default') {
+
+	echo flagSlideshowWidget::render_slideshow($gid, $w, $h, $skin);
+
+}
+ */
+
 
 class flagBannerWidget extends WP_Widget {
 
@@ -209,6 +226,13 @@ class flagBannerWidget extends WP_Widget {
 // register it
 add_action('widgets_init', create_function('', 'return register_widget("flagBannerWidget");'));
 
+function flagBannerWidget($xml, $w = '100%', $h = '200', $skin = 'default') {
+
+	echo flagBannerWidget::render_slideshow($xml, $w, $h, $skin);
+
+}
+
+
 
 /**
  * flagWidget - The widget control for GRAND FlAGallery
@@ -217,7 +241,7 @@ add_action('widgets_init', create_function('', 'return register_widget("flagBann
  * @access public
  */
 class flagWidget extends WP_Widget {
-    
+
    	function flagWidget() {
 		$widget_ops = array('classname' => 'flag_images', 'description' => __( 'Add recent or random images from the galleries', 'flag') );
 		$this->WP_Widget('flag-images', __('FLAGallery Widget', 'flag'), $widget_ops);
@@ -225,7 +249,7 @@ class flagWidget extends WP_Widget {
 
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
-		
+
 		$instance['title']	= strip_tags($new_instance['title']);
 		$instance['type']	= $new_instance['type'];
 		$instance['width']	= (int) $new_instance['width'];
@@ -246,7 +270,7 @@ class flagWidget extends WP_Widget {
 		$all_skins = get_skins();
 
 		//Defaults
-		$instance = wp_parse_args( (array) $instance, array( 
+		$instance = wp_parse_args( (array) $instance, array(
             'title' => 'Galleries',
             'type'  => 'random',
             'width' => '75',
@@ -268,7 +292,7 @@ class flagWidget extends WP_Widget {
 			<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title');?>" type="text" class="widefat" value="<?php echo $title; ?>" />
 			</label>
 		</p>
-			
+
 		<p>
 			<label for="<?php echo $this->get_field_id('type'); ?>_random">
 			<input id="<?php echo $this->get_field_id('type'); ?>_random" name="<?php echo $this->get_field_name('type'); ?>" type="radio" value="random" <?php checked("random" , $instance['type']); ?> /> <?php _e('random','flag'); ?>
@@ -353,14 +377,14 @@ class flagWidget extends WP_Widget {
 
 				// get the effect code
 				$thumbcode = 'class="flag_fancybox"';
-				
+
 				// enable i18n support for alttext and description
-				$alttext      =  htmlspecialchars( stripslashes( flagGallery::i18n($image->alttext, 'pic_' . $image->pid . '_alttext') ));
-				$description  =  htmlspecialchars( stripslashes( flagGallery::i18n($image->description, 'pic_' . $image->pid . '_description') ));
+				$alttext      =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->alttext, 'pic_' . $image->pid . '_alttext') )) );
+				$description  =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->description, 'pic_' . $image->pid . '_description') )) );
 
 				//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
 				$out = '<a href="'.home_url().'/wp-content/plugins/flash-album-gallery/facebook.php?i='.$image->galleryid.'&amp;f='.$instance['skin'].'&amp;h='.$instance['fheight'].'" title="' . $image->title . '" ' . $thumbcode .'>';
-				$out .= '<img src="'.$image->thumbURL.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$alttext.'" />';
+				$out .= '<img src="'.$image->thumbURL.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$description.'" />';
 				echo $out . '</a>'."\n";
 
 			}
@@ -370,7 +394,7 @@ class flagWidget extends WP_Widget {
 		echo '<style type="text/css">.flag_fancybox img { border: 1px solid #A9A9A9; margin: 0 2px 2px 0; padding: 1px; }</style>'."\n";
 		echo '<script type="text/javascript">var fbVar = "'.FLAG_URLPATH.'"; var fbW = '.$instance['fwidth'].', fbH = '.$instance['fheight'].'; waitJQ(fbVar,fbW,fbH);</script>'."\n";
 		echo $after_widget;
-		
+
 	}
 
 }// end widget class
@@ -379,68 +403,152 @@ class flagWidget extends WP_Widget {
 add_action('widgets_init', create_function('', 'return register_widget("flagWidget");'));
 
 /**
- * flagSlideshowWidget($galleryID, $width, $height)
- * Function for templates without widget support
- * 
- * @param integer $galleryID 
- * @param string $width
- * @param string $height
- * @return echo the widget content
- */
-function flagSlideshowWidget($gid, $w = '100%', $h = '200', $skin = 'default') {
-
-	echo flagSlideshowWidget::render_slideshow($gid, $w, $h, $skin);
-
-}
-
-function flagBannerWidget($xml, $w = '100%', $h = '200', $skin = 'default') {
-
-	echo flagBannerWidget::render_slideshow($xml, $w, $h, $skin);
-
-}
-
-/**
- * flagDisplayRandomImages($number,$width,$height,$exclude,$list,$show)
- * Function for templates without widget support
+ * flagVideoWidget - The widget control for GRAND FlAGallery
  *
- * @return echo the widget content
+ * @package GRAND FlAGallery
+ * @access public
  */
-function flagDisplayRandomImages($number, $width = '75', $height = '65', $exclude = 'all', $list = '', $show = 'thumbnail') {
-	
-	$options = array(   'title'    => false, 
-						'items'    => $number,
-						'show'     => $show ,
-						'type'     => 'random',
-						'width'    => $width, 
-						'height'   => $height, 
-						'exclude'  => $exclude,
-						'list'     => $list,
-                        'webslice' => false );
-                        
-	$flag_widget = new flagWidget();
-	$flag_widget->widget($args = array( 'widget_id'=> 'sidebar_1' ), $options);
-}
+class flagVideoWidget extends WP_Widget {
 
-/**
- * flagDisplayRecentImages($number,$width,$height,$exclude,$list,$show)
- * Function for templates without widget support
- *
- * @return echo the widget content
- */
-function flagDisplayRecentImages($number, $width = '75', $height = '50', $exclude = 'all', $list = '', $show = 'thumbnail') {
+   	function flagVideoWidget() {
+		$widget_ops = array('classname' => 'flag_video', 'description' => __( 'Add recent or random video from the galleries', 'flag') );
+		$this->WP_Widget('flag-video', __('FLAGallery Video Widget', 'flag'), $widget_ops);
+	}
 
-	$options = array(   'title'    => false, 
-						'items'    => $number,
-						'show'     => $show ,
-						'type'     => 'recent',
-						'width'    => $width, 
-						'height'   => $height, 
-						'exclude'  => $exclude,
-						'list'     => $list,
-                        'webslice' => false );
-                        
-	$flag_widget = new flagWidget();
-	$flag_widget->widget($args = array( 'widget_id'=> 'sidebar_1' ), $options);
-}
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+
+		$instance['title']	= strip_tags($new_instance['title']);
+		$instance['width']	= (int) $new_instance['width'];
+		$instance['height']	= (int) $new_instance['height'];
+		$instance['fwidth']	= (int) $new_instance['fwidth'];
+		$instance['fheight']	= (int) $new_instance['fheight'];
+		$instance['vxml']	= $new_instance['vxml'];
+
+		return $instance;
+	}
+
+	function form( $instance ) {
+		global $wpdb, $flagdb;
+
+		require_once (dirname( dirname(__FILE__) ) . '/admin/video.functions.php');
+
+		//Defaults
+		$instance = wp_parse_args( (array) $instance, array(
+            'title' => 'Videos',
+            'width' => '75',
+            'height'=> '65',
+            'fwidth' => '640',
+            'fheight'=> '480',
+            'vxml' =>  '' ) );
+		$title  = esc_attr( $instance['title'] );
+		$width  = esc_attr( $instance['width'] );
+        $height = esc_attr( $instance['height'] );
+		$fwidth  = esc_attr( $instance['fwidth'] );
+        $fheight = esc_attr( $instance['fheight'] );
+
+		?>
+
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title :','flag'); ?>
+			<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title');?>" type="text" class="widefat" value="<?php echo $title; ?>" />
+			</label>
+		</p>
+
+		<p>
+			<?php _e('Width x Height of thumbs:','flag'); ?><br />
+			<input style="width: 50px; padding:3px;" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo $width; ?>" /> x
+			<input style="width: 50px; padding:3px;" id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo $height; ?>" /> (px)
+		</p>
+
+		<p>
+			<?php _e('Width x Height of popup:','flag'); ?><br />
+			<input style="width: 50px; padding:3px;" id="<?php echo $this->get_field_id('fwidth'); ?>" name="<?php echo $this->get_field_name('fwidth'); ?>" type="text" value="<?php echo $fwidth; ?>" /> x
+			<input style="width: 50px; padding:3px;" id="<?php echo $this->get_field_id('fheight'); ?>" name="<?php echo $this->get_field_name('fheight'); ?>" type="text" value="<?php echo $fheight; ?>" /> (px)
+		</p>
+
+		<p>
+			<label for="<?php echo $this->get_field_id('vxml'); ?>"><?php _e('Select Playlist:','flag'); ?>
+			<select id="<?php echo $this->get_field_id('vxml'); ?>" name="<?php echo $this->get_field_name('vxml'); ?>" class="widefat">
+				<option value="" ><?php _e('Choose playlist','flag'); ?></option>
+			<?php
+				$all_playlists = get_v_playlists();
+				if(is_array($all_playlists)) {
+					foreach((array)$all_playlists as $playlist_file => $playlist_data) {
+						$playlist_name = basename($playlist_file, '.xml');
+				?>
+					<option<?php if ($playlist_name == $instance['vxml']) echo ' selected="selected"'; ?> value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+				<?php
+					}
+				}
+			?>
+			</select>
+			</label>
+		</p>
+
+	<?php
+
+	}
+
+	function widget( $args, $instance ) {
+		global $wpdb, $flagdb;
+
+		extract( $args );
+
+		require_once (dirname( dirname(__FILE__) ) . '/admin/video.functions.php');
+		$flag_options = get_option('flag_options');
+        $title = apply_filters('widget_title', empty($instance['title']) ? '&nbsp;' : $instance['title'], $instance, $this->id_base);
+
+		echo $before_widget . $before_title . $title . $after_title;
+
+		$playlistPath = $flag_options['galleryPath'].'playlists/video/'.$instance['vxml'].'.xml';
+		if(file_exists($playlistPath)) {
+			$playlist = get_v_playlist_data(ABSPATH.$playlistPath);
+			$items_a = $playlist['items'];
+
+			echo "\n" . '<div class="flag-widget">'. "\n";
+
+			if (count($items_a)){
+				foreach($items_a as $item) {
+					$flv = get_post($item);
+					if($flv->ID) {
+				        $thumb = $flvthumb = get_post_meta($item, 'thumbnail', true);
+				        if(empty($thumb)) {
+				          $thumb = site_url().'/wp-includes/images/crystal/video.png';
+				          $flvthumb = '';
+				        }
+						$url = wp_get_attachment_url($flv->ID);
+
+						// get the effect code
+						$thumbcode = 'class="flag_fancyvid"';
+
+						// enable i18n support for alttext and description
+						$alttext      =  strip_tags( htmlspecialchars( stripslashes( $flv->post_title )) );
+						$description  =  strip_tags( htmlspecialchars( stripslashes( $flv->post_content )) );
+
+						//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
+						$out = '<a href="'.home_url().'/wp-content/plugins/flash-album-gallery/facebook.php?mv='.$flv->ID.'&amp;w=1&amp;h='.$instance['fheight'].'" title="' . $alttext . '" ' . $thumbcode .'>';
+						$out .= '<img src="'.$thumb.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$description.'" />';
+						echo $out . '</a>'."\n";
+					}
+				}
+			}
+
+		} else {
+			echo '<p>'.__('Error! No playlist.','flag').'</p>';
+		}
+
+		echo '</div>'."\n";
+		echo '<style type="text/css">.flag_fancyvid img { border: 1px solid #A9A9A9; margin: 0 2px 2px 0; padding: 1px; }</style>'."\n";
+		echo '<script type="text/javascript">var fvVar = "'.FLAG_URLPATH.'"; var fvW = '.$instance['fwidth'].', fvH = '.$instance['fheight'].'; waitJQv(fvVar,fvW,fvH);</script>'."\n";
+		echo $after_widget;
+	}
+
+}// end widget class
+
+// register it
+add_action('widgets_init', create_function('', 'return register_widget("flagVideoWidget");'));
+
+
 
 ?>

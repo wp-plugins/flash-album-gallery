@@ -232,9 +232,9 @@ class flagLoad {
 		// Let's override WP's bundled swfobject, cause as of WP 2.9, it's still using 2.1 
 		wp_deregister_script('swfobject');
 		// and register our own.
-		wp_register_script('swfobject', plugins_url('/admin/js/swfobject.js', __FILE__), array(), '2.2');
+		wp_register_script('swfobject', plugins_url('/flash-album-gallery/admin/js/swfobject.js'), array(), '2.2');
 		wp_enqueue_script('swfobject');
-		wp_register_script('swfaddress', plugins_url('/admin/js/swfaddress.js', __FILE__), array(), '2.4');
+		wp_register_script('swfaddress', plugins_url('/flash-album-gallery/admin/js/swfaddress.js'), array(), '2.4');
 		wp_enqueue_script('swfaddress');
 
 	}

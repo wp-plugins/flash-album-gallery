@@ -61,16 +61,25 @@ if(isset($_GET['m'])) {
 		_e("Can't find playlist");
 }
 ?>
-<?php 
+<?php
 if(isset($_GET['v'])) {
+	$height = isset($_GET['h'])? $_GET['h'] : '';
+	$width = isset($_GET['w'])? '100%' : '';
 	$playlistpath = $flag_options['galleryPath'].'playlists/video/'.$_GET['v'].'.xml';
 	if(file_exists($playlistpath))
-		echo flagShowVPlayer($playlist=$_GET['v'], $width='', $height='', $wmode='opaque');
+		echo flagShowVPlayer($playlist=$_GET['v'], $width, $height, $wmode='opaque');
 	else
 		_e("Can't find playlist");
 }
 ?>
-<?php 
+<?php
+if(isset($_GET['mv'])) {
+	$height = isset($_GET['h'])? $_GET['h'] : '';
+	$width = '100%';
+	echo flagShowVmPlayer($_GET['mv'], $width, $height, $autoplay='true');
+}
+?>
+<?php
 if(isset($_GET['b'])) {
 	$playlistpath = $flag_options['galleryPath'].'playlists/banner/'.$_GET['b'].'.xml';
 	if(file_exists($playlistpath))

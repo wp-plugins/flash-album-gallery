@@ -34,6 +34,10 @@ Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.49 - 06.09.2011 =
+* Added : Widget for Video Playlists
+* Fixed : Minor Bugs
+
 = v1.48 - 30.08.2011 =
 * Fixed : iPhone/iPad alternative for music and video default players
 
