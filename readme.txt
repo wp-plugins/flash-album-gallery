@@ -34,7 +34,7 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
 = v1.50 - 20.09.2011 =
-* Fixed : Widget for Banner Rotator (refresh skins)
+* Fixed : Widget for Banner Rotator (refresh skins on Skins page after plugin update)
 * Removed : Unnecessary links on Banner Rotator
 
 = v1.49 - 06.09.2011 =
