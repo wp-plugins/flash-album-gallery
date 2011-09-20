@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.50 - 20.09.2011 =
+* Fixed : Widget for Banner Rotator (refresh skins)
+* Removed : Unnecessary links on Banner Rotator
+
 = v1.49 - 06.09.2011 =
 * Added : Widget for Video Playlists
 * Fixed : Minor Bugs

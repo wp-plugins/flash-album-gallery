@@ -75,22 +75,13 @@ var current_image = '';
 function send_to_editor(html) {
 	var source = html.match(/src=\".*\" alt/);
 	source = source[0].replace(/^src=\"/, "").replace(/" alt$/, "");
-	if(insFor=='thumb') {
-		jQuery('#banthumb-'+actInp).attr('value', source);
-		jQuery('#thumb-'+actInp).attr('src', source);
-	} else if(insFor=='preview') {
+	if(insFor=='preview') {
 		jQuery('#preview-'+actInp).attr('value', source);
 		jQuery('#preview_txt-'+actInp).attr('src', source).text(source);
 	}
 	tb_remove();
 }
 jQuery(document).ready(function(){
-  jQuery('.del_thumb').click(function(){
-    var id = jQuery(this).attr('data-id');
-	jQuery('#banthumb-'+id).attr('value', '');
-    jQuery('#thumb-'+id).attr('src', jQuery('#thumb-'+id).parent().attr('href'));
-    return false;
-  });
   jQuery('.del_preview').click(function(){
     var id = jQuery(this).attr('data-id');
 	jQuery('#preview-'+id).attr('value', '');
@@ -111,7 +102,7 @@ jQuery(document).ready(function(){
 <span><a href="<?php echo $filepath; ?>"><?php _e('Back to Banner Box', 'flag'); ?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 <select name="select_playlist" onchange="window.location.href=this.options[this.selectedIndex].value">
 	<option selected="selected"><?php _e('Choose another playlist', 'flag'); ?></option>
-<?php 
+<?php
 	foreach((array)$all_playlists as $playlist_file => $playlist_data) {
 		$playlist_name = basename($playlist_file, '.xml');
 		if ($playlist_file == $_GET['playlist']) continue; 
@@ -237,8 +228,6 @@ if(count($items_a)) {
 				<div style="font-size:10px;"><?php _e('Preview image (optional)', 'flag'); ?>: <a class="thickbox" href="<?php echo $preview; ?>" id="preview_txt-<?php echo $ban->ID; ?>"><?php echo $preview; ?></a><input id="preview-<?php echo $ban->ID; ?>" name="item_a[<?php echo $ban->ID; ?>][preview]" style="width:50%;" type="hidden" value="<?php echo $preview; ?>" /></div>
     			<?php
     			$actions = array();
-    			$actions['add_thumb']   = '<a class="thickbox" onclick="insFor=\'thumb\';actInp='.$ban->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('change thumb', 'flag') . '</a>';
-    			$actions['del_thumb']   = '<a class="del_thumb" data-id="'.$ban->ID.'" href="#" title="' . __('Delete an Image','flag') . '">' . __('restore thumb', 'flag') . '</a>';
     			$actions['add_preview']   = '<a class="thickbox" onclick="insFor=\'preview\';actInp='.$ban->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('add preview image', 'flag') . '</a>';
     			$actions['del_preview']   = '<a class="del_preview" data-id="'.$ban->ID.'" href="#" title="' . __('Delete an Image','flag') . '">' . __('remove preview image', 'flag') . '</a>';
     			$action_count = count($actions);

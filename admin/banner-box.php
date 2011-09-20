@@ -217,12 +217,6 @@ jQuery(document).ready(function(){
 			jQuery('#items_array').val(arr);
 		};
  	});
-    jQuery('.del_thumb').click(function(){
-      var id = jQuery(this).attr('data-id');
-      jQuery('#banthumb-'+id).attr('value', '');
-      jQuery('#thumb-'+id).attr('src', jQuery('#thumb-'+id).parent().attr('href'));
-      return false;
-    })
 });
 function checkAll(form)	{
 	for (i = 0, n = form.elements.length; i < n; i++) {
@@ -261,14 +255,6 @@ function showDialog( windowId, height ) {
 	jQuery("#" + windowId + "_bulkaction").val(jQuery("#bulkaction").val());
 	jQuery("#" + windowId + "_banid").val(jQuery('#items_array').val());
 	tb_show("", "#TB_inline?width=640&height=" + height + "&inlineId=" + windowId + "&modal=true", false);
-}
-var current_image = '';
-function send_to_editor(html) {
-	var source = html.match(/src=\".*\" alt/);
-	source = source[0].replace(/^src=\"/, "").replace(/" alt$/, "");
-	jQuery('#banthumb-'+actInp).attr('value', source);
-	jQuery('#thumb-'+actInp).attr('src', source);
-	tb_remove();
 }
 //-->
 </script>
@@ -410,21 +396,6 @@ if($bannerlist) {
 				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
 				<textarea name="item_a[<?php echo $ban->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $ban->post_title; ?></textarea><br />
 				<?php _e('URL', 'flag'); ?>: <input id="banlink-<?php echo $ban->ID; ?>" name="item_a[<?php echo $ban->ID; ?>][link]" style="width:50%;" type="text" value="<?php echo $link; ?>" /><br />
-    			<?php
-    			$actions = array();
-    			$actions['add_thumb']   = '<a class="thickbox" onclick="actInp='.$ban->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('change thumb', 'flag') . '</a>';
-    			$actions['del_thumb']   = '<a class="del_thumb" data-id="'.$ban->ID.'" href="#" title="' . __('Delete an Image','flag') . '">' . __('restore thumb', 'flag') . '</a>';
-    			//$actions['delete'] = '<a href="' . wp_nonce_url("admin.php?page=banner-box&amp;mode=delmedia&amp;id=".$ban->ID, 'flag_delmedia'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . attribute_escape(sprintf(__('Delete "%s"' , 'flag'), $ban->post_title)). '\');if(check==false) return false;">' . __('Delete from WP Media Library','flag') . '</a>';
-    			$action_count = count($actions);
-    			$i = 0;
-    			echo '<p class="row-actions">';
-    			foreach ( $actions as $action => $link ) {
-    				++$i;
-    				( $i == $action_count ) ? $sep = '' : $sep = ' | ';
-    				echo "<span class='$action'>$link$sep</span>";
-    			}
-    			echo '</p>';
-    			?>
 			</td>
 			<td class="description">
 				<textarea name="item_a[<?php echo $ban->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo $ban->post_content; ?></textarea>

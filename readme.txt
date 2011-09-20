@@ -33,6 +33,10 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.50 - 20.09.2011 =
+* Fixed : Widget for Banner Rotator (refresh skins)
+* Removed : Unnecessary links on Banner Rotator
+
 = v1.49 - 06.09.2011 =
 * Added : Widget for Video Playlists
 * Fixed : Minor Bugs
