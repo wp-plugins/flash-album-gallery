@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.51 - ??.09.2011 =
+* Added : FeedBurner to rss feed (now alternatives showing)
+
 = v1.50 - 20.09.2011 =
 * Fixed : Widget for Banner Rotator (refresh skins)
 * Removed : Unnecessary links on Banner Rotator
