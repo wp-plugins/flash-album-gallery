@@ -17,6 +17,8 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 
 New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery.
 
+v1.51 Major Fix : Updated cPanel for skins - compatibility with Adobe Flash Player v11.
+
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
 * Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
@@ -33,8 +35,15 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.51 - 04.10.2011 =
+* Major Fix : Updated cPanel for skins
+* Added : RSS for FeedBurner
+* Updated : SEO optimization for serch engines
+* Updated : Optimization for RSS Readers (added photo description)
+* Updated : Scripts for feature SlideShow Skin
+
 = v1.50 - 20.09.2011 =
-* Fixed : Widget for Banner Rotator (refresh skins on Skins page after plugin update)
+* Fixed : Widget for Banner Rotator (refresh skins)
 * Removed : Unnecessary links on Banner Rotator
 
 = v1.49 - 06.09.2011 =
@@ -394,7 +403,7 @@ it will display all galleries except ID=1 sorted by title of gallery.
 
 = [IOErrorEvent type="ioError" bubbles=false cancelable=false eventPhase=2 text="Error #2032"] =
 
-Probably you use some plugin that extend standard WordPress TinyMCE Editor. And it replace ( " ) symbol in shortcode to ( “ ). Try remove all quotes from shortcode (album name without quotes shouldn't consist spaces).
+Probably you use some plugin that extend standard WordPress TinyMCE Editor. And it replace ( " ) symbol in shortcode to ( вЂњ ). Try remove all quotes from shortcode (album name without quotes shouldn't consist spaces).
 
 = I get this error code: ERROR: IMG_5879.JPG : Invalid upload. Error Code : 1. =
 

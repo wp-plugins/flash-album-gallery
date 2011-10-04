@@ -86,9 +86,12 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	// create the output
 	$out = '<div class="flashalbum">' . $swfobject->output($alternate) . '</div>';
 	// add now the script code
-	$out .= "\n".'<script type="text/javascript" defer="defer">';
-	$out .= $swfobject->javascript();
-	$out .= "\n".'</script>';
+	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT'])){
+		$out .= "\n".'<script type="text/javascript" defer="defer">';
+		$out .= "\n".'flag_alt[\''.$skinID.'\'] = jQuery("div.flag_alternate").clone().wrap("<div></div>").parent().html();';
+		$out .= $swfobject->javascript();
+		$out .= "\n".'</script>';
+	}
 
 	$out = apply_filters('flag_show_flash_content', $out);
 			
@@ -106,12 +109,14 @@ function flagShowMPlayer($playlist, $width, $height, $wmode='') {
 	$skin = $playlist_data['skin'];
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
+	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
 	$args = array(
 		'playlist' 	=> $playlist, 
 		'skin' 		=> $skin, 
 		'width' 	=> $width, 
 		'height' 	=> $height,
-		'wmode' 	=> $wmode
+		'wmode' 	=> $wmode,
+		'crawler' 	=> $isCrawler
 	);
 	$out = apply_filters( 'flagShowMusicSkin', $args );
 	return $out;	
@@ -128,12 +133,14 @@ function flagShowVPlayer($playlist, $width, $height, $wmode='') {
 	$skin = $playlist_data['skin'];
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
+	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
 	$args = array(
 		'playlist'	=> $playlist, 
 		'skin' 		=> $skin, 
 		'width' 	=> $width, 
 		'height' 	=> $height,
-		'wmode' 	=> $wmode
+		'wmode' 	=> $wmode,
+		'crawler' 	=> $isCrawler
 	);
 	$out = apply_filters( 'flagShowVideoSkin', $args );
 	return $out;
@@ -176,10 +183,12 @@ function flagShowVmPlayer($id, $w, $h, $autoplay) {
 	$swfobject->add_flashvars( 'autoplay', $autoplay );
 	// create the output
 	$out = '<div class="grandflv">' . $swfobject->output($alternative) . '</div>';
-	// add now the script code
-	$out .= "\n".'<script type="text/javascript" defer="defer">';
-	$out .= $swfobject->javascript();
-	$out .= "\n".'</script>';
+	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT'])){
+		// add now the script code
+		$out .= "\n".'<script type="text/javascript" defer="defer">';
+		$out .= $swfobject->javascript();
+		$out .= "\n".'</script>';
+	}
 
 	$out = apply_filters('flag_flv_mini', $out);
 			
@@ -198,13 +207,15 @@ function flagShowBanner($xml, $width, $height, $wmode='') {
 	$items = $playlist_data['items'];
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
+	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
 	$args = array(
 		'xml'		=> $xml,
 		'skin' 		=> $skin,
 		'items' 	=> $items,
 		'width' 	=> $width,
 		'height' 	=> $height,
-		'wmode' 	=> $wmode
+		'wmode' 	=> $wmode,
+		'crawler' 	=> $isCrawler
 	);
 	$out = apply_filters( 'flagShowBannerSkin', $args );
 	return $out;
@@ -245,7 +256,7 @@ function flagGetBetween($content,$start,$end){
 }
 
 function flagGetUserNow($userAgent) {
-    $crawlers = 'Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|' .
+    $crawlers = 'Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|FeedBurner|' .
     'AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|' .
     'GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby|yandex';
     $isCrawler = (preg_match("/$crawlers/i", $userAgent) > 0);

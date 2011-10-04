@@ -311,7 +311,7 @@ class flagGallery {
 	}
 	
 	function getUserNow($userAgent) {
-	    $crawlers = 'Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|' .
+	    $crawlers = 'Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|FeedBurner|' .
 	    'AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|' .
 	    'GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby|yandex';
 	    $isCrawler = (preg_match("/$crawlers/i", $userAgent) > 0);
