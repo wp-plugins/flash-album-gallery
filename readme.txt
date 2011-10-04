@@ -17,7 +17,7 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 
 New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery.
 
-v1.51 Major Fix : Updated cPanel for skins - compatibility with Adobe Flash Player v11.
+**v1.51 Major Fix : Updated cPanel for skins - compatibility with Adobe Flash Player v11**
 
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
