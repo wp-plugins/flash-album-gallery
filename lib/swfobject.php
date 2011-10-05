@@ -88,7 +88,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	// add now the script code
 	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT'])){
 		$out .= "\n".'<script type="text/javascript" defer="defer">';
-		$out .= "\n".'flag_alt[\''.$skinID.'\'] = jQuery("div.flag_alternate").clone().wrap("<div></div>").parent().html();';
+		$out .= "\n".'flag_alt[\''.$skinID.'\'] = jQuery("div.flag_alternate").clone().wrap(document.createElement(\'div\')).parent().html();';
 		$out .= $swfobject->javascript();
 		$out .= "\n".'</script>';
 	}
