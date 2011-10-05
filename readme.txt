@@ -144,148 +144,6 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * Added : Flash Gallery for Facebook page
 * Fixed : small fixes
 
-= v0.61 - 22.05.2011 =
-* Added : Azerbaijani translation
-
-= v0.60 - 11.04.2011 =
-* Fixed : Security fix in two files
-
-= v0.59 - 23.03.2011 =
-* Fixed : Fix for default skins - don't load empty photo galleries
-* Fixed : Fix for edit big thumbs
-* Notice : New photo gallery flash skin released today
-
-= v0.58pl1 - 19.02.2011 =
-* Changed : Fix for compatibility with new skin
-* Notice : New photo gallery flash skin released today
-
-= v0.58 - 17.02.2011 =
-* Changed : core files for skins swfobject
-* Notice : all feature photo gallery skins require plugin v0.58 or higher
-
-= v0.57 - 17.02.2011 =
-* Added : js for feature skin
-* Fixed : small fixes
-
-= v0.56 - 17.02.2011 =
-* Fixed : transparent and bg color for image gallery skins
-* Added : functionality for feature  flash photo gallery skin
-
-= v0.55 - 18.01.2011 =
-* Removed : disablescroll.js - very buggy
-
-= v0.54 - 18.01.2011 =
-* Added : javascript - flash scroll without html scroll
-* Added : Dutch language
-
-= v0.52 - 5.10.2010 =
-* Added : Polish translation
-
-= v0.50 - 19.07.2010 =
-* Fixed : Metadata to description wrong tag
-
-= v0.49 - 28.06.2010 =
-* Added : Bulk action: copy image metadata to image description
-* Added : Russian translation
-* Bug fixes and CSS fixes
-
-= v0.46 - 03.05.2010 =
-* Added : Belorussian language
-
-= v0.45 - 22.04.2010 =
-* Added : WordPress MU support
-* Small bug fixes
-
-= v0.44 - 12.04.2010 =
-* Added : Turkish language
-* Small bug fixes
-
-= v0.43 - 28.03.2010 =
-* Added : More informative error messages on plugin upgrade
-* Bugfix : Conflicted with NGG JWPlayer
-* Bugfix : Help screen replaced on all admin pages
-* Bugfix : Wrong pager calculate
-* Changed : swfobject js for compability with older version of js library
-
-= v0.42 - 25.03.2010 =
-* Changed : Replaced all php short_open_tag from '<?=...?>' to '<?php echo ...; ?>'
-
-= v0.41 - 25.03.2010 =
-* Bugfix : Photo gallery Skin options didn't save colors
-
-= v0.40 - 24.03.2010 =
-* Change : DataBase structure 
-* Change : Photo gallery Skin options now on skins page 
-* Change : Skins now in separate folder outside of Flash Album Gallery plugin folder 
-* Added : Each image gallery skin has own color settings saved in file
-* Added : Hide image for unregistered users option
-* Added : SWFaddress for deeplinking in flash
-* Added : Meta data for Images
-* Added : Action popup for Resize image... and Create new thumbnails
-* Added : New Action - Import Meta data
-* Added : Actions on Manage Galleries page
-* Added : Search Images on Manage Galleries page
-
-= v0.39pl3 - 12.02.2010 =
-* Bugfix : Image uploader fix (Error 'no valid image') 
-* Added : German translation
-
-= v0.39pl2 - 04.02.2010 =
-* Bugfix : TinyMCE button insert wrong shortcode for flash photo gallery
-* Bugfix : Color tab and color settings not showing 
-
-= v0.39pl1 - 31.01.2010 =
-* Added : Portuguese  translation 
-* Added : Traditional Chinese  translation 
-
-= v0.39 - 25.12.2009 =
-* Added : Spanish translation 
-* Bugfix : bugfixes for WP2.9  
-
-= v0.38 - 08.12.2009 =
-* Added : Photo gallery shortcode parameters (orderby=gid | title | random, order=DESC | ASC, exclude, skin) 
-* Added : Popup tabs for additional shortcode parameters 
-* Added : Ability to add more flash albums in post/posts with different skins 
-* Added : Ability set default skin colors or leave your own 
-* Bugfix : small fixes  
-
-= v0.37 - 13.11.2009 =
-* Added : French translation 
-* Bugfix : Fix for GRAND Flash Album Gallery Skin page (blank page)  
-
-= v0.36 - 5.11.2009 =
-* Added : Italian translation 
-* Update : Little fixes of text  
-
-= v0.35 - 22.10.2009 =
-* Added : Confirmation popup for delete skin option 
-* Bugfix: Fix for included skins with WP 2.7.1 and PHP 4 
-* Update : Update for Wordpress v.2.8.5 
-
-= v0.34 - 19.10.2009 =
-* Added : Delete skin option 
-* Added : Capability for 'delete skin' 
-* Bugfix : Fix for flag.ajax.js (conflict with wp-security-scan plugin) 
- 
-= v0.33 - 5.10.2009 =
-* Bugfix : Fix for skins upload 
-* Bugfix : Fix editor buttons in IE 
-
-= v0.32 - 30.09.2009 =
-* Added : Skin "Photo Gallery PRO 1.0 DEMO" 
-* Bugfix : Fix for image date & time 
-* Bugfix : Fixed html special chars in description of image 
-* Changed : Database structure 
-
-= v0.29 - 17.08.2009 =
-* NEW : Import images from folder 
-* Added : Button "FlAGallery" on HTML Editor panel, even if Visual Editor is disabled 
-* Added : International Skin to display any language in the flash 
-* Added : Loader for News Box on Overview page 
-* Added : To display all galleries in the album, added parameter value "all", e.g.: gid=all 
-* Changed : Shortcode 'album' replaced with 'flagallery', becouse of conflict with NextGEN Gallery 
-* Bugfix : Fix for Upload Images button on Overview page 
-* Bugfix : Fixed conflict with NextGEN Gallery (creating thumbnails cause error) 
  
 == Upgrade Notice ==
 
@@ -360,6 +218,11 @@ Make sure you have the following in your template. (It's in the original WP head
 
 That line would go in between your <HEAD> </HEAD> tags
 
+= The flash didn't appear and no error messages =
+
+If you have W3 Total Cache installed:
+Go Wordpress admin -> Performance -> Minify -> Scroll down to the JavaScript settings, uncheck the "Enable" checkbox and click "Save changes"
+
 = When I try to activate the plugin I get the message : "Plugin could not be activated because it triggered a fatal error." =
 
 This problem could happened if you have a low memory_limit in your php environment and a lot of plugins installed. For a simple test deactivate all other plugins and try then to activate GRAND FlAGallery again. Please check also if you have a minimum memory_limit of 16Mbyte (as much as possible).
@@ -403,7 +266,7 @@ it will display all galleries except ID=1 sorted by title of gallery.
 
 = [IOErrorEvent type="ioError" bubbles=false cancelable=false eventPhase=2 text="Error #2032"] =
 
-Probably you use some plugin that extend standard WordPress TinyMCE Editor. And it replace ( " ) symbol in shortcode to ( вЂњ ). Try remove all quotes from shortcode (album name without quotes shouldn't consist spaces).
+Probably you use some plugin that extend standard WordPress TinyMCE Editor. And it replace ( " ) symbol in shortcode to ( &quote; ). Try remove all quotes from shortcode (album name without quotes shouldn't consist spaces).
 
 = I get this error code: ERROR: IMG_5879.JPG : Invalid upload. Error Code : 1. =
 
