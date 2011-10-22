@@ -40,6 +40,7 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 = v1.51 - 04.10.2011 =
 * Major Fix : Updated cPanel for skins
 * Added : RSS for FeedBurner
+* Added : Supported new Slider skin
 * Updated : SEO optimization for serch engines
 * Updated : Optimization for RSS Readers (added photo description)
 * Updated : Scripts for feature SlideShow Skin
