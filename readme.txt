@@ -1,7 +1,7 @@
 ﻿=== GRAND FlAGallery - Best Photo & Media Gallery ===
 Contributors: Rattus
 Donate link: Buy Skin
-Tags: admin,album,flash,gallery,image,images,image gallery,page,photo,photo gallery,plugin,widget,portfolio,Post,posts,slideshow,mp3,music,video,player,Facebook,Twitter
+Tags: admin,album,flash,gallery,image,images,image gallery,page,photo,photo gallery,plugin,widget,portfolio,Post,posts,slideshow,mp3,music,video,player,Facebook,Twitter,slide
 Requires at least: 3.0
 Tested up to: 3.2
 Stable tag: trunk
