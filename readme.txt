@@ -15,7 +15,7 @@ You can edit your media content the way you want: upload images, import music an
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
-iPhone / iPad friendly galleries, SEO optimized.
+iPhone / iPad friendly photo gallery, SEO optimized.
 New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery.
 
 v1.51 Major Fix : Updated cPanel for skins - compatibility with Adobe Flash Player v11.
@@ -40,7 +40,7 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 = v1.51 - 04.10.2011 =
 * Major Fix : Updated cPanel for skins
 * Added : RSS for FeedBurner
-* Added : Supported new Slider skin
+* Added : Supported new Slider skin - FancyBox fullscreen preview
 * Updated : SEO optimization for serch engines
 * Updated : Optimization for RSS Readers (added photo description)
 * Updated : Scripts for feature SlideShow Skin
