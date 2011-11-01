@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.52 - 01.11.2011 =
+* Updated : Singleton (mini) mp3 player
+* Added : Autoplay for singleton (mini) mp3 player
+* Bugfix : Android browser support
+
 = v1.51 - 04.10.2011 =
 * Major Fix : Updated cPanel for skins
 * Added : RSS for FeedBurner

@@ -136,7 +136,7 @@ function alternate_flag_e(t){
 		});
 	});
 }
-if(fv.major<10) {
+if(fv.major<10 || (navigator.userAgent.toLowerCase().indexOf("android") > -1)) {
 	new FlAGClass(ExtendVar, false, false, false);
 }
 function thumb_cl(skin_id, pic_id, slideshow){

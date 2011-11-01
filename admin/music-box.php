@@ -399,7 +399,7 @@ if($musiclist) {
         <tr class="mp3-<?php echo $mp3->ID.$class2; ?>"<?php echo $ex; ?>>
             <td valign="top" class="player" colspan="3"><script type="text/javascript">swfobject.embedSWF("<?php echo FLAG_URLPATH; ?>lib/mini.swf", "c-<?php echo $mp3->ID; ?>", "250", "20", "10.1.52", "expressInstall.swf", {path:"<?php echo str_replace(array('.mp3'), array(''), $url); ?>",bgcolor:"<?php echo $flag_options['mpBG'] ?>",color1:"<?php echo $flag_options['mpColor1'] ?>",color2:"<?php echo $flag_options['mpColor2'] ?>"}, {wmode:"transparent"}, {id:"f-<?php echo $mp3->ID; ?>",name:"f-<?php echo $mp3->ID; ?>"});</script>
 <div class="play" style="padding-left: 4px;"><span id="c-<?php echo $mp3->ID; ?>"></span></div>
-<p style="padding: 7px 3px;">Shortcode:&nbsp;<input type="text" class="shortcode1" readonly="readonly" onfocus="this.select()" value="[grandmp3 id=<?php echo $mp3->ID; ?>]" /></p></td>
+<p style="padding: 7px 3px;">Shortcode:&nbsp;<input type="text" class="shortcode1" readonly="readonly" style="width: 180px; font-size: 9px;" onfocus="this.select()" value="[grandmp3 id=<?php echo $mp3->ID; ?> autoplay=<?php echo $flag_options['mpAutoplay']; ?>]" /></p></td>
         </tr>
 		<?php
 	}

@@ -257,6 +257,7 @@ function flag_list_options() {
 	$flag_options['mpBG']					= '4f4f4f';
 	$flag_options['mpColor1']				= 'ffffff';
 	$flag_options['mpColor2']				= '3283A7';
+	$flag_options['mpAutoplay']				= 'false';
 
 	$flag_options['advanced']				= false;  							// Advanced options
 	
@@ -291,7 +292,7 @@ function flag_remove_capability($capability){
  */
 function flag_uninstall() {
 	global $wpdb;
-	
+
 	// first remove all tables
 	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}flag_pictures");
 	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}flag_gallery");

@@ -1,4 +1,4 @@
-<?php  
+<?php
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
 function flag_admin_options()  {
@@ -218,14 +218,14 @@ jQuery(document).ready(function() {
 					<td>
 						<input class="colorPick" type="text" size="7" maxlength="6" id="vmColor2" name="vmColor2" value="<?php echo $flag_options['vmColor2']; ?>" /><div id="cp_vmColor2" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
-				<tr>					
+				<tr>
 					<th><?php _e('Autoplay','flag'); ?>:</th>
 					<td>
 						<label><input name="vmAutoplay" type="radio" value="true" <?php checked('true', $flag_options['vmAutoplay']); ?> /> <?php _e('True', 'flag'); ?></label><br />
 						<label><input name="vmAutoplay" type="radio" value="false" <?php checked('false', $flag_options['vmAutoplay']); ?> /> <?php _e('False', 'flag'); ?></label><br />
 					</td>
 				</tr>
-				<tr>					
+				<tr>
 					<th><?php _e('Default Size','flag'); ?>:<br /><small>(width x height)</small></th>
 					<td>
 						<input name="vmWidth" type="text" size="3" maxlength="3" value="<?php echo $flag_options['vmWidth']; ?>" /> x <input name="vmHeight" type="text" size="3" maxlength="3" value="<?php echo $flag_options['vmHeight']; ?>" />
@@ -239,7 +239,7 @@ jQuery(document).ready(function() {
 	<div id="mPlayer" class="cptab">
 		<form name="mPlayer"  method="post">
 			<?php wp_nonce_field('flag_settings'); ?>
-			<input type="hidden" name="page_options" value="mpBG,mpColor1,mpColor2" />
+			<input type="hidden" name="page_options" value="mpBG,mpColor1,mpColor2,mpAutoplay" />
 			<h2><?php _e('MP3 Player Colors','flag'); ?></h2>
 			<table class="flag_colors form-table flag-options">
 				<tr>
@@ -254,6 +254,13 @@ jQuery(document).ready(function() {
 					<th><?php _e('Color 2','flag'); ?>:</th>
 					<td>
 						<input class="colorPick" type="text" size="7" maxlength="6" id="mpColor2" name="mpColor2" value="<?php echo $flag_options['mpColor2']; ?>" /><div id="cp_mpColor2" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
+				</tr>
+				<tr>
+					<th><?php _e('Autoplay','flag'); ?>:</th>
+					<td>
+						<label><input name="mpAutoplay" type="radio" value="true" <?php checked('true', $flag_options['mpAutoplay']); ?> /> <?php _e('True', 'flag'); ?></label><br />
+						<label><input name="mpAutoplay" type="radio" value="false" <?php checked('false', $flag_options['mpAutoplay']); ?> /> <?php _e('False', 'flag'); ?></label><br />
+					</td>
 				</tr>
 			</table>
 			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>

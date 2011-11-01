@@ -18,8 +18,6 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 iPhone / iPad friendly photo gallery, SEO optimized.
 New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery.
 
-v1.51 Major Fix : Updated cPanel for skins - compatibility with Adobe Flash Player v11.
-
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
 * Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
@@ -37,8 +35,13 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.52 - 01.11.2011 =
+* Updated : Singleton (mini) mp3 player
+* Added : Autoplay for singleton (mini) mp3 player
+* Bugfix : Android browser support
+
 = v1.51 - 04.10.2011 =
-* Major Fix : Updated cPanel for skins
+* Major Fix : Updated cPanel for skins (compatibility with Adobe Flash Player v11)
 * Added : RSS for FeedBurner
 * Added : Supported new Slider skin - FancyBox fullscreen preview
 * Updated : SEO optimization for serch engines
