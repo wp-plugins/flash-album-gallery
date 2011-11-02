@@ -35,6 +35,10 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.53 - 02.11.2011 =
+* Updated : Feedburner RSS now display bold title near image (not only description)
+* Added : Support for very old skins
+
 = v1.52 - 01.11.2011 =
 * Updated : Singleton (mini) mp3 player
 * Added : Autoplay for singleton (mini) mp3 player

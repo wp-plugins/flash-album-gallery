@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.53 - 02.11.2011 =
+* Updated : Feedburner RSS now display bold title near image (not only description)
+* Added : Support for very old skins
+
 = v1.52 - 01.11.2011 =
 * Updated : Singleton (mini) mp3 player
 * Added : Autoplay for singleton (mini) mp3 player
