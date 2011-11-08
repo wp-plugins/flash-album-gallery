@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.54 - ??.11.2011 =
+* Cool update soon...
+
 = v1.53 - 02.11.2011 =
 * Updated : Feedburner RSS now display bold title near image (not only description)
 * Added : Support for very old skins
