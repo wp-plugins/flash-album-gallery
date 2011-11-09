@@ -400,13 +400,11 @@ class flagLoad {
 	  $items_array = $_POST["mb_items_array"];
 	  $skinname = $_POST["mb_skinname"];
 	  $scode = $_POST["mb_scode"];
-	  $butpos = $_POST["mb_butpos"];
 	  $button_text = $_POST["mb_button"];
 	  $button_link = $_POST["mb_button_link"];
 	  update_post_meta($post_id, "mb_items_array", $_POST["mb_items_array"]);
 	  update_post_meta($post_id, "mb_skinname", $_POST["mb_skinname"]);
 	  update_post_meta($post_id, "mb_scode", $_POST["mb_scode"]);
-	  update_post_meta($post_id, "mb_butpos", $_POST["mb_butpos"]);
 	  update_post_meta($post_id, "mb_button", $_POST["mb_button"]);
 	  update_post_meta($post_id, "mb_button_link", $_POST["mb_button_link"]);
 
