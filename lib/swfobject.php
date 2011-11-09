@@ -54,7 +54,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	$altColors['ThumbLoaderColor'] = $flag_options['ThumbLoaderColor'];
 	$altColors['TitleColor'] = $flag_options['TitleColor'];
 	$altColors['DescrColor'] = $flag_options['DescrColor'];
-	
+
 	if($flag_options['jAlterGal']) {
 		$alternate = get_include_contents(FLAG_ABSPATH."admin/jgallery.php", $galleryID, $skin, $skinID, $width, $height, $altColors);
 	} else {
@@ -76,7 +76,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	$swfobject->add_attributes('styleclass', 'flashalbum');
 	$swfobject->add_attributes('id', $skinID);
 
-	// adding the flash parameter	
+	// adding the flash parameter
 	$swfobject->add_flashvars( 'path', $flag_options['skinsDirURL'].$skin.'/' );
 	$swfobject->add_flashvars( 'gID', $galleryID );
 	$swfobject->add_flashvars( 'galName', $name );
@@ -88,7 +88,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	// add now the script code
 	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT']) && !preg_match("/Android/i", $_SERVER['HTTP_USER_AGENT'])){
 		$out .= "\n".'<script type="text/javascript" defer="defer">';
-		$out .= "\n".'flag_alt[\''.$skinID.'\'] = jQuery("div.flag_alternate").clone().wrap(document.createElement(\'div\')).parent().html();';
+		$out .= "\n".'flag_alt[\''.$skinID.'\'] = jQuery("div#'.$skinID.'_jq").clone().wrap(document.createElement(\'div\')).parent().html();';
 		$out .= $swfobject->javascript();
 		$out .= "\n".'</script>';
 	}
