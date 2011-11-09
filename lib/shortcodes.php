@@ -40,7 +40,8 @@ class FlAG_shortcodes {
 			'exclude' 	=> '',
 			'skin'	 	=> '',
 			'play'	 	=> '',
-			'wmode' 	=> ''
+			'wmode' 	=> '',
+			'fullwindow'=> false,
 		), $atts ));
 		
 		$out = '';
@@ -69,7 +70,7 @@ class FlAG_shortcodes {
 					$gids.='_'.$gallery->gid;
 				}
                 $gids = ltrim($gids,'_');
-                $out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode);
+                $out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode, false, $fullwindow);
 			} else {
             	$out = __('[Gallery not found]','flag');
 			}
@@ -84,7 +85,7 @@ class FlAG_shortcodes {
     		}
 
     		if( $galleryID )
-    			$out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode);
+    			$out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode, false, $fullwindow);
     		else
     			$out = __('[Gallery not found]','flag');
     	}

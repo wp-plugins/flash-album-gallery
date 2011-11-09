@@ -1,4 +1,4 @@
-<?php global $wpdb;
+<?php global $wpdb, $post;
 $flag_options = get_option ('flag_options'); 
 $siteurl = get_option ('siteurl');
 $isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']); // check if is a crowler
@@ -42,12 +42,25 @@ extract($altColors);
 .flag_alternate .flagcategory a:hover { background-color: #<?php echo $ThumbBG; ?>; border: 2px solid #<?php echo $ThumbLoaderColor; ?>; color: #<?php echo $ThumbLoaderColor; ?>; }
 .flag_alternate .flagcategory a.current, .flag_alternate .flagcategory a.last { border-color: #<?php echo $ThumbLoaderColor; ?>; }
 <?php }; ?>
+<?php if($altColors['FullWindow'] && !$isCrawler){ ?>
+.flag_alternate a.backlink { float: right; display: block; padding: 2px 5px; border: 1px solid #000; border-radius: 1px; background: #000; color: #fff; text-decoration: none; outline: none; font-size: 12px; font-family: Verdana; font-weight: bold; }
+.flag_alternate a.backlink:hover { text-decoration: underline; }
+<?php } ?>
 </style>
 <?php if(!$isCrawler){ ?>
 <script type="text/javascript">var ExtendVar='<?php echo FLAG_URLPATH; ?>';</script>
 <?php } ?>
 <div id="<?php echo $skinID; ?>_jq" class="flag_alternate">
-		<div class="flagcatlinks"></div>
+		<div class="flagcatlinks"><?php
+			if($altColors['FullWindow'] && !$isCrawler){
+				$flag_custom = get_post_custom($post->ID);
+				$backlink = $flag_custom["mb_button_link"][0];
+				if(!$backlink || $backlink == 'http://'){ $backlink = $_SERVER["HTTP_REFERER"]; }
+				if($backlink){
+					echo '<a class="backlink" href="'.$backlink.'">'.$flag_custom["mb_button"][0].'</a>';
+				}
+			}
+		?></div>
 <?php
 $gID = explode( '_', $galleryID ); // get the gallery id
 if ( is_user_logged_in() ) $exclude_clause = '';

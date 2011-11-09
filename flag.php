@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 1.53
+Version: 1.54
 Author: Rattus
 Author URI: http://codeasily.com/
 
@@ -37,7 +37,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 	
-	var $version     = '1.53';
+	var $version     = '1.54';
 	var $dbversion   = '1.24';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '2.8';
@@ -80,8 +80,12 @@ class flagLoad {
 		//Add some message on the plugin page
 		add_action( 'after_plugin_row', array(&$this, 'flag_check_message_version') );
 
+		add_action('init', array(&$this, 'flag_fullwindow_page_init') );
+		add_action( 'add_meta_boxes', array(&$this, 'flag_fullwindow_page_add_meta_box') );
+		add_action( 'save_post', array(&$this, 'flag_fullwindow_page_save_meta_box') );
+		add_action("template_redirect", array(&$this, 'flag_fullwindow_page_template_redirect') );
 	}
-	
+
 	function start_plugin() {
 
 		// Content Filters
@@ -254,6 +258,8 @@ class flagLoad {
 		include_once (dirname (__FILE__) . '/admin/flag_install.php');
 		// check for tables
 		flag_install();
+		$this->flag_fullwindow_page_init();
+		flush_rewrite_rules();
 	}
 	
 	function deactivate() {
@@ -315,6 +321,117 @@ class flagLoad {
 			}
 		}
 	}
+
+	function flag_fullwindow_page_init() {
+	  $labels = array(
+	    'name' => _x('GRAND Galleries', 'post type general name', 'flag'),
+	    'singular_name' => __('FlAGallery Page', 'flag'),
+	    'add_new' => __('Add New Gallery Page', 'flag'),
+	    'add_new_item' => __('Add New Gallery Page', 'flag'),
+	    'edit_item' => __('Edit Gallery Page', 'flag'),
+	    'new_item' => __('New Gallery Page', 'flag'),
+	    'all_items' => __('All GRAND Galleries', 'flag'),
+	    'view_item' => __('View Gallery Page', 'flag'),
+	    'search_items' => __('Search GRAND Galleries', 'flag'),
+	    'not_found' =>  __('No GRAND Galleries found', 'flag'),
+	    'not_found_in_trash' => __('No GRAND Galleries found in Trash', 'flag'),
+	    'parent_item_colon' => '',
+	    'menu_name' => 'GRAND Pages'
+
+	  );
+	  $args = array(
+	    'labels' => $labels,
+	    'description' => __('This is the page template for displaing GRAND FlAGallery galleries in full width and height of browser window.', 'flag'),
+	    'public' => true,
+	    'publicly_queryable' => true,
+	    'show_ui' => true,
+	    'show_in_menu' => true,
+	    'menu_position' => 20,
+	    'menu_icon' => null,
+	    'capability_type' => 'post',
+	    'hierarchical' => true,
+	    'supports' => array('title','author','thumbnail','excerpt','page-attributes'),
+	    'has_archive' => true,
+	    'rewrite' => true,
+	    'query_var' => true,
+	  );
+	  register_post_type('flagallery',$args);
+	}
+
+	/* Adds a meta box to the main column on the flagallery edit screens */
+	function flag_fullwindow_page_add_meta_box() {
+	    add_meta_box( 'flag_gallery', __( 'Photo Gallery Page Generator', 'flag' ), array(&$this, 'flag_fullwindow_page_meta_box'), 'flagallery', 'normal', 'high' );
+	}
+
+	/* Prints the meta box content */
+	function flag_fullwindow_page_meta_box( $post ) {
+
+	  // Use nonce for verification
+	  wp_nonce_field( plugin_basename( __FILE__ ), 'flag_meta_box' );
+
+	  include_once(dirname(__FILE__) . '/admin/meta_box.php');
+	}
+
+	/* When the post is saved, saves our custom data */
+	function flag_fullwindow_page_save_meta_box( $post_id ) {
+	  // verify if this is an auto save routine.
+	  // If it is our form has not been submitted, so we dont want to do anything
+	  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+	      return;
+
+	  // verify this came from the our screen and with proper authorization,
+	  // because save_post can be triggered at other times
+
+	  if ( !wp_verify_nonce( $_POST['flag_meta_box'], plugin_basename( __FILE__ ) ) )
+	      return;
+
+	  // Check permissions
+	  if ( 'flagallery' == $_POST['post_type'] )
+	  {
+	    if ( !current_user_can( 'edit_page', $post_id ) )
+	        return;
+	  }
+	  else
+	  {
+	    if ( !current_user_can( 'edit_post', $post_id ) )
+	        return;
+	  }
+	  // OK, we're authenticated: we need to find and save the data
+	  $items_array = $_POST["mb_items_array"];
+	  $skinname = $_POST["mb_skinname"];
+	  $scode = $_POST["mb_scode"];
+	  $butpos = $_POST["mb_butpos"];
+	  $button_text = $_POST["mb_button"];
+	  $button_link = $_POST["mb_button_link"];
+	  update_post_meta($post_id, "mb_items_array", $_POST["mb_items_array"]);
+	  update_post_meta($post_id, "mb_skinname", $_POST["mb_skinname"]);
+	  update_post_meta($post_id, "mb_scode", $_POST["mb_scode"]);
+	  update_post_meta($post_id, "mb_butpos", $_POST["mb_butpos"]);
+	  update_post_meta($post_id, "mb_button", $_POST["mb_button"]);
+	  update_post_meta($post_id, "mb_button_link", $_POST["mb_button_link"]);
+
+  	}
+
+	// Template selection
+	function flag_fullwindow_page_template_redirect()
+	{
+		global $wp;
+		global $wp_query;
+		if ($wp->query_vars["post_type"] == "flagallery")
+		{
+			// Let's look for the full_window_template.php template file
+			if (have_posts())
+			{
+				include(FLAG_ABSPATH . 'full_window_template.php');
+				die();
+			}
+			else
+			{
+				$wp_query->is_404 = true;
+			}
+		}
+	}
+
 
 }
 	// Let's start the holy plugin

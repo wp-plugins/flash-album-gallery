@@ -9,7 +9,7 @@
  * @param integer $flashHeight Height of the flash container
  * @return the content
  */
-function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='', $playlist='', $wmode='', $linkto='') {
+function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='', $playlist='', $wmode='', $linkto='', $fullwindow=false) {
  	global $post;	
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
 
@@ -54,6 +54,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	$altColors['ThumbLoaderColor'] = $flag_options['ThumbLoaderColor'];
 	$altColors['TitleColor'] = $flag_options['TitleColor'];
 	$altColors['DescrColor'] = $flag_options['DescrColor'];
+	$altColors['FullWindow'] = $fullwindow;
 
 	if($flag_options['jAlterGal']) {
 		$alternate = get_include_contents(FLAG_ABSPATH."admin/jgallery.php", $galleryID, $skin, $skinID, $width, $height, $altColors);
@@ -83,6 +84,15 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	$swfobject->add_flashvars( 'skinID', $skinID );
 	$swfobject->add_flashvars( 'postID', $post->ID);
 	$swfobject->add_flashvars( 'postTitle', urlencode($post->post_title." "));
+	if($fullwindow){
+		$flag_custom = get_post_custom($post->ID);
+		$backlink = $flag_custom["mb_button_link"][0];
+		if(!$backlink || $backlink == 'http://'){ $backlink = $_SERVER["HTTP_REFERER"]; }
+		if($backlink){
+			$swfobject->add_flashvars( 'butText', urlencode($flag_custom["mb_button"][0]));
+			$swfobject->add_flashvars( 'butLink', $backlink);
+		}
+	}
 	// create the output
 	$out = '<div class="flashalbum">' . $swfobject->output($alternate) . '</div>';
 	// add now the script code

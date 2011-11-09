@@ -16,7 +16,9 @@ You can edit your media content the way you want: upload images, import music an
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
 iPhone / iPad friendly photo gallery, SEO optimized.
-New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery.
+New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
+Added: GRAND Pages - Full Window Gallery Template. Now you can display your gallery in full window separate page (gallery template).
+
 
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
@@ -35,8 +37,9 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
-= v1.54 - ??.11.2011 =
-* Cool update soon...
+= v1.54 - 09.11.2011 =
+* Added: GRAND Pages - Full Window Gallery Template
+* Updated: Script for Slider skin (multiple Sliders on one page)
 
 = v1.53 - 02.11.2011 =
 * Updated : Feedburner RSS now display bold title near image (not only description)

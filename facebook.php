@@ -9,7 +9,7 @@ require_once( $_m[1] . 'wp-load.php');
 </head>
 <body style="margin: 0; padding: 0;">
 <div id="page">
-<script language="JavaScript" src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.js'); ?>" type="text/javascript"></script>
 <script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/swfobject.js'); ?>" type="text/javascript"></script>
 <?php $flag_options = get_option('flag_options');
 if(isset($_GET['l'])) {
