@@ -259,7 +259,6 @@ class flagLoad {
 		// check for tables
 		flag_install();
 		$this->flag_fullwindow_page_init();
-		flush_rewrite_rules();
 	}
 	
 	function deactivate() {
@@ -352,10 +351,11 @@ class flagLoad {
 	    'hierarchical' => true,
 	    'supports' => array('title','author','thumbnail','excerpt','page-attributes'),
 	    'has_archive' => true,
-	    'rewrite' => true,
+		'rewrite' => array( 'slug' => 'flagallery','with_front' => FALSE),
 	    'query_var' => true,
 	  );
 	  register_post_type('flagallery',$args);
+	  flush_rewrite_rules();
 	}
 
 	/* Adds a meta box to the main column on the flagallery edit screens */
