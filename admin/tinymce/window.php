@@ -231,7 +231,7 @@ if($_REQUEST['riched'] == "false") {
 			else
 				var gallerysize="";
 			
-			if (galleryid == 'all') {
+			if (galleryid == ' gid=all') {
 				if (galorderby) {
 					var galorderby = " orderby=" + galorderby;
 				} 
