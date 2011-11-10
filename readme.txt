@@ -15,14 +15,17 @@ You can edit your media content the way you want: upload images, import music an
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
-iPhone / iPad friendly photo gallery, SEO optimized.
-New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
-Added: GRAND Pages - Full Window Gallery Template. Now you can display your gallery in full window separate page (gallery template).
+	iPhone / iPad friendly photo gallery, SEO optimized.
+
+	New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
+
+	Added: GRAND Pages - Full Window Gallery Template. Now you can display your gallery in full window separate page (gallery template). [View Demo](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
 
 
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
 * Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
+* Demo [Full Window Gallery Template](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
 * Demo [Video Galleries](http://photogallerycreator.com/flv-video-players/)
 * Demo [mp3 Music Players](http://photogallerycreator.com/mp3-music-players/)
 * Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
@@ -36,6 +39,13 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
+
+= v1.55 - 09.11.2011 =
+* Fixed: GRAND Pages permalinks
+* Added: Option to disable deep linking in the flash (not all skins support this feature)
+* Fixed: Alternative gallery
+* Fixed: CSS for FancyBox
+* Added: Alternative for Music Player Default
 
 = v1.54 - 09.11.2011 =
 * Added: GRAND Pages - Full Window Gallery Template

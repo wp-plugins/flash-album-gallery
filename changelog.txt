@@ -1,6 +1,13 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.55 - 09.11.2011 =
+* Fixed: GRAND Pages permalinks
+* Added: Option to disable deep linking in the flash (not all skins support this feature)
+* Fixed: Alternative gallery
+* Fixed: CSS for FancyBox
+* Added: Alternative for Music Player Default
+
 = v1.54 - 09.11.2011 =
 * Added: GRAND Pages - Full Window Gallery Template
 * Updated: Script for Slider skin (multiple Sliders on one page)

@@ -192,8 +192,9 @@ function flag_list_options() {
 	$flag_options['galleryPath']			= 'wp-content/flagallery/';  		// set default path to the gallery
 	$flag_options['swfUpload']				= true;								// activate the batch upload
 	$flag_options['deleteImg']				= true;								// delete Images
+	$flag_options['deepLinks']				= true;								// activate the global Media RSS file
 	$flag_options['useMediaRSS']			= false;							// activate the global Media RSS file
-	
+
 	// Sort Settings
 	$flag_options['galSort']				= 'sortorder';						// Sort order
 	$flag_options['galSortDir']				= 'ASC';							// Sort direction

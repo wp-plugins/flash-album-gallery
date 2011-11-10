@@ -90,7 +90,7 @@ jQuery(document).ready(function() {
 	<div id="imageoptions" class="cptab">
 		<form name="generaloptions" method="post">
 		<?php wp_nonce_field('flag_settings'); ?>
-			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,useMediaRSS,jAlterGal,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgResize,imgWidth,imgHeight,imgQuality,galSort,galSortDir" />
+			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,deepLinks,useMediaRSS,jAlterGal,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgResize,imgWidth,imgHeight,imgQuality,galSort,galSortDir" />
 			<h2><?php _e('Image Gallery Options','flag'); ?></h2>
 			<h3><?php _e('General Options','flag'); ?></h3>
 			<table class="form-table flag-options">
@@ -108,6 +108,11 @@ jQuery(document).ready(function() {
 					<th align="left"><?php _e('Delete image files','flag'); ?></th>
 					<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="checkbox" name="deleteImg" value="1" <?php checked('1', $flag_options['deleteImg']); ?> />
 					<?php _e('Delete files, when removing a gallery in the database','flag'); ?></td>
+				</tr>
+				<tr>
+					<th align="left"><?php _e('Activate Deep Linking (optional)','flag'); ?><br /><small><?php _e('Not all skins support this feature.','flag'); ?></small></th>
+					<td><input type="checkbox" name="deepLinks" value="1" <?php checked('1', $flag_options['deepLinks']); ?> />
+					<span class="setting-description"><?php _e('Deep links for images in flash.','flag'); ?></span></td>
 				</tr>
 				<tr>
 					<th align="left"><?php _e('Activate Media RSS feed','flag'); ?></th>

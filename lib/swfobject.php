@@ -129,7 +129,7 @@ function flagShowMPlayer($playlist, $width, $height, $wmode='') {
 		'crawler' 	=> $isCrawler
 	);
 	$out = apply_filters( 'flagShowMusicSkin', $args );
-	return $out;	
+	return $out;
 }
 
 function flagShowVPlayer($playlist, $width, $height, $wmode='') {

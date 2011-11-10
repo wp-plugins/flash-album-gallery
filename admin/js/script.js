@@ -43,10 +43,10 @@ function waitFB(skin_id, pic_id, slideshow) {
 					'transitionOut'	: 'elastic',
 					'titlePosition'	: 'over',
 					'titleFormat'	: function(title, currentArray, currentIndex, currentOpts) {
-						var descr = jQuery("#flag_pic_"+pic_id, flag_alt[skin_id]).find('span').html();
-						title = jQuery("#flag_pic_"+pic_id, flag_alt[skin_id]).attr("title");
+						var descr = jQuery('<div />').html(jQuery("#flag_pic_"+pic_id, flag_alt[skin_id]).find('.flag_pic_desc > span').html()).text();
+						title = jQuery('<div />').html(jQuery("#flag_pic_"+pic_id, flag_alt[skin_id]).find('.flag_pic_desc > strong').html()).text();
 						if(title.length || descr.length)
-							return '<div class="grand_controls" rel="'+skin_id+'"><span rel="prev" class="g_prev">prev</span><span rel="show" class="g_slideshow '+slideshow+'">play/pause</span><span rel="next" class="g_next">next</span></div><span id="fancybox-title-over">'+(title.length? '<strong class="title">'+title+'</strong>' : '')+(descr.length? '<span class="descr">'+descr+'</span>' : '')+'</span>';
+							return '<div class="grand_controls" rel="'+skin_id+'"><span rel="prev" class="g_prev">prev</span><span rel="show" class="g_slideshow '+slideshow+'">play/pause</span><span rel="next" class="g_next">next</span></div><div id="fancybox-title-over">'+(title.length? '<strong class="title">'+title+'</strong>' : '')+(descr.length? '<div class="descr">'+descr+'</div>' : '')+'</div>';
 						else
 							return '<div class="grand_controls" rel="'+skin_id+'"><span rel="prev" class="g_prev">prev</span><span rel="show" class="g_slideshow '+slideshow+'">play/pause</span><span rel="next" class="g_next">next</span></div>';
 					},
@@ -115,16 +115,16 @@ function alternate_flag_e(t){
 			jQuery(this).addClass('loaded').html(d);
 		}
 		jQuery(this).show();
-		jQuery('a',this).fancybox({
+		jQuery('a.flag_pic_alt',this).fancybox({
 			'overlayShow'	: true,
 			'overlayOpacity': '0.5',
 			'transitionIn'	: 'elastic',
 			'transitionOut'	: 'elastic',
 			'titlePosition'	: 'over',
 			'titleFormat'	: function(title, currentArray, currentIndex, currentOpts) {
-				var descr = jQuery('span', currentArray[currentIndex]).html();
-				title = jQuery(currentArray[currentIndex]).attr("title");
-				return '<span id="fancybox-title-over"><em>'+(currentIndex + 1)+' / '+currentArray.length+' &nbsp; </em>'+(title.length? '<strong class="title">'+title+'</strong>' : '')+(descr.length? '<span class="descr">'+descr+'</span>' : '')+'</span>';
+				var descr = jQuery('<div />').html(jQuery('.flag_pic_desc > span', currentArray[currentIndex]).html()).text();
+				title = jQuery('<div />').html(jQuery('.flag_pic_desc > strong', currentArray[currentIndex]).html()).text();
+				return '<div id="fancybox-title-over"><em>'+(currentIndex + 1)+' / '+currentArray.length+' &nbsp; </em>'+(title.length? '<strong class="title">'+title+'</strong>' : '')+(descr.length? '<div class="descr">'+descr+'</div>' : '')+'</div>';
 			},
 			'onClosed' 		: function(currentArray, currentIndex){
 				jQuery(currentArray[currentIndex]).removeClass('current').addClass('last');
