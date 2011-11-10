@@ -19,7 +19,7 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 
 	New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
 
-	Added: GRAND Pages - Full Window Gallery Template. Now you can display your gallery in full window separate page (gallery template). [View Demo](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
+Added: GRAND Pages - Full Window Gallery Template. Now you can display your gallery in full window separate page (gallery template). [View Demo](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
 
 
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
