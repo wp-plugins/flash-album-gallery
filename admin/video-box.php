@@ -362,7 +362,11 @@ if($videolist) {
 			<td class="size" style="padding-bottom: 0; border-bottom: none;"><?php 
 				$path = $uploads['basedir'].str_replace($uploads['baseurl'],'',$url);
 				$size = filesize($path);
-				echo round($size/1024/1024,2).' Mb';
+				if($size){
+					echo round($size/1024/1024,2).' Mb';
+				} else {
+					_e("Can't read file size. Perhaps file is broken.",'flag');
+				}
 			?></td>
 			<td class="thumb" rowspan="2">
 				<a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo FLAG_URLPATH; ?>admin/flv_preview.php?vid=<?php echo $flv->ID; ?>&amp;TB_iframe=1&amp;width=490&amp;height=293"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
