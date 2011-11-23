@@ -5,7 +5,7 @@ Skin URI:
 Description:
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 1.1
+Version: 1.2
 */
 
 function flagShowSkin_music_default($args) {
@@ -15,7 +15,12 @@ function flagShowSkin_music_default($args) {
 	$skinID = 'id_'.mt_rand();
 	// look up for the path
 	$playlistpath = $flag_options['galleryPath'].'playlists/'.$playlist.'.xml';
-	$data = file_get_contents($playlistpath);
+	if($isWidget){
+		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+		$data = file_get_contents($skinpath.'/settings/settings.xml');
+	} else {
+		$data = file_get_contents($playlistpath);
+	}
 	$flashBackcolor = flagGetBetween($data,'<property1>0x','</property1>');
 	if(empty($width)) {
 		$width = flagGetBetween($data,'<width><![CDATA[',']]></width>');
@@ -64,6 +69,9 @@ function flagShowSkin_music_default($args) {
 	$swfobject->add_flashvars( 'path', $flag_options['skinsDirURL'].$skin.'/' );
 	$swfobject->add_flashvars( 'skinID', $skinID );
 	$swfobject->add_flashvars('playlist', $playlist);
+	if($isWidget){
+		$swfobject->add_flashvars('widget', 1);
+	}
 	// create the output
 	$out = '<div class="grandmusic">' . $swfobject->output($alternative) . '</div>';
 	// add now the script code
@@ -73,9 +81,9 @@ function flagShowSkin_music_default($args) {
 		$out .= "\n".'</script>';
 	}
 
-	$out = apply_filters('flag_show_flash_content', $out);
-
-	return $out;
+	$out = apply_filters('flag_show_flash_content', $out);	
+			
+	return $out;	
 }
 remove_all_filters( 'flagShowMusicSkin' );
 add_filter( 'flagShowMusicSkin', 'flagShowSkin_music_default' );

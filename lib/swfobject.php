@@ -108,7 +108,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	return $out;	
 }
 
-function flagShowMPlayer($playlist, $width, $height, $wmode='') {
+function flagShowMPlayer($playlist, $width, $height, $wmode='', $skin='', $isWidget=false) {
 	
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
     require_once ( dirname(dirname(__FILE__)) . '/admin/playlist.functions.php');
@@ -116,7 +116,9 @@ function flagShowMPlayer($playlist, $width, $height, $wmode='') {
 	$flag_options = get_option('flag_options');
 	$playlistPath = $flag_options['galleryPath'].'playlists/'.$playlist.'.xml';
 	$playlist_data = get_playlist_data(ABSPATH.$playlistPath);
-	$skin = $playlist_data['skin'];
+	if(!$skin){
+		$skin = $playlist_data['skin'];
+	}
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
@@ -126,7 +128,8 @@ function flagShowMPlayer($playlist, $width, $height, $wmode='') {
 		'width' 	=> $width, 
 		'height' 	=> $height,
 		'wmode' 	=> $wmode,
-		'crawler' 	=> $isCrawler
+		'crawler' 	=> $isCrawler,
+		'isWidget'	=> $isWidget
 	);
 	$out = apply_filters( 'flagShowMusicSkin', $args );
 	return $out;

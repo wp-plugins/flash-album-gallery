@@ -550,5 +550,118 @@ class flagVideoWidget extends WP_Widget {
 add_action('widgets_init', create_function('', 'return register_widget("flagVideoWidget");'));
 
 
+/**
+ * flagMusicWidget - The widget control for GRAND FlAGallery
+ *
+ * @package GRAND FlAGallery
+ * @access public
+ */
+class flagMusicWidget extends WP_Widget {
+
+	function flagMusicWidget() {
+		$widget_ops = array('classname' => 'widget_music', 'description' => __( 'Show a GRAND FlAGallery Music Player', 'flag') );
+		$this->WP_Widget('flag-music', __('FLAGallery Music', 'flag'), $widget_ops);
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+
+		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __('Music', 'flag') : $instance['title'], $instance, $this->id_base);
+
+		$out = $this->render_music($instance['xml'], $instance['width'], $instance['height'], $instance['skin']);
+
+		if ( !empty( $out ) ) {
+			echo $before_widget;
+			if ( $title)
+				echo $before_title . $title . $after_title;
+		?>
+		<div class="flag_banner widget">
+			<?php echo $out; ?>
+		</div>
+		<?php
+			echo $after_widget;
+		}
+
+	}
+
+	function render_music($xml, $w = '100%', $h = '200', $skin = '') {
+        $out = do_shortcode('[grandmusic playlist='.$xml.' w='.$w.' h='.$h.' skin='.$skin.' is_widget=1]');
+		return $out;
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+
+		$instance['title'] = strip_tags($new_instance['title']);
+		$instance['xml'] = $new_instance['xml'];
+		$instance['height'] = (int) $new_instance['height'];
+		$instance['width'] = $new_instance['width'];
+		$instance['skin'] = $new_instance['skin'];
+
+		return $instance;
+	}
+
+	function form( $instance ) {
+
+		global $wpdb;
+
+		require_once (dirname( dirname(__FILE__) ) . '/admin/get_skin.php');
+		require_once (dirname( dirname(__FILE__) ) . '/admin/playlist.functions.php');
+
+		//Defaults
+		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Music', 'xml' => '', 'width' => '100%', 'height' => '200', 'skin' => 'music_default') );
+		$title  = esc_attr( $instance['title'] );
+		$width  = esc_attr( $instance['width'] );
+		$height = esc_attr( $instance['height'] );
+		$skin  = esc_attr( $instance['skin'] );
+		$all_playlists = get_playlists();
+		$all_skins = get_skins(false,'m');
+?>
+		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('xml'); ?>"><?php _e('Select playlist:', 'flag'); ?></label>
+				<select size="1" name="<?php echo $this->get_field_name('xml'); ?>" id="<?php echo $this->get_field_id('xml'); ?>" class="widefat">
+<?php
+	foreach((array)$all_playlists as $playlist_file => $playlist_data) {
+		$playlist_name = basename($playlist_file, '.xml');
+?>
+					<option <?php selected($playlist_name , $instance['xml']); ?> value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+<?php
+	}
+?>
+				</select>
+		</p>
+		<p><label for="<?php echo $this->get_field_id('height'); ?>"><?php _e('Height:', 'flag'); ?></label> <input id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" style="padding: 3px; width: 45px;" value="<?php echo $height; ?>" /></p>
+		<p><label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width:', 'flag'); ?></label> <input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" style="padding: 3px; width: 45px;" value="<?php echo $width; ?>" /></p>
+		<p>
+			<label for="<?php echo $this->get_field_id('skin'); ?>"><?php _e('Select Skin:', 'flag'); ?></label>
+				<select size="1" name="<?php echo $this->get_field_name('skin'); ?>" id="<?php echo $this->get_field_id('skin'); ?>" class="widefat">
+<?php
+				if($all_skins) {
+					foreach ( (array)$all_skins as $skin_file => $skin_data) {
+						echo '<option value="'.dirname($skin_file).'"';
+						if (dirname($skin_file) == $instance['skin']) echo ' selected="selected"';
+						echo '>'.$skin_data['Name'].'</option>'."\n";
+					}
+				}
+?>
+				</select>
+		</p>
+<?php
+	}
+
+}
+
+// register it
+add_action('widgets_init', create_function('', 'return register_widget("flagMusicWidget");'));
+
+function flagMusicWidget($xml, $w = '100%', $h = '200', $skin = 'default') {
+
+	echo flagMusicWidget::render_music($xml, $w, $h, $skin);
+
+}
+
+
+
 
 ?>

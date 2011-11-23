@@ -4,9 +4,16 @@ preg_match('|^(.*?/)(wp-content)/|i', str_replace('\\', '/', __FILE__), $_m);
 require_once( $_m[1] . 'wp-load.php');
 $flag_options = get_option ('flag_options');
 $file = $_GET['playlist'];
+$isWidget = isset($_GET['widget'])? $_GET['widget'] : false;
 $playlistPath = $_m[1].$flag_options['galleryPath'].'playlists/'.$file.'.xml';
 if(file_exists($playlistPath)) {
 	require_once( FLAG_ABSPATH.'admin/playlist.functions.php');
+	if($isWidget){
+		$settings = file_get_contents(dirname(__FILE__).'/settings/settings.xml');
+		$properties = '<properties>'.flagGallery::flagGetBetween($settings,'<properties>','</properties>').'</properties>
+<category';
+	}
+	$xml = file_get_contents($playlistPath);
 	$playlist = get_playlist_data($playlistPath);
 	if(count($playlist['items'])) {
 		$content = '<items>';
@@ -27,8 +34,10 @@ if(file_exists($playlistPath)) {
 		$content .= '
 	</items>';
 	}
-	$xml = file_get_contents($playlistPath);
 	$newXML = preg_replace("|<items>.*?</items>|si", $content, $xml);
+	if($isWidget){
+		$newXML = preg_replace("|<properties>.*?<category|si", $properties, $newXML);
+	}
 	echo $newXML;
 } else {
 	echo 'no such file or directory';

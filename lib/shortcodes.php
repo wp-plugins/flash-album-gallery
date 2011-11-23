@@ -138,17 +138,19 @@ class FlAG_shortcodes {
 		extract(shortcode_atts(array(
 			'playlist'	=> '',
 			'w'		 	=> '',
-			'h'		 	=> ''
+			'h'		 	=> '',
+			'skin'		=> '',
+			'is_widget'	=> 0
 		), $atts ));
 		$out = sprintf(__('[Playlist %s not found]','flag'),$playlist);
 		if($playlist) {
 			$flag_options = get_option('flag_options');
-			if(!file_exists($flag_options['galleryPath'].'playlists/'.$playlist.'.xml')) { 
+			if(!file_exists($flag_options['galleryPath'].'playlists/'.$playlist.'.xml')) {
 				return $out;
 			}
 			$this->flag_shortcode = true;
 			$this->flag_add_mousewheel = true;
-            $out = flagShowMPlayer($playlist, $w, $h);
+            $out = flagShowMPlayer($playlist, $w, $h, $wmode='', $skin, $is_widget);
 		}
         return $out;
 	}

@@ -89,11 +89,14 @@ function flag_banner_controler() {
 
 }
 function flag_crunch($crunch_list) {
-	$crunch_string = implode(',', $crunch_list); 
+	if(!$crunch_list) {
+		return;
+	}
+	$crunch_string = implode(',', $crunch_list);
 	$folder = rtrim($_POST['bannerfolder'], '/');
 	$path = WINABSPATH . $folder.'/';
 ?>
-<script type="text/javascript"> 
+<script type="text/javascript">
 <!--
 jQuery(document).ready(function(){
 	var crunch_string = '<?php echo $crunch_string; ?>';

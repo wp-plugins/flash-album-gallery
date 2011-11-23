@@ -19,9 +19,8 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 
 	New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
 
-Added: GRAND Pages - Full Window Gallery Template. Now you can display your gallery in full window separate page (gallery template). [View Demo 1](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/), [View Demo 2](http://photogallerycreator.com/flagallery/3d-sphere-v2-0-full-window-mode/)
+Added: GRAND Pages - Full Window Gallery Template. Now you can display your gallery in full window separate page (gallery template). [View Demo](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
 
-Starting with version 1.55 you have the opportunity to create a gallery, as separate pages. It looks very cool when you open a gallery, and gallery occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
 
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
@@ -40,6 +39,13 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
+
+= v1.56 - 23.11.2011 =
+* Added: Icon for GRAND Pages
+* Added: FlAGallery Music Widget
+* Added: New Music Player Skin
+* Fixed: Bugfix in Baner Box import function
+* Fixed: Music Box didn't update skin settings
 
 = v1.55 - 09.11.2011 =
 * Fixed: GRAND Pages permalinks

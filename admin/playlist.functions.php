@@ -59,7 +59,7 @@ function get_playlists($playlist_folder = '') {
 	return $flag_playlists;
 }
 
-function flagSavePlaylist($title,$descr,$data,$file='') {
+function flagSavePlaylist($title,$descr,$data,$file='',$skinaction='') {
 	global $wpdb;
 	if(!trim($title)) {
 		$title = 'default';
@@ -72,7 +72,9 @@ function flagSavePlaylist($title,$descr,$data,$file='') {
 
 	$flag_options = get_option('flag_options');
     $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'music_default';
-    $skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
+	if(!$skinaction) {
+	    $skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
+	}
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/'.$file.'.xml';
 	if( file_exists($playlistPath) && ($skin == $skinaction) ) {

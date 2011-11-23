@@ -69,6 +69,9 @@ function flagShowSkin_music_compact($args) {
 	$swfobject->add_flashvars( 'path', $flag_options['skinsDirURL'].$skin.'/' );
 	$swfobject->add_flashvars( 'skinID', $skinID );
 	$swfobject->add_flashvars('playlist', $playlist);
+	if($isWidget){
+		$swfobject->add_flashvars('widget', 1);
+	}
 	// create the output
 	$out = '<div class="grandmusic">' . $swfobject->output($alternative) . '</div>';
 	// add now the script code

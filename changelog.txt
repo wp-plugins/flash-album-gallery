@@ -1,6 +1,13 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.56 - 23.11.2011 =
+* Added: Icon for GRAND Pages
+* Added: FlAGallery Music Widget
+* Added: New Music Player Skin
+* Fixed: Bugfix in Baner Box import function
+* Fixed: Music Box didn't update skin settings
+
 = v1.55 - 09.11.2011 =
 * Fixed: GRAND Pages permalinks
 * Added: Option to disable deep linking in the flash (not all skins support this feature)
