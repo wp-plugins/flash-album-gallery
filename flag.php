@@ -344,7 +344,7 @@ class flagLoad {
 	    'show_ui' => true,
 	    'show_in_menu' => true,
 	    'menu_position' => 20,
-	    'menu_icon' => null,
+	    'menu_icon' => FLAG_URLPATH .'admin/images/flag.png',
 	    'capability_type' => 'post',
 	    'hierarchical' => true,
 	    'supports' => array('title','author','thumbnail','excerpt','page-attributes'),
