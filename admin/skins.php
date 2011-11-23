@@ -193,6 +193,7 @@ if( isset($_GET['skins_refresh']) ) {
 	<ul id="tabs" class="tabs">
 		<li class="selected"><a href="#" rel="addskin"><?php _e('Add new skin', 'flag'); ?></a></li>
 		<li><a href="#" rel="skinoptions"><?php _e('Active Skin Options', 'flag'); ?></a></li>
+		<li><a href="#" rel="license"><?php _e('License Agreement', 'flag'); ?></a></li>
 	</ul>
 
 	<div id="addskin" class="cptab">
@@ -216,6 +217,25 @@ if( isset($_GET['skins_refresh']) ) {
 	<div id="skinoptions" class="cptab">
 		<h2><?php _e('Active Skin Options', 'flag'); ?></h2>
 		<?php flag_skin_options_tab(); ?>
+	</div>
+
+	<div id="license" class="cptab">
+		<h2><?php _e('License Agreement', 'flag'); ?></h2>
+<div style="padding: 10px 0 10px;">
+<p><em>Photogallerycreator.com</em> grants you the non-exclusive right and license to use the software products from our web site in accordance with the following terms and conditions.</p>
+<p><strong><em>Each purchase provides a single user license</em></strong><br />
+This software may be used for personal and/or commercial web sites. You need one license for each developer using the product.</p>
+<p><strong><em>Assignability</em></strong><br />
+You may not sub-license, assign, or transfer this license to anyone else without prior written consent from <em>Photogallerycreator.com</em>.</p>
+<p><strong><em>Modifications</em></strong><br />
+You are authorized to make any necessary modification(s) to our products to fit your purposes.</p>
+<p><strong><em>Unauthorized Use</em></strong><br />
+You may not put our software, modified in any way or not, on a diskette, CD, website or any other medium and offer them for redistribution or resale without prior written consent from <em>Photogallerycreator.com</em></p>
+<p><strong><em>Disclaimer</em></strong><br />
+<em>Photogallerycreator.com</em> software products are provided "as is" without warranty of any kind, either expressed or implied. You agree to hold <em>Photogallerycreator.com</em> harmless for any damages that may occur due to use, or inability to use the identified software.</p>
+<p><strong><em>Ownership</em></strong><br />
+The software is copyrighted and protected by international treaty provisions. All and any intellectual property rights in the Software belong to <em>Photogallerycreator.com</em>. Exclusive rights for commercial use of the software, modified or unmodified, worldwide are owned by <em>Photogallerycreator.com</em>.</p>
+</div>
 	</div>
 	<script type="text/javascript">
 		/* <![CDATA[ */

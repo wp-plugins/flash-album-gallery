@@ -251,3 +251,4 @@ div.message { background: #ffffee; border: 1px solid #cccccc; border-radius: 4px
 div.message .flag_progress { position: relative; height: 18px; width: 400px; border: 1px solid #0066FF; background-color: #ffffff; margin: 7px 0; }
 div.message .flag_progress .txt { position: absolute; left: 10px; top: 0; line-height: 18px; font-weight: bold; height: 18px; z-index: 10; }
 div.message .flag_progress .flag_complete { position: absolute; left: 0; top: 0; height: 18px; width: 0px; overflow: hidden; background: #00FFB7; z-index: 5; }
+div#license div p { font-size: 13px; }
