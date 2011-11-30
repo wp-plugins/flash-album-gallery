@@ -2,10 +2,10 @@
 /*
 Skin Name: 3D FlatWall Gallery DEMO
 Skin URI: 
-Description: 3D FlatWall Gallery New. Contains Alternate jQuery gallery for iPhone / iPad and devices without flash player. SEO optimized. <br /><b style="color:red;">Worked only with GRAND FlAGallery v0.58 or higher.</b><br /><br />Details: FullScreen Mode (On/Off), Thumbnails Hints, jQuery alternative gallery.
+Description: 3D FlatWall Gallery New. Contains Alternate jQuery gallery for iPhone / iPad and devices without flash player. SEO optimized. <br /><b style="color:red;">Worked only with GRAND FlAGallery v1.51 or higher.</b><br /><br />Details: FullScreen Mode (On/Off), Thumbnails Hints, jQuery alternative gallery.
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 2.0
+Version: 2.5
 */
 
 function flagShowSkin($galleryID, $name, $width, $height, $skin) {
