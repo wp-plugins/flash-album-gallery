@@ -13,7 +13,7 @@ Try GRAND FlAGallery - powerfull flash & jQuery media content plugin. It provide
 
 You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **photo gallery, mp3 player, video player or nice widgets.** SEO optimized, compartibility with Google Reader, FeedBerner, etc.
 
-Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available. 
+Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
 	iPhone / iPad friendly photo gallery, SEO optimized.
 
@@ -39,6 +39,11 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
+
+= v1.57 - 01.12.2011 =
+* Bugfix: Error when update from very old version
+* Bugfix: xss vulnerability
+* Updated: 3D FlatWall, 3D Cube and Afflux skins compatibility with GRAND Pages
 
 = v1.56 - 23.11.2011 =
 * Added: Icon for GRAND Pages

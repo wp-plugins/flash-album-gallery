@@ -2,6 +2,8 @@
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
+require_once(dirname(dirname(__FILE__)) . '/lib/core.php');
+
 function flag_tune($show_error=true) {
 	/* Move skins outside the plugin folder */
 	$flag_options = get_option('flag_options');

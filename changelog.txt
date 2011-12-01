@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Sergey Pasyuk & CodEasily DEV Team
 
+= v1.57 - 01.12.2011 =
+* Bugfix: Error when update from very old version
+* Bugfix: xss vulnerability
+* Updated: 3D FlatWall, 3D Cube and Afflux skins compatibility with GRAND Pages
+
 = v1.56 - 23.11.2011 =
 * Added: Icon for GRAND Pages
 * Added: FlAGallery Music Widget
