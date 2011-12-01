@@ -25,7 +25,7 @@ if(isset($_GET['i'])) {
 		if(is_dir($skinpath))
 			$skin = $_GET['f'];
 	}
-	$h = isset($_GET['h'])? $_GET['h'] : (int) $flag_options['flashHeight'];
+	$h = isset($_GET['h'])? intval($_GET['h']) : (int) $flag_options['flashHeight'];
 
 	$gids = $_GET['i'];
 	if($gids=='all') {
@@ -33,7 +33,7 @@ if(isset($_GET['i'])) {
 		if(empty($orderby)) $orderby='gid';
 		if(empty($order)) $order='DESC';
 	          $gallerylist = $flagdb->find_all_galleries($orderby, $order);
-	          if(is_array($gallerylist)) {
+	    if(is_array($gallerylist)) {
 			$excludelist = explode(',',$exclude);
 			foreach($gallerylist as $gallery) {
 				if (in_array($gallery->gid, $excludelist))
@@ -42,8 +42,12 @@ if(isset($_GET['i'])) {
 			}
 			$gids = ltrim($gids,'_');
 		}
+	} else {
+		$gids = explode('_',$gids);
+		$mapping = array_map('intval', $gids);
+		$gids = implode('_',$mapping);
 	}
-	echo flagShowFlashAlbum($gids, $name='Gallery', $width='100%', $height=$_GET['h'], $skin, $playlist='', $wmode='opaque', $linkto); ?>
+	echo flagShowFlashAlbum($gids, $name='Gallery', $width='100%', $height=$h, $skin, $playlist='', $wmode='opaque', $linkto); ?>
 
 <link href="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css'); ?>" rel="stylesheet" type="text/css" />
 <script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js'); ?>" type="text/javascript"></script>
@@ -63,7 +67,7 @@ if(isset($_GET['m'])) {
 ?>
 <?php
 if(isset($_GET['v'])) {
-	$height = isset($_GET['h'])? $_GET['h'] : '';
+	$height = isset($_GET['h'])? intval($_GET['h']) : '';
 	$width = isset($_GET['w'])? '100%' : '';
 	$playlistpath = $flag_options['galleryPath'].'playlists/video/'.$_GET['v'].'.xml';
 	if(file_exists($playlistpath))
@@ -74,9 +78,10 @@ if(isset($_GET['v'])) {
 ?>
 <?php
 if(isset($_GET['mv'])) {
-	$height = isset($_GET['h'])? $_GET['h'] : '';
+	$height = isset($_GET['h'])? intval($_GET['h']) : '';
 	$width = '100%';
-	echo flagShowVmPlayer($_GET['mv'], $width, $height, $autoplay='true');
+	$mv = intval($_GET['mv']);
+	echo flagShowVmPlayer($mv, $width, $height, $autoplay='true');
 }
 ?>
 <?php
