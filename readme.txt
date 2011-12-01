@@ -13,7 +13,7 @@ Try GRAND FlAGallery - powerfull flash & jQuery media content plugin. It provide
 
 You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **photo gallery, mp3 player, video player or nice widgets.** SEO optimized, compartibility with Google Reader, FeedBerner, etc.
 
-Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
+Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available. 
 
 	iPhone / iPad friendly photo gallery, SEO optimized.
 
