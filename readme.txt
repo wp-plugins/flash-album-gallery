@@ -1,7 +1,7 @@
 ﻿=== GRAND FlAGallery - Best Photo & Media Gallery ===
 Contributors: Rattus
 Donate link: Buy Skin
-Tags: admin,album,flash,gallery,image,images,image gallery,page,photo,photo gallery,plugin,widget,portfolio,Post,posts,slideshow,mp3,music,video,player,Facebook,Twitter,fullscreen
+Tags: admin,album,flash,gallery,image,images,image gallery,page,photo,photo gallery,plugin,widget,portfolio,Post,posts,slideshow,mp3,music,video,player,Facebook template,share,twitter,fullscreen
 Requires at least: 3.0
 Tested up to: 3.2
 Stable tag: trunk
@@ -19,8 +19,9 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 
 	New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
 
-Added: GRAND Pages - Full Window Gallery Template. Now you can display your gallery in full window separate page (gallery template). [View Demo](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
+Added: GRAND Pages - Full Window Gallery Template. Now you can display your gallery in full window separate page (gallery template). [View Demo 1](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/), [View Demo 2](http://photogallerycreator.com/flagallery/3d-sphere-v2-0-full-window-mode/)
 
+Starting with version 1.55 you have the opportunity to create a gallery, as separate pages. It looks very cool when you open a gallery, and gallery occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
 
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
