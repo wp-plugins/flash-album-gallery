@@ -9,8 +9,6 @@ require_once( $_m[1] . 'wp-load.php');
 </head>
 <body style="margin: 0; padding: 0;">
 <div id="page">
-<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.js'); ?>" type="text/javascript"></script>
-<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/swfobject.js'); ?>" type="text/javascript"></script>
 <?php $flag_options = get_option('flag_options');
 if(isset($_GET['l'])) {
 	$linkto = intval($_GET['l']);
@@ -47,21 +45,26 @@ if(isset($_GET['i'])) {
 		$mapping = array_map('intval', $gids);
 		$gids = implode('_',$mapping);
 	}
-	echo flagShowFlashAlbum($gids, $name='Gallery', $width='100%', $height=$h, $skin, $playlist='', $wmode='opaque', $linkto); ?>
 
+	if($gids){ ?>
+<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.js'); ?>" type="text/javascript"></script>
+<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/swfobject.js'); ?>" type="text/javascript"></script>
+		<?php echo flagShowFlashAlbum($gids, $name='Gallery', $width='100%', $height=$h, $skin, $playlist='', $wmode='opaque', $linkto); ?>
 <link href="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css'); ?>" rel="stylesheet" type="text/css" />
 <script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js'); ?>" type="text/javascript"></script>
 <script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/flagscroll.js'); ?>" type="text/javascript"></script>
 <script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/script.js'); ?>" type="text/javascript"></script>
+<?php }
+} ?>
 
-<?php } ?>
-
-<?php 
+<?php
 if(isset($_GET['m'])) {
 	$playlistpath = $flag_options['galleryPath'].'playlists/'.$_GET['m'].'.xml';
-	if(file_exists($playlistpath))
-		echo flagShowMPlayer($playlist=$_GET['m'], $width='', $height='', $wmode='opaque');
-	else
+	if(file_exists($playlistpath)) { ?>
+<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.js'); ?>" type="text/javascript"></script>
+<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/swfobject.js'); ?>" type="text/javascript"></script>
+		<?php echo flagShowMPlayer($playlist=$_GET['m'], $width='', $height='', $wmode='opaque');
+	} else
 		_e("Can't find playlist");
 }
 ?>
@@ -70,9 +73,11 @@ if(isset($_GET['v'])) {
 	$height = isset($_GET['h'])? intval($_GET['h']) : '';
 	$width = isset($_GET['w'])? '100%' : '';
 	$playlistpath = $flag_options['galleryPath'].'playlists/video/'.$_GET['v'].'.xml';
-	if(file_exists($playlistpath))
-		echo flagShowVPlayer($playlist=$_GET['v'], $width, $height, $wmode='opaque');
-	else
+	if(file_exists($playlistpath)) { ?>
+<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.js'); ?>" type="text/javascript"></script>
+<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/swfobject.js'); ?>" type="text/javascript"></script>
+		<?php echo flagShowVPlayer($playlist=$_GET['v'], $width, $height, $wmode='opaque');
+	} else
 		_e("Can't find playlist");
 }
 ?>
@@ -80,16 +85,20 @@ if(isset($_GET['v'])) {
 if(isset($_GET['mv'])) {
 	$height = isset($_GET['h'])? intval($_GET['h']) : '';
 	$width = '100%';
-	$mv = intval($_GET['mv']);
-	echo flagShowVmPlayer($mv, $width, $height, $autoplay='true');
+	$mv = intval($_GET['mv']); ?>
+<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.js'); ?>" type="text/javascript"></script>
+<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/swfobject.js'); ?>" type="text/javascript"></script>
+	<?php echo flagShowVmPlayer($mv, $width, $height, $autoplay='true');
 }
 ?>
 <?php
 if(isset($_GET['b'])) {
 	$playlistpath = $flag_options['galleryPath'].'playlists/banner/'.$_GET['b'].'.xml';
-	if(file_exists($playlistpath))
-		echo flagShowBanner($playlist=$_GET['b'], $width='', $height='', $wmode='opaque');
-	else
+	if(file_exists($playlistpath)) { ?>
+<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.js'); ?>" type="text/javascript"></script>
+<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/swfobject.js'); ?>" type="text/javascript"></script>
+		<?php echo flagShowBanner($playlist=$_GET['b'], $width='', $height='', $wmode='opaque');
+	} else
 		_e("Can't find playlist");
 }
 ?>
