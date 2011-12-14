@@ -257,6 +257,7 @@ class flagLoad {
 		// check for tables
 		flag_install();
 		$this->flag_fullwindow_page_init();
+		flush_rewrite_rules();
 	}
 	
 	function deactivate() {
@@ -353,7 +354,6 @@ class flagLoad {
 	    'query_var' => true,
 	  );
 	  register_post_type('flagallery',$args);
-	  flush_rewrite_rules();
 	}
 
 	/* Adds a meta box to the main column on the flagallery edit screens */

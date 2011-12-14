@@ -217,8 +217,8 @@ jQuery(document).ready(function(){
 		accept: ".acat",
 		hoverClass: "active",
 		drop: function( event, ui ) {
-			jQuery( this )
-				.addClass( "highlight" )
+			jQuery( this ).find(jQuery(ui.draggable))
+				.addClass( "highlight_new" ).attr("id", "g_"+jQuery(ui.draggable).attr('rel'))
 				.find( "p" )
 					.remove();
 		}
@@ -236,6 +236,10 @@ jQuery(document).ready(function(){
 				jQuery(e.target).parent().find('.alb_msg').show().html(response).fadeOut(1200);
 				if(jQuery(e.target).hasClass('del')) {
 					jQuery(e.target).parent().parent().parent().remove();
+				}
+				if(response == 'Success'){
+					jQuery(e.target).parents('div.album:first').find('.acat').removeClass('highlight_new');
+					jQuery(e.target).parents('span.album_actions').find('.alb_msg').show().text('OK').fadeOut(1200);
 				}
 			}
 		);
@@ -289,7 +293,7 @@ if($gallerylist) {
 		$author_user = get_userdata( (int) $gallery->author );
 		if (flagAdmin::can_manage_this_gallery($gallery->author)) {
 ?>
-				<div class="acat" id="g_<?php echo $gid; ?>"><?php echo $name; ?><span class="drop">x</span></div>
+				<div class="acat" rel="<?php echo $gid; ?>"><?php echo $name; ?><span class="drop">x</span></div>
 <?php 
 		}
 	}

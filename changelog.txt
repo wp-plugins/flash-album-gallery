@@ -1,5 +1,11 @@
 GRAND FlAGallery
-by Sergey Pasyuk & CodEasily DEV Team
+by Rattus & CodEasily DEV Team
+
+= v1.58 - 15.12.2011 =
+* Bugfix: Compatibility with theme's custom post templates
+* Bugfix: xss vulnerability (flagshow.php)
+* Updated: Compatibility with Wordpress 3.3
+* Fixed: Support any language for Add Gallery field
 
 = v1.57 - 01.12.2011 =
 * Bugfix: Error when update from very old version

@@ -190,7 +190,7 @@ jQuery(document).ready(function(){
 	<tfoot>
 	<tr>
 		<th class="cb" scope="col"><a href="#" onclick="checkAll(document.getElementById('updatePlaylist'));return false;"><?php _e('Check', 'flag'); ?></a></th>
-		<th class="id" scope="col"><?php _e('Play', 'flag'); ?></th>
+		<th class="id" scope="col"><?php _e('ID', 'flag'); ?></th>
 		<th class="size" scope="col"><?php _e('Size', 'flag'); ?></th>
 		<th class="thumb" scope="col"><?php _e('Thumbnail', 'flag'); ?></th>
 		<th class="title_filename" scope="col"><?php _e('Filename / Title', 'flag'); ?></th>

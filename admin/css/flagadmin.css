@@ -112,7 +112,7 @@ p#flag-inlinebutton {
 }
 
 .fixed .column-id {
-	width: 2em;
+	width: 3em;
 }
 
 .fixed .column-alt_title_desc {
@@ -130,6 +130,7 @@ p#flag-inlinebutton {
 }
 
 .flagform .widefat thead th { padding: 7px 0 8px; }
+.flagform .widefat tfoot th { padding: 7px 0 8px; }
 .flagform .widefat thead th > div, .flagform .widefat thead th > p { margin-left: 7px; padding: 0; }
 .flagform .widefat thead th.cb { width: 54px; text-align: center; }
 .flagform .widefat tfoot th.cb { text-align: center; }
@@ -252,3 +253,4 @@ div.message .flag_progress { position: relative; height: 18px; width: 400px; bor
 div.message .flag_progress .txt { position: absolute; left: 10px; top: 0; line-height: 18px; font-weight: bold; height: 18px; z-index: 10; }
 div.message .flag_progress .flag_complete { position: absolute; left: 0; top: 0; height: 18px; width: 0px; overflow: hidden; background: #00FFB7; z-index: 5; }
 div#license div p { font-size: 13px; }
+.highlight_new { background-color: #E4F2FD; color: #000000; font-weight: bold; }

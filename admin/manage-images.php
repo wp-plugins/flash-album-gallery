@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {	die('You are not allowed to call this page directly.');}
 
@@ -287,12 +287,19 @@ jQuery(document).ready( function() {
 
 	<thead>
 	<tr>
-<?php print_column_headers('flag-manage-images'); ?>
+<?php foreach($gallery_columns as $key=>$value){
+		echo $cols = '<th class="manage-column column-'.$key.'">'.$value.'</td>';
+	}
+?>
 	</tr>
 	</thead>
 	<tfoot>
 	<tr>
-<?php print_column_headers('flag-manage-images', false); ?>
+<?php foreach($gallery_columns as $key=>$value){
+		if($key == 'cb' && !$header) { $value = ''; }
+		echo $cols = '<th class="manage-column column-'.$key.'">'.$value.'</td>';
+	}
+?>
 	</tr>
 	</tfoot>
 	<tbody>
@@ -324,13 +331,13 @@ if($picturelist) {
 			<?php
 			foreach($gallery_columns as $gallery_column_key => $column_display_name) {
 				$class = "class=\"$gallery_column_key column-$gallery_column_key\"";
-		
+
 				$style = '';
 				if ( in_array($gallery_column_key, $hidden_columns) )
 					$style = ' style="display:none;"';
-		
+
 				$attributes = "$class$style";
-				
+
 				switch ($gallery_column_key) {
 					case 'cb' :
 						?> 
@@ -342,7 +349,7 @@ if($picturelist) {
 						<td <?php echo $attributes; ?>><?php echo $pid; ?>
 							<input type="hidden" name="pid[]" value="<?php echo $pid; ?>" />
 						</td>
-						<?php						
+						<?php
 					break;
 					case 'thumbnail' :
 						?>
@@ -359,12 +366,12 @@ if($picturelist) {
 								<?php echo $picture->filename; ?>
 							</a></strong>
 							<br /><?php echo $date; ?>
-							<?php if ( !empty($picture->meta_data['width']) ) { 
+							<?php if ( !empty($picture->meta_data['width']) ) {
 								echo '<br />'.__('Size: ', 'flag').$picture->meta_data['width'].'x'.$picture->meta_data['height'].' '.__('pixel', 'flag');
 							} else {
-								$imgpath = WINABSPATH.$picture->path."/".$picture->filename; 
+								$imgpath = WINABSPATH.$picture->path."/".$picture->filename;
 								$img = @getimagesize($imgpath); 
-								if($img) echo '<br />'.__('Size: ', 'flag').$img[0].'x'.$img[1].' '.__('pixel', 'flag'); 
+								if($img) echo '<br />'.__('Size: ', 'flag').$img[0].'x'.$img[1].' '.__('pixel', 'flag');
 							} ?>
 							<p>
 							<?php
@@ -548,8 +555,6 @@ function flag_manage_gallery_columns() {
 	$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'flag') . ' / ' . __('Description', 'flag');
 	$gallery_columns['exclude'] = '<img src="'.FLAG_URLPATH.'admin/images/lock.png" alt="member view" title="'.__('Only for logged in users', 'flag').'" />';
 	//$gallery_columns['views'] = '<img src="'.FLAG_URLPATH.'admin/images/hits.png" alt="total views" title="'.__('Views', 'flag').'" />';
-	
-	$gallery_columns = apply_filters('flag_manage_gallery_columns', $gallery_columns);
 
 	return $gallery_columns;
 }

@@ -199,4 +199,77 @@ function flag_banner_crunch() {
 	exit();
 }
 
+add_action('wp_ajax_flag_file_browser', 'flag_ajax_file_browser');
+
+/**
+ * jQuery File Tree PHP Connector
+ * @author Cory S.N. LaViska - A Beautiful Site (http://abeautifulsite.net/)
+ * @version 1.0.1
+ *
+ * @return string folder content
+ */
+function flag_ajax_file_browser() {
+
+    global $flag;
+
+	// check for correct NextGEN capability
+	if ( !current_user_can('FlAG Import folder') )
+		die('No access');
+
+    if ( !defined('ABSPATH') )
+        die('No access');
+
+	// if nonce is not correct it returns -1
+	check_ajax_referer( 'flag-ajax', 'nonce' );
+
+    //PHP4 compat script
+	if (!function_exists('scandir')) {
+		function scandir($dir, $listDirectories = false, $skipDots = true ) {
+			$dirArray = array();
+			if ($handle = opendir($dir) ) {
+				while (false !== ($file = readdir($handle))) {
+					if (($file != '.' && $file != '..' ) || $skipDots == true) {
+						if($listDirectories == false) { if(is_dir($file)) { continue; } }
+						array_push($dirArray, basename($file) );
+					}
+				}
+				closedir($handle);
+			}
+			return $dirArray;
+		}
+	}
+
+    // start from the default path
+    $root = trailingslashit ( WINABSPATH );
+    // get the current directory
+	$dir = trailingslashit ( urldecode($_POST['dir']) );
+
+	if( file_exists($root . $dir) ) {
+		$files = scandir($root . $dir);
+		natcasesort($files);
+
+        // The 2 counts for . and ..
+		if( count($files) > 2 ) {
+			echo "<ul class=\"jqueryDirTree\" style=\"display: none;\">";
+
+            // return only directories
+			foreach( $files as $file ) {
+
+			    //reserved name for the thumnbnails, don't use it as folder name
+                if ( $file == 'thumbs')
+                    continue;
+
+				if ( file_exists($root . $dir . $file) && $file != '.' && $file != '..' && is_dir($root . $dir . $file) ) {
+					echo "<li class=\"directory collapsed\"><a href=\"#\" rel=\"" . esc_html($dir . $file) . "/\">" . esc_html($file) . "</a></li>";
+				}
+			}
+
+			echo "</ul>";
+		}
+	}
+
+    die();
+}
+
+
 ?>

@@ -78,16 +78,16 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	<script type="text/javascript">
 	/* <![CDATA[ */
 		  jQuery(function() {								 
-		    jQuery("#file_browser").fileTree({
-		      root: "<?php echo WINABSPATH; ?>",
-		      script: "<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/connectors/jqueryFileTree.php",
-		    }, function(file) {
-		        var path = file.replace("<?php echo WINABSPATH; ?>", "");
-		        jQuery("#galleryfolder").val(path);
-		    });
-		    
 		    jQuery("span.browsefiles").show().click(function(){
-		    	jQuery("#file_browser").slideToggle();
+			    jQuery("#file_browser").fileTree({
+			      script: "admin-ajax.php?action=flag_file_browser&nonce=<?php echo wp_create_nonce( 'flag-ajax' ) ;?>",
+			      root: jQuery("#galleryfolder").val(),
+			    }, function(file) {
+			        //var path = file.replace("<?php echo WINABSPATH; ?>", "");
+			        jQuery("#galleryfolder").val(file);
+			    });
+
+		    	jQuery("#file_browser").show("slide");
 		    });	
 		  });
 	/* ]]> */
@@ -273,10 +273,10 @@ if($flag->options['swfUpload']) { ?>
 		<h2><?php _e('Import image folder', 'flag'); ?></h2>
 			<form name="importfolder" id="importfolder_form" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
 			<?php wp_nonce_field('flag_addgallery'); ?>
-				<table class="form-table"> 
+				<table class="form-table">
 				<tr valign="top"> 
 					<th scope="row"><?php _e('Import from Server path:', 'flag'); ?></th> 
-					<td><input type="text" size="35" id="galleryfolder" name="galleryfolder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Toggle DIR Browser',"flag"); ?></span>
+					<td><input type="text" size="35" id="galleryfolder" name="galleryfolder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Browse...',"flag"); ?></span>
 					<div id="file_browser"></div>
 					<div><?php echo $maxsize; ?>
 					<?php if (SAFE_MODE) {?><br /><?php _e(' Please note : For safe-mode = ON you need to add the subfolder thumbs manually', 'flag'); ?><?php }; ?></div></td> 

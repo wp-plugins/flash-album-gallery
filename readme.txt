@@ -3,7 +3,7 @@ Contributors: Rattus
 Donate link: Buy Skin
 Tags: admin,album,flash,gallery,image,images,image gallery,page,photo,photo gallery,plugin,widget,portfolio,Post,posts,slideshow,mp3,music,video,player,Facebook template,share,twitter,fullscreen
 Requires at least: 3.0
-Tested up to: 3.2
+Tested up to: 3.3
 Stable tag: trunk
 
 GRAND FlAGallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
@@ -41,9 +41,15 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.58 - 15.12.2011 =
+* Bugfix: Compatibility with theme's custom post templates
+* Bugfix: xss vulnerability (flagshow.php)
+* Updated: Compatibility with Wordpress 3.3
+* Fixed: Support any language for Add Gallery field
+
 = v1.57 - 01.12.2011 =
 * Bugfix: Error when update from very old version
-* Bugfix: xss vulnerability
+* Bugfix: xss vulnerability (facebook.php)
 * Updated: 3D FlatWall, 3D Cube and Afflux skins compatibility with GRAND Pages
 
 = v1.56 - 23.11.2011 =

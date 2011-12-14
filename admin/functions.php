@@ -24,7 +24,10 @@ class flagAdmin{
 
 		//cleanup pathname
 		$galleryname = sanitize_file_name( $gallerytitle );
-		$galleryname = apply_filters('flag_gallery_name', $gallerytitle);
+		$galleryname = apply_filters('flag_gallery_name', $galleryname);
+		$galleryname = preg_replace('/[^\w\._-]+/', '', $galleryname);
+		if(!$galleryname) $galleryname = date('y-m-j_h-i-s');
+
 		$flagpath = $defaultpath . $galleryname;
 		$flagRoot = WINABSPATH . $defaultpath;
 		$txt = '';
