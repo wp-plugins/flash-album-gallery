@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.59 - 21.12.2011 =
+* Updated: thumbnail generator script
+* Updated: flagshow.php file
+
 = v1.58 - 15.12.2011 =
 * Bugfix: Compatibility with theme's custom post templates
 * Bugfix: xss vulnerability (flagshow.php)
