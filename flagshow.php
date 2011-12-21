@@ -1,6 +1,7 @@
 <?php
 // Load wp-config
-require_once( dirname(__FILE__) . '/flag-config.php');
+if ( !defined('ABSPATH') )
+	require_once( dirname(__FILE__) . '/flag-config.php');
 
 // reference thumbnail class
 include_once( flagGallery::graphic_library() );
@@ -10,10 +11,19 @@ include_once('lib/core.php');
 $flag_options = get_option('flag_options');	
 
 // Some parameters from the URL
-$pictureID = (int) $_GET['pid'];
+if ( !isset($_GET['pid']) )
+    exit;
+
+$pictureID = intval($_GET['pid']);
+if( !$pictureID )
+	exit;
 
 // let's get the image data
 $picture  = flagdb::find_image( $pictureID );
+
+if ( !is_object($picture) )
+    exit;
+
 $thumb = new flag_Thumbnail( $picture->imagePath );
 
 // Resize if necessary

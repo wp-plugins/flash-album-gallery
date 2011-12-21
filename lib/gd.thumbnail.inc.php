@@ -129,19 +129,22 @@ class flag_Thumbnail {
 
         //if there are no errors, determine the file format
         if($this->error == false) {
-            //check if gif
-            if(stristr(strtolower($this->fileName),'.gif')) $this->format = 'GIF';
-            //check if jpg
-            elseif(stristr(strtolower($this->fileName),'.jpg') || stristr(strtolower($this->fileName),'.jpeg')) $this->format = 'JPG';
-            //check if png
-            elseif(stristr(strtolower($this->fileName),'.png')) $this->format = 'PNG';
-            //unknown file format
-            else {
-                $this->errmsg = 'Unknown file format';
+    		$data = @getimagesize($this->fileName);
+    		if (isset($data) && is_array($data)) {
+    		  $extensions = array('1' => 'GIF', '2' => 'JPG', '3' => 'PNG');
+    		  $extension = array_key_exists($data[2], $extensions) ?  $extensions[$data[2]] : '';
+                if($extension) {
+                    $this->format = $extension;
+                } else {
+                    $this->errmsg = 'Unknown file format';
+                    $this->error = true;
+                }
+            } else {
+                $this->errmsg = 'File is not an image';
                 $this->error = true;
             }
         }
-        
+
 		// increase memory-limit if possible, GD needs this for large images
 		// @ini_set('memory_limit', '128M');
         
@@ -215,15 +218,23 @@ class flag_Thumbnail {
 		    $memoryNeeded = memory_get_usage() + $memoryNeeded;
 			// get memory limit
 			$memory_limit = ini_get('memory_limit');
-			if ($memory_limit != '') {
-				$memory_limit = substr($memory_limit, 0, -1) * 1024 * 1024;
-			}
-			
-			if ($memoryNeeded > $memory_limit) {
-				$memoryNeeded = round ($memoryNeeded / 1024 / 1024, 2);
-				$this->errmsg = 'Exceed Memory limit. Require : '.$memoryNeeded. " MByte" ;
-		        $this->error = true;
-	        }
+
+            // PHP docs : Note that to have no memory limit, set this directive to -1.
+            if ($memory_limit == -1 ) return;
+
+            // Just check megabyte limits, not higher
+            if ( strtolower(substr($memory_limit, -1)) == 'm' ) {
+
+    			if ($memory_limit != '') {
+    				$memory_limit = substr($memory_limit, 0, -1) * 1024 * 1024;
+    			}
+
+    			if ($memoryNeeded > $memory_limit) {
+    				$memoryNeeded = round ($memoryNeeded / 1024 / 1024, 2);
+    				$this->errmsg = 'Exceed Memory limit. Require : '.$memoryNeeded. " MByte" ;
+    		        $this->error = true;
+    	        }
+            }
 		}
 	    return;
 	}
@@ -361,9 +372,8 @@ class flag_Thumbnail {
      * 
      * @param int $Width
      * @param int $Height
-     * @param int $resampleMode
      */
-    function resizeFix($Width = 0, $Height = 0, $resampleMode = 3) {
+    function resizeFix($Width = 0, $Height = 0, $deprecated = 3) {
         $this->newWidth = $Width;
         $this->newHeight = $Height;
 
@@ -375,7 +385,7 @@ class flag_Thumbnail {
 		}
 
 //		ImageCopyResampled(
-		$this->fastimagecopyresampled(
+		$this->imagecopyresampled(
 			$this->workingImage,
 			$this->oldImage,
 			0,
@@ -385,8 +395,7 @@ class flag_Thumbnail {
 			$this->newWidth,
 			$this->newHeight,
 			$this->currentDimensions['width'],
-			$this->currentDimensions['height'],
-			$resampleMode
+			$this->currentDimensions['height']
 		);
 
 		$this->oldImage = $this->workingImage;
@@ -401,9 +410,8 @@ class flag_Thumbnail {
      *
      * @param int $maxWidth
      * @param int $maxHeight
-     * @param int $resampleMode
      */
-    function resize($maxWidth = 0, $maxHeight = 0, $resampleMode = 3) {
+    function resize($maxWidth = 0, $maxHeight = 0, $deprecated = 3) {
         $this->maxWidth = $maxWidth;
         $this->maxHeight = $maxHeight;
 
@@ -417,7 +425,7 @@ class flag_Thumbnail {
 		}
 
 //		ImageCopyResampled(
-		$this->fastimagecopyresampled(
+		$this->imagecopyresampled(
 			$this->workingImage,
 			$this->oldImage,
 			0,
@@ -427,8 +435,7 @@ class flag_Thumbnail {
 			$this->newDimensions['newWidth'],
 			$this->newDimensions['newHeight'],
 			$this->currentDimensions['width'],
-			$this->currentDimensions['height'],
-			$resampleMode
+			$this->currentDimensions['height']
 		);
 
 		$this->oldImage = $this->workingImage;
@@ -454,7 +461,7 @@ class flag_Thumbnail {
 			$this->workingImage = ImageCreate($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
 		}
 
-		ImageCopyResampled(
+		$this->ImageCopyResampled(
 			$this->workingImage,
 			$this->oldImage,
 			0,
@@ -477,9 +484,8 @@ class flag_Thumbnail {
 	 * Crops the image from calculated center in a square of $cropSize pixels
 	 *
 	 * @param int $cropSize
-	 * @param int $resampleMode
 	 */
-	function cropFromCenter($cropSize, $resampleMode = 3) {
+	function cropFromCenter($cropSize) {
 	    if($cropSize > $this->currentDimensions['width']) $cropSize = $this->currentDimensions['width'];
 	    if($cropSize > $this->currentDimensions['height']) $cropSize = $this->currentDimensions['height'];
 
@@ -493,8 +499,7 @@ class flag_Thumbnail {
 			$this->workingImage = ImageCreate($cropSize,$cropSize);
 		}
 
-//		imagecopyresampled(
-		$this->fastimagecopyresampled(
+		$this->imagecopyresampled(
             $this->workingImage,
             $this->oldImage,
             0,
@@ -504,8 +509,7 @@ class flag_Thumbnail {
             $cropSize,
             $cropSize,
             $cropSize,
-            $cropSize,
-            $resampleMode
+            $cropSize
 		);
 
 		$this->oldImage = $this->workingImage;
@@ -522,7 +526,7 @@ class flag_Thumbnail {
 	 * @param int $width
 	 * @param int $height
 	 */
-	function crop($startX,$startY,$width,$height) {
+	function crop($startX, $startY, $width, $height) {
 	    //make sure the cropped area is not greater than the size of the image
 	    if($width > $this->currentDimensions['width']) $width = $this->currentDimensions['width'];
 	    if($height > $this->currentDimensions['height']) $height = $this->currentDimensions['height'];
@@ -539,7 +543,7 @@ class flag_Thumbnail {
 			$this->workingImage = ImageCreate($width,$height);
 		}
 
-		imagecopyresampled(
+		$this->imagecopyresampled(
             $this->workingImage,
             $this->oldImage,
             0,
@@ -609,6 +613,10 @@ class flag_Thumbnail {
 	    	$this->errmsg = 'Create Image failed. Check safe mode settings';
 	    	return false;
 	    }
+
+        if( function_exists('do_action') )
+	       do_action('flag_ajax_image_save', $name);
+
 	    return true;
 	}
 
@@ -717,41 +725,33 @@ class flag_Thumbnail {
     }
     
     /**
-     * Fast imagecopyresampled by tim@leethost.com
+     * Modfied imagecopyresampled function to save transparent images
+     * See : http://www.akemapa.com/2008/07/10/php-gd-resize-transparent-image-png-gif/
      *
-     */	
-	function fastimagecopyresampled (&$dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h, $quality = 3) {
-		// Plug-and-Play fastimagecopyresampled function replaces much slower imagecopyresampled.
-		// Just include this function and change all "imagecopyresampled" references to "fastimagecopyresampled".
-		// Typically from 30 to 60 times faster when reducing high resolution images down to thumbnail size using the default quality setting.
-		// Author: Tim Eckel - Date: 12/17/04 - Project: FreeRingers.net - Freely distributable.
-		//
-		// Optional "quality" parameter (defaults is 3).  Fractional values are allowed, for example 1.5.
-		// 1 = Up to 600 times faster.  Poor results, just uses imagecopyresized but removes black edges.
-		// 2 = Up to 95 times faster.  Images may appear too sharp, some people may prefer it.
-		// 3 = Up to 60 times faster.  Will give high quality smooth results very close to imagecopyresampled.
-		// 4 = Up to 25 times faster.  Almost identical to imagecopyresampled for most images.
-		// 5 = No speedup.  Just uses imagecopyresampled, highest quality but no advantage over imagecopyresampled.
-		
-		if (empty($src_image) || empty($dst_image)) { return false; }
-		
-		if ($quality <= 1) {
-			$temp = imagecreatetruecolor ($dst_w + 1, $dst_h + 1);
-			imagecopyresized ($temp, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w + 1, $dst_h + 1, $src_w, $src_h);
-			imagecopyresized ($dst_image, $temp, 0, 0, 0, 0, $dst_w, $dst_h, $dst_w, $dst_h);
-			imagedestroy ($temp);
-		} elseif ($quality < 5 && (($dst_w * $quality) < $src_w || ($dst_h * $quality) < $src_h)) {
-			$tmp_w = $dst_w * $quality;
-			$tmp_h = $dst_h * $quality;
-			// on whatever reason PHP 4.4.8 stopped here.
-			$temp = imagecreatetruecolor ($tmp_w + 1, $tmp_h + 1);
-			imagecopyresized ($temp, $src_image, $dst_x * $quality, $dst_y * $quality, $src_x, $src_y, $tmp_w + 1, $tmp_h + 1, $src_w, $src_h);
-			imagecopyresampled ($dst_image, $temp, 0, 0, 0, 0, $dst_w, $dst_h, $tmp_w, $tmp_h);
-			imagedestroy ($temp);
-		} else {
-			imagecopyresampled ($dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
-		}
-		return true;
-	}
+     * @param resource $dst_image
+     * @param resource $src_image
+     * @param int $dst_x
+     * @param int $dst_y
+     * @param int $src_x
+     * @param int $src_y
+     * @param int $dst_w
+     * @param int $dst_h
+     * @param int $src_w
+     * @param int $src_h
+     * @return bool
+     */
+    function imagecopyresampled( &$dst_image , $src_image , $dst_x , $dst_y , $src_x , $src_y , $dst_w , $dst_h , $src_w , $src_h) {
+
+        // Check if this image is PNG or GIF, then set if Transparent
+        if( $this->format == 'GIF' || $this->format == 'PNG'){
+            imagealphablending($dst_image, false);
+            imagesavealpha($dst_image, true);
+            $transparent = imagecolorallocatealpha($dst_image, 255, 255, 255, 127);
+            imagefilledrectangle($dst_image, 0, 0, $dst_w, $dst_h, $transparent);
+        }
+
+        imagecopyresampled($dst_image , $src_image , $dst_x , $dst_y , $src_x , $src_y , $dst_w , $dst_h , $src_w , $src_h);
+        return true;
+    }
 }
 ?>
