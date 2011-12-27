@@ -1,8 +1,8 @@
 <?php
 /*
-Skin Name: Green Style PRO DEMO
-Skin URI: 
-Description: Green Style PRO DEMO skin for Flash Album Gallery. <br /><br />Details: bottom hidden thumbnails with rollover effect, 'fullscreen' button, 'slideshhow' button, image description button (i)
+Skin Name: Default Skin (Midnight)
+Skin URI:
+Description: Midnight skin for Flash Album Gallery. <br />You can use any language you want for album name, alt/title and description in FlAGallery  ;)<br /><br />Details: system font for image description, bottom thumbnails, 'Fullscreen' button, 'Slideshhow' button, image description button (i)
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
 Version: 2.0
@@ -41,30 +41,82 @@ jQuery(document).ready(function() {
 	jQuery("#flashBacktransparent").click(tChecked);
 	jQuery("#skin_default").click(function(){
 		jQuery("#flashBacktransparent").removeAttr('checked');
-		jQuery("#flashBackcolor")			.val('ffffff');
-		jQuery("#buttonsBG")				.val('292e32');
-		jQuery("#buttonsMouseOver")			.val('75c30f');
-		jQuery("#buttonsMouseOut")			.val('f2efef');
+		jQuery("#flashBackcolor")			.val('262626');
+		jQuery("#buttonsBG")				.val('000000');
+		jQuery("#buttonsMouseOver")			.val('7485c2');
+		jQuery("#buttonsMouseOut")			.val('717171');
 		jQuery("#catButtonsMouseOver")		.val('000000');
 		jQuery("#catButtonsMouseOut")		.val('000000');
-		jQuery("#catButtonsTextMouseOver")	.val('75c30f');
-		jQuery("#catButtonsTextMouseOut")	.val('f2efef');
-		jQuery("#thumbMouseOver")			.val('565f68');
-		jQuery("#thumbMouseOut")			.val('ffffff');
+		jQuery("#catButtonsTextMouseOver")	.val('7485c2');
+		jQuery("#catButtonsTextMouseOut")	.val('bcbcbc');
+		jQuery("#thumbMouseOver")			.val('7485c2');
+		jQuery("#thumbMouseOut")			.val('000000');
 		jQuery("#mainTitle")				.val('ffffff');
-		jQuery("#categoryTitle")			.val('000000');
-		jQuery("#itemBG")					.val('565f68');
-		jQuery("#itemTitle")				.val('75c30f');
-		jQuery("#itemDescription")			.val('f2efef');
+		jQuery("#categoryTitle")			.val('7485c2');
+		jQuery("#itemBG")					.val('eae6ef');
+		jQuery("#itemTitle")				.val('7485c2');
+		jQuery("#itemDescription")			.val('e0e0e0');
 		tChecked();
+		return false;
+	});
+	jQuery("#slideshow_default").click(function(){
+		jQuery('#autoSlideShow option[value="false"]').attr('selected','selected');
+		jQuery('#slDelay option[value="4"]:first').attr('selected','selected');
 		return false;
 	});
 });
 </script>
 	<form method="POST"><div>
 		<?php wp_nonce_field('skin_settings'); ?>
-		<input type="hidden" name="skin_options" value="flashBackcolor,buttonsBG,flashBacktransparent,buttonsMouseOver,buttonsMouseOut,catButtonsMouseOver,catButtonsMouseOut,catButtonsTextMouseOver,catButtonsTextMouseOut,thumbMouseOver,thumbMouseOut,mainTitle,categoryTitle,itemBG,itemTitle,itemDescription" />
-
+		<input type="hidden" name="skin_options" value="autoSlideShow,slDelay,flashBackcolor,buttonsBG,flashBacktransparent,buttonsMouseOver,buttonsMouseOut,catButtonsMouseOver,catButtonsMouseOut,catButtonsTextMouseOver,catButtonsTextMouseOut,thumbMouseOver,thumbMouseOut,mainTitle,categoryTitle,itemBG,itemTitle,itemDescription" />
+	<!-- Slideshow settings -->
+		<h3><?php _e('Slideshow Settings','flag'); ?> <small style="margin-left:20px;"><a href="#" id="slideshow_default">(<?php _e('set default settings','flag'); ?>)</a></small></h3>
+		<table id="slideshow" class="form-table flag-options">
+			<tr>
+				<th style="width: 30%;"><?php _e('Auto Slideshow','flag'); ?>:</th>
+				<td><select name="autoSlideShow" id="autoSlideShow" style="width: 72px;">
+					<option value="false" <?php selected('false', $autoSlideShow); ?>> <?php _e('Off', 'flag') ;?></option>
+					<option value="true" <?php selected('true', $autoSlideShow); ?>> <?php _e('On', 'flag') ;?></option>
+				</select></td>
+			</tr>
+			<tr>
+				<th style="width: 30%;"><?php _e('Slideshow Delay','flag'); ?>:</th>
+				<td><select name="slDelay" id="slDelay" style="width: 72px;">
+					<option value="4" <?php selected('4', $slDelay); ?>> Default</option>
+					<option value="1" <?php selected('1', $slDelay); ?>> 1</option>
+					<option value="2" <?php selected('2', $slDelay); ?>> 2</option>
+					<option value="3" <?php selected('3', $slDelay); ?>> 3</option>
+					<option value="4"> 4</option>
+					<option value="5" <?php selected('5', $slDelay); ?>> 5</option>
+					<option value="6" <?php selected('6', $slDelay); ?>> 6</option>
+					<option value="7" <?php selected('7', $slDelay); ?>> 7</option>
+					<option value="8" <?php selected('8', $slDelay); ?>> 8</option>
+					<option value="9" <?php selected('9', $slDelay); ?>> 9</option>
+					<option value="10" <?php selected('10', $slDelay); ?>> 10</option>
+					<option value="11" <?php selected('11', $slDelay); ?>> 11</option>
+					<option value="12" <?php selected('12', $slDelay); ?>> 12</option>
+					<option value="13" <?php selected('13', $slDelay); ?>> 13</option>
+					<option value="14" <?php selected('14', $slDelay); ?>> 14</option>
+					<option value="15" <?php selected('15', $slDelay); ?>> 15</option>
+					<option value="16" <?php selected('16', $slDelay); ?>> 16</option>
+					<option value="17" <?php selected('17', $slDelay); ?>> 17</option>
+					<option value="18" <?php selected('18', $slDelay); ?>> 18</option>
+					<option value="19" <?php selected('19', $slDelay); ?>> 19</option>
+					<option value="20" <?php selected('20', $slDelay); ?>> 20</option>
+					<option value="21" <?php selected('21', $slDelay); ?>> 21</option>
+					<option value="22" <?php selected('22', $slDelay); ?>> 22</option>
+					<option value="23" <?php selected('23', $slDelay); ?>> 23</option>
+					<option value="24" <?php selected('24', $slDelay); ?>> 24</option>
+					<option value="25" <?php selected('25', $slDelay); ?>> 25</option>
+					<option value="26" <?php selected('26', $slDelay); ?>> 26</option>
+					<option value="27" <?php selected('27', $slDelay); ?>> 27</option>
+					<option value="28" <?php selected('28', $slDelay); ?>> 28</option>
+					<option value="29" <?php selected('29', $slDelay); ?>> 29</option>
+					<option value="30" <?php selected('30', $slDelay); ?>> 30</option>
+				</select></td>
+			</tr>
+		</table>
+        
 	<!-- Color settings -->
 		<h3><?php _e('Color Settings','flag'); ?> <small style="margin-left:20px;"><a href="#" id="skin_default">(<?php _e('set default settings','flag'); ?>)</a></small></h3>
 		<table id="colors" class="form-table flag-options">

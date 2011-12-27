@@ -37,7 +37,7 @@ foreach ( $gID as $galleryID ) {
 
 	if (is_array ($thepictures)){
 		foreach ($thepictures as $picture) {
-			echo "      <item thumb='".$siteurl."/".$picture->path."/thumbs/thumbs_".$picture->filename."' item='".$siteurl."/".$picture->path."/".$picture->filename."' title ='".attribute_escape(flagGallery::i18n(strip_tags(stripslashes($picture->alttext))))."'><![CDATA[".html_entity_decode(attribute_escape(flagGallery::i18n(stripslashes($picture->description))))."]]></item>\n";
+			echo "      <item image_icon='".$siteurl."/".$picture->path."/thumbs/thumbs_".$picture->filename."' pic='".$siteurl."/".$picture->path."/".$picture->filename."' title ='".attribute_escape(flagGallery::i18n(strip_tags(stripslashes($picture->alttext))))."'><![CDATA[".html_entity_decode(attribute_escape(flagGallery::i18n(stripslashes($picture->description))))."]]></item>\n";
 		}
 	}
 	 
