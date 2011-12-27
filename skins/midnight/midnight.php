@@ -5,7 +5,7 @@ Skin URI:
 Description: Midnight skin for Flash Album Gallery. <br />You can use any language you want for album name, alt/title and description in FlAGallery  ;)<br /><br />Details: system font for image description, bottom thumbnails, 'Fullscreen' button, 'Slideshhow' button, image description button (i)
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 2.0
+Version: 3.0
 */
 
 function flag_skin_options() { 
