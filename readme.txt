@@ -23,7 +23,7 @@ Added: GRAND Pages - Full Window Gallery Template. Now you can display your gall
 
 Starting with version 1.55 you have the opportunity to create a gallery, as separate pages. It looks very cool when you open a gallery, and gallery occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
 
-For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin. 
+For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
 * Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
 * Demo [Full Window Gallery Template](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
