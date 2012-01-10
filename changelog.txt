@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.60 - 10.01.2012 =
+* Added: Default skin without any branding
+* Added: Licenses to each skin folder
+
 = v1.59 - 21.12.2011 =
 * Updated: thumbnail generator script
 * Updated: flagshow.php file

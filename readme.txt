@@ -41,6 +41,10 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.60 - 10.01.2012 =
+* Added: Default skin without any branding
+* Added: Licenses to each skin folder
+
 = v1.59 - 21.12.2011 =
 * Updated: thumbnail generator script
 * Updated: flagshow.php file
