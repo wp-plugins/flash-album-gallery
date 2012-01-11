@@ -1,7 +1,7 @@
 === GRAND FlAGallery - Best Photo Gallery ===
 Contributors: Rattus
-Donate link: Buy Skin
-Tags: admin,flash,gallery,image,images,page,photo,plugin,widget,Post,posts,slideshow,mp3,music,video,player
+Donate link: http://photogallerycreator.com/grand-flagallery/
+Tags: admin,flash,gallery,image,images,page,photo,plugin,widget,Post,posts,slideshow,mp3,music,video,player,fullscreen gallery
 Requires at least: 3.0
 Tested up to: 3.3
 Stable tag: trunk
