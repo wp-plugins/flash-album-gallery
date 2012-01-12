@@ -52,31 +52,28 @@ function waitFB(skin_id, pic_id, slideshow) {
 					},
 					'href'			: jQuery("#flag_pic_"+pic_id, flag_alt[skin_id]).attr('href'),
 					'onStart' 		: function(){
-						if(skin_function && jQuery.isFunction(skin_function[skin_id+'_fb'])) {
+						//if(skin_function && jQuery.isFunction(skin_function[skin_id+'_fb'])) {
 							skin_function[skin_id+'_fb']('active');
-						}
+						//}
 						jQuery('#fancybox-wrap').addClass('grand');
 					},
 					'onClosed' 		: function(currentArray, currentIndex){
-						if(skin_function && jQuery.isFunction(skin_function[skin_id+'_fb'])) {
+						//if(skin_function && jQuery.isFunction(skin_function[skin_id+'_fb'])) {
 							skin_function[skin_id+'_fb']('close');
-						}
+						//}
 						jQuery('#fancybox-wrap').removeClass('grand');
-						//jQuery(currentArray[currentIndex]).removeClass('current').addClass('last');
-					},
+/					},
 					'onComplete'	: function(currentArray, currentIndex) {
-						//jQuery(currentArray).removeClass('current last');
-						//jQuery(currentArray[currentIndex]).addClass('current');
-					}
+/					}
 				});
 			}
 			jQuery('#fancybox-wrap').undelegate('.grand_controls span','click').delegate('.grand_controls span','click', function(){
-				if(skin_function && jQuery.isFunction(skin_function[skin_id+'_fb'])) {
+				//if(skin_function && jQuery.isFunction(skin_function[skin_id+'_fb'])) {
 					skin_function[skin_id+'_fb'](jQuery(this).attr('rel'));
 					if(jQuery(this).hasClass('g_slideshow')){
 						jQuery(this).toggleClass('play stop');
 					}
-				}
+				//}
 			});
 		} else {
 			jQuery('.flag_alternate').each(function(i){

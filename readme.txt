@@ -1,7 +1,7 @@
 === GRAND FlAGallery - Best Photo Gallery ===
 Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
-Tags: admin,flash,gallery,image,images,page,photo,plugin,widget,Post,posts,slideshow,mp3,music,video,player,fullscreen gallery
+Tags: admin,flash, fullscreen gallery,gallery,image,images,mp3,music,page,photo,player,plugin,Post,posts,slideshow,video,widget
 Requires at least: 3.0
 Tested up to: 3.3
 Stable tag: trunk
@@ -40,6 +40,11 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
+
+= v1.61 - 12.01.2012 =
+* Fixed: Import video from folder
+* Fixed: Import mp3 from folder
+* Fixed: Fancybox script for Slider skin (now it works in Safari browser)
 
 = v1.60 - 10.01.2012 =
 * Added: Default skin without any branding

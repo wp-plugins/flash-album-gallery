@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.61 - 12.01.2012 =
+* Fixed: Import video from folder
+* Fixed: Import mp3 from folder
+* Fixed: Fancybox script for Slider skin (now it works in Safari browser)
+
 = v1.60 - 10.01.2012 =
 * Added: Default skin without any branding
 * Added: Licenses to each skin folder

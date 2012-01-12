@@ -240,18 +240,18 @@ function send_to_editor(html) {
 <script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.js"></script>
 <script type="text/javascript">
 /* <![CDATA[ */
-	  jQuery(function() {								 
-	    jQuery("#file_browser").fileTree({
-	      root: "<?php echo WINABSPATH; ?>",
-	      script: "<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/connectors/jqueryFileTree.php",
-	    }, function(file) {
-	        var path = file.replace("<?php echo WINABSPATH; ?>", "");
-	        jQuery("#mp3folder").val(path);
-	    });
-	    
+	  jQuery(function() {
 	    jQuery("span.browsefiles").show().click(function(){
-	    	jQuery("#file_browser").slideToggle();
-	    });	
+		    jQuery("#file_browser").fileTree({
+		      script: "admin-ajax.php?action=flag_file_browser&nonce=<?php echo wp_create_nonce( 'flag-ajax' ) ;?>",
+		      root: jQuery("#mp3folder").val(),
+		    }, function(file) {
+		        //var path = file.replace("<?php echo WINABSPATH; ?>", "");
+		        jQuery("#mp3folder").val(file);
+		    });
+
+	    	jQuery("#file_browser").show("slide");
+	    });
 	  });
 /* ]]> */
 </script>
@@ -264,7 +264,7 @@ function send_to_editor(html) {
 				<table class="form-table"> 
 				<tr valign="top"> 
 					<th scope="row"><?php _e('Import from Server path:', 'flag'); ?></th> 
-					<td><input type="text" size="35" id="mp3folder" name="mp3folder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Toggle DIR Browser',"flag"); ?></span>
+					<td><input type="text" size="35" id="mp3folder" name="mp3folder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Browse...',"flag"); ?></span>
 						<div id="file_browser"></div><br />
 						<p><label><input type="checkbox" name="delete_files" value="delete" checked="checked" /> &nbsp;
 						<?php _e('delete files after import in WordPress Media Library','flag'); ?></label></p>

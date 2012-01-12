@@ -77,7 +77,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	<script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.js"></script>
 	<script type="text/javascript">
 	/* <![CDATA[ */
-		  jQuery(function() {								 
+		  jQuery(function() {
 		    jQuery("span.browsefiles").show().click(function(){
 			    jQuery("#file_browser").fileTree({
 			      script: "admin-ajax.php?action=flag_file_browser&nonce=<?php echo wp_create_nonce( 'flag-ajax' ) ;?>",
@@ -88,7 +88,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			    });
 
 		    	jQuery("#file_browser").show("slide");
-		    });	
+		    });
 		  });
 	/* ]]> */
 	</script>
