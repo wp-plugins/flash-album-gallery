@@ -1,7 +1,7 @@
 === GRAND FlAGallery - Best Photo Gallery ===
 Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
-Tags: admin,flash, fullscreen gallery,gallery,image,images,mp3,music,page,photo,player,plugin,Post,posts,slideshow,video,widget
+Tags: admin,flash, fullscreen gallery,gallery,image,images,mp3,music,page,photo,slider,plugin,Post,posts,slideshow,video,widget
 Requires at least: 3.0
 Tested up to: 3.3
 Stable tag: trunk
@@ -11,7 +11,7 @@ GRAND FlAGallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator
 == Description ==
 Try GRAND FlAGallery - powerfull flash & jQuery media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
-You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **photo gallery, mp3 player, video player or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc.
+You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **photo gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc.
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
@@ -19,9 +19,9 @@ Music/Video Player: Each instance (player copy) can play different file. All ins
 
 	New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
 
-Added: GRAND Pages - Full Window Gallery Template. Now you can display your gallery in full window separate page (gallery template). [View Demo 1](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/), [View Demo 2](http://photogallerycreator.com/flagallery/3d-sphere-v2-0-full-window-mode/)
+Added: GRAND Pages - Full Window Gallery Template. Now you can display your image gallery in full window separate page (gallery template). [View Demo 1](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/), [View Demo 2](http://photogallerycreator.com/flagallery/3d-sphere-v2-0-full-window-mode/)
 
-Starting with version 1.55 you have the opportunity to create a gallery, as separate pages. It looks very cool when you open a gallery, and gallery occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
+Starting with version 1.55 you have the opportunity to create image gallery, as separate pages. It looks very cool when you open image gallery, and gallery images occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
 
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
