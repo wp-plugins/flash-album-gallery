@@ -62,9 +62,9 @@ function waitFB(skin_id, pic_id, slideshow) {
 							skin_function[skin_id+'_fb']('close');
 						//}
 						jQuery('#fancybox-wrap').removeClass('grand');
-/					},
+					},
 					'onComplete'	: function(currentArray, currentIndex) {
-/					}
+					}
 				});
 			}
 			jQuery('#fancybox-wrap').undelegate('.grand_controls span','click').delegate('.grand_controls span','click', function(){
