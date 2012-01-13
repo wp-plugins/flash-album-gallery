@@ -41,6 +41,9 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.62 - 13.01.2012 =
+* Fixed: script.js file error
+
 = v1.61 - 12.01.2012 =
 * Fixed: Import video from folder
 * Fixed: Import mp3 from folder

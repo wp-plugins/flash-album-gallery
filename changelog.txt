@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.62 - 13.01.2012 =
+* Fixed: script.js file error
+
 = v1.61 - 12.01.2012 =
 * Fixed: Import video from folder
 * Fixed: Import mp3 from folder
