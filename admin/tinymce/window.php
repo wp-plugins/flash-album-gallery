@@ -35,7 +35,7 @@ if($_REQUEST['riched'] == "false") {
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl'); ?>/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl'); ?>/wp-includes/js/tinymce/utils/mctabs.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo get_option('siteurl'); ?>/wp-includes/js/tinymce/utils/form_utils.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/tinymce/tinymce.js"></script>
+
 	<base target="_self" />
 </head>
 <body id="link" onload="tinyMCEPopup.executeOnLoad('init();');document.body.style.display='';document.getElementById('galleries').focus();" style="display: none">
@@ -48,7 +48,7 @@ if($_REQUEST['riched'] == "false") {
 		<ul id="tabs" class="tabs">
 			<li class="selected"><a href="#" rel="gallery_panel"><span><?php _e( 'Galleries', 'flag' ); ?></span></a></li>
 			<li><a href="#" rel="album_panel"><span><?php _e( 'Albums', 'flag' ); ?></span></a></li>
-			<li><a href="#" rel="sort_panel"><span><?php _e('Sort', 'flag'); ?></span></a></li>
+			<li id="sort_tab"><a href="#" rel="sort_panel"><span><?php _e('Sort', 'flag'); ?></span></a></li>
 			<li><a href="#" rel="custom_panel"><span><?php _e( 'Skin', 'flag' ); ?></span></a></li>
 			<li style="display:none;"><a href="#" rel="music_panel"><span><?php _e( 'Music', 'flag' ); ?></span></a></li>
 		</ul>
@@ -179,14 +179,14 @@ if($_REQUEST['riched'] == "false") {
 		</div>
 		<!-- /music panel -->
 
-<?php if($_REQUEST['riched'] == "false") { ?>
 	</div>
 	<div class="mceActionPanel">
 		<div style="float: right">
 			<input type="button" id="insert" name="insert" value="<?php _e("Insert", 'flag'); ?>" />
 		</div>
 	</div>
-	<script type="text/javascript">	
+<?php if($_REQUEST['riched'] == "false") { ?>
+	<script type="text/javascript">
 		/* <![CDATA[ */
 		var cptabs=new ddtabcontent("tabs");
 		cptabs.setpersist(false);
@@ -194,6 +194,7 @@ if($_REQUEST['riched'] == "false") {
 		cptabs.init();
 		/* ]]> */
 	</script>
+<?php } ?>
 	<script type="text/javascript">
 		/* <![CDATA[ */
 		var win = window.dialogArguments || opener || parent || top;
@@ -254,9 +255,12 @@ if($_REQUEST['riched'] == "false") {
 			} else var playlist = '';
 
 			if (galleryid || album ) {
-				tagtext = '[flagallery' + galleryid + album + ' name="' + galleryname + '"' + gallerysize + galorderby + galorder + galexclude + skinname + playlist + ']';
+				tagtext = '[flagallery' + galleryid + album + gallerysize + galorderby + galorder + galexclude + skinname + playlist + ' name=' + galleryname + ']';
 				win.send_to_editor(tagtext);
 				win.bind_resize();
+<?php if($_REQUEST['riched'] != "false") { ?>
+				tinyMCEPopup.close();
+<?php } ?>
 			} else alert('Choose at least one gallery!');
 		});
 		jQuery(window).unload(function(){
@@ -264,19 +268,8 @@ if($_REQUEST['riched'] == "false") {
 		});
 		/* ]]> */
 	</script>
-<?php } else { ?>
-	</div>
-	<div class="mceActionPanel">
-		<div style="float: right">
-			<input type="submit" id="insert" name="insert" value="<?php _e("Insert", 'flag'); ?>" onclick="insertFLAGLink();" />
-		</div>
-	</div>
-<?php } ?>
 	<script type="text/javascript">
 	/* <![CDATA[ */
-	/*function setVisibility(){
-	  jQuery('#custom_tab').css('display',(document.getElementById('gallerycustom').checked) ? 'block':'none');
-	}*/
 	jQuery('#galleries').change(function(){
 		jQuery('#sort_tab').hide();
 		if(jQuery('#galleries option[value=all]:selected')) {

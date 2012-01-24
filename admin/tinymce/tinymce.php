@@ -103,12 +103,12 @@ class add_flag_button {
 		|| strstr($_SERVER['PHP_SELF'], 'page-new.php')
 		|| strstr($_SERVER['PHP_SELF'], 'page.php')
 		|| strstr($_SERVER['PHP_SELF'], 'post-new.php') )
-		{      	
+		{
 		?>
 		<script type="text/javascript">
 			<!--
 			jQuery(function() {
-				jQuery("#ed_toolbar").append('<input type=\"button\" style=\"margin:3px 2px 2px;\" class=\"ed_button\" id=\"FlAGallery_button\" onClick=\"wpflagins();\" value=\"FlAGallery\" />');
+				jQuery("#ed_toolbar").before('<div class="quicktags-toolbar" style="float:right;"><input type="button" class="ed_button" id="qt_FlAGallery_button" onClick="wpflagins();" value="FlAGallery" /></div>');
 			});
 			function wpflagins() {
 				tb_show("<?php _e('Insert Flash Album with one or more galleries', 'flag'); ?>","<?php echo FLAG_URLPATH; ?>admin/tinymce/window.php?riched=false&TB_iframe=true&width=360&height=210",false);

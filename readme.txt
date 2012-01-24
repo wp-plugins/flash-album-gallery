@@ -41,6 +41,11 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.63 - 24.01.2012 =
+* Fixed: FlAGallery button on HTML Editor panel
+* Added: FlAGallery Media button to Post and Page
+* Changes: Minor changes
+
 = v1.62 - 13.01.2012 =
 * Fixed: script.js file error
 

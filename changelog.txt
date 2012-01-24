@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.63 - 24.01.2012 =
+* Fixed: FlAGallery button on HTML Editor panel
+* Added: FlAGallery Media button to Post and Page
+* Changes: Minor changes
+
 = v1.62 - 13.01.2012 =
 * Fixed: script.js file error
 
