@@ -32,7 +32,7 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)*
 * Demo [Facebook Integration](http://www.facebook.com/#!/PhotoGalleryCreator?sk=app_206659789371708)
 
-- * - optional
+*: optional
 
 == Changelog ==
 
