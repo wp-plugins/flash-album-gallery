@@ -27,11 +27,12 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 
 * Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
 * Demo [Full Window Gallery Template](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
-* Demo [Video Galleries](http://photogallerycreator.com/flv-video-players/)
-* Demo [mp3 Music Players](http://photogallerycreator.com/mp3-music-players/)
-* Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
+* Demo [Video Galleries](http://photogallerycreator.com/flv-video-players/)*
+* Demo [mp3 Music Players](http://photogallerycreator.com/mp3-music-players/)*
+* Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)*
 * Demo [Facebook Integration](http://www.facebook.com/#!/PhotoGalleryCreator?sk=app_206659789371708)
 
+- * - optional
 
 == Changelog ==
 
