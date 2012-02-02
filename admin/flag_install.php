@@ -212,8 +212,8 @@ function flag_list_options() {
 	$flag_options['imgQuality']				= 85;								// Image Quality
 	
 	// Thumbnail Settings
-	$flag_options['thumbWidth']				= 115;  							// Thumb Width
-	$flag_options['thumbHeight']			= 100;  							// Thumb height
+	$flag_options['thumbWidth']				= 220;  							// Thumb Width
+	$flag_options['thumbHeight']			= 220;  							// Thumb height
 	$flag_options['thumbFix']				= true;								// Fix the dimension
 	$flag_options['thumbQuality']			= 100;  							// Thumb Quality
 
