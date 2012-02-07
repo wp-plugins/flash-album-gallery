@@ -49,6 +49,8 @@ extract($altColors);
 <?php } ?>
 </style>
 <?php if(!$isCrawler){ ?>
+	<meta content="width=device-width, initial-scale=1.0;" name="viewport" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="stylesheet" href="<?php echo plugins_url('/admin/js/photoswipe/photoswipe.css', dirname(__FILE__)); ?>" type="text/css" />
 	<script type="text/javascript" src="<?php echo plugins_url('/admin/js/photoswipe/klass.min.js', dirname(__FILE__)); ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url('/admin/js/photoswipe/code.photoswipe.jquery-3.0.4.min.js', dirname(__FILE__)); ?>"></script>
