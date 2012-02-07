@@ -15,7 +15,7 @@ You can edit your media content the way you want: upload images, import music an
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
-* iPhone / iPad friendly photo gallery, SEO optimized.
+* iPhone, iPad, Android, Blackberry 6 and Desktop friendly photo gallery, SEO optimized.
 * Full-screen mobile friendly slideshow with touch controls. Uses [PhotoSwipe library](http://www.photoswipe.com/)
 * New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
 
