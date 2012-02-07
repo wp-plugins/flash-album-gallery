@@ -406,6 +406,7 @@ That's it ... Have fun!
 1. 3D Prospect Gallery skin with Social buttons integrated, Afflux skin, 3D Cube Gallery skin, 3D FlatWall skin
 2. Gallery in Facebook integrated with facebook template.
 3. Alternate jQuery gallery for iPhone, iPad and browsers without flash support.
+9. Alternate gallery for mobile devices with PhotoSwipe Library.
 4. Admin Sort Gallery 
 5. Post Editor insert shortcode popup 
 6. Post Editor buttons to help you insert shortcode 
