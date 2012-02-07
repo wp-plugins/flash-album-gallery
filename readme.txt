@@ -16,6 +16,8 @@ You can edit your media content the way you want: upload images, import music an
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
 	iPhone / iPad friendly photo gallery, SEO optimized.
+	
+	Full-screen mobile friendly slideshow with touch controls. Uses [PhotoSwipe library](http://www.photoswipe.com/)
 
 	New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
 
@@ -27,12 +29,11 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 
 * Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
 * Demo [Full Window Gallery Template](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
-* Demo [Video Galleries](http://photogallerycreator.com/flv-video-players/)*
-* Demo [mp3 Music Players](http://photogallerycreator.com/mp3-music-players/)*
-* Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)*
+* Demo [Video Galleries](http://photogallerycreator.com/flv-video-players/)
+* Demo [mp3 Music Players](http://photogallerycreator.com/mp3-music-players/)
+* Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
 * Demo [Facebook Integration](http://www.facebook.com/#!/PhotoGalleryCreator?sk=app_206659789371708)
 
-_* - optional
 
 == Changelog ==
 
@@ -41,6 +42,9 @@ _* - optional
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
+
+= v1.64 - 07.02.2012 =
+* Changed: Alternate Gallery changed fancybox script to PhotoSwipe. Full touchscreen support: iPhone, iPad, Android, Blackberry 6 and Desktop all supported.
 
 = v1.63 - 24.01.2012 =
 * Fixed: FlAGallery button on HTML Editor panel

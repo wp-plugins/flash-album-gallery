@@ -1,35 +1,7 @@
 var fv = swfobject.getFlashPlayerVersion();
+
 function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
-  this.ExtendVar = ExtendVar;
-  if (typeof(jQuery) == 'undefined') {
-	var JQ = document.createElement('script');
-	JQ.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js';
-	JQ.type = 'text/javascript';
-	document.getElementsByTagName('head')[0].appendChild(JQ);
-  }
-
-  waitJQ(skin_id, pic_id, slideshow);
-}
-
-function waitJQ(skin_id, pic_id, slideshow) {
-	if (typeof(jQuery) == 'undefined') {
-	  window.setTimeout(waitJQ, 100);
-	}
-	else {
-	  if (typeof(jQuery.fn.fancybox) == 'undefined') {
-		jQuery("head").append("<script type='text/javascript' src='"+this.ExtendVar+"admin/js/jquery.fancybox-1.3.4.pack.js'></script><link rel='stylesheet' href='"+this.ExtendVar+"admin/js/jquery.fancybox-1.3.4.css' type='text/css' media='screen' />");
-	  }
-
-	  waitFB(skin_id, pic_id, slideshow);
-	}
-}
-
-function waitFB(skin_id, pic_id, slideshow) {
-	if (typeof(jQuery.fn.fancybox) == 'undefined') {
-	  window.setTimeout(waitFB, 100);
-	}
-	else {
-	  jQuery(document).ready(function() {
+	jQuery(document).ready(function() {
 		if(pic_id !== false){
 			var skin_function = flagFind(skin_id);
 			if(pic_id !== 0 ) {
@@ -97,13 +69,12 @@ function waitFB(skin_id, pic_id, slideshow) {
 				}
 				return false;
 			});
-			alternate_flag_e('.flagcategory:first');
+			alternate_flag_e('.flagcategory:first', ExtendVar);
 		}
-	  });
-	}
+	});
 }
 
-function alternate_flag_e(t){
+function alternate_flag_e(t, ExtendVar){
 	jQuery('.flag_alternate').find(t).not('.loaded').each(function(){
 		var d = jQuery(this).html();
 		if(d) {
@@ -112,25 +83,77 @@ function alternate_flag_e(t){
 			jQuery(this).addClass('loaded').html(d);
 		}
 		jQuery(this).show();
-		jQuery('a.flag_pic_alt',this).fancybox({
-			'overlayShow'	: true,
-			'overlayOpacity': '0.5',
-			'transitionIn'	: 'elastic',
-			'transitionOut'	: 'elastic',
-			'titlePosition'	: 'over',
-			'titleFormat'	: function(title, currentArray, currentIndex, currentOpts) {
-				var descr = jQuery('<div />').html(jQuery('.flag_pic_desc > span', currentArray[currentIndex]).html()).text();
-				title = jQuery('<div />').html(jQuery('.flag_pic_desc > strong', currentArray[currentIndex]).html()).text();
-				return '<div id="fancybox-title-over"><em>'+(currentIndex + 1)+' / '+currentArray.length+' &nbsp; </em>'+(title.length? '<strong class="title">'+title+'</strong>' : '')+(descr.length? '<div class="descr">'+descr+'</div>' : '')+'</div>';
+		var
+			showDescr, longDescription, imgdescr, psImgCaption, curel,
+			options = {
+				allowUserZoom:false,
+				captionAndToolbarAutoHideDelay:0,
+				captionAndToolbarHide:false,
+				captionAndToolbarShowEmptyCaptions:false,
+				zIndex:10000,
+				getToolbar: function(){
+					flagToolbar = window.Code.PhotoSwipe.Toolbar.getToolbar();
+					flagToolbar = flagToolbar + '<div class="ps-toolbar-descr"><div class="ps-toolbar-content"></div></div>';
+					return flagToolbar;
+					// NB. Calling PhotoSwipe.Toolbar.getToolbar() wil return the default toolbar HTML
+				},
+				getImageCaption: function(el){
+					psImgCaption = jQuery('<strong></strong>').addClass('ps-title').append(jQuery(el).attr('title'));
+					return psImgCaption;
+				},
+				getImageMetaData: function(el){
+					imgdescr = jQuery(el).find('span.flag_pic_desc > span:first').html();
+					if(imgdescr.length){
+						imgdescr = jQuery('<div></div>').append(imgdescr);
+					}
+					return {
+						longDescription: imgdescr
+					}
+
+				}
 			},
-			'onClosed' 		: function(currentArray, currentIndex){
-				jQuery(currentArray[currentIndex]).removeClass('current').addClass('last');
-			},
-			'onComplete'	: function(currentArray, currentIndex) {
-				jQuery(currentArray).removeClass('current last');
-				jQuery(currentArray[currentIndex]).addClass('current');
+			instance = jQuery('a.flag_pic_alt',this).photoSwipe(options);
+
+		// onShow - store a reference to our "say hi" button
+	  	instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onShow, function(e){
+			showDescr = window.document.querySelectorAll('.ps-toolbar-descr')[0];
+		});
+		// onBeforeHide - clean up
+		instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onBeforeHide, function(e){
+			showDescr = null;
+		});
+		// onDisplayImage
+		instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onDisplayImage, function(e){
+			curel = instance.getCurrentImage();
+			if(curel.metaData.longDescription){
+				jQuery('.ps-caption-content').append(jQuery('<div></div>').addClass('ps-long-description').html(jQuery(curel.metaData.longDescription).text()).hide());
+				jQuery('.ps-toolbar-descr').removeClass('disabled active').addClass('enabled');
+			} else {
+				jQuery('.ps-toolbar-descr').removeClass('enabled active').addClass('disabled');
 			}
 		});
+		// onSlideshowStart
+		instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onCaptionAndToolbarShow, function(e){
+			curel = instance.getCurrentImage();
+			if(curel.metaData.longDescription){
+				jQuery('.ps-caption-content').append(jQuery('<div></div>').addClass('ps-long-description').html(jQuery(curel.metaData.longDescription).text()).hide());
+				jQuery('.ps-toolbar-descr').removeClass('disabled active').addClass('enabled');
+			} else {
+				jQuery('.ps-toolbar-descr').removeClass('enabled active').addClass('disabled');
+			}
+		});
+		// onToolbarTap - listen out for when the toolbar is tapped
+		instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onToolbarTap, function(e){
+			if (e.toolbarAction === window.Code.PhotoSwipe.Toolbar.ToolbarAction.none){
+				if (e.tapTarget === showDescr || window.Code.Util.DOM.isChildOf(e.tapTarget, showDescr)){
+					if(jQuery(showDescr).hasClass('enabled')){
+						jQuery('.ps-toolbar-descr').toggleClass('active');
+						jQuery('.ps-long-description').slideToggle(400);
+					}
+				}
+			}
+		});
+
 	});
 }
 if(fv.major<10 || (navigator.userAgent.toLowerCase().indexOf("android") > -1)) {

@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.64 - 07.02.2012 =
+* Changed: Alternate Gallery changed fancybox script to PhotoSwipe. Full touchscreen support: iPhone, iPad, Android, Blackberry 6 and Desktop all supported.
+
 = v1.63 - 24.01.2012 =
 * Fixed: FlAGallery button on HTML Editor panel
 * Added: FlAGallery Media button to Post and Page

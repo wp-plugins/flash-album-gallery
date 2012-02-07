@@ -10,10 +10,10 @@ extract($altColors);
 <?php if(!$isCrawler) { ?>
 .flag_alternate { display: none; }
 .flag_alternate .flagcatlinks { padding: 7px 3px; margin:0 0 3px; background-color: #292929; }
-.flag_alternate .flagcatlinks a.flagcat { padding: 4px 10px; margin: 0; border: none; border-left: 1px dotted #ffffff; font: 14px Tahoma; text-decoration: none; background: none; color: #ffffff; background-color: #292929; }
-.flag_alternate .flagcatlinks a.flagcat:hover { text-decoration: none; background: none; border: none; border-left: 1px dotted #ffffff; }
+.flag_alternate .flagcatlinks a.flagcat { padding: 4px 10px; margin: 2px 0; border: none; border-width: 1px; border-color: #ffffff; border-style: solid dotted; font: 14px Tahoma; text-decoration: none; background: none; color: #ffffff; background-color: #292929; white-space: nowrap; border-top-left-radius: 8px; border-top-right-radius: 8px; margin-right: -1px; }
+.flag_alternate .flagcatlinks a.flagcat:hover { text-decoration: none; background: none; }
 .flag_alternate .flagcatlinks a.active, .flag_alternate .flagcatlinks a.flagcat:hover { color: #ffffff; background-color: #737373; outline: none; }
-.flag_alternate .flagcatlinks a.flagcat:first-child { border: none; }
+.flag_alternate .flagcatlinks a.flagcat:first-child {  }
 .flag_alternate .flagcategory { display: none; font-size: 0; line-height: 0; }
 <?php } else { ?>
 .flag_alternate .flagCatMeta h4 { padding: 4px 10px; margin: 7px 0; border: none; font: 14px Tahoma; text-decoration: none; background:#292929 none; color: #ffffff; }
@@ -49,7 +49,10 @@ extract($altColors);
 <?php } ?>
 </style>
 <?php if(!$isCrawler){ ?>
-<script type="text/javascript">var ExtendVar='<?php echo FLAG_URLPATH; ?>';</script>
+	<link rel="stylesheet" href="<?php echo plugins_url('/admin/js/photoswipe/photoswipe.css', dirname(__FILE__)); ?>" type="text/css" />
+	<script type="text/javascript" src="<?php echo plugins_url('/admin/js/photoswipe/klass.min.js', dirname(__FILE__)); ?>"></script>
+	<script type="text/javascript" src="<?php echo plugins_url('/admin/js/photoswipe/code.photoswipe.jquery-3.0.4.min.js', dirname(__FILE__)); ?>"></script>
+	<script type="text/javascript">var ExtendVar=false;</script>
 <?php } ?>
 <div id="<?php echo $skinID; ?>_jq" class="flag_alternate">
 		<div class="flagcatlinks"><?php

@@ -7,6 +7,7 @@
 class FlAG_shortcodes {
 	var $flag_shortcode;
 	var $flag_add_script;
+	var $flag_fancybox;
 	var $flag_add_mousewheel;
 	// register the new shortcodes
 	function FlAG_shortcodes() {
@@ -89,8 +90,6 @@ class FlAG_shortcodes {
     		else
     			$out = __('[Gallery not found]','flag');
     	}
-		$this->flag_shortcode = true;
-		$this->flag_add_script = true;
 
 		$flag_options = get_option('flag_options');
 		if($skin == '') $skin = $flag_options['flashSkin'];
@@ -99,6 +98,13 @@ class FlAG_shortcodes {
 			$skin = 'default';
 			$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 		} 
+		$this->flag_shortcode = true;
+		$this->flag_add_script = true;
+		if($skin == 'slider_gallery' || $skin == 'slider_gallery_demo'){
+			$this->flag_fancybox = true;
+		} else {
+			$this->flag_fancybox = false;
+		}
 		$swfmousewheel = false;
 		if(file_exists($skinpath . "/settings/settings.xml")) {
 			$data = file_get_contents($skinpath . "/settings/settings.xml");
@@ -119,11 +125,13 @@ class FlAG_shortcodes {
 			wp_register_script('flagscroll', plugins_url('/admin/js/flagscroll.js', dirname(__FILE__)), array('jquery'), '1.0', true );
 			wp_print_scripts('flagscroll');
 		}
-		if ( $this->flag_add_script ) {
+		if ( $this->flag_fancybox ) {
 			wp_register_style('fancybox', plugins_url('/admin/js/jquery.fancybox-1.3.4.css', dirname(__FILE__)) );
 			wp_print_styles('fancybox');
 			wp_register_script('fancybox', plugins_url('/admin/js/jquery.fancybox-1.3.4.pack.js', dirname(__FILE__)), array('jquery'), '1.3.4', true );
 			wp_print_scripts('fancybox');
+		}
+		if ( $this->flag_add_script ) {
 			wp_register_script('flagscript', plugins_url('/admin/js/script.js', dirname(__FILE__)), array('jquery'), '1.0', true );
 			wp_print_scripts('flagscript');
 		}

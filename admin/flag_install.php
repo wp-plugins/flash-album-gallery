@@ -202,7 +202,7 @@ function flag_list_options() {
 	// Flash settings
 	$flag_options['skinsDirABS']			= str_replace("\\","/", WP_PLUGIN_DIR . '/flagallery-skins/' );
 	$flag_options['skinsDirURL']			= WP_PLUGIN_URL . '/flagallery-skins/';
-	$flag_options['flashSkin']				= 'default'; 
+	$flag_options['flashSkin']				= 'default';
 	$flag_options['flashWidth']				= '100%'; 
 	$flag_options['flashHeight']			= '500';
 
