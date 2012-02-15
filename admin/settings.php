@@ -90,7 +90,7 @@ jQuery(document).ready(function() {
 	<div id="imageoptions" class="cptab">
 		<form name="generaloptions" method="post">
 		<?php wp_nonce_field('flag_settings'); ?>
-			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,deepLinks,useMediaRSS,jAlterGal,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgResize,imgWidth,imgHeight,imgQuality,galSort,galSortDir" />
+			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,deepLinks,useMediaRSS,jAlterGal,jAlterGalScript,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgResize,imgWidth,imgHeight,imgQuality,galSort,galSortDir" />
 			<h2><?php _e('Image Gallery Options','flag'); ?></h2>
 			<h3><?php _e('General Options','flag'); ?></h3>
 			<table class="form-table flag-options">
@@ -128,6 +128,14 @@ jQuery(document).ready(function() {
 					<td><input type="checkbox" name="jAlterGal" value="1" <?php checked('1', $flag_options['jAlterGal']); ?> /></td>
 				</tr>
 				<tr>
+					<th align="left"><?php _e('jQuery gallery script','flag'); ?></th>
+					<td><select name="jAlterGalScript">
+							<option value="0" <?php selected('0', $flag_options['jAlterGalScript']); ?>>PhotoSwipe</option>
+							<option value="1" <?php selected('1', $flag_options['jAlterGalScript']); ?>>FancyBox</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
 					<th width="200"><?php _e('Top Bar BG','flag'); ?>:</th>
 					<td><input class="colorPick" type="text" size="7" maxlength="6" id="BarsBG" name="BarsBG" value="<?php echo $flag_options['BarsBG']?>" /><div id="cp_BarsBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
@@ -157,12 +165,12 @@ jQuery(document).ready(function() {
 					<th><?php _e('Thumbnail MouseOver BG','flag'); ?>:</th>
 					<td><input class="colorPick" type="text" size="7" maxlength="6" id="ThumbLoaderColor" name="ThumbLoaderColor" value="<?php echo $flag_options['ThumbLoaderColor']; ?>" /><div id="cp_ThumbLoaderColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
-				<tr>					
-					<th><?php _e('Fancybox Title','flag'); ?>:</th>
+				<tr>
+					<th><?php _e('Fancybox Title','flag'); ?>:<br /><small><?php _e('Only if FancyBox script is selected','flag'); ?></small></th>
 					<td><input class="colorPick" type="text" size="7" maxlength="6" id="TitleColor" name="TitleColor" value="<?php echo $flag_options['TitleColor']; ?>" /><div id="cp_TitleColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
-				<tr>					
-					<th><?php _e('Fancybox Description Text','flag'); ?>:</th>
+				<tr>
+					<th><?php _e('Fancybox Description Text','flag'); ?>:<br /><small><?php _e('Only if FancyBox script is selected','flag'); ?></small></th>
 					<td><input class="colorPick" type="text" size="7" maxlength="6" id="DescrColor" name="DescrColor" value="<?php echo $flag_options['DescrColor']; ?>" /><div id="cp_DescrColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
 			</table>

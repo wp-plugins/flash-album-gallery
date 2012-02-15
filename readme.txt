@@ -41,6 +41,11 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.65 - 15.02.2012 =
+* Added: Now you can select FancyBox or PhotoSwipe script for alternate gallery. Added option to Options page. (Default is PhotoSwipe)
+* Optimized: Optimized Photoswipe script for themes without mobile version.
+* Fixed: FlAGallery media button above Post / Page editor.
+
 = v1.64 - 07.02.2012 =
 * Changed: Alternate Gallery changed fancybox script to PhotoSwipe. Full touchscreen support: iPhone, iPad, Android, Blackberry 6 and Desktop all supported.
 

@@ -100,7 +100,7 @@ class FlAG_shortcodes {
 		} 
 		$this->flag_shortcode = true;
 		$this->flag_add_script = true;
-		if($skin == 'slider_gallery' || $skin == 'slider_gallery_demo'){
+		if($skin == 'slider_gallery' || $skin == 'slider_gallery_demo' || $flag_options['jAlterGalScript'] == 1 ){
 			$this->flag_fancybox = true;
 		} else {
 			$this->flag_fancybox = false;
@@ -109,7 +109,7 @@ class FlAG_shortcodes {
 		if(file_exists($skinpath . "/settings/settings.xml")) {
 			$data = file_get_contents($skinpath . "/settings/settings.xml");
 			$swfmousewheel = flagGetBetween($data,'<swfmousewheel>','</swfmousewheel>');
-		} 
+		}
 		if($swfmousewheel == 'true') $this->flag_add_mousewheel = true;
 
         return $out;

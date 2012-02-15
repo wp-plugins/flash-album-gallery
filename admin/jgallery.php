@@ -1,5 +1,5 @@
 <?php global $wpdb, $post;
-$flag_options = get_option ('flag_options'); 
+$flag_options = get_option ('flag_options');
 $siteurl = get_option ('siteurl');
 $isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']); // check if is a crowler
 extract($altColors);
@@ -48,14 +48,16 @@ extract($altColors);
 .flag_alternate a.backlink:hover { text-decoration: underline; }
 <?php } ?>
 </style>
-<?php if(!$isCrawler){ ?>
-	<meta content="width=device-width, initial-scale=1.0;" name="viewport" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
+<?php if(!$isCrawler){
+	if(!$flag_options['jAlterGalScript']) { ?>
 	<link rel="stylesheet" href="<?php echo plugins_url('/admin/js/photoswipe/photoswipe.css', dirname(__FILE__)); ?>" type="text/css" />
 	<script type="text/javascript" src="<?php echo plugins_url('/admin/js/photoswipe/klass.min.js', dirname(__FILE__)); ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url('/admin/js/photoswipe/code.photoswipe.jquery-3.0.4.min.js', dirname(__FILE__)); ?>"></script>
-	<script type="text/javascript">var ExtendVar=false;</script>
-<?php } ?>
+	<script type="text/javascript">var ExtendVar='photoswipe';</script>
+	<?php } else if($flag_options['jAlterGalScript'] == 1) { ?>
+	<script type="text/javascript">var ExtendVar='fancybox';</script>
+<?php }
+ } ?>
 <div id="<?php echo $skinID; ?>_jq" class="flag_alternate">
 		<div class="flagcatlinks"><?php
 			if($altColors['FullWindow'] && !$isCrawler){

@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 1.64
+Version: 1.65
 Author: Rattus
 Author URI: http://codeasily.com/
 
@@ -23,7 +23,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 	
-	var $version     = '1.64';
+	var $version     = '1.65';
 	var $dbversion   = '1.24';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '2.8';
@@ -417,7 +417,7 @@ class flagLoad {
 
 	function addFlAGMediaIcon($context){
 	    global $post_ID, $temp_ID, $wpdb;
-		$flag_upload_iframe_src = FLAG_URLPATH."admin/tinymce/window.php?media_button=true";
+		$flag_upload_iframe_src = FLAG_URLPATH."admin/tinymce/window.php?media_button=true&riched=false";
 		$flag_iframe_src = apply_filters('flag_iframe_src', "$flag_upload_iframe_src&amp;tab=flagallery");
 		$title = __('Add GRAND FlAGallery');
 	    return $context.'<a href="'.$flag_upload_iframe_src.'&amp;TB_iframe=1&amp;width=360&amp;height=210" class="thickbox" id="add_flagallery" title="'.$title.'"><span style="margin:0 5px;">FlAGallery</span></a>';
