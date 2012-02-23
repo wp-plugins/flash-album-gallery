@@ -14,7 +14,7 @@
 	color: #000;
 }
 .skins .inactive a { 
-	color: #557799; 	
+	color: #557799;
 }
 .skins .inactive a:hover {
 	color: #d54e21;
@@ -71,10 +71,10 @@
 #choosegalfirst {position:relative; float:left; margin-left:15px; overflow:hidden;}
 #choosegalfirst .disabledbut {position:absolute; top:0; left:0; right:0; bottom:0; width:100%; height:100%;}
 
-/* SETTINGS FOR THE OPTIONS TABLE */ 
+/* SETTINGS FOR THE OPTIONS TABLE */
 .flag-options th {
 	width:22%;
-} 
+}
 
 /* SETTINGS FOR MANAGE TABLE */
 
@@ -160,28 +160,28 @@ p#flag-inlinebutton {
 /* SETTINGS FOR PROGRESS BAR */
 
 div .progressborder {
-	border: 1px inset ; 
-	display: block; 
-	height: 20px; 
-	background-color: #464646; 
+	border: 1px inset ;
+	display: block;
+	height: 20px;
+	background-color: #464646;
 	width: 100%;
 	margin-top: 15px;
 	margin-bottom: 15px;
 }
 
 div .progressbar {
-	border: medium none ; 
-	display: block; 
-	height: 20px; 
-	background-color: #D54E21; 
+	border: medium none ;
+	display: block;
+	height: 20px;
+	background-color: #D54E21;
 	width: 0%;
 }
 
 div .progressbar span {
-	display: inline; 
-	position: relative; 
-	color: white; 
-	font-weight: bold; 
+	display: inline;
+	position: relative;
+	color: white;
+	font-weight: bold;
 	padding-left: 5px;
 }
 
@@ -189,7 +189,7 @@ div .progressbar span {
 .show_details
 {
 	height: 16px;
-	line-height: 20px; 
+	line-height: 20px;
 	overflow: hidden;
 	min-width: 8em;
 	padding: 3px;
@@ -201,7 +201,7 @@ div .progressbar span {
 	border-bottom:1px solid #999;
 	white-space:pre;
 }
-.show_details:hover 
+.show_details:hover
 {
 	height: auto;
 	overflow: visible;

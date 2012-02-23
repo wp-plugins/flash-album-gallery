@@ -73,12 +73,12 @@ class flagAdminPanel{
 		global $flag;
 		
 		// check for upgrade
-		if( get_option( 'flag_db_version' ) != FLAG_DBVERSION ) {
+		/*if( get_option( 'flag_db_version' ) != FLAG_DBVERSION ) {
 			include_once ( dirname (__FILE__) . '/functions.php' );
 			include_once ( dirname (__FILE__) . '/upgrade.php' );
 			flag_upgrade_page();
 			return;
-		}
+		}*/
 		
 		// Set installation date
 		if( empty($flag->options['installDate']) ) {

@@ -19,7 +19,7 @@ function flag_install () {
 
 	flag_capabilities();
 	
-	// upgrade function changed in WordPress 2.3	
+	// upgrade function changed in WordPress 2.3
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
 	// add charset & collate like wp core
@@ -177,12 +177,12 @@ function flag_default_options() {
 		// get the site options
 		$flag_wpmu_options = get_site_option('flag_options');
 		// get the default value during installation
-		if (!is_array($flag_wpmu_options)) {
-			$flag_wpmu_options['galleryPath'] = 'wp-content/blogs.dir/%BLOG_ID%/files/';
+		//if (!is_array($flag_wpmu_options)) {
+			//$flag_wpmu_options['galleryPath'] = 'wp-content/blogs.dir/%BLOG_ID%/files/';
 			update_site_option('flag_options', $flag_wpmu_options);
-		}
-		$flag_options['galleryPath']  		= str_replace("%BLOG_ID%", $blog_id , $flag_wpmu_options['galleryPath']);
-	} 
+		//}
+		//$flag_options['galleryPath']  		= str_replace("%BLOG_ID%", $blog_id , $flag_wpmu_options['galleryPath']);
+	}
 
 	update_option('flag_options', $flag_options);
 
@@ -237,7 +237,7 @@ function flag_list_options() {
 
 	// Alternative gallery colors
 	$flag_options['jAlterGal']				= true;
-	$flag_options['jAlterGalScript']		= 0;							// If '0' - use PhotoSwipe script
+	$flag_options['jAlterGalScript']		= 0;							// If '0' - use FancyBox script
 	$flag_options['BarsBG']					= '292929';
 	$flag_options['CatBGColor']				= '292929';
 	$flag_options['CatBGColorOver']			= '737373';

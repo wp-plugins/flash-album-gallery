@@ -42,7 +42,8 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	}
 	if(empty($wmode)) $wmode = $flashBacktransparent? 'transparent' : 'opaque';
 	if(empty($flashBackcolor)) $flashBackcolor = $flag_options['flashBackcolor'];
-	
+	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
+
 	$altColors['wmode'] = $wmode;
 	$altColors['Background'] = $flashBackcolor;
 	$altColors['BarsBG'] = $flag_options['BarsBG'];
@@ -61,9 +62,13 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	} else {
 		$alternate = '';
 	}
-
+	$width = strpos($width, '%')? $width : $width.'px';
+	if(!$isCrawler)
+		$height = strpos($height, '%')? $height : $height.'px';
+	else
+		$height = 'auto';
 	// init the flash output
-	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , $skinID, $width, $height, '10.1.52', FLAG_URLPATH .'skins/expressInstall.swf');
+	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , $skinID, '100%', '100%', '10.1.52', FLAG_URLPATH .'skins/expressInstall.swf');
 
 	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
 
@@ -94,7 +99,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 		}
 	}
 	// create the output
-	$out = '<div class="flashalbum">' . $swfobject->output($alternate) . '</div>';
+	$out = '<div class="flashalbum" style="width:'.$width.';height:'.$height.';">' . $swfobject->output($alternate) . '</div>';
 	// add now the script code
 	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT']) && !preg_match("/Android/i", $_SERVER['HTTP_USER_AGENT'])){
 		$out .= "\n".'<script type="text/javascript" defer="defer">';

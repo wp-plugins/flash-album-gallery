@@ -6,28 +6,12 @@ extract($altColors);
 ?>
 <?php $bg = ($wmode == 'window')? '#'.$Background : 'transparent'; ?>
 <style type="text/css">
-.flashalbum { clear: both; }
-<?php if(!$isCrawler) { ?>
-.flag_alternate { display: none; }
-.flag_alternate .flagcatlinks { padding: 7px 3px; margin:0 0 3px; background-color: #292929; }
-.flag_alternate .flagcatlinks a.flagcat { padding: 4px 10px; margin: 2px 0; border: none; border-width: 1px; border-color: #ffffff; border-style: solid dotted; font: 14px Tahoma; text-decoration: none; background: none; color: #ffffff; background-color: #292929; white-space: nowrap; border-top-left-radius: 8px; border-top-right-radius: 8px; margin-right: -1px; }
-.flag_alternate .flagcatlinks a.flagcat:hover { text-decoration: none; background: none; }
-.flag_alternate .flagcatlinks a.active, .flag_alternate .flagcatlinks a.flagcat:hover { color: #ffffff; background-color: #737373; outline: none; }
-.flag_alternate .flagcatlinks a.flagcat:first-child {  }
-.flag_alternate .flagcategory { display: none; font-size: 0; line-height: 0; }
-<?php } else { ?>
+<?php if(!$isCrawler) { ?>@import url("<?php echo FLAG_URLPATH; ?>admin/css/flagallery_nocrawler.css");<?php } ?>
+@import url("<?php echo FLAG_URLPATH; ?>admin/css/flagallery_noflash.css");
+<?php if($isCrawler) { ?>
 .flag_alternate .flagCatMeta h4 { padding: 4px 10px; margin: 7px 0; border: none; font: 14px Tahoma; text-decoration: none; background:#292929 none; color: #ffffff; }
 .flag_alternate .flagCatMeta p { font-size: 12px; }
 <?php } ?>
-.flag_alternate { background-color: <?php echo $bg; ?>; margin: 7px 0; }
-.flag_alternate .flagcategory { width: 100%; height: auto; position: relative; text-align: center; padding-bottom: 4px; }
-.flag_alternate .flagcategory a.flag_pic_alt { display: inline-block; margin: 1px 0 0 1px; padding: 0; height: 100px; width: 115px; line-height: 96px; position:relative; z-index: 2; text-align: center; z-index:99; cursor:pointer; background-color: #ffffff; border: 2px solid #ffffff; text-decoration: none; background-image: url(<?php echo FLAG_URLPATH; ?>admin/images/loadingAnimation.gif); background-repeat: no-repeat; background-position: 50% 50%; font-size: 8px; color: #ffffff; }
-.flag_alternate .flagcategory a.flag_pic_alt > .flag_pic_desc { display: none; padding: 4px; line-height: 140%; font-size: 12px; }
-.flag_alternate .flagcategory a.flag_pic_alt > .flag_pic_desc * { display: none; line-height: 140%; font-size: 12px !important; }
-.flag_alternate .flagcategory a.flag_pic_alt:hover { background-color: #ffffff; border: 2px solid #4a4a4a; color: #4a4a4a; text-decoration: none; z-index: 3; }
-.flag_alternate .flagcategory a.flag_pic_alt.current, .flag_alternate .flagcategory a.flag_pic_alt.last { border-color: #4a4a4a; }
-.flag_alternate .flagcategory a.flag_pic_alt > img { vertical-align: middle; display:inline-block; position: static; margin: 0 auto; padding: 0; border: none; height: 100px !important; width: 115px !important; max-width: 115px; min-width: 115px; }
-
 <?php if($BarsBG) {
 	$bgBar = ($wmode == 'window')? '#'.$BarsBG : 'transparent';
 	if(!$isCrawler){
@@ -50,12 +34,12 @@ extract($altColors);
 </style>
 <?php if(!$isCrawler){
 	if(!$flag_options['jAlterGalScript']) { ?>
-	<link rel="stylesheet" href="<?php echo plugins_url('/admin/js/photoswipe/photoswipe.css', dirname(__FILE__)); ?>" type="text/css" />
+	<script type="text/javascript">var ExtendVar='fancybox';</script>
+	<?php } else if($flag_options['jAlterGalScript'] == 1) { ?>
+	<style type="text/css">@import url("<?php echo plugins_url('/admin/js/photoswipe/photoswipe.css', dirname(__FILE__)); ?>");</style>
 	<script type="text/javascript" src="<?php echo plugins_url('/admin/js/photoswipe/klass.min.js', dirname(__FILE__)); ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url('/admin/js/photoswipe/code.photoswipe.jquery-3.0.4.min.js', dirname(__FILE__)); ?>"></script>
 	<script type="text/javascript">var ExtendVar='photoswipe';</script>
-	<?php } else if($flag_options['jAlterGalScript'] == 1) { ?>
-	<script type="text/javascript">var ExtendVar='fancybox';</script>
 <?php }
  } ?>
 <div id="<?php echo $skinID; ?>_jq" class="flag_alternate">

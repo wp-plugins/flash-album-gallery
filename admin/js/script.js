@@ -52,6 +52,7 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 			if(!metaViewport){
 				jQuery('head').append('<meta content="width=device-width, initial-scale=1.0;" name="viewport" />');
 			}
+			jQuery('.flashalbum').css('height','auto');
 			jQuery('.flag_alternate').each(function(i){
 				jQuery(this).show();
 				var catMeta = jQuery('.flagCatMeta',this).hide().get();
@@ -91,10 +92,10 @@ function alternate_flag_e(t, ExtendVar){
 			var
 				showDescr, longDescription, imgdescr, psImgCaption, curel,
 				options = {
-					allowUserZoom:true,
+					allowUserZoom:false,
 					captionAndToolbarAutoHideDelay:0,
 					captionAndToolbarHide:false,
-					captionAndToolbarShowEmptyCaptions:false,
+					captionAndToolbarShowEmptyCaptions:true,
 					zIndex:10000,
 					getToolbar: function(){
 						flagToolbar = window.Code.PhotoSwipe.Toolbar.getToolbar();
@@ -121,7 +122,8 @@ function alternate_flag_e(t, ExtendVar){
 
 			// onBeforeShow - store a reference to our "say hi" button
 		  	instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onBeforeShow, function(e){
-				jQuery('meta[name=viewport]').attr('content','width=device-width, minimum-scale=1.0, maximum-scale=1.0;');
+		  		jQuery(window).scrollLeft(0).scrollTop(0);
+				jQuery('meta[name=viewport]').attr('content','width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0');
 				window.location.hash = '#OpenGallery';
 			});
 			// onShow - store a reference to our "say hi" button
@@ -135,7 +137,7 @@ function alternate_flag_e(t, ExtendVar){
 			// onHide - clean up
 			instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onHide, function(e){
 				if(!metaViewport){
-					jQuery('meta[name=viewport]').attr('content','width=device-width, minimum-scale=0.25, maximum-scale=1.6;');
+					jQuery('meta[name=viewport]').attr('content','width=device-width, initial-scale=0.50, minimum-scale=0.25, maximum-scale=1.6, user-scalable=1');
 				} else {
 					jQuery('meta[name=viewport]').attr('content',metaViewport);
 				}
@@ -202,4 +204,68 @@ if(fv.major<10 || (navigator.userAgent.toLowerCase().indexOf("android") > -1)) {
 function thumb_cl(skin_id, pic_id, slideshow){
   	pic_id = parseInt(pic_id);
 	new FlAGClass(ExtendVar, skin_id, pic_id, slideshow);
+}
+
+jQuery(document).ready(function() {
+	jQuery('div.flashalbum').dblclick(function(e){
+		if(e.target.tagName == 'IMG' || e.target.tagName == 'A') return;
+		if(jQuery('body').hasClass('FlAG')){
+			unhideSite(this, jQuery(this).attr('data-height'), jQuery(this).attr('data-scrolltop'));
+		} else {
+			jQuery(this).attr('data-height',jQuery(this).height()).attr('data-scrolltop',jQuery(window).scrollTop());
+			hideSite(this);
+		}
+	});
+});
+function enlargeFlAG(t){
+		var pleft = jQuery(t).offset().left - jQuery(window).scrollLeft();
+		var pheight = jQuery(window).height();
+		jQuery(t).css({left:-pleft,top:0,width:'100%',height:pheight+'px'});
+}
+function unlargeFlAG(t, hFA, sst){
+		jQuery(t).css({left:0,top:0,width:'100%',height:hFA+'px'});
+		jQuery(window).scrollTop(sst);
+}
+function hideSite(t){
+	jQuery('body').addClass('FlAG');
+	jQuery(t).parents('div').addClass('FlAGz').each(function(){
+		if(jQuery(this).attr('style')){
+			jQuery(this).attr('data-elstyle',jQuery(this).attr('style')).css({zIndex:100,width:'100%',maxWidth:'100%',height:'auto',padding:0,margin:0,border:'none'});
+		} else {
+			jQuery(this).css({zIndex:100,width:'100%',maxWidth:'100%',height:'auto',padding:0,margin:0,border:'none'});
+		}
+	});
+	jQuery(t).siblings().not('script, link, style, head').addClass('FlAGd').each(function(){
+		if(jQuery(this).attr('style')){
+			jQuery(this).attr('data-elstyle',jQuery(this).attr('style')).css({visibility:'hidden',height:0,minHeight:0,padding:0,margin:'0 0 0 -10000px',border:'none',fontSize:0,lineHeight:0});
+		} else {
+			jQuery(this).css({visibility:'hidden',height:0,minHeight:0,padding:0,margin:'0 0 0 -10000px',border:'none',fontSize:0,lineHeight:0});
+		}
+	});
+	jQuery(t).parents().siblings().not('script, link, style, head').addClass('FlAGd').each(function(){
+		if(jQuery(this).attr('style')){
+			jQuery(this).attr('data-elstyle',jQuery(this).attr('style')).css({visibility:'hidden',height:0,minHeight:0,maxHeight:0,padding:0,margin:'0 0 0 -10000px',border:'none',fontSize:0,lineHeight:0});
+		} else {
+			jQuery(this).css({visibility:'hidden',height:0,minHeight:0,maxHeight:0,padding:0,margin:'0 0 0 -10000px',border:'none',fontSize:0,lineHeight:0});
+		}
+	});
+	enlargeFlAG(t);
+}
+function unhideSite(t, hFA, sst){
+	jQuery('body').removeClass('FlAG');
+	jQuery(t).parents('div').removeClass('FlAGz').each(function(i){
+		if(jQuery(this).attr('data-elstyle')){
+			jQuery(this).attr('style',jQuery(this).attr('data-elstyle')).removeAttr('data-elstyle');
+		} else {
+			jQuery(this).removeAttr('style');
+		}
+	});
+	jQuery('.FlAGd').each(function(){
+		if(jQuery(this).attr('data-elstyle')){
+			jQuery(this).attr('style',jQuery(this).attr('data-elstyle')).removeAttr('data-elstyle').removeClass('FlAGd');
+		} else {
+			jQuery(this).removeAttr('style').removeClass('FlAGd');
+		}
+	});
+	unlargeFlAG(t, hFA, sst);
 }

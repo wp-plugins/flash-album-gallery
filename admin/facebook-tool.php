@@ -115,7 +115,6 @@ jQuery(document).ready(function() {
 			playlist = '?m=';
 		}
 		jQuery('#fb2_url0').val(url+playlist);
-		jQuery('#fb2_url').val(jQuery('#fb2_url0').val().substring(0, 99));
 	});
 	jQuery('#v_playlist').change(function(){
 		var playlist = jQuery(this).val();
@@ -125,7 +124,6 @@ jQuery(document).ready(function() {
 			playlist = '?v=';
 		}
 		jQuery('#fb3_url0').val(url+playlist);
-		jQuery('#fb3_url').val(jQuery('#fb3_url0').val().substring(0, 99));
 	});
 	jQuery('#b_playlist').change(function(){
 		var playlist = jQuery(this).val();
@@ -135,25 +133,26 @@ jQuery(document).ready(function() {
 			playlist = '?b=';
 		}
 		jQuery('#fb4_url0').val(url+playlist);
-		jQuery('#fb4_url').val(jQuery('#fb4_url0').val().substring(0, 99));
 	});
 });
 function fb_url(galleries,skin,h,l) {
 	jQuery('#fb1_url0').val(url+galleries+skin+h+l);
-	jQuery('#fb1_url').val(jQuery('#fb1_url0').val().substring(0, 99));
 }
 /*]]>*/</script>
 <div class="wrap">
 <h2><?php _e('Facebook Integration', 'flag'); ?></h2>
 <p>1. Log in to your <a target="_blank" href="http://www.facebook.com">Facebook</a> account.</p>
-<p>2. Go to the <a target="_blank" href="http://www.facebook.com/developers/">Developer</a> application.</p>
-<p>3. Click on <strong>Set Up New App</strong> and create a new application.</p>
-<p>4. Go to <strong>Facebook Integration</strong>, fill in the <strong>Canvas Page</strong> text field (minimum 7 characters), <strong>Canvas URL</strong> and <strong>Tab URL</strong> with the URL generated below, make sure the <strong>Canvas Type</strong> is <strong>IFrame</strong>, <strong>IFrame Size</strong> is <strong>Auto-resize</strong>.</p>
-<p>5. Then go to <strong>Application Profile Page</strong>, choose <strong>Add to My Page</strong> from the left menu and click on <strong>Add to Page</strong> next to the page you want</p>
-<p>6. Go to the page where you added the application, click on <strong>Edit Page</strong>, go to <strong>Apps</strong>, click on <strong>Edit Setttings</strong> of the application you previously created and fill in the <strong>Custom Tab Name</strong> then click <strong>Save</strong> and <strong>Okay</strong></p>
-<br /><br /><br />
+<p>2. Search for the <a href="http://apps.facebook.com/117531781690494/?ref=ts">Page Tabs: Static HTML + iFrame</a> tabs application and select it.</p>
+<p>3. Click on <strong>Add Static HTML to a page</strong> button and you'll be prompted for the page where you want the app to be added.</p>
+<p>4. Once added you'll see on the left side menu of your page a new tab with a star icon called Welcome. Click on it to edit it.</p>
+<p>5. Add the <strong>Facebook Page Url</strong> in the text field.</p>
+<p>6. Click <strong>preview</strong> to see how it looks or <strong>save changes</strong>. The product is now added to the Welcome tab of your page.</p>
+<p>7. <strong>Optional:</strong> To change the tab's name, called by default <strong>Welcome</strong>, edit your page, go to the <strong>Apps</strong> tab and click <strong>Edit Settings</strong> option next to the <strong>Page Tabs: Static HTML + iFrame</strong> application to enter the name you want.</p>
+<p>8. <strong>Optional:</strong> To make the tab your default landing tab (first thing your visitors see on your page) edit your page and go to the <strong>Manage Permissions</strong> tab and change the <strong>Default Landing Tab</strong>.</p>
+<br /><br />
 <form id="facebook_copy" name="facebook_copy" method="POST" class="alignright">
-	<p><input type="submit" name="copy_file" class="button-primary" value="<?php _e('Copy facebook.php file to root directory', 'flag'); ?>" /></p>
+	<p>Optional: &nbsp; <input type="submit" name="copy_file" class="button-primary" value="<?php _e('Copy facebook.php file to root directory', 'flag'); ?>" /><br />
+	(makes Facebook page url shorter)</p>
 </form>
 <form id="generator1"><fieldset style="clear:both; margin:0 0 20px 0; padding: 20px; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("Photo Gallery Facebook Page Generator", 'flag'); ?></legend>
 	<table border="0" cellpadding="4" cellspacing="0">
@@ -197,9 +196,7 @@ function fb_url(galleries,skin,h,l) {
         </tr>
 		<tr>
 			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
-            <td valign="top"><div style="position: relative; width: 590px;">
-				<input id="fb1_url0" type="text" style="width: 780px; font-size: 10px; color: #cc0000;" value="<?php echo $fb_url.'?i=all'; ?>" />
-				<input id="fb1_url" type="text" readonly="readonly" onfocus="this.select()" style="width: 780px; font-size: 10px; position: absolute; left: 0; top: 0; background: transparent;" maxlength="100" value="<?php echo $fb_url.'?i=all'; ?>" /><span style="font-size:9px;display:block;">(<?php _e("limit 100 characters", 'flag'); ?>)</span></div></td>
+            <td valign="top"><input id="fb1_url0" type="text" style="width: 780px; font-size: 10px;" value="<?php echo $fb_url.'?i=all'; ?>" /></td>
 		</tr>
     </table>
 </fieldset></form>
@@ -221,9 +218,7 @@ function fb_url(galleries,skin,h,l) {
         </tr>
 		<tr>
 			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
-            <td valign="top"><div style="position: relative; width: 590px;">
-				<input id="fb2_url0" type="text" style="width: 600px; font-size: 10px; color: #cc0000;" value="<?php echo $fb_url.'?m='; ?>" />
-				<input id="fb2_url" type="text" readonly="readonly" onfocus="this.select()" style="width: 600px; font-size: 10px; position: absolute; left: 0; top: 0; background: transparent;" maxlength="100" value="<?php echo $fb_url.'?m='; ?>" /><span style="font-size:9px;display:block;">(<?php _e("limit 100 characters", 'flag'); ?>)</span></div></td>
+            <td valign="top"><input id="fb2_url0" type="text" style="width: 600px; font-size: 10px;" value="<?php echo $fb_url.'?m='; ?>" /></td>
 		</tr>
     </table>
 </fieldset></form>
@@ -245,9 +240,7 @@ function fb_url(galleries,skin,h,l) {
         </tr>
 		<tr>
 			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
-            <td valign="top"><div style="position: relative; width: 590px;">
-				<input id="fb3_url0" type="text" style="width: 600px; font-size: 10px; color: #cc0000;" value="<?php echo $fb_url.'?v='; ?>" />
-				<input id="fb3_url" type="text" readonly="readonly" onfocus="this.select()" style="width: 600px; font-size: 10px; position: absolute; left: 0; top: 0; background: transparent;" maxlength="100" value="<?php echo $fb_url.'?v='; ?>" /><span style="font-size:9px;display:block;">(<?php _e("limit 100 characters", 'flag'); ?>)</span></div></td>
+            <td valign="top"><input id="fb3_url0" type="text" style="width: 600px; font-size: 10px;" value="<?php echo $fb_url.'?v='; ?>" /></td>
 		</tr>
     </table>
 </fieldset></form>
@@ -269,9 +262,7 @@ function fb_url(galleries,skin,h,l) {
         </tr>
 		<tr>
 			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
-            <td valign="top"><div style="position: relative; width: 590px;">
-				<input id="fb4_url0" type="text" style="width: 600px; font-size: 10px; color: #cc0000;" value="<?php echo $fb_url.'?b='; ?>" />
-				<input id="fb4_url" type="text" readonly="readonly" onfocus="this.select()" style="width: 600px; font-size: 10px; position: absolute; left: 0; top: 0; background: transparent;" maxlength="100" value="<?php echo $fb_url.'?b='; ?>" /><span style="font-size:9px;display:block;">(<?php _e("limit 100 characters", 'flag'); ?>)</span></div></td>
+            <td valign="top"><input id="fb4_url0" type="text" style="width: 600px; font-size: 10px;" value="<?php echo $fb_url.'?b='; ?>" /></td>
 		</tr>
     </table>
 </fieldset></form>

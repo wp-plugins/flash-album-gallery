@@ -100,7 +100,7 @@ class FlAG_shortcodes {
 		} 
 		$this->flag_shortcode = true;
 		$this->flag_add_script = true;
-		if($skin == 'slider_gallery' || $skin == 'slider_gallery_demo' || $flag_options['jAlterGalScript'] == 1 ){
+		if($skin == 'slider_gallery' || $skin == 'slider_gallery_demo' || !$flag_options['jAlterGalScript'] ){
 			$this->flag_fancybox = true;
 		} else {
 			$this->flag_fancybox = false;
@@ -134,6 +134,8 @@ class FlAG_shortcodes {
 		if ( $this->flag_add_script ) {
 			wp_register_script('flagscript', plugins_url('/admin/js/script.js', dirname(__FILE__)), array('jquery'), '1.0', true );
 			wp_print_scripts('flagscript');
+			wp_register_style('flagallery', plugins_url('/admin/css/flagallery.css', dirname(__FILE__)) );
+			wp_print_styles('flagallery');
 		}
 		if ( $this->flag_add_mousewheel ) {
 			wp_register_script('swfmousewheel', plugins_url('/admin/js/swfmousewheel.js', dirname(__FILE__)), false, '2.0', true );
@@ -177,7 +179,7 @@ class FlAG_shortcodes {
 			if(	! flagGallery::getUserNow($_SERVER['HTTP_USER_AGENT']) ){
 				$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini.swf", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.$url.'",bgcolor:"'.$flag_options["mpBG"].'",color1:"'.$flag_options["mpColor1"].'",color2:"'.$flag_options["mpColor2"].'",autoplay:"'.$autoplay.'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>';
 			}
-			$out .= '<div id="c-'.$id.'"><audio src="'.$url.'.mp3" controls preload="none" autobuffer="false"></audio></div>';
+			$out .= '<div id="c-'.$id.'" class="grandmp3"><audio src="'.$url.'.mp3" controls preload="none" autobuffer="false"></audio></div>';
 		}
        	return $out;
 	}
