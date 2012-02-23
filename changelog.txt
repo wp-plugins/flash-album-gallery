@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.66 - 23.02.2012 =
+* Changed: FancyBox script for alternate gallery is now enabled by default.
+* Changed: Instructions for Facebook gallery page creation.
+* Fixed: small bugfixes.
+
 = v1.65 - 15.02.2012 =
 * Added: Now you can select FancyBox or PhotoSwipe script for alternate gallery. Added option to Options page. (Default is PhotoSwipe)
 * Optimized: Optimized Photoswipe script for themes without mobile version.
