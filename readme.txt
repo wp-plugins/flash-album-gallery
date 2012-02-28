@@ -16,7 +16,7 @@ You can edit your media content the way you want: upload images, import music an
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
 * iPhone, iPad, Android, Blackberry 6 and Desktop friendly photo gallery, SEO optimized.
-* Full-screen mobile friendly slideshow with touch controls. Uses [PhotoSwipe library](http://www.photoswipe.com/)
+* Full-screen mobile friendly slideshow with touch controls (optional, if set [PhotoSwipe library](http://www.photoswipe.com/) script for alternative gallery)
 * New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
 
 Added: GRAND Pages - Full Window Gallery Template. Now you can display your image gallery in full window separate page (gallery template). [View Demo 1](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/), [View Demo 2](http://photogallerycreator.com/flagallery/3d-sphere-v2-0-full-window-mode/)
