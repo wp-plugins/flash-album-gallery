@@ -477,9 +477,9 @@ Make sure that you have equal number of images in Manage Gallery and in ftp fold
 
 = How do I set a specific category as the first one that is displayed? =
 
-if you have three galleries and shortcode like: [flagallery gid=3,1,2 name="Gallery"]
+if you have three galleries and shortcode like: [flagallery gid=3,1,2 name=Gallery]
 first gallery will be with ID=3, then ID=1, and then ID=2
-if you have: [flagallery gid=all name="Gallery" orderby=title order=ASC exclude=1]
+if you have: [flagallery gid=all name=Gallery orderby=title order=ASC exclude=1]
 it will display all galleries except ID=1 sorted by title of gallery.
 
 = [IOErrorEvent type="ioError" bubbles=false cancelable=false eventPhase=2 text="Error #2032"] =
