@@ -45,7 +45,7 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * Changed: FancyBox script for alternate gallery is now enabled by default.
 * Optimized: Optimized Photoswipe script.
 * Changed: Instructions for Facebook gallery page creation.
-* Fixed: small bugfixes.
+* Fixed: minor bugfixes.
 
 = v1.65 - 15.02.2012 =
 * Added: Now you can select FancyBox or PhotoSwipe script for alternate gallery. Added option to Options page. (Default is PhotoSwipe)
