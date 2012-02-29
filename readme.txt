@@ -41,6 +41,9 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.67 - 29.02.2012 =
+* Added: Romanian language
+
 = v1.66 - 23.02.2012 =
 * Changed: FancyBox script for alternate gallery is now enabled by default.
 * Optimized: Optimized Photoswipe script.
