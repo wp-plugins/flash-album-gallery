@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.67 - 29.02.2012 =
+* Added: Romanian language
+
 = v1.66 - 23.02.2012 =
 * Changed: FancyBox script for alternate gallery is now enabled by default.
 * Changed: Instructions for Facebook gallery page creation.
