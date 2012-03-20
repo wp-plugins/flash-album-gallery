@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
 
@@ -339,7 +339,9 @@ class flagManageGallery {
 		$alttext = 		$_POST['alttext'];
 		$exclude = 		$_POST['exclude'];
 		$pictures = 	$_POST['pid'];
-		
+		$hitcounter = 	$_POST['hitcounter'];
+		$total_votes = 	$_POST['total_votes'];
+
 		if ( is_array($description) ) {
 			foreach( $description as $key => $value ) {
 				$desc = $wpdb->escape($value);
@@ -350,6 +352,18 @@ class flagManageGallery {
 			foreach( $alttext as $key => $value ) {
 				$alttext = $wpdb->escape($value);
 				$wpdb->query( "UPDATE $wpdb->flagpictures SET alttext = '$alttext' WHERE pid = $key");
+			}
+		}
+		if ( is_array($hitcounter) ){
+			foreach( $hitcounter as $key => $value ) {
+				$hitcounter = abs( intval($value) );
+				$wpdb->query( "UPDATE $wpdb->flagpictures SET hitcounter = '$hitcounter' WHERE pid = $key");
+			}
+		}
+		if ( is_array($total_votes) ){
+			foreach( $total_votes as $key => $value ) {
+				$total_votes = abs( intval($value) );
+				$wpdb->query( "UPDATE $wpdb->flagpictures SET total_votes = IF(hitcounter > $total_votes, $total_votes, hitcounter) WHERE pid = $key");
 			}
 		}
 		if ( is_array($pictures) ){

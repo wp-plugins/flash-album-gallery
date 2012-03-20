@@ -115,6 +115,11 @@ p#flag-inlinebutton {
 	width: 3em;
 }
 
+.fixed .column-rating { width:100px; text-align: center; }
+.fixed td.column-rating { background-color: #CCFFCC; }
+.fixed .column-views_likes { width:150px; padding-left: 0; padding-right: 0; }
+.fixed .column-views_likes input { width:45px; font-size: 10px; }
+
 .fixed .column-alt_title_desc {
 
 }

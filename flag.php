@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: GRAND FlaGallery - Best Photo Gallery
+Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
-Description: The GRAND Flash Album Gallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 1.67
+Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
+Version: 1.70
 Author: Rattus
 Author URI: http://codeasily.com/
 
@@ -22,24 +22,24 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 if (!class_exists('flagLoad')) {
 class flagLoad {
-	
-	var $version     = '1.67';
+
+	var $version     = '1.70';
 	var $dbversion   = '1.24';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '2.8';
 	var $options     = '';
 	var $manage_page;
 	var $add_PHP5_notice = false;
-	
+
 	function flagLoad() {
 
 		// Load the language file
 		$this->load_textdomain();
-		
+
 		// Stop the plugin if we missed the requirements
 		if ( ( !$this->required_version() ) || ( !$this->check_memory_limit() ) )
 			return;
-			
+
 		// Get some constants first
 		$this->load_options();
 		$this->define_constant();

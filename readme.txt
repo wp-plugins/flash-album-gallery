@@ -41,6 +41,11 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.70 - 20.03.2012 =
+* Added: New Skin - PhotoBlog
+* Added: Image Views, Likes and Rating for each images (available only in PhotoBlog skin)
+* Fixed: CSS and JS small bugs
+
 = v1.67 - 29.02.2012 =
 * Added: Romanian language
 

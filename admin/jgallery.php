@@ -34,7 +34,7 @@ extract($altColors);
 </style>
 <?php if(!$isCrawler){
 	if(!$flag_options['jAlterGalScript']) { ?>
-	<script type="text/javascript">var ExtendVar='fancybox';</script>
+	<script type="text/javascript">var ExtendVar='fancybox', hitajax = '<?php echo plugins_url("/lib/hitcounter.php", dirname(__FILE__)); ?>';</script>
 	<?php } else if($flag_options['jAlterGalScript'] == 1) { ?>
 	<style type="text/css">@import url("<?php echo plugins_url('/admin/js/photoswipe/photoswipe.css', dirname(__FILE__)); ?>");</style>
 	<script type="text/javascript" src="<?php echo plugins_url('/admin/js/photoswipe/klass.min.js', dirname(__FILE__)); ?>"></script>

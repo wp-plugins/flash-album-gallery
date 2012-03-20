@@ -46,7 +46,7 @@ function flag_picturelist() {
 		
 		// get picture values
 		$picturelist = $flagdb->get_gallery($act_gid, $flag->options['galSort'], $flag->options['galSortDir'], false, 50, $start );
-		
+
 		// build pagination
 		$page_links = paginate_links( array(
 			'base' => add_query_arg( 'paged', '%#%' ),
@@ -64,11 +64,23 @@ function flag_picturelist() {
 		
 	// list all galleries
 	$gallerylist = $flagdb->find_all_galleries();
-	
+
 	//get the columns
 	$gallery_columns = flag_manage_gallery_columns();
 	$hidden_columns  = get_hidden_columns('flag-manage-images');
-	$num_columns     = count($gallery_columns) - count($hidden_columns);	
+	if($picturelist){
+		foreach($picturelist as $p){
+			$a_hits[] = $p->hitcounter;
+		}
+		if(!array_sum($a_hits)){
+			$hidden_columns[] = 'views_likes';
+			$hidden_columns[] = 'rating';
+		}
+	} else {
+		$hidden_columns[] = 'views_likes';
+		$hidden_columns[] = 'rating';
+	}
+	$num_columns     = count($gallery_columns) - count($hidden_columns);
 ?>
 <!--[if lt IE 8]>
 	<style type="text/css">
@@ -288,6 +300,8 @@ jQuery(document).ready( function() {
 	<thead>
 	<tr>
 <?php foreach($gallery_columns as $key=>$value){
+		if ( in_array($key, $hidden_columns) )
+			continue;
 		echo $cols = '<th class="manage-column column-'.$key.'">'.$value.'</td>';
 	}
 ?>
@@ -296,6 +310,8 @@ jQuery(document).ready( function() {
 	<tfoot>
 	<tr>
 <?php foreach($gallery_columns as $key=>$value){
+		if ( in_array($key, $hidden_columns) )
+			continue;
 		if($key == 'cb' && !$header) { $value = ''; }
 		echo $cols = '<th class="manage-column column-'.$key.'">'.$value.'</td>';
 	}
@@ -313,12 +329,17 @@ if($picturelist) {
 		$thumbsize = 'width="'.$flag->options['thumbWidth'].'" height="'.$flag->options['thumbHeight'].'"';
 	}
 	
+	$rt=array(24.5, 45.7, 54.8, 59.3, 64.7, 68.9, 71.5, 73.7, 75.9, 77.1);
+
 	foreach($picturelist as $picture) {
 
 		//for search result we need to check the capatibiliy
 		if ( !flagAdmin::can_manage_this_gallery($picture->author) && $is_search )
 			continue;
-			
+
+		$hits = intval($picture->hitcounter);
+		$votes = intval($picture->total_votes);
+
 		$counter++;
 		$pid       = (int) $picture->pid;
 		$alternate = ( !isset($alternate) || $alternate == 'alternate' ) ? '' : 'alternate';	
@@ -334,7 +355,7 @@ if($picturelist) {
 
 				$style = '';
 				if ( in_array($gallery_column_key, $hidden_columns) )
-					$style = ' style="display:none;"';
+					continue;
 
 				$attributes = "$class$style";
 
@@ -393,13 +414,37 @@ if($picturelist) {
 						</td>
 						<?php						
 					break;
+					case 'views_likes' :
+						?>
+						<td <?php echo $attributes; ?>>
+							<input name="hitcounter[<?php echo $pid; ?>]" type="text" value="<?php echo stripslashes($picture->hitcounter); ?>" /> /
+							<input name="total_votes[<?php echo $pid; ?>]" type="text" value="<?php echo stripslashes($picture->total_votes); ?>" />
+						</td>
+						<?php
+					break;
+					case 'rating' :
+						?>
+						<td <?php echo $attributes; ?>>
+							<?php
+								if($votes==0){
+									$like = '0.0';
+								}else if($votes<11){
+									$like = $rt[$votes-1];
+								}else{
+									$like = round( ((100-$rt[count($rt)-1])/($hits>0?$hits:1))*($votes<=$hits?$votes:$hits), 1 ) + $rt[count($rt)-1];
+								}
+								echo $like.'%';
+							?>
+						</td>
+						<?php
+					break;
 					case 'alt_title_desc' :
 						?>
 						<td <?php echo $attributes; ?>>
 							<input name="alttext[<?php echo $pid; ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext); ?>" /><br/>
 							<textarea name="description[<?php echo $pid; ?>]" style="width:95%; margin-top: 2px;" rows="2" ><?php echo stripslashes($picture->description); ?></textarea>
 						</td>
-						<?php						
+						<?php
 					break;
 					case 'exclude' :
 						?>
@@ -552,6 +597,8 @@ function flag_manage_gallery_columns() {
 	$gallery_columns['id'] = __('ID');
 	$gallery_columns['thumbnail'] = __('Thumbnail', 'flag');
 	$gallery_columns['filename'] = __('Filename', 'flag');
+	$gallery_columns['views_likes'] = __('Views / Likes', 'flag');
+	$gallery_columns['rating'] = __('Rating', 'flag');
 	$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'flag') . ' / ' . __('Description', 'flag');
 	$gallery_columns['exclude'] = '<img src="'.FLAG_URLPATH.'admin/images/lock.png" alt="member view" title="'.__('Only for logged in users', 'flag').'" />';
 	//$gallery_columns['views'] = '<img src="'.FLAG_URLPATH.'admin/images/hits.png" alt="total views" title="'.__('Views', 'flag').'" />';

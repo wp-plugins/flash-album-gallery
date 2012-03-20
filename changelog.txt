@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.70 - 20.03.2012 =
+* Added: New Skin - PhotoBlog
+* Added: Image Views, Likes and Rating for each images (available only in PhotoBlog skin)
+* Fixed: CSS and JS small bugs
+
 = v1.67 - 29.02.2012 =
 * Added: Romanian language
 

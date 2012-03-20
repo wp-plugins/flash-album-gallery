@@ -137,7 +137,7 @@ function alternate_flag_e(t, ExtendVar){
 			// onHide - clean up
 			instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onHide, function(e){
 				if(!metaViewport){
-					jQuery('meta[name=viewport]').attr('content','width=device-width, initial-scale=0.50, minimum-scale=0.25, maximum-scale=1.6, user-scalable=1');
+					jQuery('meta[name=viewport]').attr('content','width=device-width, initial-scale=1.0, minimum-scale=0.25, maximum-scale=1.6, user-scalable=1');
 				} else {
 					jQuery('meta[name=viewport]').attr('content',metaViewport);
 				}
@@ -192,6 +192,9 @@ function alternate_flag_e(t, ExtendVar){
 				'onComplete'	: function(currentArray, currentIndex) {
 					jQuery(currentArray).removeClass('current last');
 					jQuery(currentArray[currentIndex]).addClass('current');
+					var curid = jQuery(currentArray[currentIndex]).attr('id');
+					curid = curid.replace('flag_pic_','');
+					jQuery.post(hitajax, { hit: curid }, function(r){ console.log(r); });
 				}
 			});
 		}
@@ -206,7 +209,7 @@ function thumb_cl(skin_id, pic_id, slideshow){
 	new FlAGClass(ExtendVar, skin_id, pic_id, slideshow);
 }
 
-jQuery(document).ready(function() {
+/*jQuery(document).ready(function() {
 	jQuery('div.flashalbum').dblclick(function(e){
 		if(e.target.tagName == 'IMG' || e.target.tagName == 'A') return;
 		if(jQuery('body').hasClass('FlAG')){
@@ -216,7 +219,7 @@ jQuery(document).ready(function() {
 			hideSite(this);
 		}
 	});
-});
+});*/
 function enlargeFlAG(t){
 		var pleft = jQuery(t).offset().left - jQuery(window).scrollLeft();
 		var pheight = jQuery(window).height();
