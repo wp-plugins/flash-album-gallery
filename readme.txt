@@ -23,6 +23,8 @@ Added: GRAND Pages - Full Window Gallery Template. Now you can display your imag
 
 Starting with version 1.55 you have the opportunity to create image gallery, as separate pages. It looks very cool when you open image gallery, and gallery images occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
 
+Starting with version 1.70 and with new PhotoBlog skin you have the opportunity to see "Views" of each photo in the gallery and visitors can "Like" image and see image Rating.
+
 For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
 * Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
