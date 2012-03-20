@@ -9,7 +9,7 @@ Author URI: http://codeasily.com/
 
 -------------------
 
-		Copyright 2009  Sergey Pasyuk  (email : pasyuk@gmail.com)
+		Copyright 2009  Sergey "Rattus" Pasyuk  (email : pasyuk@gmail.com)
 
 */
 
