@@ -2,10 +2,10 @@
 /*
 Skin Name: Default Skin (Midnight)
 Skin URI:
-Description: Midnight skin for Flash Album Gallery. <br />You can use any language you want for album name, alt/title and description in FlAGallery  ;)<br /><br />Details: system font for image description, bottom thumbnails, 'FS' (full screen) button, 'SL' (slideshow) button, image description button (i)
+Description: Midnight skin for Flash Album Gallery. <br /><strong>Compatible:</strong><li>HitCounter</li><li>Alternate jQuery gallery for iPhone / iPad and devices without flash player.</li><li>SEO optimized and support feed RSS2.</li><li>GRAND Pages - FullWindow Mode</li><strong style="color: red;">Recommended - GRAND FlAGallery v1.7 or higher.</strong><br /><br />You can use any language you want for album name, alt/title and description in FlAGallery  ;)<br /><br />Details: system font for image description, bottom thumbnails, 'FS' (full screen) button, 'SL' (slideshow) button, image description button (i)
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 3.0
+Version: 4.0
 */
 
 function flag_skin_options() { 
