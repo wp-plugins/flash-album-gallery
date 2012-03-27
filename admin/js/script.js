@@ -49,7 +49,7 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 				//}
 			});
 		} else {
-			if(!metaViewport){
+			if(!metaViewport && ExtendVar == 'photoswipe'){
 				jQuery('head').append('<meta content="width=device-width, initial-scale=1.0;" name="viewport" />');
 			}
 			jQuery('.flashalbum').css('height','auto');

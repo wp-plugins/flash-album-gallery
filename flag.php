@@ -3,13 +3,13 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 1.70
+Version: 1.71
 Author: Rattus
 Author URI: http://codeasily.com/
 
 -------------------
 
-		Copyright 2009  Sergey "Rattus" Pasyuk  (email : pasyuk@gmail.com)
+		Copyright 2009  Sergey Pasyuk  (email : pasyuk@gmail.com)
 
 */
 
@@ -23,7 +23,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 
-	var $version     = '1.70';
+	var $version     = '1.71';
 	var $dbversion   = '1.24';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '2.8';
@@ -71,6 +71,9 @@ class flagLoad {
 		add_action( 'save_post', array(&$this, 'flag_fullwindow_page_save_meta_box') );
 		add_action( 'template_redirect', array(&$this, 'flag_fullwindow_page_template_redirect') );
 		add_filter( 'media_buttons_context', array(&$this, 'addFlAGMediaIcon') );
+		add_action('admin_print_scripts-widgets.php', array(&$this, 'flag_widgets_scripts') );
+		add_filter( 'posts_orderby', 'sort_query_by_post_in', 10, 2 );
+
 	}
 
 	function start_plugin() {
@@ -119,7 +122,7 @@ class flagLoad {
 		// Check for WPMU installation
 		if (!defined ('IS_WPMU'))
 			define('IS_WPMU', version_compare($wpmu_version, $this->minium_WPMU, '>=') );
-		
+
  		// Check for WP version installation
 		$wp_ok  =  version_compare($wp_version, $this->minium_WP, '>=');
 		
@@ -220,14 +223,20 @@ class flagLoad {
 	function load_scripts() {
 
 		wp_enqueue_script('jquery');
-		// Let's override WP's bundled swfobject, cause as of WP 2.9, it's still using 2.1 
+		// Let's override WP's bundled swfobject, cause as of WP 2.9, it's still using 2.1
 		wp_deregister_script('swfobject');
 		// and register our own.
 		wp_register_script('swfobject', plugins_url('/flash-album-gallery/admin/js/swfobject.js'), array(), '2.2');
 		wp_enqueue_script('swfobject');
 
 	}
-	
+
+	function flag_widgets_scripts() {
+
+		wp_enqueue_script('widgets_admin', plugins_url('/flash-album-gallery/admin/js/widgets_admin.js'), array('jquery'), '1.0');
+
+	}
+
 	function load_options() {
 		// Load the options
 		$this->options = get_option('flag_options');
@@ -429,5 +438,13 @@ class flagLoad {
 	global $flag;
 	$flag = new flagLoad();
 
+}
+if(!function_exists('sort_query_by_post_in')){
+	function sort_query_by_post_in( $sortby, $thequery ) {
+		if ( !empty($thequery->query['post__in']) && isset($thequery->query['orderby']) && $thequery->query['orderby'] == 'post__in' )
+			$sortby = "find_in_set(ID, '" . implode( ',', $thequery->query['post__in'] ) . "')";
+
+		return $sortby;
+	}
 }
 ?>

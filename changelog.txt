@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.71 - 27.03.2012 =
+* Updated: Default Skin (added view counter)
+* Added: widget for GRAND Pages
+* Fixed: JS for alternate gallery
+
 = v1.70 - 20.03.2012 =
 * New: PhotoBlog Skin
 * Added: Image Views, Likes and Rating for each images (available only in PhotoBlog skin)
