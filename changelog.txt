@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.72 - 10.04.2012 =
+* Added: Sort by Image views option
+* Added: Sort by Image likes option
+
 = v1.71 - 27.03.2012 =
 * Updated: Default Skin (added view counter)
 * Added: widget for GRAND Pages

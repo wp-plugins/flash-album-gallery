@@ -43,6 +43,10 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.72 - 10.04.2012 =
+* Added: Sort by Image views option
+* Added: Sort by Image likes option
+
 = v1.71 - 03.04.2012 =
 * Updated: Aflux Skin (added new features)
 
