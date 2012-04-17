@@ -3,29 +3,23 @@
 add_action('wp_ajax_flag_ajax_operation', 'flag_ajax_operation' );
 
 function flag_ajax_operation() {
-		
 	global $wpdb;
-
 	// if nonce is not correct it returns -1
 	check_ajax_referer( "flag-ajax" );
-	
 	// check for correct capability
 	if ( !is_user_logged_in() )
 		die('-1');
-	
 	// check for correct FlAG capability
-	if ( !current_user_can('FlAG Upload images') || !current_user_can('FlAG Manage gallery') ) 
-		die('-1');	
-
+	if ( !current_user_can('FlAG Upload images') || !current_user_can('FlAG Manage gallery') )
+		die('-1');
 	// include the flag function
 	include_once (dirname (__FILE__). '/functions.php');
-
 	// Get the image id
 	if ( isset($_POST['image'])) {
 		$id = (int) $_POST['image'];
 		// let's get the image data
 		$picture = flagdb::find_image($id);
-		// what do you want to do ?		
+		// what do you want to do ?
 		switch ( $_POST['operation'] ) {
 			case 'create_thumbnail' :
 				$result = flagAdmin::create_thumbnail($picture);
@@ -44,13 +38,12 @@ function flag_ajax_operation() {
 			break;
 			default :
 				do_action( 'flag_ajax_' . $_POST['operation'] );
-				die('-1');	
-			break;		
+				die('-1');
+			break;
 		}
 		// A success should return a '1'
 		die ($result);
 	}
-	
 	// The script should never stop here
 	die('0');
 }
@@ -270,6 +263,5 @@ function flag_ajax_file_browser() {
 
     die();
 }
-
 
 ?>
