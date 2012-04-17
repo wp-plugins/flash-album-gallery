@@ -67,7 +67,7 @@ foreach ( $gID as $galleryID ) {
 	echo "				<title><![CDATA[".attribute_escape(flagGallery::i18n(stripslashes($picture->alttext)))."]]></title>\n";
 	echo "				<description><![CDATA[".html_entity_decode(attribute_escape(flagGallery::i18n(stripslashes($picture->description))))."]]></description>\n";
 	//echo "				<link>".$picture->link."</link>\n";
-	echo "				<preview_>".$siteurl."/".$picture->path."/".$picture->filename."</preview_>\n";
+	echo "				<preview__>".$siteurl."/".$picture->path."/".$picture->filename."</preview__>\n";
 	echo "				<date>".$picture->imagedate."</date>\n";
 	echo "			</item>\n";
 		}
