@@ -6,6 +6,9 @@ if ( empty( $_SERVER['HTTP_REFERER'] ) ) {
 } else {
 	$ref = $_SERVER['HTTP_REFERER'];
 	if ( false === strpos( $ref, get_home_url() ) ) {
+		$homeUrl = get_home_url();
+		echo 'referer:'.$_SERVER['HTTP_REFERER']."\n";
+		echo 'homeUrl:'.$homeUrl."\n";
 		die('-1');
 	}
 }
