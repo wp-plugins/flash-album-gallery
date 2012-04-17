@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.73 - 18.04.2012 =
+* Fixed: xss vulnerability (skins.php)
+
 = v1.72 - 10.04.2012 =
 * Added: Sort by Image views option
 * Added: Sort by Image likes option

@@ -172,8 +172,15 @@ if( isset($_GET['skin']) ) {
 	$set_skin = $_GET['skin'];
 	$flag_options = get_option('flag_options');
 	if($flag_options['flashSkin'] != $set_skin) {
-		$flag_options['flashSkin'] = $set_skin;
+		$aValid = array('-', '_');
+		if(!ctype_alnum(str_replace($aValid, '', $set_skin))){
+			die('try again');
+		}
 		$active_skin = $flag_options['skinsDirABS'].$set_skin.'/'.$set_skin.'.php';
+		if(!file_exists($active_skin)){
+			die('try again');
+		}
+		$flag_options['flashSkin'] = $set_skin;
 		include_once($active_skin);
 		update_option('flag_options', $flag_options);
 		flagGallery::show_message( __('Skin','flag').' \''.$set_skin.'\' '.__('activated successfully','flag') );
