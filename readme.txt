@@ -1,7 +1,7 @@
 === GRAND FlAGallery - Best Photo Gallery ===
 Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
-Tags: admin,flash,fullscreen gallery,gallery,image,images,mp3,music,page,photo,slider,plugin,Post,posts,slideshow,video,widget,media
+Tags: admin,flash,fullscreen gallery,gallery,image,images,mp3,music,page,photo,slider,plugin,Post,posts,slideshow,video,widget
 Requires at least: 3.0
 Tested up to: 3.3
 Stable tag: trunk
