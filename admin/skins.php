@@ -153,12 +153,16 @@ if ( isset($_GET['delete']) ) {
 		if ( $flag_options['flashSkin'] != $delskin ) {
 			$skins_dir = trailingslashit( $flag_options['skinsDirABS'] );
 			$skin = $skins_dir.$delskin.'/';
-			if ( is_dir($skin) ) {
-				if( flagGallery::flagFolderDelete($skin) ) {
-					flagGallery::show_message( __('Skin','flag').' \''.$delskin.'\' '.__('deleted successfully','flag') );
-				} else {
-					flagGallery::show_message( __('Can\'t find skin directory ','flag').' \''.$delskin.'\' '.__('. Try delete it manualy via ftp','flag') );
+			if(basename($skin) != 'flagallery-skins') {
+				if ( is_dir($skin) ) {
+					if( flagGallery::flagFolderDelete($skin) ) {
+						flagGallery::show_message( __('Skin','flag').' \''.$delskin.'\' '.__('deleted successfully','flag') );
+					} else {
+						flagGallery::show_message( __('Can\'t find skin directory ','flag').' \''.$delskin.'\' '.__('. Try delete it manualy via ftp','flag') );
+					}
 				}
+			} else {
+				flagGallery::show_message( __('Can\'t find skin directory ','flag').' \''.$delskin.'\' '.__('. Try delete it manualy via ftp','flag') );
 			}
 		} else {
 			flagGallery::show_message( __('You need activate another skin before delete it','flag') );
