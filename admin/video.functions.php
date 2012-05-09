@@ -59,7 +59,7 @@ function get_v_playlists($playlist_folder = '') {
 	return $flag_playlists;
 }
 
-function flagSave_vPlaylist($title,$descr,$data,$file='') {
+function flagSave_vPlaylist($title,$descr,$data,$file='',$skinaction='') {
 	global $wpdb;
 	if(!trim($title)) {
 		$title = 'default';
@@ -73,7 +73,8 @@ function flagSave_vPlaylist($title,$descr,$data,$file='') {
 
 	$flag_options = get_option('flag_options');
     $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'video_default';
-    $skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
+	if(empty($skinaction))
+    	$skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
 	if( file_exists($playlistPath) && ($skin == $skinaction) ) {
