@@ -40,13 +40,12 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 					}
 				});
 			}
-			jQuery('#fancybox-wrap').undelegate('.grand_controls span','click').delegate('.grand_controls span','click', function(){
-				//if(skin_function && jQuery.isFunction(skin_function[skin_id+'_fb'])) {
-					skin_function[skin_id+'_fb'](jQuery(this).attr('rel'));
+			jQuery('#fancybox-wrap').on('click', '.grand_controls span', function(){
+				skin_function[skin_id+'_fb'](jQuery(this).attr('rel'));
 					if(jQuery(this).hasClass('g_slideshow')){
-						jQuery(this).toggleClass('play stop');
-					}
-				//}
+					jQuery(this).toggleClass('play stop');
+				}
+				jQuery('#fancybox-wrap').off('click', '.grand_controls span');
 			});
 		} else {
 			if(!metaViewport && ExtendVar == 'photoswipe'){

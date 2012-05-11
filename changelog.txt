@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.76 - 13.05.2012 =
+* Fixed: Fancybox javascript not worked in v1.75
+* Updated: Fancybox javascript for Slider skin
+
 = v1.75 - 10.05.2012 =
 * Fixed: Saving Video skin settings for playlist
 * Fixed: jQuery conflict for some new themes
