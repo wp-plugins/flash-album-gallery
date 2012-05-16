@@ -128,7 +128,7 @@ jQuery(document).ready(function() {
 					<td><input type="checkbox" name="jAlterGal" value="1" <?php checked('1', $flag_options['jAlterGal']); ?> /></td>
 				</tr>
 				<tr>
-					<th align="left"><?php _e('jQuery gallery script','flag'); ?><br /><small><?php _e('Use PhotoSwipe only for for albums with one category','flag'); ?></small></th>
+					<th align="left"><?php _e('jQuery gallery script','flag'); ?></th>
 					<td><select name="jAlterGalScript">
 							<option value="0" <?php selected('0', $flag_options['jAlterGalScript']); ?>>FancyBox</option>
 							<option value="1" <?php selected('1', $flag_options['jAlterGalScript']); ?>>PhotoSwipe</option>

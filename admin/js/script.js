@@ -69,7 +69,7 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 					var catId = jQuery(this).attr('href');
 					jQuery(this).addClass('active').siblings().removeClass('active');
 					jQuery('.flag_alternate '+catId).show().siblings('.flagcategory').hide();
-					alternate_flag_e(catId);
+					alternate_flag_e(catId, ExtendVar);
 				}
 				return false;
 			});
@@ -145,6 +145,9 @@ function alternate_flag_e(t, ExtendVar){
 			// onDisplayImage
 			instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onDisplayImage, function(e){
 				curel = instance.getCurrentImage();
+				var curid = curel.refObj.id;
+				curid = curid.replace('flag_pic_','');
+				jQuery.post(hitajax, { hit: curid }, function(r){ console.log(r); });
 				if(curel.metaData.longDescription){
 					jQuery('.ps-caption-content').append(jQuery('<div></div>').addClass('ps-long-description').html(jQuery(curel.metaData.longDescription).text()).hide());
 					jQuery('.ps-toolbar-descr').removeClass('disabled active').addClass('enabled');

@@ -39,7 +39,7 @@ extract($altColors);
 	<style type="text/css">@import url("<?php echo plugins_url('/admin/js/photoswipe/photoswipe.css', dirname(__FILE__)); ?>");</style>
 	<script type="text/javascript" src="<?php echo plugins_url('/admin/js/photoswipe/klass.min.js', dirname(__FILE__)); ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url('/admin/js/photoswipe/code.photoswipe.jquery-3.0.4.min.js', dirname(__FILE__)); ?>"></script>
-	<script type="text/javascript">var ExtendVar='photoswipe';</script>
+	<script type="text/javascript">var ExtendVar='photoswipe', hitajax = '<?php echo plugins_url("/lib/hitcounter.php", dirname(__FILE__)); ?>';</script>
 <?php }
  } ?>
 <div id="<?php echo $skinID; ?>_jq" class="flag_alternate">

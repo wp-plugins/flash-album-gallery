@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.77 - 16.05.2012 =
+* Fixed: Fancybox javascript not worked when switched between gallery category
+* Fixed: PhotoSwipe javascript not worked when switched between gallery category
+* Updated: Added hitcounter to PhotoSwipe
+
 = v1.76 - 13.05.2012 =
 * Fixed: Fancybox javascript not worked in v1.75
 * Updated: Fancybox javascript for Slider skin

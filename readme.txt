@@ -43,6 +43,11 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 * If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
+= v1.77 - 16.05.2012 =
+* Fixed: Fancybox javascript not worked when switched between gallery category
+* Fixed: PhotoSwipe javascript not worked when switched between gallery category
+* Updated: Added hitcounter to PhotoSwipe
+
 = v1.76 - 13.05.2012 =
 * Fixed: Fancybox javascript not worked in v1.75
 * Updated: Fancybox javascript for Slider skin
