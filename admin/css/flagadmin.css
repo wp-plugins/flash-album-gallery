@@ -27,11 +27,10 @@
 .has-sidebar {
 	clear:left;
 	float:left;
-	margin-right:-340px;
 	width:100%;
 }
 .has-sidebar .has-sidebar-content {
-	margin-right:305px;
+	padding-right:300px;
 }
 
 .postbox .misc-pub-section .icon { background-position:left top;background-repeat:no-repeat;padding-left:18px;}

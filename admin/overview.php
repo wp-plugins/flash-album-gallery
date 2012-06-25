@@ -12,13 +12,13 @@ function flag_admin_overview()  {
 <div class="wrap flag-wrap">
 	<h2><?php _e('GRAND FlAGallery Overview', 'flag'); echo ' v'.FLAGVERSION; ?></h2>
 	<div id="flag-overview" class="metabox-holder">
-		<div id="side-info-column" class="inner-sidebar" style="display:block;">
-				<?php do_meta_boxes('flag-overview', 'side', null); ?>
-		</div>
 		<div id="post-body" class="has-sidebar">
-			<div id="post-body-content" class="has-sidebar-content">
+			<div class="has-sidebar-content">
 					<?php do_meta_boxes('flag-overview', 'normal', null); ?>
 			</div>
+		</div>
+		<div id="side-info-column" class="inner-sidebar" style="display:block; margin-left: -300px;">
+				<?php do_meta_boxes('flag-overview', 'side', null); ?>
 		</div>
 	</div>
 </div>
@@ -242,11 +242,11 @@ function flag_overview_right_now() {
 <?php
 }
 
+add_meta_box('dashboard_right_now', __('Welcome to FlAG Gallery !', 'flag'), 'flag_overview_right_now', 'flag-overview', 'normal', 'default');
+add_meta_box('flag_server', __('Server Settings', 'flag'), 'flag_overview_server', 'flag-overview', 'normal', 'default');
+add_meta_box('flag_gd_lib', __('Graphic Library', 'flag'), 'flag_overview_graphic_lib', 'flag-overview', 'normal', 'default');
 add_meta_box('dashboard_primary', __('Setup Box', 'flag'), 'flag_overview_setup', 'flag-overview', 'side', 'core');
 add_meta_box('dashboard_news', __('News Box', 'flag'), 'flag_news_box', 'flag-overview', 'side', 'core');
-add_meta_box('dashboard_right_now', __('Welcome to FlAG Gallery !', 'flag'), 'flag_overview_right_now', 'flag-overview', 'normal', 'core');
-add_meta_box('flag_server', __('Server Settings', 'flag'), 'flag_overview_server', 'flag-overview', 'normal', 'core');
-add_meta_box('flag_gd_lib', __('Graphic Library', 'flag'), 'flag_overview_graphic_lib', 'flag-overview', 'normal', 'core');
 
 /**
  * Show GD Library version information

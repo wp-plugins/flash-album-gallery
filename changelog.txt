@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.78 - 25.06.2012 =
+* Fixed: admin CSS for Overview page
+
 = v1.77 - 16.05.2012 =
 * Fixed: Fancybox javascript not worked when switched between gallery category
 * Fixed: PhotoSwipe javascript not worked when switched between gallery category
