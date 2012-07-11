@@ -1,6 +1,11 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.79 - 11.07.2012 =
+* Added: Password protection for GRAND Pages
+* Added: align=left|center|right parameter for shortcode
+* Fixed: alternate gallery for https sites
+
 = v1.78 - 25.06.2012 =
 * Fixed: admin CSS for Overview page
 

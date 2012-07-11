@@ -1,6 +1,6 @@
 <?php global $wpdb, $post;
 $flag_options = get_option ('flag_options');
-$siteurl = get_option ('siteurl');
+$siteurl = site_url();
 $isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']); // check if is a crowler
 extract($altColors);
 ?>

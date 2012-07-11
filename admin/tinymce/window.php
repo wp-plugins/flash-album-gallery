@@ -129,6 +129,15 @@ if($_REQUEST['riched'] == "false") {
 			<td valign="top"><label><?php _e("Skin size", 'flag'); ?>:</label><br /><span style="font-size:9px">(<?php _e("blank for default", 'flag'); ?>)</span></td>
             <td valign="top"><?php _e("width", 'flag'); ?>: <input id="gallerywidth" type="text" name="gallerywidth" style="width: 50px" /> &nbsp; <?php _e("height", 'flag'); ?>: <input id="galleryheight" type="text" name="galleryheight" style="width: 50px" /></td>
 		 </tr>
+		 <tr>
+			<td valign="top"><label><?php _e("Skin align", 'flag'); ?>:</label></td>
+            <td valign="top"><select id="skinalign" name="skinalign" style="width: 200px">
+                    <option value="" selected="selected"><?php _e("default", 'flag'); ?></option>
+                    <option value="left"><?php _e("align left", 'flag'); ?></option>
+                    <option value="center"><?php _e("align center", 'flag'); ?></option>
+                    <option value="right"><?php _e("align right", 'flag'); ?></option>
+            </select></td>
+		 </tr>
         </table>
 		</div>
 		<!-- /custom panel -->
@@ -207,6 +216,7 @@ if($_REQUEST['riched'] == "false") {
 			var galorder = document.getElementById('galorder').value;
 			var galexclude = document.getElementById('galexclude').value;
 			var skinname = document.getElementById('skinname').value;
+			var skinalign = document.getElementById('skinalign').value;
 			var playlist = document.getElementById('playlist').value;
 			var gallery = document.getElementById('galleries');
 			var album = jQuery('#album').val();
@@ -250,12 +260,15 @@ if($_REQUEST['riched'] == "false") {
 			if (skinname) {
 				var skinname = " skin=" + skinname;
 			} else var skinname = '';
+			if (skinalign) {
+				var skinalign = " align=" + skinalign;
+			} else var skinalign = '';
 			if (playlist) {
 				var skinname = " play=" + playlist;
 			} else var playlist = '';
 
 			if (galleryid || album ) {
-				tagtext = '[flagallery' + galleryid + album + gallerysize + galorderby + galorder + galexclude + skinname + playlist + ' name=' + galleryname + ']';
+				tagtext = '[flagallery' + galleryid + album + gallerysize + galorderby + galorder + galexclude + skinname + skinalign + playlist + ' name=' + galleryname + ']';
 				win.send_to_editor(tagtext);
 				win.bind_resize();
 <?php if($_REQUEST['riched'] != "false") { ?>

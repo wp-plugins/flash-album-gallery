@@ -9,8 +9,8 @@
  * @param integer $flashHeight Height of the flash container
  * @return the content
  */
-function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='', $playlist='', $wmode='', $linkto='', $fullwindow=false) {
- 	global $post;	
+function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='', $playlist='', $wmode='', $linkto='', $fullwindow=false, $align='') {
+ 	global $post;
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
 
 	if($linkto) {
@@ -99,7 +99,23 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 		}
 	}
 	// create the output
-	$out = '<div class="flashalbum" style="width:'.$width.';height:'.$height.';">' . $swfobject->output($alternate) . '</div>';
+	if($width != '100%' && in_array($align, array('left', 'center', 'right'))){
+		$margin = '';
+		switch($align){
+			case 'left':
+				$margin = 'margin-right: auto;';
+			break;
+			case 'center':
+				$margin = 'margin:0 auto;';
+			break;
+			case 'right':
+				$margin = 'margin-left: auto;';
+			break;
+		}
+		$out = '<div class="flashalbumwraper" style="text-align:'.$align.';"><div class="flashalbum" style="width:'.$width.';height:'.$height.';'.$margin.'">' . $swfobject->output($alternate) . '</div></div>';
+	} else {
+		$out = '<div class="flashalbum" style="width:'.$width.';height:'.$height.';">' . $swfobject->output($alternate) . '</div>';
+	}
 	// add now the script code
 	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT']) && !preg_match("/Android/i", $_SERVER['HTTP_USER_AGENT'])){
 		$out .= "\n".'<script type="text/javascript" defer="defer">';
