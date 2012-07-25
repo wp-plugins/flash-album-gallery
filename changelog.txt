@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.80 - 25.07.2012 =
+* Changed: New simple way to install skins
+
 = v1.79 - 11.07.2012 =
 * Added: Password protection for GRAND Pages
 * Added: align=left|center|right parameter for shortcode

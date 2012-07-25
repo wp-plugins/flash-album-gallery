@@ -11,10 +11,37 @@ if ( !is_user_logged_in() )
 if ( !current_user_can('FlAG Change skin') )
 	die('-1');
 
+$flag_options = get_option('flag_options');
+
 require_once (dirname (__FILE__) . '/get_skin.php');
 
 if( isset($_POST['installskin']) ) {
 	require_once (dirname (__FILE__) . '/skin_install.php');
+}
+if( isset($_POST['skinzipurl']) ) {
+	$url = $_POST['skinzipurl'];
+	$mzip = download_url($url);
+	$mzip = str_replace("\\", "/", $mzip);
+
+	$skins_dir = $flag_options['skinsDirABS'];
+
+	if( class_exists('ZipArchive') ){
+		$zip = new ZipArchive;
+		$zip->open($mzip);
+		$zip->extractTo($skins_dir);
+		$zip->close();
+	}else{
+		require_once(ABSPATH . 'wp-admin/includes/class-pclzip.php');
+		$archive = new PclZip($mzip);
+		$list = $archive->extract($skins_dir);
+		if ($list == 0) {
+			die("ERROR : '".$archive->errorInfo(true)."'");
+		}
+
+	}
+	if(unlink($mzip)){
+		flagGallery::show_message( __('The skin installed successfully.', 'flag') );
+	}
 }
 add_action('install_skins_upload', 'upload_skin');
 function upload_skin() {
@@ -119,10 +146,22 @@ if ( isset($_POST['updateskinoption']) ) {
 		$flag->options['galleryPath']    = trailingslashit($flag->options['galleryPath']);
 	}
 	// Save options
-	$flag_options = get_option('flag_options');
 	update_option('flag_options', $flag->options);
 	if( flagGallery::saveFile($flag_options['skinsDirABS'].$flag_options['flashSkin'].'_settings.php',$settings_content,'w') ){
 		flagGallery::show_message(__('Update Successfully','flag'));
+	}
+}
+
+if ( isset($_POST['skinkey']) ) {
+	$skinkeyvalue = $_POST['skinkey'];
+	foreach($skinkeyvalue as $key => $value){
+		$skinkey = mysql_real_escape_string($key);
+		$skinvalue = mysql_real_escape_string($value);
+	}
+	if(!empty($skinkey)) {
+		$flag_options['skin_uid'][$skinkey] = $skinvalue;
+		update_option('flag_options', $flag_options);
+	 	flagGallery::show_message(__('Skin Key Saved','flag'));
 	}
 }
 
@@ -149,7 +188,6 @@ if ( isset($_POST['updateoption']) ) {
 if ( isset($_GET['delete']) ) {
 	$delskin = $_GET['delete'];
 	if ( current_user_can('FlAG Delete skins') ) {
-		$flag_options = get_option('flag_options');
 		if ( $flag_options['flashSkin'] != $delskin ) {
 			$skins_dir = trailingslashit( $flag_options['skinsDirABS'] );
 			$skin = $skins_dir.$delskin.'/';
@@ -174,7 +212,6 @@ if ( isset($_GET['delete']) ) {
 
 if( isset($_GET['skin']) ) {
 	$set_skin = $_GET['skin'];
-	$flag_options = get_option('flag_options');
 	if($flag_options['flashSkin'] != $set_skin) {
 		$aValid = array('-', '_');
 		if(!ctype_alnum(str_replace($aValid, '', $set_skin))){
@@ -191,6 +228,26 @@ if( isset($_GET['skin']) ) {
 	}
 }
 $type = isset($_GET['type'])? $_GET['type'] : '';
+switch($type){
+	case '':
+		$stype = 'gallery';
+	break;
+	case 'm':
+		$stype = 'music';
+	break;
+	case 'v':
+		$stype = 'video';
+	break;
+	case 'b':
+		$stype = 'banner';
+	break;
+	case 'w':
+		$stype = 'widget';
+	break;
+	default:
+		$stype = 'gallery';
+	break;
+}
 
 if( isset($_GET['skins_refresh']) ) {
 	// upgrade plugin
@@ -239,21 +296,37 @@ if( isset($_GET['skins_refresh']) ) {
 	</script>
 </div>
 
-<div class="wrap">
+<div class="wrap" style="min-width: 878px;">
 <h2><?php _e('Skins', 'flag'); ?>:</h2>
-<p style="float: right"><a class="button" href="<?php echo admin_url('admin.php?page=flag-skins&amp;skins_refresh=1'); ?>"><?php _e('Refresh / Update Skins', 'flag'); ?></a></p>
-<p><a class="button<?php if(!$type) echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins'); ?>"><span style="font-size: 14px;"><?php _e('image gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
-<a class="button<?php if($type == 'm') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=m'); ?>"><span style="font-size: 14px;"><?php _e('music gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
-<a class="button<?php if($type == 'v') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=v'); ?>"><span style="font-size: 14px;"><?php _e('video gallery skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
-<a class="button<?php if($type == 'b') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=b'); ?>"><span style="font-size: 14px;"><?php _e('banner skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
-<a class="button<?php if($type == 'w') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=w'); ?>"><span style="font-size: 14px;"><?php _e('widget skins', 'flag'); ?></span></a>
+<!--<p style="float: right;"><a class="button" href="<?php echo admin_url('admin.php?page=flag-skins&amp;skins_refresh=1'); ?>"><?php _e('Refresh / Update Skins', 'flag'); ?></a></p>-->
+<p><a class="button<?php if(!$type) echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins'); ?>"><span style="font-size: 14px;"><?php _e('Photo skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
+<a class="button<?php if($type == 'm') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=m'); ?>"><span style="font-size: 14px;"><?php _e('Music skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
+<a class="button<?php if($type == 'v') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=v'); ?>"><span style="font-size: 14px;"><?php _e('Video skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
+<a class="button<?php if($type == 'b') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=b'); ?>"><span style="font-size: 14px;"><?php _e('Banner skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
+<a class="button<?php if($type == 'w') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=w'); ?>"><span style="font-size: 14px;"><?php _e('Widget skins', 'flag'); ?></span></a>
 </p>
 
 <?php
 $all_skins = get_skins(false,$type);
 $total_all_skins = count($all_skins);
 $flag_options = get_option ('flag_options');
+
+	// not installed skins
+	$skins_xml = @simplexml_load_file('http://mypgc.co/flagallery_skins/skins.xml', 'SimpleXMLElement', LIBXML_NOCDATA);
+	$all_skins_arr = $skins_by_type = array();
+	if(!empty($skins_xml)) {
+		foreach($skins_xml as $skin){
+			$suid = (string) $skin->uid;
+			$skintype = (string) $skin->type;
+			$all_skins_arr[$suid] = get_object_vars($skin);
+			$skins_by_type[$skintype][$suid] = $all_skins_arr[$suid];
+		}
+	}
+
+
 ?>
+
+<div style="width:70%; overflow: hidden; float: left;">
 <table class="widefat" cellspacing="0" id="skins-table">
 	<thead>
 	<tr>
@@ -281,55 +354,116 @@ $flag_options = get_option ('flag_options');
 	}
 	foreach ( (array)$all_skins as $skin_file => $skin_data) {
 		$class = ( dirname($skin_file) == $flag_options['flashSkin'] ) ? 'active' : 'inactive';
-		echo "
-	<tr id='".basename($skin_file, '.php')."' class='$class first'>
-		<td class='skin-title'><strong>{$skin_data['Name']}</strong></td>
-		<td class='desc'>";
-		$skin_meta = array();
-		if ( !empty($skin_data['Version']) )
-			$skin_meta[] = sprintf(__('Version %s', 'flag'), $skin_data['Version']);
-		if ( !empty($skin_data['Author']) ) {
-			$author = $skin_data['Author'];
-			if ( !empty($skin_data['AuthorURI']) )
-				$author = '<a href="' . $skin_data['AuthorURI'] . '" title="' . __( 'Visit author homepage', 'flag' ) . '">' . $skin_data['Author'] . '</a>';
-			$skin_meta[] = sprintf( __('By %s', 'flag'), $author );
-		}
-		if ( ! empty($skin_data['SkinURI']) )
-			$skin_meta[] = '<a href="' . $skin_data['SkinURI'] . '" title="' . __( 'Visit skin site', 'flag' ) . '">' . __('Visit skin site', 'flag' ) . '</a>';
-
-		echo implode(' | ', $skin_meta);
-		echo "</td>";
-		echo "<td class='skin-activate action-links'>";
+		if(!empty($skin_data['uid'])){
+			$suid = (string) $skin_data['uid'];
+			if(isset($all_skins_arr[$suid]) && (string) $all_skins_arr[$suid]['uid'] == $suid) {
+				$skin_data['Description'] = $all_skins_arr[$suid]['description'];
+				if(version_compare( (float) $all_skins_arr[$suid]['version'], (float) $skin_data['Version'], '<=' )) {
+					unset($skins_by_type[$stype][$suid]);
+				}
+			}
+		} ?>
+	<tr id="<?php echo basename($skin_file, '.php'); ?>" class="<?php echo $class; ?> first">
+		<td class="skin-title"><strong><?php echo $skin_data['Name']; ?></strong></td>
+		<td class="desc">
+		<?php
+			$skin_meta = array();
+			if ( !empty($skin_data['Version']) )
+				$skin_meta[] = sprintf(__('Version %s', 'flag'), $skin_data['Version']);
+			if ( !empty($skin_data['Author']) ) {
+				$author = $skin_data['Author'];
+				if ( !empty($skin_data['AuthorURI']) )
+					$author = '<a href="' . $skin_data['AuthorURI'] . '" title="' . __( 'Visit author homepage', 'flag' ) . '">' . $skin_data['Author'] . '</a>';
+				$skin_meta[] = sprintf( __('By %s', 'flag'), $author );
+			}
+			if ( ! empty($skin_data['SkinURI']) )
+				$skin_meta[] = '<a href="' . $skin_data['SkinURI'] . '" title="' . __( 'Visit skin site', 'flag' ) . '">' . __('Visit skin site', 'flag' ) . '</a>';
+		?>
+		<?php echo implode(' | ', $skin_meta); ?>
+		</td>
+		<td class="skin-activate action-links">
+		<?php
 		if(isset($_GET['type'])) {
 		} else {
-			if ( dirname($skin_file) != $flag_options['flashSkin'] ) {
-				echo '<strong><a href="'.admin_url('admin.php?page=flag-skins&skin='.dirname($skin_file)).'" title="' . __( 'Activate this skin', 'flag' ) . '">' . __('Activate', 'flag' ) . '</a></strong>';
-	 		} else {
-	 			echo "<strong>".__('Activated by default', 'flag' )."</strong>";
+			if ( dirname($skin_file) != $flag_options['flashSkin'] ) { ?>
+				<strong><a href="<?php echo admin_url('admin.php?page=flag-skins&skin='.dirname($skin_file)); ?>" title="<?php _e( 'Activate this skin', 'flag' ); ?>"><?php _e('Activate', 'flag' ); ?></a></strong>
+			<?php } else { ?>
+	 			<strong><?php _e('Activated by default', 'flag' ); ?></strong>
+			<?php
 	 		}
-		}
-		echo "</td>";
+		} ?>
+		</td>
 
-	echo "</tr>
-	<tr class='$class second'>
-		<td class='skin-title'><img src='".WP_PLUGIN_URL."/flagallery-skins/".dirname($skin_file)."/screenshot.png' alt='{$skin_data['Name']}' title='{$skin_data['Name']}' /></td>
-		<td class='desc'><p>{$skin_data['Description']}</p></td>";
- // delete link
-		echo "<td class='skin-delete action-links'>";
+	</tr>
+	<tr class="<?php echo $class; ?> second">
+		<td class="skin-title"><img src="<?php echo WP_PLUGIN_URL."/flagallery-skins/".dirname($skin_file); ?>/screenshot.png" alt="<?php echo $skin_data['Name'];?>" title="<?php echo $skin_data['Name']; ?>" /></td>
+		<td class="desc">
+			<!--<?php /* if(!empty($skin_data['uid'])) { ?>
+			<div class="key_buy" style="float: right; width: 200px; padding: 5px 5px 5px 10px; margin: 0 10px 20px 50px; border: 1px solid #888;">
+				<?php $suid = $skin_data['uid'];
+					$skin_key = isset($flag_options['skin_uid'][$suid])? $flag_options['skin_uid'][$suid] : ''; ?>
+				<div class="key"><form action="<?php echo admin_url('admin.php?page=flag-skins').'&amp;type='.$type; ?>" method="post">
+					<div><?php _e('License key', 'flag'); ?>:</div>
+					<input type="text" name="skinkey[<?php echo $suid; ?>]" value="<?php echo $skin_key; ?>" />
+					<input type="submit" value="<?php _e('Save', 'flag'); ?>" />
+				</form></div>
+				<?php if(empty($skin_key)) { ?>
+				<div class="buy" style="margin-top: 10px;"><a href="#" target="_blank"><?php _e('Buy license key', 'flag'); echo ': $'.$all_skins_arr[$suid]['price']; ?></a></div>
+				<?php } ?>
+			</div>
+			<?php } */ ?>-->
+			<p><?php echo $skin_data['Description']; ?></p>
+		</td>
+		<td class="skin-delete action-links">
+		<?php
 		$settings = $flag_options['skinsDirABS'].dirname($skin_file).'/settings';
-		if(is_dir($settings)) {
-			echo '<a class="thickbox" href="'.FLAG_URLPATH.'admin/skin_options.php?show_options=1&amp;skin='.dirname($skin_file).'&amp;TB_iframe=1&amp;width=600&amp;height=560">' . __('Options', 'flag' ) . '</a>';
-		}
+		if(is_dir($settings)) { ?>
+			<a class="thickbox" href="<?php echo FLAG_URLPATH.'admin/skin_options.php?show_options=1&amp;skin='.dirname($skin_file).'&amp;TB_iframe=1&amp;width=600&amp;height=560'; ?>"><?php _e('Options', 'flag' ); ?></a>
+ 		<?php }
 		if ( current_user_can('FlAG Delete skins') ) {
-		if ( dirname($skin_file) != $flag_options['flashSkin'] ) {
-			echo '<br /><br /><a class="delete" onclick="javascript:check=confirm( \'' . attribute_escape(sprintf(__('Delete "%s"' , 'flag'), $skin_data['Name'])). '\');if(check==false) return false;" href="'.admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)).'" title="' . __( 'Delete this skin', 'flag' ) . '">' . __('Delete', 'flag' ) . '</a>';
-		}
- 		}
-		echo "</td>";
-	echo "</tr>\n";
-	}
-?>
+		if ( dirname($skin_file) != $flag_options['flashSkin'] ) { ?>
+			<br /><br /><a class="delete" onclick="javascript:check=confirm( \'<?php echo attribute_escape(sprintf(__('Delete "%s"' , 'flag'), $skin_data['Name'])); ?>\');if(check==false) return false;" href="<?php echo admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)); ?>" title="<?php _e( 'Delete this skin', 'flag' ); ?>"><?php _e('Delete', 'flag' ); ?></a>
+		<?php }
+ 		} ?>
+		</td>
+	</tr>
+<?php } ?>
 	</tbody>
 </table>
+</div>
+
+<div class="postbox metabox-holder" id="newskins" style="width: 29%; float: right; padding-top: 5px;">
+	<h3 style="font-size: 16px; line-height: 100%; font-weight: bold; color: #2583AD;">New Skins</h3>
+	<div class="inside">
+	<?php
+	if(isset($skins_by_type[$stype]) && !empty($skins_by_type[$stype])) {
+		foreach($skins_by_type[$stype] as $skin) { ?>
+		<div class="skin <?php echo $skin['type'].' '.$skin['status']; ?>" id="uid-<?php echo $skin['uid']; ?>" style="padding: 10px; float:left;">
+			<center>
+				<p><strong style="font-size: 120%;"><?php echo $skin['title']; ?></strong> <span class="version"><?php echo 'v'.$skin['version']; ?></span></p>
+				<div class="screenshot"><img src="<?php echo $skin['screenshot']; ?>" width="200" height="184" /></div>
+			</center>
+			<div class="content">
+				<div class="links" style="text-align: center;">
+				<form action="<?php echo admin_url('admin.php?page=flag-skins').'&amp;type='.$type; ?>" method="post">
+					<input type="hidden" name="skinzipurl" value="<?php echo $skin['download']; ?>" />
+ 					<p><a class="install button-primary" onclick="jQuery(this).closest('form').submit(); return false" href="<?php echo $skin['download']; ?>"><?php _e('Install', 'gmLang') ?></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="button" href="<?php echo $skin['demo']; ?>" target="_blank"><?php _e('Preview', 'gmLang') ?></a></p>
+ 				</form>
+				</div>
+				<!--<div class="description" style="padding: 7px; overflow: hidden;"><?php // echo $skin['description']; ?></div>-->
+			</div>
+		</div>
+		<?php
+		}
+	} else { ?>
+		<div class="skin noskins"><?php echo sprintf(__('All available %s skins are already installed...', 'gmLang'), $stype); ?></div>
+	<?php }
+	?>
+	</div>
+</div>
+
+
+
 </div>
 <?php ?>

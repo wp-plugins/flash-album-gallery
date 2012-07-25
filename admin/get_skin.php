@@ -39,12 +39,13 @@ function get_skin_data( $skin_file, $type='' ) {
 	preg_match( '|^'.$type.'Skin Name:(.*)$|mi', $skin_data, $name );
     if($name[1]) {
     	preg_match( '|Skin URI:(.*)$|mi', $skin_data, $uri );
+    	preg_match( '|uid:(.*)|i', $skin_data, $uid );
     	preg_match( '|Version:(.*)|i', $skin_data, $version );
     	preg_match( '|Description:(.*)$|mi', $skin_data, $description );
     	preg_match( '|Author:(.*)$|mi', $skin_data, $author_name );
     	preg_match( '|Author URI:(.*)$|mi', $skin_data, $author_uri );
 
-    	foreach ( array( 'name', 'uri', 'version', 'description', 'author_name', 'author_uri' ) as $field ) {
+    	foreach ( array( 'name', 'uri', 'version', 'uid', 'description', 'author_name', 'author_uri' ) as $field ) {
     		if ( !empty( ${$field} ) )
     			${$field} = trim(${$field}[1]);
     		else
@@ -53,7 +54,7 @@ function get_skin_data( $skin_file, $type='' ) {
 
     	$skin_data = array(
     				'Name' => $name, 'Title' => $name, 'SkinURI' => $uri, 'Description' => $description,
-    				'Author' => $author_name, 'AuthorURI' => $author_uri, 'Version' => $version
+    				'Author' => $author_name, 'AuthorURI' => $author_uri, 'Version' => $version, 'uid' => $uid
     				);
     	return $skin_data;
     }
