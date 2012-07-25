@@ -383,7 +383,7 @@ $flag_options = get_option ('flag_options');
 		</td>
 		<td class="skin-activate action-links">
 		<?php
-		if(isset($_GET['type'])) {
+		if(isset($_GET['type']) && !empty($_GET['type'])) {
 		} else {
 			if ( dirname($skin_file) != $flag_options['flashSkin'] ) { ?>
 				<strong><a href="<?php echo admin_url('admin.php?page=flag-skins&skin='.dirname($skin_file)); ?>" title="<?php _e( 'Activate this skin', 'flag' ); ?>"><?php _e('Activate', 'flag' ); ?></a></strong>
