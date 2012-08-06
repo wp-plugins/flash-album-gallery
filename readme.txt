@@ -38,10 +38,6 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 == Changelog ==
 
 = Upgrade Notice =
-* After plugin update go to Skins page and update skins with 'Update skins' button.
-* If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
-* If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
-* Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
 
 = v1.80 - 25.07.2012 =
 * Changed: New simple way to install skins
