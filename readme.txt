@@ -37,8 +37,6 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 
 == Changelog ==
 
-= Upgrade Notice =
-
 = v1.80 - 25.07.2012 =
 * Changed: New simple way to install skins
 
