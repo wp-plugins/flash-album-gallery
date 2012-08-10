@@ -37,6 +37,9 @@ For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpres
 
 == Changelog ==
 
+= v1.81 - 10.08.2012 =
+* Fixed: Compatibility with some other flash embed plugins
+
 = v1.80 - 25.07.2012 =
 * Changed: New simple way to install skins
 

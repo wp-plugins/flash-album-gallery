@@ -1,4 +1,4 @@
-<?php 
+<?php
 if ( !class_exists('flag_swfobject') ) :
 /**
  * flag_swfobject - PHP class for creating dynamic content of SWFObject V2.1
@@ -36,16 +36,16 @@ class flag_swfobject {
 		// look for a other swfobject instance
 		if ( !isset($swfCounter) )
 			$swfCounter = 1;
-		
+
 		$this->id = $id . '_div';
 		$this->width = $width;
-		$this->height = $height;		
-		
+		$this->height = $height;
+
 		$this->flashvars  = ( is_array($flashvars) )  ? $flashvars : array();
 		$this->params     = ( is_array($params) )     ? $params : array();
 		$this->attributes = ( is_array($attributes) ) ? $attributes : array();
 
-		//$this->embedSWF = 'swfobject.switchOffAutoHideShow();'."\n";
+		$this->embedSWF = 'swfobject.switchOffAutoHideShow();'."\n";
 		$this->embedSWF .= 'swfobject.embedSWF("'. $swfUrl .'", "'. $this->id .'", "'. $width .'", "'. $height .'", "'. $version .'", "'. $expressInstallSwfurl .'", this.flashvars, this.params , this.attr );' . "\n";
 		$this->embedSWF .= 'swfobject.createCSS("#'. $id . '","outline:none");' . "\n";
 	}
