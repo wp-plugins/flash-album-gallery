@@ -13,10 +13,12 @@ Try GRAND FlAGallery - powerfull flash & jQuery media content plugin. It provide
 
 You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **image gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc.
 
+For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page")** and see demos created with "GRAND FlAGallery" WordPress Plugin.
+
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
 * iPhone, iPad, Android, Blackberry 6 and Desktop friendly photo gallery, SEO optimized.
-* Full-screen mobile friendly slideshow with touch controls (optional, if set [PhotoSwipe library](http://www.photoswipe.com/) script for alternative gallery).
+* Full-screen mobile friendly slideshow with touch controls (optional, if set PhotoSwipe library script for alternative gallery).
 * New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
 
 Added: GRAND Pages - Full Window Gallery Template. Now you can display your image gallery in full window separate page (gallery template). [View Demo 1](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/), [View Demo 2](http://photogallerycreator.com/flagallery/3d-sphere-v2-0-full-window-mode/)
@@ -24,8 +26,6 @@ Added: GRAND Pages - Full Window Gallery Template. Now you can display your imag
 Starting with version 1.55 you have the opportunity to create image gallery, as separate pages. It looks very cool when you open image gallery, and gallery images occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
 
 Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycreator.com/grand-flagallery/photoblog-skin-gallery/) you have the opportunity to see "Views" of each photo in the gallery and visitors can "Like" image and see image "Rating".
-
-For more information read [Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page") and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
 * Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
 * Demo [Full Window Gallery Template](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
