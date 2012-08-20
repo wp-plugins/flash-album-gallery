@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.82 - 20.08.2012 =
+* Fixed: Compatibility with other plugins that use old swfobject
+
 = v1.81 - 10.08.2012 =
 * Fixed: Compatibility with some other flash embed plugins
 

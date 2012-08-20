@@ -37,6 +37,9 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 == Changelog ==
 
+= v1.82 - 20.08.2012 =
+* Fixed: Compatibility with other plugins that use old swfobject
+
 = v1.81 - 10.08.2012 =
 * Fixed: Compatibility with some other flash embed plugins
 
