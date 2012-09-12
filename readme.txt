@@ -1,4 +1,4 @@
-=== GRAND FlAGallery - Best Photo Gallery ===
+=== GRAND FlAGallery ===
 Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
 Tags: admin,flash,fullscreen gallery,gallery,image,images,image gallery,mp3,music,page,photo,slider,plugin,Post,posts,slideshow,video,widget
@@ -36,6 +36,12 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 
 == Changelog ==
+
+= v1.83 - 12.09.2012 =
+* Updated: PhotoSwipe library and make it default alternative gallery
+* Updated: Now FlAGallery widget in mobile browser opens galleries on new page, but not in popup
+* Added: Backround image for GRAND Pages
+* Fixed: cPanel for skins options (Major FIX)
 
 = v1.82 - 20.08.2012 =
 * Fixed: Compatibility with other plugins that use old swfobject

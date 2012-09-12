@@ -237,7 +237,7 @@ function flag_list_options() {
 
 	// Alternative gallery colors
 	$flag_options['jAlterGal']				= true;
-	$flag_options['jAlterGalScript']		= 0;							// If '0' - use FancyBox script
+	$flag_options['jAlterGalScript']		= 0;							// If '0' - use PhotoSwipe script
 	$flag_options['BarsBG']					= '292929';
 	$flag_options['CatBGColor']				= '292929';
 	$flag_options['CatBGColorOver']			= '737373';

@@ -11,6 +11,9 @@ $button_text = $flag_custom["mb_button"][0];
 $button_link = $flag_custom["mb_button_link"][0];
 if(!$button_text) $button_text = __('Back','flag');
 if(!$button_link) $button_link = 'http://';
+$bg_link = $flag_custom["mb_bg_link"][0];
+$bg_pos = $flag_custom["mb_bg_pos"][0];
+$bg_repeat = $flag_custom["mb_bg_repeat"][0];
 ?>
 <script type="text/javascript">/*<![CDATA[*/
 var i_arr = '<?php echo $items_array; ?>';
@@ -29,7 +32,9 @@ jQuery(document).ready(function() {
 	var galleries = 'gid='+jQuery('#mb_items_array').val();
 	var skin = jQuery('#mb_skinname option:selected').val();
 	if(skin) skin = ' skin='+skin; else skin = '';
-	short_code(galleries,skin);
+	var wmode = jQuery('#mb_bg_link').val();
+	if(wmode) wmode = ' wmode=transparent'; else wmode = ' wmode=window';
+	short_code(galleries,skin,wmode);
 	jQuery('#galleries :checkbox').click(function(){
 		if(jQuery(this).is(':checked')){
 			var cur = jQuery(this).val();
@@ -55,7 +60,7 @@ jQuery(document).ready(function() {
 		}
 		galleries = 'gid='+jQuery('#mb_items_array').val();
 		skin = jQuery('#mb_skinname option:selected').val(); if(skin) skin = ' skin='+skin; else skin = '';
-		short_code(galleries,skin);
+		short_code(galleries,skin,wmode);
 	});
 	jQuery('#mb_skinname').change(function(){
 		var skin = jQuery(this).val();
@@ -65,11 +70,21 @@ jQuery(document).ready(function() {
 			skin = '';
 		}
 		galleries = 'gid='+jQuery('#mb_items_array').val();
-		short_code(galleries,skin);
+		short_code(galleries,skin,wmode);
+	});
+	jQuery('#mb_bg_link').change(function(){
+		var wmode = jQuery(this).val();
+		if(wmode) {
+			wmode = ' wmode=transparent';
+		} else {
+			wmode = ' wmode=window';
+		}
+		galleries = 'gid='+jQuery('#mb_items_array').val();
+		short_code(galleries,skin,wmode);
 	});
 });
-function short_code(galleries,skin) {
-	jQuery('#mb_scode').val('[flagallery '+galleries+' name=Gallery w=100% h=100%'+skin+' wmode=window fullwindow=true]');
+function short_code(galleries,skin,wmode) {
+	jQuery('#mb_scode').val('[flagallery '+galleries+' name=Gallery w=100% h=100%'+skin+wmode+' fullwindow=true]');
 }
 /*]]>*/</script>
 <div class="wrap">
@@ -108,14 +123,42 @@ function short_code(galleries,skin) {
 			</td>
         </tr>
 		<tr>
-			<td valign="top"><p style="padding-top:3px;"><?php _e("Back Button Text", 'flag'); ?>: &nbsp; </p></td>
+			<td nowrap="nowrap" valign="top"><div style="padding-top: 3px;"><?php _e("Back Button Text", 'flag'); ?>: &nbsp; </div></td>
             <td valign="top"><input id="mb_button" name="mb_button" type="text" style="width: 49%;"  value="<?php echo $button_text; ?>" /></td>
 		</tr>
 		<tr>
-			<td valign="top"><p style="padding-top:3px;"><?php _e("Back Button Link", 'flag'); ?>: &nbsp; </p></td>
-            <td valign="top"><input id="mb_button_link" name="mb_button_link" type="text" style="width: 49%;"  value="<?php echo $button_link; ?>" />
-				<p><small><?php _e("Leave empty to use referer link", 'flag'); ?></small></p></td>
+			<td nowrap="nowrap" valign="top"><div style="padding-top: 3px;"><?php _e("Back Button Link", 'flag'); ?>: &nbsp; </div></td>
+            <td valign="top"><input id="mb_button_link" name="mb_button_link" type="text" style="width: 49%;"  value="<?php echo $button_link; ?>" /><br />
+				<small><?php _e("Leave empty to use referer link", 'flag'); ?></small></td>
 		</tr>
+		<tr>
+			<td nowrap="nowrap" valign="top"><div style="padding-top: 3px;"><?php _e("Background Image Link", 'flag'); ?>: &nbsp; </div></td>
+            <td valign="top"><input id="mb_bg_link" name="mb_bg_link" type="text" style="width: 49%;"  value="<?php echo $bg_link; ?>" /><br />
+				<small><?php _e("(optional) Be sure you set Wmode to 'transparent' in skin's options", 'flag'); ?></small></td>
+		</tr>
+        <tr>
+            <td nowrap="nowrap" valign="top"><div style="padding-top: 3px;"><?php _e("Background Position", 'flag'); ?>:</div></td>
+            <td valign="top"><select id="mb_bg_pos" name="mb_bg_pos">
+                    <option value="center center" <?php selected($bg_pos,'center center'); ?>>center center</option>
+                    <option value="left top" <?php selected($bg_pos,'left top'); ?>>left top</option>
+                    <option value="left center" <?php selected($bg_pos,'left center'); ?>>left center</option>
+                    <option value="left bottom" <?php selected($bg_pos,'left bottom'); ?>>left bottom</option>
+                    <option value="center top" <?php selected($bg_pos,'center top'); ?>>center top</option>
+                    <option value="center bottom" <?php selected($bg_pos,'center bottom'); ?>>center bottom</option>
+                    <option value="right top" <?php selected($bg_pos,'right top'); ?>>right top</option>
+                    <option value="right center" <?php selected($bg_pos,'right center'); ?>>right center</option>
+                    <option value="right bottom" <?php selected($bg_pos,'right bottom'); ?>>right bottom</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td nowrap="nowrap" valign="top"><div style="padding-top: 3px;"><?php _e("Background Repeat", 'flag'); ?>:</div></td>
+            <td valign="top"><select id="mb_bg_repeat" name="mb_bg_repeat">
+                    <option value="repeat" <?php selected($bg_repeat,'repeat'); ?>>repeat</option>
+                    <option value="repeat-x" <?php selected($bg_repeat,'repeat-x'); ?>>repeat-x</option>
+                    <option value="repeat-y" <?php selected($bg_repeat,'repeat-y'); ?>>repeat-y</option>
+                    <option value="no-repeat" <?php selected($bg_repeat,'no-repeat'); ?>>no-repeat</option>
+            </select></td>
+        </tr>
     </table>
 </form>
 </div>

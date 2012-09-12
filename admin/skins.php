@@ -152,7 +152,7 @@ if ( isset($_POST['updateskinoption']) ) {
 	}
 }
 
-if ( isset($_POST['skinkey']) ) {
+/*if ( isset($_POST['skinkey']) ) {
 	$skinkeyvalue = $_POST['skinkey'];
 	foreach($skinkeyvalue as $key => $value){
 		$skinkey = mysql_real_escape_string($key);
@@ -163,7 +163,7 @@ if ( isset($_POST['skinkey']) ) {
 		update_option('flag_options', $flag_options);
 	 	flagGallery::show_message(__('Skin Key Saved','flag'));
 	}
-}
+}*/
 
 if ( isset($_POST['updateoption']) ) {
 	check_admin_referer('flag_settings');
@@ -259,13 +259,15 @@ if( isset($_GET['skins_refresh']) ) {
 ?>
 <div id="slider" class="wrap">
 	<ul id="tabs" class="tabs">
+<?php if( current_user_can('FlAG Add skins') ) { ?>
 		<li class="selected"><a href="#" rel="addskin"><?php _e('Add new skin', 'flag'); ?></a></li>
+<?php } ?>
 		<li><a href="#" rel="skinoptions"><?php _e('Active Skin Options', 'flag'); ?></a></li>
 	</ul>
 
+<?php if( current_user_can('FlAG Add skins') ) { ?>
 	<div id="addskin" class="cptab">
 		<h2><?php _e('Add new skin', 'flag'); ?></h2>
-<?php if( current_user_can('FlAG Add skins') ) { ?>
 		<h4><?php _e('Install a skin in .zip format', 'flag'); ?></h4>
 		<p><?php _e('If you have a skin in a .zip format, You may install it by uploading it here.', 'flag'); ?></p>
 		<form method="post" enctype="multipart/form-data" action="<?php echo admin_url('admin.php?page=flag-skins'); ?>">
@@ -276,10 +278,8 @@ if( isset($_GET['skins_refresh']) ) {
 		<?php if( isset($_POST['installskin']) ) {
 			do_action('install_skins_upload');
 		} ?>
-<?php } else { ?>
-		<p><?php _e('You do not have sufficient permissions to install skin through admin page. You can install it by uploading via ftp to /flagallery-skins/ folder.', 'flag'); ?></p>
-<?php } ?>
 	</div>
+<?php } ?>
 
 	<div id="skinoptions" class="cptab">
 		<h2><?php _e('Active Skin Options', 'flag'); ?></h2>
@@ -309,7 +309,6 @@ if( isset($_GET['skins_refresh']) ) {
 <?php
 $all_skins = get_skins(false,$type);
 $total_all_skins = count($all_skins);
-$flag_options = get_option ('flag_options');
 
 	// not installed skins
 	$skins_xml = @simplexml_load_file('http://mypgc.co/flagallery_skins/skins.xml', 'SimpleXMLElement', LIBXML_NOCDATA);

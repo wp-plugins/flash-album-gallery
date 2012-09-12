@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once( dirname(dirname(__FILE__)) . '/flag-config.php');
 
 // check for correct capability
@@ -14,12 +14,11 @@ $act_skin = isset($_GET['skin'])? $_GET['skin'] : $flag_options['flashSkin'];
 $settings = $flag_options['skinsDirABS'].$act_skin.'/settings';
 $settingsXML =  $settings.'/settings.xml';
 
-if (isset($HTTP_RAW_POST_DATA) ) {
-	$flashPost = $HTTP_RAW_POST_DATA;
-} else {
-	$flashPost = implode("\r\n", file('php://input'));
-}
-if($flashPost) {
+$flashPost = file_get_contents("php://input");
+// parse properties_skin
+parse_str($flashPost);
+
+if(isset($properties_skin) && !empty($properties_skin)) {
 	$fp = fopen($settingsXML, "r");
 	if(!$fp) {
 		exit( "2");//Failure - not read;
@@ -30,7 +29,7 @@ if($flashPost) {
 	$fp = fopen($settingsXML, "w");
 	if(!$fp)
 		exit("0");//Failure
-	$newProperties = preg_replace("|<properties>.*?</properties>|si", $flashPost, $mainXML);
+	$newProperties = preg_replace("|<properties>.*?</properties>|si", $properties_skin, $mainXML);
 	fwrite($fp, $newProperties);
 	fclose($fp);
 	echo "1";//Save
@@ -50,6 +49,7 @@ function flag_skin_options() {
 		echo '<p style="color:#ff0000;"><b>Error! The configuration file not be found. You need to reinstall this skin.</b></p>';
 	} else {
 		$cPanel = FLAG_URLPATH."lib/cpanel.swf";
+		$constructor = FLAG_URLPATH."lib/";
 		$swfObject = FLAG_URLPATH."admin/js/swfobject.js?ver=2.2";
 		?>
 		<div id="skinOptions">
@@ -57,6 +57,8 @@ function flag_skin_options() {
 			<script type="text/javascript">
 				var flashvars = {
 					path : "<?php echo $settings; ?>",
+					constructor : "<?php echo $constructor; ?>",
+					skin : "<?php echo $act_skin; ?>",
 				};
 				var params = {
 					wmode : "transparent",

@@ -130,8 +130,8 @@ jQuery(document).ready(function() {
 				<tr>
 					<th align="left"><?php _e('jQuery gallery script','flag'); ?></th>
 					<td><select name="jAlterGalScript">
-							<option value="0" <?php selected('0', $flag_options['jAlterGalScript']); ?>>FancyBox</option>
-							<option value="1" <?php selected('1', $flag_options['jAlterGalScript']); ?>>PhotoSwipe</option>
+							<option value="1" <?php selected('1', $flag_options['jAlterGalScript']); ?>>FancyBox</option>
+							<option value="0" <?php selected('0', $flag_options['jAlterGalScript']); ?>>PhotoSwipe</option>
 						</select>
 					</td>
 				</tr>

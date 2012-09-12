@@ -2,8 +2,8 @@
 /**
  * Return a script for the flash slideshow. Can be used in any tmeplate with <?php echo flagShowFlashAlbum($galleryID, $name, $width, $height, $skin) ? >
  * Require the script swfobject.js in the header or footer
- * 
- * @access public 
+ *
+ * @access public
  * @param integer $galleryID ID of the gallery
  * @param integer $flashWidth Width of the flash container
  * @param integer $flashHeight Height of the flash container
@@ -15,7 +15,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 
 	if($linkto) {
 		$post = get_post($linkto);
-	} 
+	}
 	$flag_options = get_option('flag_options');
 	$skinID = 'sid_'.mt_rand();
 	if($skin == '') $skin = $flag_options['flashSkin'];
@@ -23,18 +23,20 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	if(!is_dir($skinpath)) {
 		$skin = 'default';
 		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
-	} 
+	}
 	$swfmousewheel = '';
 	$flashBacktransparent = '';
 	$flashBackcolor = '';
 	if (empty($width) ) $width  = $flag_options['flashWidth'];
 	if (empty($height)) $height = (int) $flag_options['flashHeight'];
 	if(file_exists($skinpath . "/settings/settings.xml")) {
-		$data = file_get_contents($skinpath . "/settings/settings.xml");
-		if(empty($wmode))
-			$wmode = flagGetBetween($data,'<property0><![CDATA[',']]></property0>');
-		$flashBackcolor = flagGetBetween($data,'<property1>0x','</property1>');
-		$swfmousewheel = flagGetBetween($data,'<swfmousewheel>','</swfmousewheel>');
+		if ($settings_xml = @simplexml_load_file($skinpath . "/settings/settings.xml", 'SimpleXMLElement', LIBXML_NOCDATA)){
+			if(empty($wmode))
+				$wmode = (string) $settings_xml->properties->property0;
+			$flashBackcolor = (string) $settings_xml->properties->property1;
+			$flashBackcolor = str_replace('0x','',$flashBackcolor);
+			$swfmousewheel = (string) $settings_xml->properties->swfmousewheel;
+		}
 	} else if(file_exists($skinpath . "_settings.php")) {
 		include( $skinpath . "_settings.php");
 	} else if(file_exists($skinpath . "/settings.php")) {

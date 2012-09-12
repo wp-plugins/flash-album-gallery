@@ -379,12 +379,18 @@ class flagWidget extends WP_Widget {
 		echo "\n" . '<div class="flag-widget">'. "\n";
 
 		if (is_array($imageList)){
+
+			$isMobile = (bool)preg_match('#\b(ip(hone|od|ad)|android|opera m(ob|in)i|windows (phone|ce)|blackberry|tablet'.
+                    '|s(ymbian|eries60|amsung)|p(laybook|alm|rofile/midp|laystation portable)|nokia|fennec|htc[\-_]'.
+                    '|mobile|up\.browser|[1-4][0-9]{2}x[1-4][0-9]{2})\b#i', $_SERVER['HTTP_USER_AGENT'] );
+			if(!$isMobile)
+				$thumbcode = 'class="flag_fancybox"';
+			else 
+				$thumbcode = 'class="flag_newbox"';
+
 			foreach($imageList as $key => $image) {
 				// get the URL constructor
 				$image = new flagImage($image[0]);
-
-				// get the effect code
-				$thumbcode = 'class="flag_fancybox"';
 
 				// enable i18n support for alttext and description
 				$alttext      =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->alttext, 'pic_' . $image->pid . '_alttext') )) );
@@ -399,7 +405,7 @@ class flagWidget extends WP_Widget {
 		}
 
 		echo '</div>'."\n";
-		echo '<style type="text/css">.flag_fancybox img { border: 1px solid #A9A9A9; margin: 0 2px 2px 0; padding: 1px; }</style>'."\n";
+		echo '<style type="text/css">.flag_fancybox img, .flag_newbox img { border: 1px solid #A9A9A9; margin: 0 2px 2px 0; padding: 1px; }</style>'."\n";
 		echo '<script type="text/javascript">var fbVar = "'.FLAG_URLPATH.'"; var fbW = '.$instance['fwidth'].', fbH = '.$instance['fheight'].'; waitJQ(fbVar,fbW,fbH);</script>'."\n";
 		echo $after_widget;
 

@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 1.82
+Version: 1.83
 Author: Rattus
 Author URI: http://codeasily.com/
 
@@ -23,7 +23,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 
-	var $version     = '1.82';
+	var $version     = '1.83';
 	var $dbversion   = '1.24';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '2.8';
@@ -396,11 +396,17 @@ class flagLoad {
 	  $scode = $_POST["mb_scode"];
 	  $button_text = $_POST["mb_button"];
 	  $button_link = $_POST["mb_button_link"];
+	  $bg_link = $_POST["mb_bg_link"];
+	  $bg_pos = $_POST["mb_bg_pos"];
+	  $bg_repeat = $_POST["mb_bg_repeat"];
 	  update_post_meta($post_id, "mb_items_array", $_POST["mb_items_array"]);
 	  update_post_meta($post_id, "mb_skinname", $_POST["mb_skinname"]);
 	  update_post_meta($post_id, "mb_scode", $_POST["mb_scode"]);
 	  update_post_meta($post_id, "mb_button", $_POST["mb_button"]);
 	  update_post_meta($post_id, "mb_button_link", $_POST["mb_button_link"]);
+	  update_post_meta($post_id, "mb_bg_link", $_POST["mb_bg_link"]);
+	  update_post_meta($post_id, "mb_bg_pos", $_POST["mb_bg_pos"]);
+	  update_post_meta($post_id, "mb_bg_repeat", $_POST["mb_bg_repeat"]);
 
   	}
 
