@@ -455,7 +455,7 @@ You should have received a copy of the GNU General Public License along with thi
 3. Be sure that after activation 'wp-content/plugins/flagallery-skins' folder (chmod 755) created successfully. If not, create it manually and install skins through admin Skins page or via ftp.
 3. Add a gallery and upload some images (the main gallery folder must have write permission). 
 4. Go to your post/page an enter the tag '[flagallery gid=X name="ALBUM TITLE"]', where X - gallery IDs separated by comma;  ALBUM TITLE - title of your album (default 'Gallery'). Easy way is click FlAGallery button on the Editor panel. 
-5. If you would like to use additional Flash Skins (only a option), go to <a href="http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/" title="Flash Skins">Flash Skins</a>, download the skin and upload the file through Skins page in Wordpress admin panel. 
+5. If you would like to use additional Flash Skins (only a option), go to <a href="http://photogallerycreator.com/grand-flagallery/" title="Flash Skins">Flash Skins</a>, download the skin and upload the file through Skins page in Wordpress admin panel. 
  
 See more tags in the FAQ section 
  
@@ -523,7 +523,8 @@ To display ALL galleries as categories: [flagallery gid=all name="My Galleries"]
 
 = How can I set it to auto slideshow when open the page? =
 
-Download and activate skin with auto slideshow http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery/
+Download and activate skin with auto slideshow 
+http://photogallerycreator.com/grand-flagallery/
 
 = The gallery keeps loading without ever showing the images =
 
@@ -553,9 +554,9 @@ Check PHP Max Upload Size on Overview page.
 
 Create it manually with chmod 0755.
  
-= Live Demo: =
+= Live Demos: =
 
-http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/ 
+http://photogallerycreator.com/grand-flagallery/ 
  
 = A further FAQ you can found here: = 
 
