@@ -311,7 +311,7 @@ $all_skins = get_skins(false,$type);
 $total_all_skins = count($all_skins);
 
 	// not installed skins
-	$skins_xml = @simplexml_load_file('http://mypgc.co/flagallery_skins/skins.xml', 'SimpleXMLElement', LIBXML_NOCDATA);
+	$skins_xml = @simplexml_load_file('https://dl.dropbox.com/u/104873029/flagallery_skins/skins.xml', 'SimpleXMLElement', LIBXML_NOCDATA);
 	$all_skins_arr = $skins_by_type = array();
 	if(!empty($skins_xml)) {
 		foreach($skins_xml as $skin){
@@ -356,7 +356,6 @@ $total_all_skins = count($all_skins);
 		if(!empty($skin_data['uid'])){
 			$suid = (string) $skin_data['uid'];
 			if(isset($all_skins_arr[$suid]) && (string) $all_skins_arr[$suid]['uid'] == $suid) {
-				$skin_data['Description'] = $all_skins_arr[$suid]['description'];
 				if(version_compare( (float) $all_skins_arr[$suid]['version'], (float) $skin_data['Version'], '<=' )) {
 					unset($skins_by_type[$stype][$suid]);
 				}
