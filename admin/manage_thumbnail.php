@@ -39,13 +39,13 @@ $preview_image		= FLAG_URLPATH . 'flagshow.php?pid=' . $picture->pid . '&amp;wid
 $imageInfo			= @getimagesize($picture->imagePath);
 $rr = round($imageInfo[0] / $resizedPreviewInfo['newWidth'], 2);
 
+$WidthHtmlPrev  = $flag_options['thumbWidth'];
+$HeightHtmlPrev = $flag_options['thumbHeight'];
+
 if ( ($flag_options['thumbFix'] == 1) ) {
 
-	$WidthHtmlPrev1  = $flag_options['thumbWidth'];
-	$HeightHtmlPrev1 = $flag_options['thumbHeight'];
-	$k  = $flag_options['thumbWidth']/150;
-	$WidthHtmlPrev  = '150';
-	$HeightHtmlPrev = round(($flag_options['thumbHeight']*150)/$flag_options['thumbWidth']);
+	$WidthHtmlPrev  = $flag_options['thumbWidth'];
+	$HeightHtmlPrev = $flag_options['thumbHeight'];
 
 } else {
 	// H > W
