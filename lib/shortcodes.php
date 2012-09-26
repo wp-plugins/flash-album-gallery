@@ -117,11 +117,6 @@ class FlAG_shortcodes {
 	}
 
 	function add_script() {
-		$flag_options = get_option('flag_options');
-		if ( $flag_options['deepLinks'] ) {
-			wp_register_script('swfaddress', plugins_url('/flash-album-gallery/admin/js/swfaddress.js'), array(), '2.4');
-			wp_print_scripts('swfaddress');
-		}
 		if ( $this->flag_shortcode ) {
 			wp_register_script('flagscroll', plugins_url('/admin/js/flagscroll.js', dirname(__FILE__)), array('jquery'), '1.0', true );
 			wp_print_scripts('flagscroll');

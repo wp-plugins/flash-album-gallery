@@ -37,6 +37,10 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 == Changelog ==
 
+= v1.84 - 26.09.2012 =
+* Fixed: edit thumbnail not worked on some servers (Major Fix)
+* Fixed: gallery deep linkining
+
 = v1.83 - 12.09.2012 =
 * Updated: PhotoSwipe library and make it default alternative gallery
 * Updated: Now FlAGallery widget in mobile browser opens galleries on new page, but not in popup
