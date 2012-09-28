@@ -101,7 +101,7 @@ class FlAG_shortcodes {
 		} 
 		$this->flag_shortcode = true;
 		$this->flag_add_script = true;
-		if($skin == 'slider_gallery' || $skin == 'slider_gallery_demo' || !$flag_options['jAlterGalScript'] ){
+		if(in_array($skin, array('slider_gallery', 'slider_gallery_demo', 'slider', 'slider_demo')) || !$flag_options['jAlterGalScript'] ){
 			$this->flag_fancybox = true;
 		} else {
 			$this->flag_fancybox = false;
