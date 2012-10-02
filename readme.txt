@@ -6,12 +6,12 @@ Requires at least: 3.0
 Tested up to: 3.4.1
 Stable tag: trunk
 
-GRAND FlAGallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
+GRAND Flash Album Gallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
 
 == Description ==
-Try GRAND FlAGallery - powerfull flash & jQuery media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
+Try GRAND Flash Album Gallery - powerfull flash & jQuery media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
-You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **image gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc.
+You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **image gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc. 
 
 For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page")** and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
