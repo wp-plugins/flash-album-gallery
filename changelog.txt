@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v1.85 - 12.10.2012 =
+* Changed: new way to add preview images for video and music
+
 = v1.84 - 26.09.2012 =
 * Fixed: edit thumbnail not worked on some servers (Major Fix)
 * Fixed: gallery deep linkining

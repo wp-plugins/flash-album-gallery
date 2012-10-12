@@ -393,11 +393,10 @@ if($bannerlist) {
 			<td class="id"><p style="margin-bottom: 3px; white-space: nowrap;">ID: <?php echo $ban->ID; ?></p></td>
 			<td class="thumb">
 				<a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo $url; ?>"><img id="thumb-<?php echo $ban->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
-				<input id="banthumb-<?php echo $ban->ID; ?>" name="item_a[<?php echo $ban->ID; ?>][post_thumb]" type="hidden" value="<?php echo $banthumb; ?>" />
 			</td>
 			<td class="title_filename">
 				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
-				<textarea name="item_a[<?php echo $ban->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $ban->post_title; ?></textarea><br />
+				<textarea title="Title" name="item_a[<?php echo $ban->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $ban->post_title; ?></textarea><br />
 				<?php _e('URL', 'flag'); ?>: <input id="banlink-<?php echo $ban->ID; ?>" name="item_a[<?php echo $ban->ID; ?>][link]" style="width:50%;" type="text" value="<?php echo $link; ?>" /><br />
 			</td>
 			<td class="description">

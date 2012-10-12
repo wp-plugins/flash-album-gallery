@@ -225,25 +225,11 @@ if(count($items_a)) {
 			?></td>
 			<td class="thumb">
 				<a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo FLAG_URLPATH; ?>admin/flv_preview.php?vid=<?php echo $flv->ID; ?>&amp;TB_iframe=1&amp;width=490&amp;height=293"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
-				<input id="flvthumb-<?php echo $flv->ID; ?>" name="item_a[<?php echo $flv->ID; ?>][post_thumb]" type="hidden" value="<?php echo $flvthumb; ?>" />
 			</td>
 			<td class="title_filename">
 				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
-				<textarea name="item_a[<?php echo $flv->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $flv->post_title; ?></textarea><br />
-    			<?php
-    			$actions = array();
-    			$actions['add_thumb']   = '<a class="thickbox" onclick="actInp='.$flv->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('add thumb', 'flag') . '</a>';
-    			$actions['del_thumb']   = '<a class="del_thumb" data-id="'.$flv->ID.'" href="#" title="' . __('Delete an Image','flag') . '">' . __('remove thumb', 'flag') . '</a>';
-    			$action_count = count($actions);
-    			$i = 0;
-    			echo '<p class="row-actions">';
-    			foreach ( $actions as $action => $link ) {
-    				++$i;
-    				( $i == $action_count ) ? $sep = '' : $sep = ' | ';
-    				echo "<span class='$action'>$link$sep</span>";
-    			}
-    			echo '</p>';
-    			?>
+				<textarea title="Title" name="item_a[<?php echo $flv->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $flv->post_title; ?></textarea><br />
+				<p><?php _e('Thumb URL:', 'flag'); ?> <input id="flvthumb-<?php echo $flv->ID; ?>" name="item_a[<?php echo $flv->ID; ?>][post_thumb]" type="text" value="<?php echo $flvthumb; ?>" /> <a class="thickbox" onclick="actInp=<?php echo $flv->ID; ?>" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="<?php _e('Add an Image','flag'); ?>"><?php _e('assist', 'flag'); ?></a></p>
 			</td>
 			<td class="description">
 				<textarea name="item_a[<?php echo $flv->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo $flv->post_content; ?></textarea>

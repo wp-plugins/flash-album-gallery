@@ -219,27 +219,11 @@ if(count($items_a)) {
 			<td class="id"><p style="white-space: nowrap;">ID: <?php echo $ban->ID; ?></p></td>
 			<td class="thumb">
 				<a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo $url; ?>"><img id="thumb-<?php echo $ban->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
-				<input id="banthumb-<?php echo $ban->ID; ?>" name="item_a[<?php echo $ban->ID; ?>][post_thumb]" type="hidden" value="<?php echo $banthumb; ?>" />
 			</td>
 			<td class="title_filename">
 				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
-				<textarea name="item_a[<?php echo $ban->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $ban->post_title; ?></textarea><br />
+				<textarea title="Title" name="item_a[<?php echo $ban->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $ban->post_title; ?></textarea><br />
 				<?php _e('URL', 'flag'); ?>: <input id="banlink-<?php echo $ban->ID; ?>" name="item_a[<?php echo $ban->ID; ?>][link]" style="width:50%;" type="text" value="<?php echo $link; ?>" /><br />
-				<div style="font-size:10px;"><?php _e('Preview image (optional)', 'flag'); ?>: <a class="thickbox" href="<?php echo $preview; ?>" id="preview_txt-<?php echo $ban->ID; ?>"><?php echo $preview; ?></a><input id="preview-<?php echo $ban->ID; ?>" name="item_a[<?php echo $ban->ID; ?>][preview]" style="width:50%;" type="hidden" value="<?php echo $preview; ?>" /></div>
-    			<?php
-    			$actions = array();
-    			$actions['add_preview']   = '<a class="thickbox" onclick="insFor=\'preview\';actInp='.$ban->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('add preview image', 'flag') . '</a>';
-    			$actions['del_preview']   = '<a class="del_preview" data-id="'.$ban->ID.'" href="#" title="' . __('Delete an Image','flag') . '">' . __('remove preview image', 'flag') . '</a>';
-    			$action_count = count($actions);
-    			$i = 0;
-    			echo '<p class="row-actions">';
-    			foreach ( $actions as $action => $link ) {
-    				++$i;
-    				( $i == $action_count ) ? $sep = '' : $sep = ' | ';
-    				echo "<span class='$action'>$link$sep</span>";
-    			}
-    			echo '</p>';
-    			?>
 			</td>
 			<td class="description">
 				<textarea name="item_a[<?php echo $ban->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo $ban->post_content; ?></textarea>

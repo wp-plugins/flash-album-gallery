@@ -226,25 +226,11 @@ if(count($items_a)) {
 			?></td>
 			<td class="thumb" rowspan="2">
 				<img id="thumb-<?php echo $mp3->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" />
-				<input id="mp3thumb-<?php echo $mp3->ID; ?>" name="item_a[<?php echo $mp3->ID; ?>][post_thumb]" type="hidden" value="<?php echo $mp3thumb; ?>" />
 			</td>
 			<td class="title_filename" rowspan="2">
 				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
-				<textarea name="item_a[<?php echo $mp3->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $mp3->post_title; ?></textarea><br />
-    			<?php
-    			$actions = array();
-    			$actions['add_thumb']   = '<a class="thickbox" onclick="actInp='.$mp3->ID.'" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="' . __('Add an Image','flag') . '">' . __('add thumb', 'flag') . '</a>';
-    			$actions['del_thumb']   = '<a class="del_thumb" data-id="'.$mp3->ID.'" href="#" title="' . __('Delete an Image','flag') . '">' . __('remove thumb', 'flag') . '</a>';
-    			$action_count = count($actions);
-    			$i = 0;
-    			echo '<p class="row-actions">';
-    			foreach ( $actions as $action => $link ) {
-    				++$i;
-    				( $i == $action_count ) ? $sep = '' : $sep = ' | ';
-    				echo "<span class='$action'>$link$sep</span>";
-    			}
-    			echo '</p>';
-    			?>
+				<textarea title="Title" name="item_a[<?php echo $mp3->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $mp3->post_title; ?></textarea><br />
+				<p><?php _e('Thumb URL:', 'flag'); ?> <input id="mp3thumb-<?php echo $mp3->ID; ?>" name="item_a[<?php echo $mp3->ID; ?>][post_thumb]" type="text" value="<?php echo $mp3thumb; ?>" /> <a class="thickbox" onclick="actInp=<?php echo $mp3->ID; ?>" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="<?php _e('Add an Image','flag'); ?>"><?php _e('assist', 'flag'); ?></a></p>
 			</td>
 			<td class="description" rowspan="2">
 				<textarea name="item_a[<?php echo $mp3->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo $mp3->post_content; ?></textarea>

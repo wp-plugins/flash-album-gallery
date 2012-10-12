@@ -13,7 +13,7 @@ Try GRAND Flash Album Gallery - powerfull flash & jQuery media content plugin. I
 
 You can edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **image gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc. 
 
-**[How to add gallery to your Wordpress site](http://skins.allforblogs.com/how-add-gallery-to-wordpress-website-or-blog)** - full HowTo guide.
+**[How to add gallery to your Wordpress site](http://mypgc.co/how-add-gallery-to-wordpress-website-or-blog)** - full HowTo guide.
 
 For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page")** and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
@@ -38,6 +38,9 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 
 == Changelog ==
+
+= v1.85 - 12.10.2012 =
+* Changed: new way to add preview images for video and music
 
 = v1.84 - 26.09.2012 =
 * Fixed: edit thumbnail not worked on some servers (Major Fix)
