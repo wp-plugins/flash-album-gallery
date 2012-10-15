@@ -17,6 +17,8 @@ You can edit your media content the way you want: upload images, import music an
 
 For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page")** and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
+New version of Banner Rotator!!! Now it is responsive. Full support of iPhone/iPad. Ideal for mobile themes. [See demo](http://skins.mypgc.co) in the site's header.
+
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
 * iPhone, iPad, Android, Blackberry 6 and Desktop friendly photo gallery, SEO optimized.
