@@ -8,15 +8,10 @@ $flag_custom = get_post_custom($post->ID);
 <head profile="http://gmpg.org/xfn/11">
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <title><?php wp_title(''); ?></title>
-<link href="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css'); ?>" rel="stylesheet" type="text/css" />
 <style type="text/css">
-html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; min-height: 200px; min-width: 400px; }
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; min-height: 200px; min-width: 320px; }
 div#page, .flashalbum { width: 100%; height: 100%; position: relative; z-index: 1; }
-a#backlink { position: absolute; z-index: 10; display: block; padding: 2px 5px; border: 1px solid #000; border-radius: 1px; background: #000; color: #fff; text-decoration: none; outline: none; font-size: 12px; font-family: Verdana; font-weight: bold; }
-a#backlink:hover { text-decoration: none; }
-a.topright { right: 30px; top: 30px; }
 .flag_alternate { margin: 0 !important; }
-form { position: absolute; left: 50%; top:50%; margin-left: -200px; margin-top: -100px; width: 360px; height: 110px; text-align: center; background: #eeeeee; border-radius: 10px; padding: 20px; }
 <?php if(isset($flag_custom['mb_bg_link'][0]) && !empty($flag_custom['mb_bg_link'][0])) { ?>
 div.flashalbum { background-image: url(<?php echo $flag_custom['mb_bg_link'][0]; ?>); background-position: <?php echo $flag_custom['mb_bg_pos'][0]; ?>; background-repeat: <?php echo $flag_custom['mb_bg_repeat'][0]; ?>; }
 <?php } ?>
@@ -25,7 +20,7 @@ div.flashalbum { background-image: url(<?php echo $flag_custom['mb_bg_link'][0];
 <script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/swfobject.js'); ?>" type="text/javascript"></script>
 <script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/swfaddress.js'); ?>" type="text/javascript"></script>
 </head>
-<body>
+<body id="fullwindow">
 <div id="page">
 <?php
 if ( post_password_required( $post ) ) {
@@ -35,7 +30,6 @@ if ( post_password_required( $post ) ) {
 	echo do_shortcode($scode);
 } ?>
 </div>
-<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js'); ?>" type="text/javascript"></script>
 <script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/flagscroll.js'); ?>" type="text/javascript"></script>
 <script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/script.js'); ?>" type="text/javascript"></script>
 </body>

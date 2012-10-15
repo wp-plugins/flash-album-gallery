@@ -1,30 +1,31 @@
 /*
- * jQuery Nivo Slider v2.6
+ * jQuery Nivo Slider v3.1
  * http://nivo.dev7studios.com
  *
- * Copyright 2011, Gilbert Pellegrom
+ * Copyright 2012, Dev7studios
  * Free to use and abuse under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
- * 
- * March 2010
  */
- 
  
 /* The Nivo Slider styles */
 .nivoSlider {
 	position:relative;
-    background:url(images/loading.gif) no-repeat 50% 50%;
+	width:100%;
+	height:auto;
+	overflow: hidden;
 }
 .nivoSlider img {
 	position:absolute;
 	top:0px;
 	left:0px;
-	display: none;
+	max-width: none;
 }
-.nivoSlider a {
-    border:0;
-    display:block;
+.nivo-main-image {
+	display: block !important;
+	position: relative !important; 
+	width: 100% !important;
 }
+
 /* If an image is wrapped in a link */
 .nivoSlider a.nivo-imageLink {
 	position:absolute;
@@ -44,12 +45,16 @@
 	position:absolute;
 	z-index:5;
 	height:100%;
+	top:0;
 }
 .nivo-box {
 	display:block;
 	position:absolute;
 	z-index:5;
+	overflow:hidden;
 }
+.nivo-box img { display:block; }
+
 /* Caption styles */
 .nivo-caption {
 	position:absolute;
@@ -57,9 +62,17 @@
 	bottom:0px;
 	background:#000;
 	color:#fff;
-	opacity:0.8; /* Overridden by captionOpacity setting */
 	width:100%;
 	z-index:8;
+	padding: 5px 10px;
+	opacity: 0.8;
+	overflow: hidden;
+	display: none;
+	-moz-opacity: 0.8;
+	filter:alpha(opacity=8);
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 .nivo-caption p {
 	padding:5px;
@@ -85,97 +98,15 @@
 	right:0px;
 }
 /* Control nav styles (e.g. 1,2,3...) */
+.nivo-controlNav {
+	text-align:center;
+	padding: 15px 0;
+}
 .nivo-controlNav a {
-	position:relative;
-	z-index:9;
 	cursor:pointer;
 }
 .nivo-controlNav a.active {
 	font-weight:bold;
-}
-
-/*
-Skin Name: Nivo Slider Default Theme
-Skin URI: http://nivo.dev7studios.com
-Skin Type: flexible
-Description: The default skin for the Nivo Slider.
-Version: 1.0
-Author: Gilbert Pellegrom
-Author URI: http://dev7studios.com
-*/
-
-.theme-default .nivoSlider {
-	position:relative;
-	background: url(images/loading.gif) no-repeat 50% 50%;
-/*
-    -webkit-box-shadow: 0px 1px 5px 0px #4a4a4a;
-    -moz-box-shadow: 0px 1px 5px 0px #4a4a4a;
-    box-shadow: 0px 1px 5px 0px #4a4a4a;
-*/
-}
-.theme-default .nivoSlider img {
-	position:absolute;
-	top:0px;
-	left:0px;
-	display:none;
-}
-.theme-default .nivoSlider a {
-	border:0 !important;
-	display:block;
-	background: transparent;
-}
-.theme-default .nivoSlider > a:hover {
-	border:0 !important;
-	display:block;
-	background: transparent;
-}
-
-.theme-default .nivo-controlNav {
-	position:absolute;
-    text-align:center;
-    left:0;
-    right:0;
-	bottom: -42px;
-}
-.theme-default .nivo-controlNav a {
-	display:inline-block;
-	width:22px;
-	height:22px;
-	background:url(images/bullets.png) no-repeat;
-	text-indent:-9999px;
-	border:0;
-	margin-right:3px;
-}
-.theme-default .nivo-controlNav a.active {
-	background-position:0 -22px;
-}
-
-.theme-default .nivo-directionNav a {
-	display:block;
-	width:30px;
-	height:30px;
-	background:url(images/arrows.png) no-repeat;
-	text-indent:-9999px;
-	border:0;
-}
-.theme-default a.nivo-nextNav {
-	background-position:-30px 0;
-	right:15px;
-}
-.theme-default a.nivo-prevNav {
-	left:15px;
-}
-
-.theme-default .nivo-caption {
-    font:13px Tahoma;
-}
-.theme-default .nivo-caption p { padding-left: 15px; }
-.theme-default .nivo-caption a {
-    color:#fff;
-    border-bottom:1px dotted #fff;
-}
-.theme-default .nivo-caption a:hover {
-    color:#fff;
 }
 .grandlovelink { display: none; float: right; background: #000000; color: #ffffff; font-size: 11px; padding: 1px 5px; border: 1px solid #000000; border-top: none;
 border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;

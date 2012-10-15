@@ -2,10 +2,10 @@
 /*
 bSkin Name: Default Banner Player
 Skin URI:
-Description:
+Description: New version! Responsive layout. Themes available.
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 1.0
+Version: 2.0
 */
 
 function flagShowSkin_banner_default($args) {
@@ -23,20 +23,24 @@ function flagShowSkin_banner_default($args) {
 		$height = flagGetBetween($data,'<height><![CDATA[',']]></height>');
 	}
 
+	$theme = flagGetBetween($data,'<theme><![CDATA[',']]></theme>');
+	if(empty($theme))
+		$theme = 'default';
 	$effect = flagGetBetween($data,'<effect><![CDATA[',']]></effect>');
 	$slices = flagGetBetween($data,'<slices><![CDATA[',']]></slices>');
 	$animSpeed = flagGetBetween($data,'<animSpeed><![CDATA[',']]></animSpeed>');
 	$pauseTime = flagGetBetween($data,'<pauseTime><![CDATA[',']]></pauseTime>');
 	$startSlide = flagGetBetween($data,'<startSlide><![CDATA[',']]></startSlide>');
-	$keyboardNav = flagGetBetween($data,'<keyboardNav>','</keyboardNav>');
 	$pauseOnHover = flagGetBetween($data,'<pauseOnHover>','</pauseOnHover>');
-	$captionOpacity = flagGetBetween($data,'<captionOpacity>','</captionOpacity>');
+	$directionNav = flagGetBetween($data,'<directionNav>','</directionNav>');
 	$controlNav = flagGetBetween($data,'<controlNav>','</controlNav>');
+	$randomStart = flagGetBetween($data,'<randomStart>','</randomStart>');
 	$linkTarget = (flagGetBetween($data,'<linkTarget>','</linkTarget>') == 'false')? '' : ' target="_blank"';
 	$out = '';
 
 	if(count($items)) {
-		$out .= '<link rel="stylesheet" href="'.FLAG_URLPATH.'admin/js/nivo-slider.css" type="text/css" media="screen" />
+		$out .= '<link rel="stylesheet" href="'.FLAG_URLPATH.'admin/js/themes/'.$theme.'/styles.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="'.FLAG_URLPATH.'admin/js/nivo-slider.css" type="text/css" media="screen" />
 <script src="'.FLAG_URLPATH.'admin/js/jquery.nivo.slider.pack.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(window).load(function() {
@@ -48,23 +52,21 @@ jQuery(window).load(function() {
         animSpeed:'.$animSpeed.', // Slide transition speed
         pauseTime:'.$pauseTime.', // How long each slide will show
         startSlide:'.$startSlide.', // Set starting Slide (0 index)
-        directionNav:true, // Next & Prev navigation
-        directionNavHide:true, // Only show on hover
+        directionNav:'.$directionNav.', // Next & Prev navigation
         controlNav:'.$controlNav.', // 1,2,3... navigation
         controlNavThumbs:false, // Use thumbnails for Control Nav
-        keyboardNav:'.$keyboardNav.', // Use left & right arrows
         pauseOnHover:'.$pauseOnHover.', // Stop animation while hovering
-        captionOpacity:'.($captionOpacity/100).', // Universal caption opacity
         prevText:"Prev", // Prev directionNav text
         nextText:"Next", // Next directionNav text
+		randomStart: '.$randomStart.'
     });
 });
 </script>';
 		$marginBot = $keyboardNav? '55px' : '0';
 		$out .= '
-<div class="slider-wrapper theme-default" style="width:'.$width.'px; margin-bottom:'.$marginBot.'">
+<div class="slider-wrapper theme-'.$theme.'" style="position: relative; margin-bottom:'.$marginBot.'">
     <div class="ribbon"></div>
-    <div id="slider_'.$skinID.'" class="nivoSlider" style="width:'.$width.'px; height:'.$height.'px;">';
+    <div id="slider_'.$skinID.'" class="nivoSlider">';
 		$suffix = $width.'x'.$height;
 		foreach( $items as $id ) {
 			$ban = get_post($id);

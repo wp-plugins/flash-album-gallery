@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel title="Banner Box Skin 1.0">
-	<item type="textInput" name="width">
-		<title><![CDATA[Slider width]]></title>
-		<maxChars>0</maxChars>
-		<restrict><![CDATA[0-9]]></restrict>
-		<text><![CDATA[700]]></text>
-	</item>
-	<item type="textInput" name="height">
-		<title><![CDATA[Slider height]]></title>
-		<maxChars>0</maxChars>
-		<restrict><![CDATA[0-9]]></restrict>
-		<text><![CDATA[300]]></text>
+	<item type="comboBox" name="theme">
+		<title><![CDATA[Choose theme]]></title>
+		<data>
+			<label name="Default"><![CDATA[default]]></label>
+			<label name="Light"><![CDATA[light]]></label>
+			<label name="Dark"><![CDATA[dark]]></label>
+			<label name="Bar"><![CDATA[bar]]></label>
+		</data>
+		<prompt><![CDATA[]]></prompt>
+		<rowCount>4</rowCount>
+		<value><![CDATA[default]]></value>
 	</item>
 	<item type="comboBox" name="effect">
 		<title><![CDATA[Choose effect]]></title>
@@ -60,24 +60,15 @@
 		<restrict><![CDATA[0-9]]></restrict>
 		<text><![CDATA[0]]></text>
 	</item>
-	<item type="checkBox" name="keyboardNav">
-		<title><![CDATA[Enable keyboard controls (left,right arrows)]]></title>
-		<description><![CDATA[]]></description>
-		<selected>true</selected>
-	</item>
 	<item type="checkBox" name="pauseOnHover">
 		<title><![CDATA[Pause slideshow on mouseover]]></title>
 		<description><![CDATA[]]></description>
 		<selected>true</selected>
 	</item>
-	<item type="slider" name="captionOpacity">
-		<title><![CDATA[Caption opacity]]></title>
-		<description><![CDATA[Opacity of the image description background.]]></description>
-		<maximum>100</maximum>
-		<minimum>0</minimum>
-		<snapInterval>5</snapInterval>
-		<tickInterval>5</tickInterval>
-		<value>80</value>
+	<item type="checkBox" name="directionNav">
+		<title><![CDATA[Next & Prev navigation]]></title>
+		<description><![CDATA[]]></description>
+		<selected>true</selected>
 	</item>
 	<item type="checkBox" name="controlNav">
 		<title><![CDATA[Bottom navigation]]></title>
@@ -89,18 +80,22 @@
 		<description><![CDATA[]]></description>
 		<selected>false</selected>
 	</item>
+	<item type="checkBox" name="randomStart">
+		<title><![CDATA[Random Start]]></title>
+		<description><![CDATA[]]></description>
+		<selected>false</selected>
+	</item>
 <properties>
-  <width><![CDATA[600]]></width>
-  <height><![CDATA[300]]></height>
+  <theme><![CDATA[default]]></theme>
   <effect><![CDATA[random]]></effect>
   <slices><![CDATA[15]]></slices>
   <animSpeed><![CDATA[500]]></animSpeed>
   <pauseTime><![CDATA[5000]]></pauseTime>
   <startSlide><![CDATA[0]]></startSlide>
-  <keyboardNav>true</keyboardNav>
   <pauseOnHover>true</pauseOnHover>
-  <captionOpacity>80</captionOpacity>
+  <directionNav>true</directionNav>
   <controlNav>true</controlNav>
-  <linkTarget>true</linkTarget>
+  <linkTarget>false</linkTarget>
+  <randomStart>false</randomStart>
 </properties>
 </panel>

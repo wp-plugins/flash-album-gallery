@@ -2,7 +2,7 @@
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
 
 function flag_admin_options()  {
-	
+
 	global $wpdb, $flag;
 	
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
@@ -11,7 +11,7 @@ function flag_admin_options()  {
 	if ( isset($_POST['updateoption']) ) {	
 		check_admin_referer('flag_settings');
 		// get the hidden option fields, taken from WP core
-		if ( $_POST['page_options'] )	
+		if ( $_POST['page_options'] )
 			$options = explode(',', stripslashes($_POST['page_options']));
 		if ($options) {
 			foreach ($options as $option) {
@@ -20,7 +20,7 @@ function flag_admin_options()  {
 				$flag->options[$option] = $value;
 			}
 			if(isset($_POST['galleryPath'])) {
-			// the path should always end with a slash	
+			// the path should always end with a slash
 				$flag->options['galleryPath']    = trailingslashit($flag->options['galleryPath']);
 			}
 			// the custom sortorder must be ascending
@@ -130,8 +130,8 @@ jQuery(document).ready(function() {
 				<tr>
 					<th align="left"><?php _e('jQuery gallery script','flag'); ?></th>
 					<td><select name="jAlterGalScript">
-							<option value="1" <?php selected('1', $flag_options['jAlterGalScript']); ?>>FancyBox</option>
-							<option value="0" <?php selected('0', $flag_options['jAlterGalScript']); ?>>PhotoSwipe</option>
+							<option value="0" <?php selected('0', $flag_options['jAlterGalScript']); ?>>FancyBox</option>
+							<option value="1" <?php selected('1', $flag_options['jAlterGalScript']); ?>>PhotoSwipe</option>
 						</select>
 					</td>
 				</tr>
@@ -228,7 +228,7 @@ jQuery(document).ready(function() {
 					<th><?php _e('Color 1','flag'); ?>:</th>
 					<td><input class="colorPick" type="text" size="7" maxlength="6" id="vmColor1" name="vmColor1" value="<?php echo $flag_options['vmColor1']?>" /><div id="cp_vmColor1" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
 				</tr>
-				<tr>					
+				<tr>
 					<th><?php _e('Color 2','flag'); ?>:</th>
 					<td>
 						<input class="colorPick" type="text" size="7" maxlength="6" id="vmColor2" name="vmColor2" value="<?php echo $flag_options['vmColor2']; ?>" /><div id="cp_vmColor2" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
@@ -250,7 +250,7 @@ jQuery(document).ready(function() {
 			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
 		</form>
 	</div>
-	
+
 	<div id="mPlayer" class="cptab">
 		<form name="mPlayer"  method="post">
 			<?php wp_nonce_field('flag_settings'); ?>

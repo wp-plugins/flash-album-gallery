@@ -19,21 +19,22 @@ extract($altColors);
 #fancybox-title-over .title { color: #<?php echo $TitleColor; ?>; }
 #fancybox-title-over .descr { color: #<?php echo $DescrColor; ?>; }
 .flag_alternate .flagcatlinks { background-color: #<?php echo $BarsBG; ?>; }
-.flag_alternate .flagcatlinks a.flagcat { border-color: #<?php echo $CatColor; ?>; color: #<?php echo $CatColor; ?>; background-color: #<?php echo $CatBGColor; ?>; }
-.flag_alternate .flagcatlinks a.flagcat:hover { border-color: #<?php echo $CatColor; ?>; }
+.flag_alternate .flagcatlinks a.flagcat { color: #<?php echo $CatColor; ?>; background-color: #<?php echo $CatBGColor; ?>; }
 .flag_alternate .flagcatlinks a.active, .flag_alternate .flagcatlinks a.flagcat:hover { color: #<?php echo $CatColorOver; ?>; background-color: #<?php echo $CatBGColorOver; ?>; }
 	<?php } ?>
 .flag_alternate .flagcategory a.flag_pic_alt { background-color: #<?php echo $ThumbBG; ?>; border: 2px solid #<?php echo $ThumbBG; ?>; color: #<?php echo $ThumbBG; ?>; }
 .flag_alternate .flagcategory a.flag_pic_alt:hover { background-color: #<?php echo $ThumbBG; ?>; border: 2px solid #<?php echo $ThumbLoaderColor; ?>; color: #<?php echo $ThumbLoaderColor; ?>; }
 .flag_alternate .flagcategory a.flag_pic_alt.current, .flag_alternate .flagcategory a.flag_pic_alt.last { border-color: #<?php echo $ThumbLoaderColor; ?>; }
 <?php }; ?>
-<?php if($altColors['FullWindow'] && !$isCrawler){ ?>
-.flag_alternate a.backlink { float: right; display: block; padding: 2px 5px; border: 1px solid #000; border-radius: 1px; background: #000; color: #fff; text-decoration: none; outline: none; font-size: 12px; font-family: Verdana; font-weight: bold; }
-.flag_alternate a.backlink:hover { text-decoration: underline; }
-<?php } ?>
+<?php if($altColors['FullWindow'] && !$isCrawler){ 
+	echo ".flagcatlinks a.backlink { color: #{$CatColor}; background-color: #{$CatBGColor}; }";
+
+} ?>
 </style>
 <?php if(!$isCrawler){
 	if($flag_options['jAlterGalScript'] == 1) { ?>
+	<link href="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css'); ?>" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js'); ?>"></script>
 	<script type="text/javascript">var ExtendVar='fancybox', hitajax = '<?php echo plugins_url("/lib/hitcounter.php", dirname(__FILE__)); ?>';</script>
 	<?php } else if(!$flag_options['jAlterGalScript']) { ?>
 	<style type="text/css">@import url("<?php echo plugins_url('/admin/js/photoswipe/photoswipe.css', dirname(__FILE__)); ?>");</style>
@@ -49,7 +50,7 @@ extract($altColors);
 				$backlink = $flag_custom["mb_button_link"][0];
 				if(!$backlink || $backlink == 'http://'){ $backlink = $_SERVER["HTTP_REFERER"]; }
 				if($backlink){
-					echo '<a class="backlink" href="'.$backlink.'">'.$flag_custom["mb_button"][0].'</a>';
+					echo '<a id="backlink" class="backlink" href="'.$backlink.'">'.$flag_custom["mb_button"][0].'</a>';
 				}
 			}
 		?></div>

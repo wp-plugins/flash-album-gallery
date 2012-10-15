@@ -192,7 +192,9 @@ function flag_list_options() {
 	$flag_options['galleryPath']			= 'wp-content/flagallery/';  		// set default path to the gallery
 	$flag_options['swfUpload']				= true;								// activate the batch upload
 	$flag_options['deleteImg']				= false;							// delete Images
-	$flag_options['deepLinks']				= true;								// activate the global Media RSS file
+	$flag_options['deepLinks']				= true;
+	$flag_options['access_key']				= '';
+	$flag_options['license_key']			= '';
 	$flag_options['useMediaRSS']			= false;							// activate the global Media RSS file
 
 	// Sort Settings
@@ -230,14 +232,14 @@ function flag_list_options() {
 	$flag_options['thumbMouseOver']			= '7485c2';
 	$flag_options['thumbMouseOut']			= '000000';
 	$flag_options['mainTitle']				= 'ffffff';
-	$flag_options['categoryTitle']			= '7485c2';		
+	$flag_options['categoryTitle']			= '7485c2';
 	$flag_options['itemBG']					= 'eae6ef';		
 	$flag_options['itemTitle']				= '7485c2';		
 	$flag_options['itemDescription']		= 'e0e0e0';		
 
 	// Alternative gallery colors
 	$flag_options['jAlterGal']				= true;
-	$flag_options['jAlterGalScript']		= 0;							// If '0' - use PhotoSwipe script
+	$flag_options['jAlterGalScript']		= 1;							// If '0' - use FancyBox script
 	$flag_options['BarsBG']					= '292929';
 	$flag_options['CatBGColor']				= '292929';
 	$flag_options['CatBGColorOver']			= '737373';

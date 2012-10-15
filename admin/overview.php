@@ -169,36 +169,6 @@ function flag_overview_setup(){
 
 <?php
 }
-/**
- * Show the News Box
- * 
- * @return void
- */
-function flag_news_box(){ 
-?>
-<script type="text/javascript">
-/*<![CDATA[*/
-jQuery(document).ready(function(){
-jQuery("#photogallerycreator").load("<?php echo FLAG_URLPATH; ?>admin/news.php #skins", {want2Read:'http://photogallerycreator.com/grand-flagallery/'},function(){
-//Write your additional jQuery script below. Use as many functions as you like, for instance:
-jQuery("#photogallerycreator a").attr('target','_blank');
-jQuery("#photogallerycreator a font").replaceWith('Download Demo');
-});
-});
-/*]]>*/
-</script>
-		<p><?php _e("What's new at PhotoGalleryCreator.com","flag"); ?></p>
-		<div id="photogallerycreator" style="text-align:center; overflow:auto; max-height:627px;">
-			<script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/swfobject.js"></script>
-			<script type="text/javascript">
-			/*<![CDATA[*/
-			swfobject.embedSWF("<?php echo FLAG_URLPATH; ?>admin/js/loader.swf", "loader", "100", "100", "9.0.45", false );
-			/*]]>*/
-			</script>
-			<div class="swfobject" id="loader" style="text-align:center"><p>Loading...</p></div>
-		</div>
-<?php
-}
 
 /**
  * Show a summary of the used images
@@ -246,7 +216,6 @@ add_meta_box('dashboard_right_now', __('Welcome to FlAG Gallery !', 'flag'), 'fl
 add_meta_box('flag_server', __('Server Settings', 'flag'), 'flag_overview_server', 'flag-overview', 'normal', 'default');
 add_meta_box('flag_gd_lib', __('Graphic Library', 'flag'), 'flag_overview_graphic_lib', 'flag-overview', 'normal', 'default');
 add_meta_box('dashboard_primary', __('Setup Box', 'flag'), 'flag_overview_setup', 'flag-overview', 'side', 'core');
-add_meta_box('dashboard_news', __('News Box', 'flag'), 'flag_news_box', 'flag-overview', 'side', 'core');
 
 /**
  * Show GD Library version information

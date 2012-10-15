@@ -39,6 +39,12 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 == Changelog ==
 
+= v1.90 - 15.10.2012 =
+* Fixed: FancyBox alternative gallery
+* Fixed: Scroll for alternative gallery
+* Changed: Alternative gallery categories bar styling
+* Updated: Banner Rotator Default is now responsive and have 4 themes.
+
 = v1.85 - 12.10.2012 =
 * Changed: new way to add preview images for video and music
 

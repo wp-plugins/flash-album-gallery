@@ -52,6 +52,7 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 				jQuery('head').append('<meta content="width=device-width, initial-scale=1.0;" name="viewport" />');
 			}
 			jQuery('.flashalbum').css('height','auto');
+			jQuery('body#fullwindow').css('overflow','auto');
 			jQuery('.flag_alternate').each(function(i){
 				jQuery(this).show();
 				var catMeta = jQuery('.flagCatMeta',this).hide().get();
@@ -63,6 +64,7 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 					if(j==0) act = ' active';
 					jQuery('.flagcatlinks',this).append('<a class="flagcat'+act+'" href="#'+catId+'" title="'+catDescr+'">'+catName+'</a>');
 				}
+				jQuery('a#backlink').appendTo('.flagcatlinks',this);
 			});
 			jQuery('.flag_alternate .flagcat').click(function(){
 				if(!jQuery(this).hasClass('active')) {
