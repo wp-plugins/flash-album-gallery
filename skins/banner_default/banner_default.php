@@ -96,7 +96,6 @@ jQuery(window).load(function() {
 	}
 	$out .= '
     </div>
-	<div class="grandlovelink"><a href="http://wordpress.org/extend/plugins/flash-album-gallery/">GRAND FlAGallery WordPress plugin</a></div>
 </div>';
 
 	$out = apply_filters('flag_show_flash_b_content', $out);	
