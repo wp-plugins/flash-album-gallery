@@ -152,18 +152,15 @@ if ( isset($_POST['updateskinoption']) ) {
 	}
 }
 
-/*if ( isset($_POST['skinkey']) ) {
-	$skinkeyvalue = $_POST['skinkey'];
-	foreach($skinkeyvalue as $key => $value){
-		$skinkey = mysql_real_escape_string($key);
-		$skinvalue = mysql_real_escape_string($value);
-	}
-	if(!empty($skinkey)) {
-		$flag_options['skin_uid'][$skinkey] = $skinvalue;
+if ( isset($_POST['license_key']) ) {
+	check_admin_referer('skin-api');
+	$license_key = mysql_real_escape_string($_POST['license_key']);
+	if(!empty($license_key)) {
+		$flag_options['license_key'] = $license_key;
 		update_option('flag_options', $flag_options);
-	 	flagGallery::show_message(__('Skin Key Saved','flag'));
+	 	flagGallery::show_message(__('License Key Saved','flag'));
 	}
-}*/
+}
 
 if ( isset($_POST['updateoption']) ) {
 	check_admin_referer('flag_settings');
@@ -296,6 +293,18 @@ if( isset($_GET['skins_refresh']) ) {
 	</script>
 </div>
 
+<?php if( current_user_can('FlAG Add skins') ) { ?>
+<div id="skinapikey">
+	<h2><?php _e('Skin License Key', 'flag'); ?></h2>
+	<p><?php _e('If you have license key then paste it here.', 'flag'); ?></p>
+	<form method="post" enctype="multipart/form-data" action="<?php echo admin_url('admin.php?page=flag-skins'); ?>">
+		<?php wp_nonce_field( 'skin-api'); ?>
+		<p><input type="text" name="license_key" value="<?php echo $flag_options['license_key'] ?>" size="55" />
+		<input type="submit" class="button" value="<?php _e('Save', 'flag'); ?>" /></p>
+	</form>
+</div>
+<?php } ?>
+
 <div class="wrap" style="min-width: 878px;">
 <h2><?php _e('Skins', 'flag'); ?>:</h2>
 <!--<p style="float: right;"><a class="button" href="<?php echo admin_url('admin.php?page=flag-skins&amp;skins_refresh=1'); ?>"><?php _e('Refresh / Update Skins', 'flag'); ?></a></p>-->
@@ -311,7 +320,7 @@ $all_skins = get_skins(false,$type);
 $total_all_skins = count($all_skins);
 
 	// not installed skins
-	$skins_xml = @simplexml_load_file('https://dl.dropbox.com/u/104873029/flagallery_skins/skins.xml', 'SimpleXMLElement', LIBXML_NOCDATA);
+	$skins_xml = @simplexml_load_file('https://dl.dropbox.com/u/104873029/flagallery_skins/skins_v2.xml', 'SimpleXMLElement', LIBXML_NOCDATA);
 	$all_skins_arr = $skins_by_type = array();
 	if(!empty($skins_xml)) {
 		foreach($skins_xml as $skin){
@@ -396,20 +405,6 @@ $total_all_skins = count($all_skins);
 	<tr class="<?php echo $class; ?> second">
 		<td class="skin-title"><img src="<?php echo WP_PLUGIN_URL."/flagallery-skins/".dirname($skin_file); ?>/screenshot.png" alt="<?php echo $skin_data['Name'];?>" title="<?php echo $skin_data['Name']; ?>" /></td>
 		<td class="desc">
-			<!--<?php /* if(!empty($skin_data['uid'])) { ?>
-			<div class="key_buy" style="float: right; width: 200px; padding: 5px 5px 5px 10px; margin: 0 10px 20px 50px; border: 1px solid #888;">
-				<?php $suid = $skin_data['uid'];
-					$skin_key = isset($flag_options['skin_uid'][$suid])? $flag_options['skin_uid'][$suid] : ''; ?>
-				<div class="key"><form action="<?php echo admin_url('admin.php?page=flag-skins').'&amp;type='.$type; ?>" method="post">
-					<div><?php _e('License key', 'flag'); ?>:</div>
-					<input type="text" name="skinkey[<?php echo $suid; ?>]" value="<?php echo $skin_key; ?>" />
-					<input type="submit" value="<?php _e('Save', 'flag'); ?>" />
-				</form></div>
-				<?php if(empty($skin_key)) { ?>
-				<div class="buy" style="margin-top: 10px;"><a href="#" target="_blank"><?php _e('Buy license key', 'flag'); echo ': $'.$all_skins_arr[$suid]['price']; ?></a></div>
-				<?php } ?>
-			</div>
-			<?php } */ ?>-->
 			<p><?php echo $skin_data['Description']; ?></p>
 		</td>
 		<td class="skin-delete action-links">
@@ -449,7 +444,6 @@ $total_all_skins = count($all_skins);
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="button" href="<?php echo $skin['demo']; ?>" target="_blank"><?php _e('Preview', 'gmLang') ?></a></p>
  				</form>
 				</div>
-				<!--<div class="description" style="padding: 7px; overflow: hidden;"><?php // echo $skin['description']; ?></div>-->
 			</div>
 		</div>
 		<?php

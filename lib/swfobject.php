@@ -2,8 +2,8 @@
 /**
  * Return a script for the flash slideshow. Can be used in any tmeplate with <?php echo flagShowFlashAlbum($galleryID, $name, $width, $height, $skin) ? >
  * Require the script swfobject.js in the header or footer
- *
- * @access public
+ * 
+ * @access public 
  * @param integer $galleryID ID of the gallery
  * @param integer $flashWidth Width of the flash container
  * @param integer $flashHeight Height of the flash container
@@ -23,14 +23,19 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	if(!is_dir($skinpath)) {
 		$skin = 'default';
 		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
-	}
+	} 
 	$swfmousewheel = '';
 	$flashBacktransparent = '';
 	$flashBackcolor = '';
 	if (empty($width) ) $width  = $flag_options['flashWidth'];
 	if (empty($height)) $height = (int) $flag_options['flashHeight'];
+	$data = '';
 	if(file_exists($skinpath . "/settings/settings.xml")) {
 		if ($settings_xml = @simplexml_load_file($skinpath . "/settings/settings.xml", 'SimpleXMLElement', LIBXML_NOCDATA)){
+			$data = $settings_xml->properties;
+			$data->plug = plugins_url() . '/' . FLAGFOLDER . '/lib/';
+			$data->siteurl = site_url();
+			$data->key = $flag_options['license_key'];
 			if(empty($wmode))
 				$wmode = (string) $settings_xml->properties->property0;
 			$flashBackcolor = (string) $settings_xml->properties->property1;
@@ -59,8 +64,9 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	$altColors['DescrColor'] = $flag_options['DescrColor'];
 	$altColors['FullWindow'] = $fullwindow;
 
+	include(FLAG_ABSPATH."admin/jgallery.php");
 	if($flag_options['jAlterGal']) {
-		$alternate = get_include_contents(FLAG_ABSPATH."admin/jgallery.php", $galleryID, $skin, $skinID, $width, $height, $altColors);
+		$alternate = $xml['alt'];
 	} else {
 		$alternate = '';
 	}
@@ -70,7 +76,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	else
 		$height = 'auto';
 	// init the flash output
-	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , $skinID, '100%', '100%', '10.1.52', FLAG_URLPATH .'skins/expressInstall.swf');
+	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , $skinID, '100%', '100%', '11.0.0', FLAG_URLPATH .'skins/expressInstall.swf');
 
 	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
 
@@ -91,6 +97,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	$swfobject->add_flashvars( 'skinID', $skinID );
 	$swfobject->add_flashvars( 'postID', $post->ID);
 	$swfobject->add_flashvars( 'postTitle', urlencode($post->post_title." "));
+	$swfobject->add_flashvars( 'json', 'json_xml_'.$skinID);
 	if($fullwindow){
 		$flag_custom = get_post_custom($post->ID);
 		$backlink = $flag_custom["mb_button_link"][0];
@@ -121,6 +128,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	// add now the script code
 	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT']) && !preg_match("/Android/i", $_SERVER['HTTP_USER_AGENT'])){
 		$out .= "\n".'<script type="text/javascript" defer="defer">';
+		$out .= "\n".'function json_xml_'.$skinID.'(e){ return '.$xml['json'].'; }';
 		$out .= "\n".'flag_alt[\''.$skinID.'\'] = jQuery("div#'.$skinID.'_jq").clone().wrap(document.createElement(\'div\')).parent().html();';
 		$out .= $swfobject->javascript();
 		$out .= "\n".'</script>';

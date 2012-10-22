@@ -29,8 +29,17 @@ function flag_admin_options()  {
 		// Save options
 		update_option('flag_options', $flag->options);
 
-	 	flagGallery::show_message(__('Update Successfully','flag'));
-	}		
+		if(!isset($_POST['access_key']))
+			flagGallery::show_message(__('Update Successfully','flag'));
+	}
+	if( isset($_POST['access_key']) ){
+		check_admin_referer('flag_settings');
+		$ch = curl_init('http://mypgc.co/app/account_st.php');
+		curl_setopt ($ch, CURLOPT_POST, 1);
+		curl_setopt ($ch, CURLOPT_POSTFIELDS, array('access_key'=>$_POST['access_key'], 'access_url'=>$_POST['access_url']));
+		curl_exec ($ch);
+		curl_close ($ch);
+	}
 
 	if ( isset($_POST['update_cap']) ) {	
 
@@ -65,6 +74,7 @@ function flag_admin_options()  {
 
 	<ul id="tabs" class="tabs">
 		<li class="selected"><a href="#" rel="imageoptions"><?php _e('Image Gallery Options', 'flag'); ?></a></li>
+		<li><a href="#" rel="rControl"><?php _e('Remote Control', 'flag'); ?></a></li>
 		<li><a href="#" rel="vPlayer"><?php _e('FLV Single Player Options', 'flag'); ?></a></li>
 		<li><a href="#" rel="mPlayer"><?php _e('MP3 Single Player Options', 'flag'); ?></a></li>
 <?php if (flagGallery::flag_wpmu_enable_function('wpmuRoles')) : ?>
@@ -212,6 +222,23 @@ jQuery(document).ready(function() {
 			</table>
 			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
 		</form>	
+	</div>
+
+	<div id="rControl" class="cptab">
+		<form name="rControl"  method="post">
+			<?php wp_nonce_field('flag_settings'); ?>
+			<input type="hidden" name="page_options" value="access_key" />
+			<input type="hidden" name="access_url" value="<?php echo plugins_url() . '/' . FLAGFOLDER . '/lib/app.php'; ?>" />
+			<h2><?php _e('Remote Control App Settings','flag'); ?></h2>
+			<table class="form-table flag-options">
+				<tr>
+					<th valign="top" width="200"><?php _e('App Access Key','flag'); ?>:</th>
+					<td valign="top"><input type="text" size="54" id="access_key" name="access_key" value="<?php echo $flag_options['access_key']?>" /></td>
+				</tr>
+			</table>
+			<h3>Coming soon...</h3>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
+		</form>
 	</div>
 
 	<div id="vPlayer" class="cptab">
