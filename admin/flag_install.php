@@ -191,7 +191,7 @@ function flag_default_options() {
 function flag_list_options() {
 	$flag_options['galleryPath']			= 'wp-content/flagallery/';  		// set default path to the gallery
 	$flag_options['swfUpload']				= true;								// activate the batch upload
-	$flag_options['deleteImg']				= false;							// delete Images
+	$flag_options['deleteImg']				= true;								// delete Images
 	$flag_options['deepLinks']				= true;
 	$flag_options['access_key']				= '';
 	$flag_options['license_key']			= '';

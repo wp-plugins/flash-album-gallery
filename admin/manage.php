@@ -123,10 +123,10 @@ class flagManageGallery {
 			check_admin_referer('flag_delpicture');
 			$image = $flagdb->find_image( $this->pid );
 			if ($image) {
-				if ($flag->options['deleteImg']) {
+				//if ($flag->options['deleteImg']) {
 					@unlink($image->imagePath);
 					@unlink($image->thumbPath);	
-				} 
+				//} 
 				$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = $image->pid");
 			}
 			if($delete_pic)
