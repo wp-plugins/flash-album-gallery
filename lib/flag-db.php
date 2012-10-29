@@ -78,6 +78,9 @@ class flagdb {
 		
         $exclude_clause = ($exclude) ? ' AND exclude<>1 ' : '';
 		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
+		if( !in_array($order_by, array('title','rand')) ) {
+			$order_by = 'gid';
+		}
 		if( $order_by == 'rand') $order_by = 'RAND()';
 		$limit_by  = ( $limit > 0 ) ? 'LIMIT ' . intval($start) . ',' . intval($limit) : '';
 		$this->galleries = $wpdb->get_results( "SELECT SQL_CALC_FOUND_ROWS * FROM $wpdb->flaggallery ORDER BY {$order_by} {$order_dir} {$limit_by}", OBJECT_K );

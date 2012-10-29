@@ -61,7 +61,7 @@ class FlAG_shortcodes {
     			$out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode, false, $fullwindow, $align);
 
         } elseif($gid == "all") {
-			if(!$orderby) $orderby='gid';
+			if(!in_array($orderby, array('title','rand'))) $orderby='gid';
 			if(!$order) $order='DESC';
             $gallerylist = $flagdb->find_all_galleries($orderby, $order);
             if(is_array($gallerylist)) {

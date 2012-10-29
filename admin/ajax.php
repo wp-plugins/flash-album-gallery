@@ -127,9 +127,8 @@ function flag_save_album() {
 		if(count($g))
 			$galstring = implode(',', $g);
 		else
-			$g = '';
-		$name = $wpdb->escape($album_name);
-		$result = $wpdb->query( "UPDATE $wpdb->flagalbum SET name = '{$name}', categories = '{$galstring}' WHERE id = $album_id" );
+			$galstring = '';
+		$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagalbum SET name = %s, categories = %s WHERE id = %s", $album_name, $galstring, $album_id) );
 	}
 
 	if($result) {

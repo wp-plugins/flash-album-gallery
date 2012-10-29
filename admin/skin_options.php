@@ -29,6 +29,7 @@ if(isset($properties_skin) && !empty($properties_skin)) {
 	$fp = fopen($settingsXML, "w");
 	if(!$fp)
 		exit("0");//Failure
+	$properties_skin = str_replace( array( '=','?','"','$' ), '', $properties_skin );
 	$newProperties = preg_replace("|<properties>.*?</properties>|si", $properties_skin, $mainXML);
 	fwrite($fp, $newProperties);
 	fclose($fp);

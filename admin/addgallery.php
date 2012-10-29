@@ -128,7 +128,9 @@ if($flag->options['swfUpload']) { ?>
 				upload_complete_handler : uploadComplete,
 				
 				post_params : {
-					"auth_cookie" : "<?php echo $_COOKIE[AUTH_COOKIE]; ?>",
+					"auth_cookie" : "<?php echo (is_ssl() ? $_COOKIE[SECURE_AUTH_COOKIE] : $_COOKIE[AUTH_COOKIE]); ?>",
+                    "logged_in_cookie": "<?php echo $_COOKIE[LOGGED_IN_COOKIE]; ?>",
+                    "_wpnonce" : "<?php echo wp_create_nonce('flag_swfupload'); ?>",
 					"galleryselect" : "0"
 				},
 				
