@@ -1,7 +1,7 @@
 === GRAND FlAGallery ===
 Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
-Tags: admin,flash,fullscreen gallery,gallery,image,images,image gallery,mp3,music,page,photo,slider,plugin,Post,posts,slideshow,video,widget
+Tags: admin, flash, fullscreen gallery, gallery, image, images, image gallery, mp3, music, page, photo, slider, plugin, Post, posts, slideshow, video, widget, iOS gallery
 Requires at least: 3.0
 Tested up to: 3.4.2
 Stable tag: trunk
