@@ -41,6 +41,10 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 == Changelog ==
 
+= v2.11 - 03.11.2012 =
+* Updated: New system of checking license key
+* Changed: Skins update box.
+
 = v2.10 - 29.10.2012 =
 * Fixed: Vulnerability in shortcode function, album saving, saving skin options, facebook.php file
 * Fixed: Delete image will delete it from FTP

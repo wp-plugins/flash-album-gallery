@@ -155,10 +155,28 @@ if ( isset($_POST['updateskinoption']) ) {
 if ( isset($_POST['license_key']) ) {
 	check_admin_referer('skin-api');
 	$license_key = mysql_real_escape_string($_POST['license_key']);
-	if(!empty($license_key)) {
-		$flag_options['license_key'] = $license_key;
-		update_option('flag_options', $flag_options);
-	 	flagGallery::show_message(__('License Key Saved','flag'));
+	$flag_options['license_key'] = $license_key;
+	update_option('flag_options', $flag_options);
+ 	flagGallery::show_message(__('License Key Updated','flag'));
+}
+
+if(!empty($flag_options['license_key'])){
+	if(function_exists('curl_init')){
+		$ch = curl_init('http://mypgc.co/app/account_st.php');
+		curl_setopt ($ch, CURLOPT_POST, 1);
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt ($ch, CURLOPT_POSTFIELDS, array('check_status'=>$flag_options['license_key']));
+		$status = curl_exec ($ch);
+		curl_close ($ch);
+		if($status === '0'){
+			$flag_options['license_key'] = '';
+			update_option('flag_options', $flag_options);
+			flagGallery::show_message(__('Your license key was deactivated','flag'));
+		} elseif($status === ''){
+			flagGallery::show_message(__('Bad Licence Key','flag'));
+		}
+	} else {
+		flagGallery::show_message(__('cURL library is not installed on your server.','flag'));
 	}
 }
 
@@ -322,6 +340,7 @@ $total_all_skins = count($all_skins);
 	// not installed skins
 	$skins_xml = @simplexml_load_file('https://dl.dropbox.com/u/104873029/flagallery_skins/skins_v2.xml', 'SimpleXMLElement', LIBXML_NOCDATA);
 	$all_skins_arr = $skins_by_type = array();
+	$skins_xml_error = false;
 	if(!empty($skins_xml)) {
 		foreach($skins_xml as $skin){
 			$suid = (string) $skin->uid;
@@ -329,6 +348,8 @@ $total_all_skins = count($all_skins);
 			$all_skins_arr[$suid] = get_object_vars($skin);
 			$skins_by_type[$skintype][$suid] = $all_skins_arr[$suid];
 		}
+	} else {
+		$skins_xml_error = __('URL file-access is disabled in the server configuration.', 'flag');
 	}
 
 
@@ -449,7 +470,7 @@ $total_all_skins = count($all_skins);
 		<?php
 		}
 	} else { ?>
-		<div class="skin noskins"><?php echo sprintf(__('All available %s skins are already installed...', 'gmLang'), $stype); ?></div>
+		<div class="skin noskins"><?php if(!$skins_xml_error){ echo sprintf(__('All available %s skins are already installed...', 'gmLang'), $stype); } else { echo $skins_xml_error; } ?></div>
 	<?php }
 	?>
 	</div>

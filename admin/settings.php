@@ -33,13 +33,20 @@ function flag_admin_options()  {
 			flagGallery::show_message(__('Update Successfully','flag'));
 	}
 	if( isset($_POST['access_key']) ){
-		check_admin_referer('flag_settings');
-		$ch = curl_init('http://mypgc.co/app/account_st.php');
-		curl_setopt ($ch, CURLOPT_POST, 1);
-		curl_setopt ($ch, CURLOPT_POSTFIELDS, array('access_key'=>$_POST['access_key'], 'access_url'=>$_POST['access_url']));
-		curl_exec ($ch);
-		curl_close ($ch);
+		if(function_exists('curl_init')){
+			check_admin_referer('flag_settings');
+			$ch = curl_init('http://mypgc.co/app/account_st.php');
+			curl_setopt ($ch, CURLOPT_POST, 1);
+			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt ($ch, CURLOPT_POSTFIELDS, array('access_key'=>$_POST['access_key'], 'access_url'=>$_POST['access_url']));
+			$access_key_return = curl_exec ($ch);
+			curl_close ($ch);
+		} else {
+			$access_key_return = '<div class="updated"><p>cURL library is not installed on your server.</p></div>';
+		}
+		echo $access_key_return;
 	}
+	
 
 	if ( isset($_POST['update_cap']) ) {	
 
