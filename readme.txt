@@ -41,6 +41,9 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 == Changelog ==
 
+= v2.12 - 12.11.2012 =
+* Fixed: XSS vulnerability in swfupload
+
 = v2.11 - 03.11.2012 =
 * Updated: New system of checking license key
 * Changed: Skins update box.
