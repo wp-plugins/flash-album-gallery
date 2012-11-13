@@ -22,7 +22,7 @@ if(isset($_GET['i'])) {
 	$skin = '';
 	if(isset($_GET['f'])){
 		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$_GET['f'];
-		$skin = esc_url($_GET['f']);
+		$skin = esc_js($_GET['f']);
 	}
 	$h = isset($_GET['h'])? intval($_GET['h']) : (int) $flag_options['flashHeight'];
 
