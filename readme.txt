@@ -41,6 +41,9 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 == Changelog ==
 
+= v2.14 - 20.11.2012 =
+* Fixed: swfobject path was wrong on some servers
+
 = v2.12 - 12.11.2012 =
 * Fixed: XSS vulnerability in swfupload
 

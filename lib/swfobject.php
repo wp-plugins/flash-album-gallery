@@ -19,10 +19,10 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	$flag_options = get_option('flag_options');
 	$skinID = 'sid_'.mt_rand();
 	if($skin == '') $skin = $flag_options['flashSkin'];
-	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
 	if(!is_dir($skinpath)) {
 		$skin = 'default';
-		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+		$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
 	} 
 	$swfmousewheel = '';
 	$flashBacktransparent = '';
@@ -76,7 +76,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	else
 		$height = 'auto';
 	// init the flash output
-	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , $skinID, '100%', '100%', '11.0.0', FLAG_URLPATH .'skins/expressInstall.swf');
+	$swfobject = new flag_swfobject( plugins_url('flagallery-skins/'.$skin.'/gallery.swf') , $skinID, '100%', '100%', '11.0.0', FLAG_URLPATH .'skins/expressInstall.swf');
 
 	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
 
@@ -91,7 +91,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	$swfobject->add_attributes('id', $skinID);
 
 	// adding the flash parameter
-	$swfobject->add_flashvars( 'path', $flag_options['skinsDirURL'].$skin.'/' );
+	$swfobject->add_flashvars( 'path', plugins_url('flagallery-skins/'.$skin.'/') );
 	$swfobject->add_flashvars( 'gID', $galleryID );
 	$swfobject->add_flashvars( 'galName', $name );
 	$swfobject->add_flashvars( 'skinID', $skinID );
@@ -145,12 +145,12 @@ function flagShowMPlayer($playlist, $width, $height, $wmode='', $skin='', $isWid
     require_once ( dirname(dirname(__FILE__)) . '/admin/playlist.functions.php');
 
 	$flag_options = get_option('flag_options');
-	$playlistPath = $flag_options['galleryPath'].'playlists/'.$playlist.'.xml';
+	$playlistPath = 'wp-content/flagallery/playlists/'.$playlist.'.xml';
 	$playlist_data = get_playlist_data(ABSPATH.$playlistPath);
 	if(!$skin){
 		$skin = $playlist_data['skin'];
 	}
-	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
 	$args = array(
@@ -172,10 +172,10 @@ function flagShowVPlayer($playlist, $width, $height, $wmode='') {
     require_once ( dirname(dirname(__FILE__)) . '/admin/video.functions.php');
 
 	$flag_options = get_option('flag_options');
-	$playlistPath = $flag_options['galleryPath'].'playlists/video/'.$playlist.'.xml';
+	$playlistPath = 'wp-content/flagallery/playlists/video/'.$playlist.'.xml';
 	$playlist_data = get_v_playlist_data(ABSPATH.$playlistPath);
 	$skin = $playlist_data['skin'];
-	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
 	$args = array(
@@ -245,11 +245,11 @@ function flagShowBanner($xml, $width, $height, $wmode='') {
     require_once ( dirname(dirname(__FILE__)) . '/admin/banner.functions.php');
 
 	$flag_options = get_option('flag_options');
-	$playlistPath = $flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml';
+	$playlistPath = 'wp-content/flagallery/playlists/banner/'.$xml.'.xml';
 	$playlist_data = get_b_playlist_data(ABSPATH.$playlistPath);
 	$skin = $playlist_data['skin'];
 	$items = $playlist_data['items'];
-	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
 	$args = array(
@@ -271,13 +271,13 @@ function flagShowWidgetBanner($xml, $width, $height, $skin) {
     require_once ( dirname(dirname(__FILE__)) . '/admin/banner.functions.php');
 
 	$flag_options = get_option('flag_options');
-	$playlistPath = $flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml';
+	$playlistPath = 'wp-content/flagallery/playlists/banner/'.$xml.'.xml';
 	$playlist_data = get_b_playlist_data(ABSPATH.$playlistPath);
 	if(!$skin) {
 		$skin = $playlist_data['skin'];
 	}
 	$items = $playlist_data['items'];
-	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
+	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	$args = array(
 		'xml'		=> $xml,
