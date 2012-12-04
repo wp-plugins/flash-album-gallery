@@ -38,6 +38,7 @@ function flag_banner_controler() {
 				$title = $_POST['playlist_title'];
 				$descr = $_POST['playlist_descr'];
 				$file = $_GET['playlist'];
+				$data = array();
 				foreach($_POST['item_a'] as $item_id => $item) {
 					if($action=='delete_items' && in_array($item_id, $_POST['doaction']))
 						continue;
@@ -113,7 +114,7 @@ jQuery(document).ready(function(){
 					path: encodeURI(bannerfolder + crunch_list[0])
 				},
 				function( response ) {
-					crunch_list.shift()
+					crunch_list.shift();
 					var parts_done = parts - crunch_list.length;
 					jQuery(".flag_crunching .flag_progress .flag_complete").animate({width:parts_done*(100/parts)+'%'}, 400);
 					jQuery(".flag_crunching").append(response);
@@ -196,6 +197,7 @@ function flag_banner_wp_media_lib($added=false) {
 	global $wpdb;
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
 	$filepath = admin_url() . 'admin.php?page=' . $_GET['page'];
+	$exclude = array();
 	if($added!==false) {
 		$filepath .= '&amp;playlist='.$_GET['playlist'].'&amp;mode=save';
 		$flag_options = get_option('flag_options');
@@ -208,17 +210,18 @@ function flag_banner_wp_media_lib($added=false) {
 <!--
 jQuery(document).ready(function(){
     jQuery('.cb :checkbox').click(function() {
+		var cur, arr, del;
 		if(jQuery(this).is(':checked')){
-			var cur = jQuery(this).val();
-			var arr = jQuery('#items_array').val();
-			if(arr) { var del = ','; } else { var del = ''; }
+			cur = jQuery(this).val();
+			arr = jQuery('#items_array').val();
+			if(arr) { del = ','; } else { del = ''; }
 			jQuery('#items_array').val(arr+del+cur);
 		} else {
-			var cur = jQuery(this).val();
-			var arr = jQuery('#items_array').val().split(',');
+			cur = jQuery(this).val();
+			arr = jQuery('#items_array').val().split(',');
 			arr = jQuery.grep(arr, function(a){ return a != cur; }).join(',');
 			jQuery('#items_array').val(arr);
-		};
+		}
  	});
 });
 function checkAll(form)	{
@@ -238,20 +241,20 @@ function checkAll(form)	{
 // this function check for a the number of selected images, sumbmit false when no one selected
 function checkSelected() {
 	if(!jQuery('.cb input:checked')) { 
-		alert('<?php echo js_escape(__("No items selected", "flag")); ?>');
+		alert('<?php echo esc_js(__("No items selected", "flag")); ?>');
 		return false; 
-	} 
-	actionId = jQuery('#bulkaction').val();
+	}
+	var actionId = jQuery('#bulkaction').val();
 	switch (actionId) {
 		case "new_playlist":
 			showDialog('new_playlist', 160);
 			return false;
 			break;
 		case "add_to_playlist":
-			return confirm('<?php echo sprintf(js_escape(__("You are about to add %s items to playlist \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
+			return confirm('<?php echo sprintf(esc_js(__("You are about to add %s items to playlist \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 			break;
 	}
-	return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s items \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
+	return confirm('<?php echo sprintf(esc_js(__("You are about to start the bulk edit for %s items \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 }
 
 function showDialog( windowId, height ) {
@@ -273,7 +276,7 @@ function showDialog( windowId, height ) {
 	  jQuery(function() {								 
 	    jQuery("#file_browser").fileTree({
 	      root: "<?php echo WINABSPATH; ?>",
-	      script: "<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/connectors/jqueryFileTree.php",
+	      script: "<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/connectors/jqueryFileTree.php"
 	    }, function(file) {
 	        var path = file.replace("<?php echo WINABSPATH; ?>", "");
 	        jQuery("#bannerfolder").val(path);

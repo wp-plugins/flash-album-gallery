@@ -36,20 +36,21 @@ jQuery(document).ready(function() {
 	if(wmode) wmode = ' wmode=transparent'; else wmode = ' wmode=window';
 	short_code(galleries,skin,wmode);
 	jQuery('#galleries :checkbox').click(function(){
+		var cur, arr, del;
 		if(jQuery(this).is(':checked')){
-			var cur = jQuery(this).val();
+			cur = jQuery(this).val();
 			if(cur == 'all') {
 				jQuery(this).parent().siblings('.row').find('input').removeAttr('checked');
 				jQuery('#mb_items_array').val(cur);
 			} else {
 				jQuery('#galleries input[value="all"]').removeAttr('checked');
-				var arr = jQuery('#mb_items_array').val();
-				if(arr && arr != 'all') { var del = ','; } else { arr = ''; var del = ''; }
+				arr = jQuery('#mb_items_array').val();
+				if(arr && arr != 'all') { del = ','; } else { arr = ''; del = ''; }
 				jQuery('#mb_items_array').val(arr+del+cur);
 			}
 		} else {
-			var cur = jQuery(this).val();
-			var arr = jQuery('#mb_items_array').val().split(',');
+			cur = jQuery(this).val();
+			arr = jQuery('#mb_items_array').val().split(',');
 			arr = jQuery.grep(arr, function(a){ return a != cur; }).join(',');
 			if(arr) {
 				jQuery('#mb_items_array').val(arr);

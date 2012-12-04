@@ -28,15 +28,14 @@ if(isset($_GET['i'])) {
 
 	$gids = $_GET['i'];
 	if($gids=='all') {
+		/** @var $flagdb flagdb */
+		global $flagdb;
 		$gids='';
 		if(empty($orderby)) $orderby='gid';
 		if(empty($order)) $order='DESC';
 	          $gallerylist = $flagdb->find_all_galleries($orderby, $order);
 	    if(is_array($gallerylist)) {
-			$excludelist = explode(',',$exclude);
 			foreach($gallerylist as $gallery) {
-				if (in_array($gallery->gid, $excludelist))
-					continue;
 				$gids.='_'.$gallery->gid;
 			}
 			$gids = ltrim($gids,'_');

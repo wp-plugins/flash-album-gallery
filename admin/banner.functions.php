@@ -2,7 +2,7 @@
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
 
 function get_b_playlist_data( $playlist_file ) {
-	global $wpdb;	
+
 	$playlist_content = file_get_contents($playlist_file);
 
 	$playlist_data['title'] = flagGallery::flagGetBetween($playlist_content,'<title><![CDATA[',']]></title>');
@@ -60,7 +60,7 @@ function get_b_playlists($playlist_folder = '') {
 }
 
 function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
-	global $wpdb;
+
 	require_once(ABSPATH . '/wp-admin/includes/image.php');
 	if(!trim($title)) {
 		$title = 'default';
@@ -155,7 +155,7 @@ function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
 }
 
 function flagSave_bPlaylistSkin($file) {
-	global $wpdb;
+
 	$flag_options = get_option('flag_options');
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/banner/'.$file.'.xml';
 	// Save options

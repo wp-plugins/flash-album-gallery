@@ -23,9 +23,11 @@ function flag_ajax_operation() {
 		switch ( $_POST['operation'] ) {
 			case 'create_thumbnail' :
 				$result = flagAdmin::create_thumbnail($picture);
+				do_action('flag_thumbnail_created', $picture);
 			break;
 			case 'resize_image' :
 				$result = flagAdmin::resize_image($picture);
+				do_action('flag_image_resized', $picture);
 			break;
 			case 'import_metadata' :
 				$result = flagAdmin::import_MetaData( $id );
@@ -123,6 +125,7 @@ function flag_save_album() {
 	$g = array();
 	if(isset($_POST['form']))
 		parse_str($_POST['form']);
+	$result = false;
 	if($album_name && $album_id) {
 		if(count($g))
 			$galstring = implode(',', $g);
@@ -150,12 +153,13 @@ function flag_delete_album() {
 		die('-1');
 	// check for correct FlAG capability
 	if ( !current_user_can('FlAG Manage gallery') ) 
-		die('-1');	
-		
+		die('-1');
+
+	$result = false;
 	if(isset($_POST['post'])) {
 		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->flagalbum WHERE id = %d", $_POST['post']) );
 	}
-	
+
 	if($result) {
 		_e('Success','flag');
 	}

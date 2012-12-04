@@ -69,6 +69,7 @@ function flag_picturelist() {
 	$gallery_columns = flag_manage_gallery_columns();
 	$hidden_columns  = get_hidden_columns('flag-manage-images');
 	if($picturelist){
+		$a_hits = array();
 		foreach($picturelist as $p){
 			$a_hits[] = $p->hitcounter;
 		}
@@ -100,7 +101,7 @@ function showDialog( windowId, height ) {
 			if(form.elements[i].name == "doaction[]")
 				if(form.elements[i].checked == true)
 					if (elementlist == "")
-						elementlist = form.elements[i].value
+						elementlist = form.elements[i].value;
 					else
 						elementlist += "," + form.elements[i].value ;
 		}
@@ -144,7 +145,7 @@ function checkSelected() {
 	var numchecked = getNumChecked(document.getElementById('updategallery'));
 	 
 	if(numchecked < 1) { 
-		alert('<?php echo js_escape(__("No images selected", "flag")); ?>');
+		alert('<?php echo esc_js(__("No images selected", "flag")); ?>');
 		return false; 
 	} 
 	
@@ -166,7 +167,7 @@ function checkSelected() {
 			break;			
 	}
 	
-	return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
+	return confirm('<?php echo sprintf(esc_js(__("You are about to start the bulk edit for %s images \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 }
 
 jQuery(document).ready( function() {
@@ -181,7 +182,7 @@ jQuery(document).ready( function() {
 <div class="wrap">
 
 <?php if ($is_search) :?>
-<h2><?php printf( __('Search results for &#8220;%s&#8221;', 'flag'), wp_specialchars( get_search_query() ) ); ?></h2>
+<h2><?php printf( __('Search results for &#8220;%s&#8221;', 'flag'), esc_html( get_search_query() ) ); ?></h2>
 <form class="search-form" action="" method="get">
 <p class="search-box">
 	<label class="hidden" for="media-search-input"><?php _e( 'Search Images', 'flag' ); ?>:</label>
@@ -199,14 +200,14 @@ jQuery(document).ready( function() {
 
 <?php else :?>
 
-<h2><?php echo _n( 'Gallery', 'Galleries', 1, 'flag' ); ?> : <?php echo flagGallery::i18n($gallery->title); ?></h2>
+<h2><?php echo _n( 'Gallery', 'Galleries', 1, 'flag' ); ?> : <?php echo $gallery->title; ?></h2>
 <select name="select_gid" style="width:180px; float: right; margin: -20px 3px 0 0;" onchange="window.location.href=this.options[this.selectedIndex].value">
 	<option selected="selected"><?php _e('Choose another gallery', 'flag'); ?></option>
 <?php 
 	foreach ($gallerylist as $gal) { 
 		if ($gal->gid != $act_gid) { 
 ?>
-	<option value="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gal->gid, 'flag_editgallery')?>" ><?php echo $gal->gid; ?> - <?php echo attribute_escape(stripslashes($gal->title)); ?></option>
+	<option value="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gal->gid, 'flag_editgallery')?>" ><?php echo $gal->gid; ?> - <?php echo esc_attr(stripslashes($gal->title)); ?></option>
 <?php 
 		} 
 	}
@@ -282,6 +283,7 @@ jQuery(document).ready( function() {
 		<option value="copy_meta" ><?php _e("Metadata to description",'flag')?></option>
 		<option value="copy_to" ><?php _e("Copy to...",'flag')?></option>
 		<option value="move_to"><?php _e("Move to...",'flag')?></option>
+		<?php do_action('flag_manage_images_bulkaction'); ?>
 	</select>
 	<input class="button-secondary alignleft" style="margin-right:10px;" type="submit" name="showThickbox" value="<?php _e("OK",'flag')?>" onclick="if ( !checkSelected() ) return false;" />
 	
@@ -397,10 +399,10 @@ if($picturelist) {
 							<p>
 							<?php
 							$actions = array();
-							$actions['view']   = '<a class="thickbox" href="' . $picture->imageURL . '" title="' . attribute_escape(sprintf(__('View "%s"'), $picture->filename)) . '">' . __('View', 'flag') . '</a>';
+							$actions['view']   = '<a class="thickbox" href="' . $picture->imageURL . '" title="' . esc_attr(sprintf(__('View "%s"'), $picture->filename)) . '">' . __('View', 'flag') . '</a>';
 							$actions['meta']   = '<a class="thickbox" href="' . FLAG_URLPATH . 'admin/showmeta.php?id=' . $pid . '" title="' . __('Show Meta data','flag') . '">' . __('Meta', 'flag') . '</a>';
 							$actions['custom_thumb']   = '<a class="thickbox" href="' . FLAG_URLPATH . 'admin/manage_thumbnail.php?id=' . $pid . '" title="' . __('Customize thumbnail','flag') . '">' . __('Edit thumb', 'flag') . '</a>';
-							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=flag-manage-gallery&amp;mode=delpic&amp;gid=".$act_gid."&amp;pid=".$pid, 'flag_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . attribute_escape(sprintf(__('Delete "%s"' , 'flag'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete','flag') . '</a>';
+							$actions['delete'] = '<a class="submitdelete" href="' . wp_nonce_url("admin.php?page=flag-manage-gallery&amp;mode=delpic&amp;gid=".$act_gid."&amp;pid=".$pid, 'flag_delpicture'). '" class="delete column-delete" onclick="javascript:check=confirm( \'' . esc_attr(sprintf(__('Delete "%s"' , 'flag'), $picture->filename)). '\');if(check==false) return false;">' . __('Delete','flag') . '</a>';
 							$action_count = count($actions);
 							$i = 0;
 							echo '<div class="row-actions">';
@@ -602,6 +604,7 @@ function flag_manage_gallery_columns() {
 	$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'flag') . ' / ' . __('Description', 'flag');
 	$gallery_columns['exclude'] = '<img src="'.FLAG_URLPATH.'admin/images/lock.png" alt="member view" title="'.__('Only for logged in users', 'flag').'" />';
 	//$gallery_columns['views'] = '<img src="'.FLAG_URLPATH.'admin/images/hits.png" alt="total views" title="'.__('Views', 'flag').'" />';
+	$gallery_columns = apply_filters('flag_manage_images_columns', $gallery_columns);
 
 	return $gallery_columns;
 }

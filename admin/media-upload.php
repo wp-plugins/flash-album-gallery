@@ -123,7 +123,7 @@ function media_upload_flag_form($errors) {
 	
 	<div class="alignleft actions">
 		<select id="select_gal" name="select_gal" style="width:200px;">;
-			<option value="0" <?php selected('0', $galleryID); ?> ><?php esc_attr( _e('No gallery',"flag") ); ?></option>
+			<option value="0" <?php selected('0', $galleryID); ?> ><?php _e('No gallery',"flag"); ?></option>
 			<?php
 			// Show gallery selection
 			$gallerylist = $wpdb->get_results("SELECT * FROM $wpdb->flaggallery ORDER BY gid ASC");
@@ -135,7 +135,7 @@ function media_upload_flag_form($errors) {
 			}
 			?>
 		</select>
-		<input type="submit" id="show-gallery" value="<?php esc_attr( _e('Select &#187;','flag') ); ?>" class="button-secondary" />
+		<input type="submit" id="show-gallery" value="<?php _e('Select &#187;','flag'); ?>" class="button-secondary" />
 	</div>
 	<br style="clear:both;" />
 </div>
@@ -166,46 +166,46 @@ function media_upload_flag_form($errors) {
 			?>
 			<div id='media-item-<?php echo $picid; ?>' class='media-item preloaded'>
 			  <div class='filename'></div>
-			  <a class='toggle describe-toggle-on' href='#'><?php esc_attr( _e('Show', "flag") ); ?></a>
-			  <a class='toggle describe-toggle-off' href='#'><?php esc_attr( _e('Hide', "flag") ); ?></a>
+			  <a class='toggle describe-toggle-on' href='#'><?php _e('Show', "flag"); ?></a>
+			  <a class='toggle describe-toggle-off' href='#'><?php _e('Hide', "flag"); ?></a>
 			  <div class='filename new'><?php echo ( empty($picture->alttext) ) ? wp_html_excerpt($picture->filename,60): stripslashes( wp_html_excerpt($picture->alttext,60) ); ?></div>
 			  <table class='slidetoggle describe startclosed'><tbody>
 				  <tr>
 					<td rowspan='4'><img class='thumbnail' alt='<?php echo esc_attr( $picture->alttext ); ?>' src='<?php echo esc_attr( $picture->thumbURL ); ?>'/></td>
-					<td><?php esc_attr( _e('Image ID:', "flag") ); ?><?php echo $picid; ?></td>
+					<td><?php _e('Image ID:', "flag"); ?><?php echo $picid; ?></td>
 				  </tr>
 				  <tr><td><?php echo esc_attr( $picture->filename ); ?></td></tr>
 				  <tr><td><?php echo esc_attr( stripslashes($picture->alttext) ); ?></td></tr>
 				  <tr><td>&nbsp;</td></tr>
 				  <tr>
-					<td class="label"><label for="image[<?php echo $picid; ?>][alttext]"><?php esc_attr( _e('Alt/Title text', "flag") ); ?></label></td>
+					<td class="label"><label for="image[<?php echo $picid; ?>][alttext]"><?php _e('Alt/Title text', "flag"); ?></label></td>
 					<td class="field"><input id="image[<?php echo $picid; ?>][alttext]" name="image[<?php echo $picid; ?>][alttext]" value="<?php echo esc_attr( stripslashes($picture->alttext) ); ?>" type="text"/></td>
 				  </tr>	
 				  <tr>
-					<td class="label"><label for="image[<?php echo $picid; ?>][description]"><?php esc_attr( _e("Description","flag") ); ?></label></td>
+					<td class="label"><label for="image[<?php echo $picid; ?>][description]"><?php _e("Description","flag"); ?></label></td>
 						<td class="field"><textarea name="image[<?php echo $picid; ?>][description]" id="image[<?php echo $picid; ?>][description]"><?php echo esc_attr( stripslashes($picture->description) ); ?></textarea></td>
 				  </tr>
 					<tr class="align">
-						<td class="label"><label for="image[<?php echo $picid; ?>][align]"><?php esc_attr( _e("Alignment") ); ?></label></td>
+						<td class="label"><label for="image[<?php echo $picid; ?>][align]"><?php _e("Alignment"); ?></label></td>
 						<td class="field">
 							<input name="image[<?php echo $picid; ?>][align]" id="image-align-none-<?php echo $picid; ?>" checked="checked" value="none" type="radio" />
-							<label for="image-align-none-<?php echo $picid; ?>" class="align image-align-none-label"><?php esc_attr( _e("None") ); ?></label>
+							<label for="image-align-none-<?php echo $picid; ?>" class="align image-align-none-label"><?php _e("None"); ?></label>
 							<input name="image[<?php echo $picid; ?>][align]" id="image-align-left-<?php echo $picid; ?>" value="left" type="radio" />
-							<label for="image-align-left-<?php echo $picid; ?>" class="align image-align-left-label"><?php esc_attr(  _e("Left") ); ?></label>
+							<label for="image-align-left-<?php echo $picid; ?>" class="align image-align-left-label"><?php _e("Left"); ?></label>
 							<input name="image[<?php echo $picid; ?>][align]" id="image-align-center-<?php echo $picid; ?>" value="center" type="radio" />
-							<label for="image-align-center-<?php echo $picid; ?>" class="align image-align-center-label"><?php esc_attr( _e("Center") ); ?></label>
+							<label for="image-align-center-<?php echo $picid; ?>" class="align image-align-center-label"><?php _e("Center"); ?></label>
 							<input name="image[<?php echo $picid; ?>][align]" id="image-align-right-<?php echo $picid; ?>" value="right" type="radio" />
-							<label for="image-align-right-<?php echo $picid; ?>" class="align image-align-right-label"><?php esc_attr( _e("Right") ); ?></label>
+							<label for="image-align-right-<?php echo $picid; ?>" class="align image-align-right-label"><?php _e("Right"); ?></label>
 						</td>
 					</tr>
 					<tr class="image-size">
-						<th class="label"><label for="image[<?php echo $picid; ?>][size]"><span class="alignleft"><?php esc_attr( _e("Size") ); ?></span></label>
+						<th class="label"><label for="image[<?php echo $picid; ?>][size]"><span class="alignleft"><?php _e("Size"); ?></span></label>
 						</th>
 						<td class="field">
 							<input name="image[<?php echo $picid; ?>][size]" id="image-size-thumb-<?php echo $picid; ?>" type="radio" checked="checked" value="thumbnail" />
-							<label for="image-size-thumb-<?php echo $picid; ?>"><?php esc_attr( _e("Thumbnail") ); ?></label>
+							<label for="image-size-thumb-<?php echo $picid; ?>"><?php _e("Thumbnail"); ?></label>
 							<input name="image[<?php echo $picid; ?>][size]" id="image-size-full-<?php echo $picid; ?>" type="radio" value="full" />
-							<label for="image-size-full-<?php echo $picid; ?>"><?php esc_attr( _e("Full size") ); ?></label>
+							<label for="image-size-full-<?php echo $picid; ?>"><?php _e("Full size"); ?></label>
 						</td>
 					</tr>
 				   <tr class="submit">
@@ -223,7 +223,7 @@ function media_upload_flag_form($errors) {
 	?>
 	</div>
 	<p class="ml-submit">
-		<input type="submit" class="button savebutton" name="save" value="<?php esc_attr( _e('Save all changes','flag') ); ?>" />
+		<input type="submit" class="button savebutton" name="save" value="<?php _e('Save all changes','flag'); ?>" />
 	</p>
 	<input type="hidden" name="post_id" id="post_id" value="<?php echo (int) $post_id; ?>" />
 	<input type="hidden" name="select_gal" id="select_gal" value="<?php echo (int) $galleryID; ?>" />

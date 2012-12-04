@@ -3,7 +3,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 function flag_admin_options()  {
 
-	global $wpdb, $flag;
+	global $flag;
 	
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
 	$filepath    = admin_url() . 'admin.php?page='.$_GET['page'];
@@ -11,9 +11,10 @@ function flag_admin_options()  {
 	if ( isset($_POST['updateoption']) ) {	
 		check_admin_referer('flag_settings');
 		// get the hidden option fields, taken from WP core
+		$options=array();
 		if ( $_POST['page_options'] )
 			$options = explode(',', stripslashes($_POST['page_options']));
-		if ($options) {
+		if (!empty($options)) {
 			foreach ($options as $option) {
 				$option = trim($option);
 				$value = trim($_POST[$option]);
@@ -195,7 +196,7 @@ jQuery(document).ready(function() {
 			<h3><?php _e('Image settings','flag'); ?></h3>
 			<table class="form-table flag-options">
 				<tr valign="top">
-					<th scope="row" width="200"><label for="fixratio"><?php _e('Resize Images','flag'); ?></label><br /><small>(Manage Gallery -> 'Resize Images' action)</small></th>
+					<th scope="row" width="200"><label><?php _e('Resize Images','flag'); ?></label><br /><small>(Manage Gallery -> 'Resize Images' action)</small></th>
 					<td><input type="hidden" name="imgResize" value="1" <?php checked('1', $flag_options['imgResize']); ?> />
 					<input type="text" size="5" name="imgWidth" value="<?php echo $flag_options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $flag_options['imgHeight']; ?>" />
 					<span class="setting-description"><?php _e('Width x Height (in pixel). Flash Album Gallery will keep ratio size','flag'); ?></span></td>
@@ -377,7 +378,7 @@ jQuery(document).ready(function() {
 			</tr>
 			<tr valign="top"> 
 				<th scope="row" style="white-space: nowrap"><?php _e('Facebook page', 'flag'); ?>:</th> 
-				<td><label for="facebook_page"><select style="width: 150px;" name="facebook_page" id="change_options"><?php wp_dropdown_roles( flag_get_role('FlAG Facebook page') ); ?></select></label></td>
+				<td><label for="facebook_page"><select style="width: 150px;" name="facebook_page" id="facebook_page"><?php wp_dropdown_roles( flag_get_role('FlAG Facebook page') ); ?></select></label></td>
 			</tr>
 			</table>
 			<div class="submit"><input type="submit" class="button-primary" name= "update_cap" value="<?php _e('Update capabilities', 'flag'); ?>"/></div>

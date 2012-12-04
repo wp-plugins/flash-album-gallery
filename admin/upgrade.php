@@ -5,7 +5,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 /**
  * flag_upgrade() - update routine for older version
  * 
- * @return Success message
+ * @return mixed Success message
  */
 function flag_upgrade() {
 	
@@ -101,8 +101,8 @@ function flag_upgrade() {
 			update_option('flag_options', $flag_options);
 			echo __('finished', 'flag') . "<br />\n";
 		}		
-		return;
 	}
+	return false;
 }
 
 
@@ -158,7 +158,7 @@ function flag_add_sql_column($table_name, $column_name, $create_ddl) {
 /**
  * flag_upgrade_page() - This page showsup , when the database version doesn't fir to the script FLAG_DBVERSION constant.
  * 
- * @return Upgrade Message
+ * @return string Upgrade Message
  */
 function flag_upgrade_page()  {	
 	$filepath    = admin_url() . 'admin.php?page=' . $_GET['page'];

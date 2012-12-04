@@ -2,12 +2,19 @@
 /**
  * Return a script for the flash slideshow. Can be used in any tmeplate with <?php echo flagShowFlashAlbum($galleryID, $name, $width, $height, $skin) ? >
  * Require the script swfobject.js in the header or footer
- * 
- * @access public 
+ *
+ * @access public
  * @param integer $galleryID ID of the gallery
- * @param integer $flashWidth Width of the flash container
- * @param integer $flashHeight Height of the flash container
- * @return the content
+ * @param string $name
+ * @param string $width
+ * @param string $height
+ * @param string $skin
+ * @param string $playlist
+ * @param string $wmode
+ * @param string $linkto
+ * @param bool $fullwindow
+ * @param string $align
+ * @return string the content
  */
 function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='', $playlist='', $wmode='', $linkto='', $fullwindow=false, $align='') {
  	global $post;
@@ -77,8 +84,6 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 		$height = 'auto';
 	// init the flash output
 	$swfobject = new flag_swfobject( plugins_url('flagallery-skins/'.$skin.'/gallery.swf') , $skinID, '100%', '100%', '11.0.0', FLAG_URLPATH .'skins/expressInstall.swf');
-
-	$swfobject->message = '<p>'. __('The <a href="http://www.macromedia.com/go/getflashplayer">Flash Player</a> and a browser with Javascript support are needed.', 'flag').'</p>';
 
 	$swfobject->add_params('wmode', $wmode);
 	$swfobject->add_params('allowfullscreen', 'true');

@@ -52,6 +52,7 @@ function upload_skin() {
 	if ( ! ( ( $uploads = wp_upload_dir() ) && false === $uploads['error'] ) ) {
 		echo "<p>".$uploads['error']."</p>\n";
 	} else {
+		$filename = false;
 		if ( !empty($_FILES) ) {
 			$filename = $_FILES['skinzip']['name'];
 		}	else if ( isset($_GET['package']) ) {
@@ -90,7 +91,7 @@ function upload_skin() {
 							$content = str_replace('/../../flag-config.php','/../../flash-album-gallery/flag-config.php',$content);
 							$fp = fopen($installed_skin.'xml.php','w');
 							if( fwrite($fp,$content) === FALSE ) {
-								echo "<p>".sprintf(__("Failed to search string '/../../flag-config.php' and replace with '/../../flash-album-gallery/flag-config.php' in file '%1$s'",'flag'),
+								echo "<p>".sprintf(__('Failed to search string \'/../../flag-config.php\' and replace with \'/../../flash-album-gallery/flag-config.php\' in file \'%1$s\'','flag'),
 									$installed_skin.'xml.php').'</p>';
 							}
 							fclose($fp);
@@ -436,7 +437,12 @@ $total_all_skins = count($all_skins);
  		<?php }
 		if ( current_user_can('FlAG Delete skins') ) {
 		if ( dirname($skin_file) != $flag_options['flashSkin'] ) { ?>
-			<br /><br /><a class="delete" onclick="javascript:check=confirm( \'<?php echo attribute_escape(sprintf(__('Delete "%s"' , 'flag'), $skin_data['Name'])); ?>\');if(check==false) return false;" href="<?php echo admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)); ?>" title="<?php _e( 'Delete this skin', 'flag' ); ?>"><?php _e('Delete', 'flag' ); ?></a>
+			<script type="text/javascript">
+				function flag_delskin(){
+					return confirm( '<?php echo sprintf(__('Delete "%s"' , 'flag'), $skin_data['Name']); ?>');
+				}
+			</script>
+			<br /><br /><a class="delete" onclick="javascript:return flag_delskin();" href="<?php echo admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)); ?>" title="<?php _e( 'Delete this skin', 'flag' ); ?>"><?php _e('Delete', 'flag' ); ?></a>
 		<?php }
  		} ?>
 		</td>

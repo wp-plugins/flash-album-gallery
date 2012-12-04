@@ -58,6 +58,7 @@ function get_skin_data( $skin_file, $type='' ) {
     				);
     	return $skin_data;
     }
+	return false;
 }
 
 /**
@@ -94,6 +95,7 @@ function get_skins($skin_folder='', $type='') {
 	// Files in flash-album-gallery/skins directory
 	$skins_dir = @ opendir( $skin_root);
 	$skin_files = array();
+	$skins_subdir = '';
 	if ( $skins_dir ) {
 		while (($file = readdir( $skins_dir ) ) !== false ) {
 			if ( substr($file, 0, 1) == '.' )

@@ -60,7 +60,7 @@ function flag_manage_gallery_main() {
 		var numchecked = getNumChecked(document.getElementById('editgalleries'));
 		 
 		if(numchecked < 1) { 
-			alert('<?php echo js_escape(__('No images selected', 'flag')); ?>');
+			alert('<?php echo esc_js(__('No images selected', 'flag')); ?>');
 			return false; 
 		} 
 		
@@ -77,7 +77,7 @@ function flag_manage_gallery_main() {
 				break;
 		}
 		
-		return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s galleries \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
+		return confirm('<?php echo sprintf(esc_js(__("You are about to start the bulk edit for %s galleries \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 	}
 
 	function showDialog( windowId, height ) {
@@ -88,7 +88,7 @@ function flag_manage_gallery_main() {
 				if(form.elements[i].name == "doaction[]")
 					if(form.elements[i].checked == true)
 						if (elementlist == "")
-							elementlist = form.elements[i].value
+							elementlist = form.elements[i].value;
 						else
 							elementlist += "," + form.elements[i].value ;
 			}
@@ -125,6 +125,7 @@ function flag_manage_gallery_main() {
 					<option value="resize_images" ><?php _e("Resize images",'flag'); ?></option>
 					<option value="import_meta" ><?php _e("Import metadata",'flag'); ?></option>
 					<option value="copy_meta" ><?php _e("Metadata to description",'flag'); ?></option>
+					<?php do_action('flag_manage_galleries_bulkaction'); ?>
 				</select>
 				<input name="showThickbox" class="button-secondary" type="submit" value="<?php _e('Apply','flag'); ?>" onclick="if ( !checkSelected() ) return false;" />
 				<?php endif; ?>
@@ -230,7 +231,6 @@ jQuery(document).ready(function(){
 		var form = jQuery(this).attr('data-form');
 		var edata = jQuery(this).dataset();
 		edata.form = jQuery('#'+form).serialize()+'&'+jQuery(this).parents('.album').find('.album_categoties').sortable("serialize"); 
-;
 		jQuery.post( ajaxurl, edata,
 			function( response ) {
 				jQuery(e.target).parent().find('.alb_msg').show().html(response).fadeOut(1200);

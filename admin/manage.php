@@ -122,6 +122,7 @@ class flagManageGallery {
 
 			check_admin_referer('flag_delpicture');
 			$image = $flagdb->find_image( $this->pid );
+			$delete_pic = false;
 			if ($image) {
 				//if ($flag->options['deleteImg']) {
 					@unlink($image->imagePath);
@@ -225,6 +226,7 @@ class flagManageGallery {
 					break;
 				case 'delete_images':
 					if ( is_array($_POST['doaction']) ) {
+						$delete_pic = false;
 						foreach ( $_POST['doaction'] as $imageID ) {
 							$image = $flagdb->find_image( $imageID );
 							if ($image) {

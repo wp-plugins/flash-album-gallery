@@ -93,12 +93,15 @@ class flag_Thumbnail {
      */
     var $maxHeight;
 
-    /**
-     * Image Resource 
-     *
-     * @var string
-     * 
-     */
+	var $newWidth;
+	var $newHeight;
+
+	/**
+	 * Image Resource
+	 *
+	 * @param $fileName
+	 * @param bool $no_ErrorImage
+	 */
     function flag_Thumbnail($fileName,$no_ErrorImage = false) {
         //make sure the GD library is installed
     	if(!function_exists("gd_info")) {
@@ -367,12 +370,13 @@ class flag_Thumbnail {
         imagedestroy($errImg);
     }
 
-    /**
-     * Resizes image to fixed Width x Height
-     * 
-     * @param int $Width
-     * @param int $Height
-     */
+	/**
+	 * Resizes image to fixed Width x Height
+	 *
+	 * @param int $Width
+	 * @param int $Height
+	 * @param int $deprecated
+	 */
     function resizeFix($Width = 0, $Height = 0, $deprecated = 3) {
         $this->newWidth = $Width;
         $this->newHeight = $Height;
@@ -405,12 +409,13 @@ class flag_Thumbnail {
 	}
 
 
-    /**
-     * Resizes image to maxWidth x maxHeight
-     *
-     * @param int $maxWidth
-     * @param int $maxHeight
-     */
+	/**
+	 * Resizes image to maxWidth x maxHeight
+	 *
+	 * @param int $maxWidth
+	 * @param int $maxHeight
+	 * @param int $deprecated
+	 */
     function resize($maxWidth = 0, $maxHeight = 0, $deprecated = 3) {
         $this->maxWidth = $maxWidth;
         $this->maxHeight = $maxHeight;

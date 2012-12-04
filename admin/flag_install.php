@@ -67,7 +67,7 @@ function flag_install () {
     }
 
 
-	if($wpdb->get_var("show tables like '$flagallery'") != $flaggallery) {
+	if($wpdb->get_var("show tables like '$flaggallery'") != $flaggallery) {
       
 		$sql = "CREATE TABLE " . $flaggallery . " (
 		gid BIGINT(20) NOT NULL AUTO_INCREMENT ,

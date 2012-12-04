@@ -18,10 +18,10 @@ class flagMeta {
 
 	/**
 	 * flagMeta::flagMeta()
-	 * 
-	 * @param string $image path to a image
+	 *
+	 * @param $pic_id
 	 * @param bool $onlyEXIF parse only exif if needed
-	 * @return
+	 * @return bool
 	 */
 	function flagMeta($pic_id, $onlyEXIF = false) {
 
@@ -61,8 +61,8 @@ class flagMeta {
 
 	/**
 	 * return the saved meta data from the database
-	 * 
-	 * @param string $object (optional)
+	 *
+	 * @param bool|string $object (optional)
 	 * @return array|mixed return either the complete array or the single object
 	 */
 	function get_saved_meta($object = false) {
@@ -90,10 +90,11 @@ class flagMeta {
 	}
 
 	/**
-	* flagMeta::get_EXIF()
-	*
-	* @return structured EXIF data
-	*/
+	 * flagMeta::get_EXIF()
+	 *
+	 * @param bool $object
+	 * @return string structured EXIF data
+	 */
 	function get_EXIF($object = false) {
 
 		if (!$this->exif_data)
@@ -177,11 +178,11 @@ class flagMeta {
 	}
 
 	/**
-	* flagMeta::readIPTC() - IPTC Data Information for EXIF Display
-	*
-	* @param mixed $output_tag
-	* @return IPTC-tags
-	*/
+	 * flagMeta::readIPTC() - IPTC Data Information for EXIF Display
+	 *
+	 * @param bool $object
+	 * @return string IPTC-tags
+	 */
 	function get_IPTC($object = false) {
 		if (!$this->iptc_data)
 			return false;
@@ -230,7 +231,7 @@ class flagMeta {
 	* code by Pekka Saarinen http://photography-on-the.net	
 	*
 	* @param mixed $filename
-	* @return XML data
+	* @return string XML data
 	*/
 	function extract_XMP($filename) {
 		//TODO:Require a lot of memory, could be better
@@ -251,12 +252,12 @@ class flagMeta {
 	}
 
 	/**
-	* flagMeta::get_XMP()
-	*
-	* @package Taken from http://php.net/manual/en/function.xml-parse-into-struct.php
-	* @return XML Array or object
-	*
-	*/
+	 * flagMeta::get_XMP()
+	 *
+	 * @package Taken from http://php.net/manual/en/function.xml-parse-into-struct.php
+	 * @param bool $object
+	 * @return Array|object XML
+	 */
 	function get_XMP($object = false) {
 		if (!$this->xmp_data)
 			return false;
@@ -348,19 +349,18 @@ class flagMeta {
 			$key = array_shift($stack);
 			//TODO:Review this, reports sometimes a error "Fatal error: Only variables can be passed by reference" (PHP 5.2.6)
 			$this->setArrayValue($array [$key], $stack, $value);
-			return $array;
-		}
-		else {
+		} else {
 			$array = $value;
 		}
+		return $array;
 	}
 
 	/**
-	* flagMeta::get_META() - return a meta value form the available list 
-	*
-	* @param string $object
-	* @return mixed $value
-	*/
+	 * flagMeta::get_META() - return a meta value form the available list
+	 *
+	 * @param bool|string $object
+	 * @return mixed $value
+	 */
 	function get_META($object = false) {
 		// defined order first look into database, then XMP, IPTC and EXIF.
 		if ($value = $this->get_saved_meta($object))
@@ -379,7 +379,7 @@ class flagMeta {
 	* flagMeta::i8n_name() -  localize the tag name
 	*
 	* @param mixed $key
-	* @return translated $key
+	* @return string translated $key
 	*/
 	function i8n_name($key) {
 		$tagnames = array(
@@ -409,9 +409,7 @@ class flagMeta {
 		'country_code'		=> __('Country code','flag'),
 		'country'			=> __('Country','flag'),
 		'headline' 			=> __('Headline','flag'),
-		'credit'			=> __('Credit','flag'),
 		'source'			=> __('Source','flag'),
-		'copyright'			=> __('Copyright Notice','flag'),
 		'contact'			=> __('Contact','flag'),
 		'last_modfied'		=> __('Last modified','flag'),
 		'tool'				=> __('Program tool','flag'),
@@ -449,11 +447,10 @@ class flagMeta {
 	 * This function return the most common metadata, via a filter we can add more
 	 * Reason : GD manipulation removes that options
 	 * 
-	 * @return void
+	 * @return mixed
 	 */
 	function get_common_meta() {
-		global $wpdb;
-		
+
 		$meta = array(
 			'aperture' => 0,
 			'credit' => '',

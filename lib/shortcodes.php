@@ -52,6 +52,7 @@ class FlAG_shortcodes {
         	$gallerylist = $flagdb->get_album($album);
             $ids = explode( ',', $gallerylist );
 			$gids = str_replace(',','_',$gallerylist);
+			$galleryID = false;
     		foreach ($ids as $id) {
     			$galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->flaggallery WHERE gid = '$id' ");
     			if(!$galleryID) return $out =  sprintf(__('[Gallery %s not found]','flag'),$id);
@@ -80,7 +81,8 @@ class FlAG_shortcodes {
             $ids = explode( ',', $gid );
     		$gids = str_replace(',','_',$gid);
 
-    		foreach ($ids as $id) {
+			$galleryID = false;
+			foreach ($ids as $id) {
     			$galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->flaggallery WHERE gid = '$id' ");
     			if(!$galleryID) $galleryID = $wpdb->get_var("SELECT gid FROM $wpdb->flaggallery WHERE name = '$id' ");
     			if(!$galleryID) return $out =  sprintf(__('[Gallery %s not found]','flag'),$id);

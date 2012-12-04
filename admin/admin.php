@@ -292,7 +292,7 @@ class flagAdminPanel{
 function flag_wpmu_site_admin() {
 	// Check for site admin
 	if ( function_exists('is_site_admin') )
-		if ( is_site_admin() )
+		if ( is_super_admin() )
 			return true;
 			
 	return false;

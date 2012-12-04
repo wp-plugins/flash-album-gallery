@@ -6,10 +6,7 @@ if ( !defined('WP_LOAD_PATH') ) {
 	if (file_exists( $classic_root . 'wp-load.php') )
 		define( 'WP_LOAD_PATH', $classic_root);
 	else
-		if (file_exists( $path . 'wp-load.php') )
-			define( 'WP_LOAD_PATH', $path);
-		else
-			exit("Could not find wp-load.php");
+		exit("Could not find wp-load.php");
 }
 
 // let's load WordPress

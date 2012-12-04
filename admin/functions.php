@@ -9,14 +9,14 @@ class flagAdmin{
 
 	/**
 	 * create a new gallery & folder
-	 * 
+	 *
 	 * @class flagAdmin
 	 * @param string $gallerytitle
 	 * @param string $defaultpath
 	 * @param bool $output if the function should show an error messsage or not
-	 * @return 
+	 * @return bool|int
 	 */
-	function create_gallery($gallerytitle, $defaultpath, $output = true) {
+	static function create_gallery($gallerytitle, $defaultpath, $output = true) {
 		global $wpdb, $user_ID;
  
 		// get the current user ID
@@ -93,7 +93,7 @@ class flagAdmin{
 		$result = $wpdb->get_var("SELECT name FROM $wpdb->flaggallery WHERE name = '$galleryname' ");
 		
 		if ($result) {
-			if ($output) flagGallery::show_error( __ngettext( 'Gallery', 'Galleries', 1, 'flag' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'flag'));
+			if ($output) flagGallery::show_error( _n( 'Gallery', 'Galleries', 1, 'flag' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'flag'));
 			return false;			
 		} else { 
 			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flaggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $flagpath, $gallerytitle , $user_ID) );
@@ -101,10 +101,6 @@ class flagAdmin{
 			$gallery_id = (int) $wpdb->insert_id;
 			// here you can inject a custom function
 			do_action('flag_created_new_gallery', $gallery_id);
-
-			// return only the id if defined
-			if ($return_id)
-				return $gallery_id;
 
 			if ($result) {
 				$message  = __('Gallery \'%1$s\' successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','flag');
@@ -115,19 +111,23 @@ class flagAdmin{
 				
 				if ($output) flagGallery::show_message($message); 
 			}
+			// return only the id if defined
+			if ($gallery_id)
+				return $gallery_id;
+
 			return true;
 		} 
 	}
-	
+
 	/**
 	 * flagAdmin::import_gallery()
 	 * TODO: Check permission of existing thumb folder & images
-	 * 
+	 *
 	 * @class flagAdmin
 	 * @param string $galleryfolder contains relative path
-	 * @return
+	 * @return void
 	 */
-	function import_gallery($galleryfolder) {
+	static function import_gallery($galleryfolder) {
 		
 		global $wpdb, $user_ID;
 
@@ -153,7 +153,7 @@ class flagAdmin{
 		}
 		
 		// check & create thumbnail folder
-		if ( !flagGallery::get_thumbnail_folder($gallerypath) )
+		if ( !flagGallery::create_thumbnail_folder($gallerypath) )
 			return;
 		
 		// take folder name as gallery name		
@@ -209,14 +209,14 @@ class flagAdmin{
 
 	/**
 	 * flagAdmin::import_video()
-	 * 
+	 *
 	 * @class flagAdmin
 	 * @param string $folder contains relative path
-	 * @return
+	 * @return void
 	 */
-	function import_video($folder) {
-		global $wpdb, $user_ID;
-		
+	static function import_video($folder) {
+
+
 		$created_msg = '';
 		// remove trailing slash at the end, if somebody use it
 		$folder = rtrim($folder, '/');
@@ -250,14 +250,13 @@ class flagAdmin{
 
 	/**
 	 * flagAdmin::import_mp3()
-	 * 
+	 *
 	 * @class flagAdmin
 	 * @param string $folder contains relative path
-	 * @return
+	 * @return void
 	 */
-	function import_mp3($folder) {
-		global $wpdb, $user_ID;
-		
+	static function import_mp3($folder) {
+
 		$created_msg = '';
 		// remove trailing slash at the end, if somebody use it
 		$folder = rtrim($folder, '/');
@@ -291,27 +290,26 @@ class flagAdmin{
 
 	/**
 	 * flagAdmin::import_banner()
-	 * 
+	 *
 	 * @class flagAdmin
 	 * @param string $folder contains relative path
-	 * @return
+	 * @return array
 	 */
-	function import_banner($folder) {
-		global $wpdb, $user_ID;
-		
+	static function import_banner($folder) {
+
 		$created_msg = '';
 		// remove trailing slash at the end, if somebody use it
 		$folder = rtrim($folder, '/');
 		$path = WINABSPATH . $folder;
 		if (!is_dir($path)) {
 			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag').'</p>';
-			return ;
+			return false;
 		}
 		// read list of files
 		$new_filelist = flagAdmin::scandir($path);
 		if (empty($new_filelist)) {
 			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('does not contain image files', 'flag').'</p>';
-			return;
+			return false;
 		}
 		$created_msg .= '<div class="message"><p>'.count($new_filelist).' '.__('image(s) in the folder','flag').':</p><div class="flag_crunching"><div class="flag_progress"><span class="flag_complete"></span><span class="txt">'.__('Crunching...','flag').'</span></div></div></div>';
 		echo $created_msg;
@@ -333,6 +331,8 @@ class flagAdmin{
 
 		$wp_filetype = wp_check_filetype( $file, null );
 
+		/** @var $type
+		 *  @var $ext */
 		extract( $wp_filetype );
 		
 		if ( ( !$type || !$ext ) && !current_user_can( 'unfiltered_upload' ) )
@@ -349,7 +349,7 @@ class flagAdmin{
 
 			$attachment = get_posts(array( 'post_type' => 'attachment', 'meta_key' => '_wp_attached_file', 'meta_value' => $uploads['subdir'] . '/' . $filename ));
 			if ( !empty($attachment) )
-				return $attachments[0]->ID;
+				return $attachment[0]->ID;
 
 			//Ok, Its in the uploads folder, But NOT in WordPress's media library.
 			if ( preg_match("|(\d+)/(\d+)|", $mat[1], $datemat) ) //So lets set the date of the import to the date folder its in, IF its in a date folder.
@@ -427,9 +427,10 @@ class flagAdmin{
 
 	/**
 	 * flagAdmin::scandir()
-	 * 
+	 *
 	 * @class flagAdmin
 	 * @param string $dirname
+	 * @param array $ext
 	 * @return array
 	 */
 	function scandir($dirname = '.', $ext = array()) { 
@@ -454,7 +455,7 @@ class flagAdmin{
 	 * @param object | int $image contain all information about the image or the id
 	 * @return string result code
 	 */
-	function create_thumbnail($image) {
+	static function create_thumbnail($image) {
 		
 		global $flag;
 		
@@ -527,7 +528,7 @@ class flagAdmin{
 	 * @param integer $height optional
 	 * @return string result code
 	 */
-	function resize_image($image, $width = 0, $height = 0) {
+	static function resize_image($image, $width = 0, $height = 0) {
 		
 		global $flag;
 		
@@ -571,10 +572,11 @@ class flagAdmin{
 
 	/**
 	 * Add images to database
-	 * 
+	 *
 	 * @class flagAdmin
 	 * @param int $galleryID
 	 * @param array $imageslist
+	 * @param bool $name2alt
 	 * @return array $image_ids Id's which are sucessful added
 	 */
 	function add_Images($galleryID, $imageslist, $name2alt = false) {
@@ -618,7 +620,7 @@ class flagAdmin{
 	 * @param array|int $imagesIds
 	 * @return bool
 	 */
-	function import_MetaData($imagesIds) {
+	static function import_MetaData($imagesIds) {
 			
 		global $wpdb;
 		
@@ -640,7 +642,7 @@ class flagAdmin{
 				// get the file date/time from exif
 				$timestamp = $meta['timestamp'];
 				// update database
-				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", attribute_escape($alttext), attribute_escape($description), $timestamp, $image->pid) );
+				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", esc_attr($alttext), esc_attr($description), $timestamp, $image->pid) );
 				if ($result === false)
 					return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not update data base)', 'flag') . '</strong>';		
 				
@@ -665,10 +667,11 @@ class flagAdmin{
 	 * @param array|int $imagesIds
 	 * @return bool
 	 */
-	function copy_MetaData($imagesIds) {
+	static function copy_MetaData($imagesIds) {
 			
 		global $wpdb;
-		
+
+		/** @var $meta */
 		require_once(FLAG_ABSPATH . 'lib/meta.php');
 		require_once(FLAG_ABSPATH . 'lib/image.php');
 
@@ -679,7 +682,8 @@ class flagAdmin{
 			
 			$image = flagdb::find_image($imageID);
 			if (!$image->error) {
-
+				/** @var $makedescription
+				 *  @var $timestamp */
 				require_once(FLAG_ABSPATH . 'admin/grab_meta.php');
   		
 				// get the title
@@ -691,7 +695,7 @@ class flagAdmin{
 				// get the file date/time from exif
 				$makedescription = $alttext.$description.$makedescription;
 				// update database
-				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", '', attribute_escape($makedescription), $timestamp, $image->pid) );
+				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", '', esc_attr($makedescription), $timestamp, $image->pid) );
 				if ($result === false)
 					return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not update data base)', 'flag') . '</strong>';		
 				
@@ -705,10 +709,10 @@ class flagAdmin{
 
 	/**
 	 * flagAdmin::get_MetaData()
-	 * 
+	 *
 	 * @class flagAdmin
 	 * @require Meta class
-	 * @param string $picPath must be Gallery absPath + filename
+	 * @param $id
 	 * @return array metadata
 	 */
 	function get_MetaData($id) {
@@ -735,7 +739,7 @@ class flagAdmin{
 	 * and if based on compat reason (pre V0.40) we save then some meta datas to the database
 	 * 
 	 * @param int $id
-	 * @return result
+	 * @return mixed  result
 	 */
 	function maybe_import_meta( $id ) {
 				
@@ -786,7 +790,7 @@ class flagAdmin{
 	 * @class flagAdmin
 	 * @return void
 	 */
-	function upload_images() {
+	static function upload_images() {
 		
 		global $wpdb;
 		
@@ -814,7 +818,7 @@ class flagAdmin{
 		} 
 				
 		// read list of images
-		$dirlist = flagAdmin::scandir(WINABSPATH.$gallerypath);
+		$dirlist = flagAdmin::scandir(WINABSPATH.$gallery->path);
 		
 		$imagefiles = $_FILES['imagefiles'];
 		
@@ -894,13 +898,13 @@ class flagAdmin{
 	 * @param integer $galleryID
 	 * @return string $result
 	 */
-	function swfupload_image($galleryID = 0) {
+	static function swfupload_image($galleryID = 0) {
 
 		global $wpdb;
 		
 		if ($galleryID == 0) {
-			@unlink($temp_file);		
-			return __('No gallery selected!','flag');;
+			//@unlink($temp_file);
+			return __('No gallery selected!','flag');
 		}
 
 		// WPMU action
@@ -920,7 +924,7 @@ class flagAdmin{
 		// check for allowed extension
 		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
 		if (!in_array($filepart['extension'], $ext))
-			return $_FILES[$key]['name'] . __('is no valid image file!','flag');
+			return $filename . __('is no valid image file!','flag');
 
 		// get the path to the gallery	
 		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = '$galleryID' ");
@@ -950,12 +954,13 @@ class flagAdmin{
 			return __('Error, the file permissions could not set','flag');
 		
 		return '0';
-	}	
-	
+	}
+
 	/**
 	 * File upload error message
-	 * 
+	 *
 	 * @class flagAdmin
+	 * @param $error_code
 	 * @return string $result
 	 */
 	function file_upload_error_message($error_code) {
@@ -1021,7 +1026,7 @@ class flagAdmin{
 	 * @param string $foldername
 	 * @return bool $result
 	 */
-	function check_safemode($foldername) {
+	static function check_safemode($foldername) {
 
 		if ( SAFE_MODE ) {
 			
@@ -1046,7 +1051,7 @@ class flagAdmin{
 	 * @param int $check_ID is the user_id
 	 * @return bool $result
 	 */
-	function can_manage_this_gallery($check_ID) {
+	static function can_manage_this_gallery($check_ID) {
 
 		global $user_ID, $wp_roles;
 		
@@ -1067,7 +1072,7 @@ class flagAdmin{
 	 * @param int $dest_gid destination gallery
 	 * @return void
 	 */
-	function move_images($pic_ids, $dest_gid) {
+	static function move_images($pic_ids, $dest_gid) {
 
 		$errors = '';
 		$count = 0;
@@ -1117,7 +1122,7 @@ class flagAdmin{
 			}
 			
 			// Move the thumbnail, if possible
-			!@rename($image->thumbPath, $destination_thumbnail);
+			@rename($image->thumbPath, $destination_thumbnail);
 			
 			// Change the gallery id in the database , maybe the filename
 			if ( flagdb::update_image($image->pid, $dest_gid, $destination_file_name) )
@@ -1143,7 +1148,7 @@ class flagAdmin{
 	 * @param int $dest_gid destination gallery
 	 * @return void
 	 */
-	function copy_images($pic_ids, $dest_gid) {
+	static function copy_images($pic_ids, $dest_gid) {
 		
 		$errors = $messages = '';
 		
@@ -1192,7 +1197,7 @@ class flagAdmin{
 			}
 			
 			// Copy the thumbnail if possible
-			!@copy($image->thumbPath, $destination_thumb_file_path);
+			@copy($image->thumbPath, $destination_thumb_file_path);
 			
 			// Create new database entry for the image
 			$new_pid = flagdb::insert_image( $destination->gid, $destination_file_name, $image->alttext, $image->description, $image->exclude);
@@ -1236,7 +1241,7 @@ class flagAdmin{
 	 * @param string $title name of the operation
 	 * @return string the javascript output
 	 */
-	function do_ajax_operation( $operation, $image_array, $title = '' ) {
+	static function do_ajax_operation( $operation, $image_array, $title = '' ) {
 		
 		if ( !is_array($image_array) || empty($image_array) )
 			return;
@@ -1296,9 +1301,9 @@ class flagAdmin{
 	 * Return a JSON coded array of Image ids for a requested gallery
 	 * 
 	 * @param int $galleryID
-	 * @return arry (JSON)
+	 * @return array (JSON)
 	 */
-	function get_image_ids( $galleryID ) {
+	static function get_image_ids( $galleryID ) {
 		
 		if ( !function_exists('json_encode') )
 			return(-2);

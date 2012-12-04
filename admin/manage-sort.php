@@ -6,7 +6,7 @@
  */
 
 function flag_sortorder($galleryID = 0){
-	global $wpdb, $flag;
+	global $wpdb;
 	
 	if ($galleryID == 0) return;
 
@@ -38,10 +38,10 @@ function flag_sortorder($galleryID = 0){
 
 	// set gallery url
 	$act_gallery_url 	= get_option ('siteurl')."/".$act_gallery->path."/";
-	$act_thumbnail_url 	= get_option ('siteurl')."/".$act_gallery->path.flagGallery::get_thumbnail_folder($act_gallery->path, FALSE);
+	$act_thumbnail_url 	= get_option ('siteurl')."/".$act_gallery->path.flagGallery::create_thumbnail_folder($act_gallery->path, FALSE);
 
 	// look for presort args	
-	$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->flagpictures WHERE galleryid = '$galleryID' ORDER BY sortorder {$dir}");
+	$picturelist = $wpdb->get_results("SELECT * FROM $wpdb->flagpictures WHERE galleryid = '$galleryID' ORDER BY sortorder");
 
 	//this is the url without any presort variable
 	$base_url = admin_url() . 'admin.php?page=flag-manage-gallery&amp;mode=sort&amp;gid=' . $galleryID;

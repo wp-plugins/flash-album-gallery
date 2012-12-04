@@ -23,6 +23,7 @@ if(isset($properties_skin) && !empty($properties_skin)) {
 	if(!$fp) {
 		exit( "2");//Failure - not read;
 	}
+	$mainXML = '';
 	while(!feof($fp)) {
 		$mainXML .= fgetc($fp);
 	}
@@ -59,7 +60,7 @@ function flag_skin_options() {
 				var flashvars = {
 					path : "<?php echo $settings; ?>",
 					constructor : "<?php echo $constructor; ?>",
-					skin : "<?php echo $act_skin; ?>",
+					skin : "<?php echo $act_skin; ?>"
 				};
 				var params = {
 					wmode : "transparent",

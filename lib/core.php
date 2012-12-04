@@ -8,14 +8,14 @@ class flagGallery {
 	/**
 	* Show a error messages
 	*/
-	function show_error($message) {
+	static function show_error($message) {
 		echo '<div class="wrap"><h2></h2><div class="error" id="error"><p>' . $message . '</p></div></div>' . "\n";
 	}
 	
 	/**
 	* Show a system messages
 	*/
-	function show_message($message) {
+	static function show_message($message) {
 		echo '<div class="wrap"><h2></h2><div class="updated fade" id="message"><p>' . $message . '</p></div></div>' . "\n";
 	}
 
@@ -24,7 +24,7 @@ class flagGallery {
 	*/
 	function get_thumbnail_url($imageID, $picturepath = '', $fileName = ''){
 	
-		// get the complete url to the thumbnail
+		/** @var $wpdb wpdb */
 		global $wpdb;
 		
 		// safety first
@@ -49,7 +49,8 @@ class flagGallery {
 	/**
 	* get the complete url to the image
 	*/
-	function get_image_url($imageID, $picturepath = '', $fileName = '') {		
+	function get_image_url($imageID, $picturepath = '', $fileName = '') {
+		/** @var $wpdb wpdb */
 		global $wpdb;
 
 		// safety first
@@ -77,7 +78,7 @@ class flagGallery {
 	* @param bool $include_Abspath
 	* @return string $foldername
 	*/
-	function create_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
+	static function create_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
 		if (!$include_Abspath) {
 			$gallerypath = WINABSPATH . $gallerypath;
 		}
@@ -116,7 +117,7 @@ class flagGallery {
 	* @deprecated use create_thumbnail_folder() if needed;
 	* @return string $foldername
 	*/
-	function get_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
+	static function get_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
 		return flagGallery::create_thumbnail_folder($gallerypath, $include_Abspath);
 	}
 	
@@ -135,9 +136,9 @@ class flagGallery {
 	/**
 	 * flagGallery::graphic_library() - switch between GD and ImageMagick
 	 * 
-	 * @return path to the selected library
+	 * @return string path to the selected library
 	 */
-	function graphic_library() {
+	static function graphic_library() {
 		
 		return FLAG_ABSPATH . '/lib/gd.thumbnail.inc.php';
 		
@@ -149,7 +150,7 @@ class flagGallery {
 	 * @param string $in
 	 * @return string $in localized
 	 */
-	function i18n($in) {
+	static function i18n($in) {
 		
 		if ( function_exists( 'langswitch_filter_langs_with_message' ) )
 			$in = langswitch_filter_langs_with_message($in);
@@ -170,7 +171,7 @@ class flagGallery {
 	 * 
 	 * @return string message about recommended image size
 	 */
-	function check_memory_limit() {
+	static function check_memory_limit() {
 
 		if ( (function_exists('memory_get_usage')) && (ini_get('memory_limit')) ) {
 			
@@ -201,7 +202,7 @@ class flagGallery {
 				}
 			}
 		}
-		return;
+		return false;
 	}
 	
 	/**
@@ -210,7 +211,7 @@ class flagGallery {
 	 * @param string $name The name being checked. 
 	 * @return array containing information about file
 	 */
-	function fileinfo( $name ) {
+	static function fileinfo( $name ) {
 		
 		//Sanitizes a filename replacing whitespace with dashes
 		$name = sanitize_file_name($name);
@@ -238,10 +239,10 @@ class flagGallery {
 
 	/**
 	 * Function used to delete a folder.
-	 * @param $path full-path to folder
+	 * @param string $path full-path to folder
 	 * @return bool result of deletion
 	 */
-	function flagFolderDelete($path) {
+	static function flagFolderDelete($path) {
 		if (is_dir($path)) {
 			if (version_compare(PHP_VERSION, '5.0.0') < 0) {
 				$entries = array();
@@ -274,7 +275,7 @@ class flagGallery {
 	 * @return the number of bytes written, or FALSE on error.
 	 */
 
-	function saveFile($sName,$sContent,$mode='w+') {
+	static function saveFile($sName,$sContent,$mode='w+') {
 		if (!$dFile=fopen($sName, $mode)) {
 			flagGallery::show_error(__("Can't create/open file '","flag").$sName."'.");
 			exit;
@@ -292,7 +293,7 @@ class flagGallery {
 	}
 	
 	
-	function flag_wpmu_enable_function($value) {
+	static function flag_wpmu_enable_function($value) {
 		if (IS_WPMU) {
 			$flag_options = get_site_option('flag_options');
 			return $flag_options[$value];
@@ -301,7 +302,7 @@ class flagGallery {
 		return true;
 	}
 
-	function flagGetBetween($content,$start,$end){
+	static function flagGetBetween($content,$start,$end){
 	    $r = explode($start, $content);
 	    if (isset($r[1])){
 	        $r = explode($end, $r[1]);
@@ -318,7 +319,7 @@ class flagGallery {
 	    return $isCrawler;
 	}
 	
-	function flagSaveWpMedia() {
+	static function flagSaveWpMedia() {
 	   	if ( !empty($_POST['item_a']) )
 	    foreach ( $_POST['item_a'] as $item_id => $item ) {
 			$post = $_post = get_post($item_id, ARRAY_A);

@@ -41,6 +41,12 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 == Changelog ==
 
+= v2.15 - 04.12.2012 =
+* Optimized: Code optimized
+* Added: Hook for bulk actions dropdown
+* Added: Hook after thumbnail/image created
+* Fixed: Small PHP and JS fixes
+
 = v2.14 - 20.11.2012 =
 * Fixed: swfobject path was wrong on some servers
 

@@ -41,8 +41,9 @@ class flagMediaRss {
 	/**
 	 * Get the XML <rss> node corresponding to the last pictures registered
 	 *
-	 * @param page The current page (defaults to 0)
-	 * @param show The number of pictures to include in one field (default 30) 
+	 * @param int $page The current page (defaults to 0)
+	 * @param int $show The number of pictures to include in one field (default 30)
+	 * @return string
 	 */
 	function get_last_pictures_mrss($page = 0, $show = 30) {
 		$images = flagdb::find_last_images($page, $show);
@@ -59,9 +60,10 @@ class flagMediaRss {
 	/**
 	 * Get the XML <rss> node corresponding to a gallery
 	 *
-	 * @param $gallery (object) The gallery to include in RSS
-	 * @param $prev_gallery (object) The previous gallery to link in RSS (null if none)
-	 * @param $next_gallery (object) The next gallery to link in RSS (null if none)
+	 * @param $gallery object The gallery to include in RSS
+	 * @param $prev_gallery object The previous gallery to link in RSS (null if none)
+	 * @param $next_gallery object The next gallery to link in RSS (null if none)
+	 * @return string
 	 */
 	function get_gallery_mrss($gallery, $prev_gallery = null, $next_gallery = null) {
 		global $flag;
@@ -155,15 +157,17 @@ class flagMediaRss {
 	 */
 	function get_next_link_mrss_node($link, $indent = "\t\t") {	
 		return $indent . "<atom:link rel='next' href='" . htmlspecialchars($link) . "' />\n";
-	}	
-	
+	}
+
 	/**
 	 * Get the XML <item> node corresponding to one single image
 	 *
-	 * @param $image The image object
+	 * @param object $image
+	 * @param string $indent
+	 * @return string
 	 */
 	function get_image_mrss_node($image, $indent = "\t\t" ) {
-		global $flag;
+
 		$flag_options = get_option('flag_options');
 		
 		$title = html_entity_decode(stripslashes($image->alttext));

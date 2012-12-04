@@ -30,6 +30,8 @@ if( $upd['pid'] && ($upd['hit'] || $upd['vote']) ) {
 	flag_update_counter($upd);
 }
 $pid = $upd['pid'];
+/** @var $wpdb wpdb */
+global $wpdb;
 $result = $wpdb->get_results( "SELECT hitcounter, total_votes FROM $wpdb->flagpictures WHERE `pid` = $pid" );
 $rt=array(24.5, 45.7, 54.8, 59.3, 64.7, 68.9, 71.5, 73.7, 75.9, 77.1);
 $hits = intval($result[0]->hitcounter);
@@ -48,8 +50,7 @@ echo $hits.'~'.$like.'~'.$votes;
 /**
  * Update image hitcounter in the database
  *
- * @param int $pid   id of the image
- * @param string | int $galleryid
+ * @param $upd
  */
 function flag_update_counter($upd) {
 	global $wpdb;

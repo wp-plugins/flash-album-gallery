@@ -222,6 +222,7 @@ if($_REQUEST['riched'] == "false") {
 			var album = jQuery('#album').val();
 			var len = gallery.length;
 			var galleryid="";
+			var gallerysize="";
 			if(!album){
 				for(i=0;i<len;i++)
 				{
@@ -238,34 +239,34 @@ if($_REQUEST['riched'] == "false") {
 				album = ' album='+album;
 			}
 			if (gallerywidth && galleryheight)
-				var gallerysize = " w=" + gallerywidth + " h=" + galleryheight;
+				gallerysize = " w=" + gallerywidth + " h=" + galleryheight;
 			else
-				var gallerysize="";
+				gallerysize="";
 			
 			if (galleryid == ' gid=all') {
 				if (galorderby) {
-					var galorderby = " orderby=" + galorderby;
+					galorderby = " orderby=" + galorderby;
 				} 
 				if (galorder) {
-					var galorder = " order=" + galorder;
+					galorder = " order=" + galorder;
 				}
 				if (galexclude) {
-					var galexclude = " exclude=" + galexclude;
+					galexclude = " exclude=" + galexclude;
 				} 
 			} else {
-				var galorderby = '';
-				var galorder = '';
-				var galexclude = '';
+				galorderby = '';
+				galorder = '';
+				galexclude = '';
 			}
 			if (skinname) {
-				var skinname = " skin=" + skinname;
-			} else var skinname = '';
+				skinname = " skin=" + skinname;
+			} else skinname = '';
 			if (skinalign) {
-				var skinalign = " align=" + skinalign;
-			} else var skinalign = '';
+				skinalign = " align=" + skinalign;
+			} else skinalign = '';
 			if (playlist) {
-				var skinname = " play=" + playlist;
-			} else var playlist = '';
+				skinname = " play=" + playlist;
+			} else playlist = '';
 
 			if (galleryid || album ) {
 				tagtext = '[flagallery' + galleryid + album + gallerysize + galorderby + galorder + galexclude + skinname + skinalign + playlist + ' name=' + galleryname + ']';

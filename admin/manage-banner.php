@@ -3,7 +3,7 @@
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {	die('You are not allowed to call this page directly.');}
 
 function flag_b_playlist_edit() {
-	global $wpdb;
+
 	$filepath = admin_url() . 'admin.php?page=' . $_GET['page'];
 	$all_playlists = get_b_playlists();
 	$flag_options = get_option('flag_options');
@@ -39,7 +39,7 @@ function checkSelected() {
 	var numchecked = getNumChecked(document.getElementById('updatePlaylist'));
 	 
 	if(numchecked < 1) { 
-		alert('<?php echo js_escape(__("No items selected", "flag")); ?>');
+		alert('<?php echo esc_js(__("No items selected", "flag")); ?>');
 		return false; 
 	} 
 	
@@ -47,11 +47,11 @@ function checkSelected() {
 	
 	switch (actionId) {
 		case "delete_items":
-			return confirm('<?php echo sprintf(js_escape(__("You are about to delete %s item(s) \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
+			return confirm('<?php echo sprintf(esc_js(__("You are about to delete %s item(s) \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 			break;			
 	}
 	
-	return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s item(s) \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
+	return confirm('<?php echo sprintf(esc_js(__("You are about to start the bulk edit for %s item(s) \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 }
 
 function showDialog( windowId, height ) {
@@ -62,7 +62,7 @@ function showDialog( windowId, height ) {
 			if(form.elements[i].name == "doaction[]")
 				if(form.elements[i].checked == true)
 					if (elementlist == "")
-						elementlist = form.elements[i].value
+						elementlist = form.elements[i].value;
 					else
 						elementlist += "," + form.elements[i].value ;
 		}
@@ -92,7 +92,7 @@ jQuery(document).ready(function(){
   	var skin = jQuery(this).val();
 	jQuery('#skinOptions').attr("href","<?php echo FLAG_URLPATH; ?>admin/skin_options.php?show_options=1&amp;skin="+skin+"&amp;TB_iframe=1&amp;width=600&amp;height=560");
   });
-})
+});
 //]]>
 </script>
 
@@ -195,9 +195,9 @@ jQuery(document).ready(function(){
 	</tr>
 	</tfoot>
 	<tbody>
-<?php 
+<?php
+$counter = 0;
 if(count($items_a)) {
-	$counter = 0;
     $alt = ' class="alternate"';
 	$uploads = wp_upload_dir();	
 	foreach($items_a as $item) {

@@ -52,10 +52,10 @@ function flag_overview_server() {
 	<div class="flag-dashboard-widget">
 	  <?php if (IS_WPMU) {
 	  	if (flagGallery::flag_wpmu_enable_function('wpmuQuotaCheck'))
-			echo flag_SpaceManager::details();
+			flag_SpaceManager::details();
 		else {
 			//TODO:WPMU message in WP2.5 style
-			echo flag_SpaceManager::details();
+			flag_SpaceManager::details();
 		}
 	  } else { ?>
 		<div class="dashboard-widget-content">
@@ -94,7 +94,7 @@ function flag_overview_graphic_lib() {
  * @return void
  */
 function flag_overview_setup(){ 
-	global $wpdb, $flag;
+	global $flag;
 			
 	if (isset($_POST['resetdefault'])) {	
 		check_admin_referer('flag_uninstall');
@@ -187,13 +187,13 @@ function flag_overview_right_now() {
 		<tbody>
 			<tr class="first">
 				<td class="first b"><a href="admin.php?page=flag-manage-gallery&tabs=1"><?php echo $images; ?></a></td>
-				<td class="t"><?php echo __ngettext( 'Image', 'Images', $images, 'flag' ); ?></td>
+				<td class="t"><?php echo _n( 'Image', 'Images', $images, 'flag' ); ?></td>
 				<td class="b"></td>
 				<td class="last"></td>
 			</tr>
 			<tr>
 				<td class="first b"><a href="admin.php?page=flag-manage-gallery&tabs=0"><?php echo $galleries; ?></a></td>
-				<td class="t"><?php echo __ngettext( 'Gallery', 'Galleries', $galleries, 'flag' ); ?></td>
+				<td class="t"><?php echo _n( 'Gallery', 'Galleries', $galleries, 'flag' ); ?></td>
 				<td class="b"></td>
 				<td class="last"></td>
 			</tr>
@@ -243,7 +243,7 @@ function flag_GD_info() {
  * Return localized Yes or no 
  * 
  * @param bool $bool
- * @return return 'Yes' | 'No'
+ * @return string  'Yes' | 'No'
  */
 function flag_GD_Support($bool){
 	if($bool) 
@@ -336,7 +336,7 @@ class flag_SpaceManager {
 		return $quota;
 	}
 	 
-	function details() {
+	static function details() {
 		
 		// take default seetings
 		$settings = array(

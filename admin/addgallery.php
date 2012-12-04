@@ -24,14 +24,14 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	if ($_POST['addgallery']){
 		check_admin_referer('flag_addgallery');
-		$newgallery = attribute_escape( $_POST['galleryname']);
+		$newgallery = esc_attr( $_POST['galleryname']);
 		if ( !empty($newgallery) )
 			flagAdmin::create_gallery($newgallery, $defaultpath);
 	}
 	if ($_POST['uploadimage']){
 		check_admin_referer('flag_addgallery');
 		if ($_FILES['MF__F_0_0']['error'] == 0) {
-			$messagetext = flagAdmin::upload_images();
+			flagAdmin::upload_images();
 		}
 		else
 			flagGallery::show_error( __('Upload failed!','flag') );
@@ -81,7 +81,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		    jQuery("span.browsefiles").show().click(function(){
 			    jQuery("#file_browser").fileTree({
 			      script: "admin-ajax.php?action=flag_file_browser&nonce=<?php echo wp_create_nonce( 'flag-ajax' ) ;?>",
-			      root: jQuery("#galleryfolder").val(),
+			      root: jQuery("#galleryfolder").val()
 			    }, function(file) {
 			        //var path = file.replace("<?php echo WINABSPATH; ?>", "");
 			        jQuery("#galleryfolder").val(file);

@@ -9,6 +9,7 @@
 -o-user-select: none;
 user-select: none;
 }
+div.flashalbum br { display: none; }
 .flag_alternate { background-color: <?php echo $bg; ?>; margin: 7px 0; }
 .flag_alternate .flagcategory { width: 100%; height: auto; position: relative; text-align: center; padding-bottom: 4px; }
 .flag_alternate .flagcategory a.flag_pic_alt { display: inline-block; margin: 1px 0 0 1px; padding: 0; height: 100px; width: 115px; line-height: 96px; position:relative; z-index: 2; text-align: center; z-index:99; cursor:pointer; background-color: #ffffff; border: 2px solid #ffffff; text-decoration: none; background-image: url(../images/loadingAnimation.gif); background-repeat: no-repeat; background-position: 50% 50%; font-size: 8px; color: #ffffff; }

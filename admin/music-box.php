@@ -36,6 +36,7 @@ function flag_music_controler() {
 				$title = $_POST['playlist_title'];
 				$descr = $_POST['playlist_descr'];
 				$file = $_GET['playlist'];
+				$data = array();
 				foreach($_POST['item_a'] as $item_id => $item) {
 					if($action=='delete_items' && in_array($item_id, $_POST['doaction']))
 						continue;
@@ -161,17 +162,18 @@ function flag_music_wp_media_lib($added=false) {
 <!--
 jQuery(document).ready(function(){
     jQuery('.cb :checkbox').click(function() {
+		var cur, arr, del;
 		if(jQuery(this).is(':checked')){
-			var cur = jQuery(this).val();
-			var arr = jQuery('#items_array').val();
-			if(arr) { var del = ','; } else { var del = ''; }
+			cur = jQuery(this).val();
+			arr = jQuery('#items_array').val();
+			if(arr) { del = ','; } else { del = ''; }
 			jQuery('#items_array').val(arr+del+cur);
 		} else {
-			var cur = jQuery(this).val();
-			var arr = jQuery('#items_array').val().split(',');
+			cur = jQuery(this).val();
+			arr = jQuery('#items_array').val().split(',');
 			arr = jQuery.grep(arr, function(a){ return a != cur; }).join(',');
 			jQuery('#items_array').val(arr);
-		};
+		}
  	});
     jQuery('.del_thumb').click(function(){
       var id = jQuery(this).attr('data-id');
@@ -197,7 +199,7 @@ function checkAll(form)	{
 // this function check for a the number of selected images, sumbmit false when no one selected
 function checkSelected() {
 	if(!jQuery('.cb input:checked')) { 
-		alert('<?php echo js_escape(__('No items selected', 'flag')); ?>');
+		alert('<?php echo esc_js(__('No items selected', 'flag')); ?>');
 		return false; 
 	} 
 	actionId = jQuery('#bulkaction').val();
@@ -207,10 +209,10 @@ function checkSelected() {
 			return false;
 			break;
 		case "add_to_playlist":
-			return confirm('<?php echo sprintf(js_escape(__("You are about to add %s items to playlist \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
+			return confirm('<?php echo sprintf(esc_js(__("You are about to add %s items to playlist \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 			break;
 	}
-	return confirm('<?php echo sprintf(js_escape(__("You are about to start the bulk edit for %s items \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
+	return confirm('<?php echo sprintf(esc_js(__("You are about to start the bulk edit for %s items \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 }
 
 function showDialog( windowId, height ) {
@@ -244,7 +246,7 @@ function send_to_editor(html) {
 	    jQuery("span.browsefiles").show().click(function(){
 		    jQuery("#file_browser").fileTree({
 		      script: "admin-ajax.php?action=flag_file_browser&nonce=<?php echo wp_create_nonce( 'flag-ajax' ) ;?>",
-		      root: jQuery("#mp3folder").val(),
+		      root: jQuery("#mp3folder").val()
 		    }, function(file) {
 		        //var path = file.replace("<?php echo WINABSPATH; ?>", "");
 		        jQuery("#mp3folder").val(file);

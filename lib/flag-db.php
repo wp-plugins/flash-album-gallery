@@ -29,7 +29,9 @@ class flagdb {
      * @var object|array
      */
     var $comments = false;
-	
+
+	var $paged;
+
 	/**
 	 * PHP4 compatibility layer for calling the PHP5 constructor.
 	 * 
@@ -60,20 +62,21 @@ class flagdb {
 	 */
 	function __destruct() {
 		return true;
-	}	
+	}
 
 	/**
 	 * Get all the galleries
-	 * 
+	 *
 	 * @param string $order_by
 	 * @param string $order_dir
 	 * @param bool $counter (optional) Select true  when you need to count the images
 	 * @param int $limit number of paged galleries, 0 shows all galleries
 	 * @param int $start the start index for paged galleries
-     * @param bool $exclude
+	 * @param bool|int $exclude
 	 * @return array $galleries
 	 */
     function find_all_galleries($order_by = 'gid', $order_dir = 'ASC', $counter = false, $limit = 0, $start = 0, $exclude = 0) {
+		/** @var $wpdb wpdb */
 		global $wpdb; 
 		
         $exclude_clause = ($exclude) ? ' AND exclude<>1 ' : '';
@@ -130,22 +133,23 @@ class flagdb {
 	 * @return object $albums
 	 */
     function find_all_albums($order_by = 'id', $order_dir = 'DESC') {
-		global $wpdb; 
+		/** @var $wpdb wpdb */
+		global $wpdb;
 		
 		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
 		$albums = $wpdb->get_results( "SELECT * FROM $wpdb->flagalbum ORDER BY {$order_by} {$order_dir}", OBJECT_K );
 		return $albums;
 	}
-	
+
 	/**
 	 * Get all galleries from Album
-	 * 
-	 * @param string $order_by
-	 * @param string $order_dir
+	 *
+	 * @param $id
 	 * @return object $albums
 	 */
     function get_album($id) {
-		global $wpdb; 
+		/** @var $wpdb wpdb */
+		global $wpdb;
 		$id = $wpdb->escape($id);
 		$albums = $wpdb->get_var( "SELECT categories FROM $wpdb->flagalbum WHERE id = '{$id}'" );
 		return $albums;
@@ -155,9 +159,10 @@ class flagdb {
 	 * Get a gallery given its ID
 	 * 
 	 * @param int|string $id or $name
-	 * @return A flagGallery object (null if not found)
+	 * @return object flagGallery (null if not found)
 	 */
-	function find_gallery( $id ) {		
+	static function find_gallery( $id ) {
+		/** @var $wpdb wpdb */
 		global $wpdb;
 		
         if( is_numeric($id) ) {
@@ -179,20 +184,21 @@ class flagdb {
         } else 
 			return false;
 	}
-	
+
 	/**
 	 * This function return all information about the gallery and the images inside
-	 * 
+	 *
 	 * @param int|string $id or $name
-	 * @param string $order_by 
+	 * @param string $order_by
 	 * @param string $order_dir (ASC |DESC)
-     * @param bool $exclude
+	 * @param bool|int $exclude
 	 * @param int $limit number of paged galleries, 0 shows all galleries
 	 * @param int $start the start index for paged galleries
-	 * @return An array containing the flagImage objects representing the images in the gallery.
+	 * @return array containing the flagImage objects representing the images in the gallery.
 	 */
     function get_gallery($id, $order_by = 'sortorder', $order_dir = 'ASC', $exclude = 0, $limit = 0, $start = 0) {
 
+		/** @var $wpdb wpdb */
 		global $wpdb;
 
 		// init the gallery as empty array
@@ -234,18 +240,19 @@ class flagdb {
 
 		return $gallery;		
 	}
-	
+
 	/**
 	 * This function return all information about the gallery and the images inside
-	 * 
+	 *
 	 * @param int|string $id or $name
-	 * @param string $orderby 
-	 * @param string $order (ASC |DESC)
-     * @param bool $exclude
-	 * @return An array containing the flagImage objects representing the images in the gallery.
+	 * @param string $order_by
+	 * @param string $order_dir
+	 * @param bool|int $exclude
+	 * @return array containing the flagImage objects representing the images in the gallery.
 	 */
-    function get_ids_from_gallery($id, $order_by = 'sortorder', $order_dir = 'ASC', $exclude = 0) {
+    static function get_ids_from_gallery($id, $order_by = 'sortorder', $order_dir = 'ASC', $exclude = 0) {
 
+		/** @var $wpdb wpdb */
 		global $wpdb;
 		
         // Check for the exclude setting
@@ -268,23 +275,30 @@ class flagdb {
 	 * 
 	 * @gid The gallery ID
 	 */
-	function delete_gallery($gid) {		
+	function delete_gallery($gid) {
+		/** @var $wpdb wpdb */
 		global $wpdb;
 				
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->flagpictures WHERE galleryid = %d", $gid) );
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->flaggallery WHERE gid = %d", $gid) );
         
-        wp_cache_delete($id, 'flag_gallery');
+        wp_cache_delete($gid, 'flag_gallery');
 
 		return true;
 	}
 
 	/**
 	 * Insert an image in the database
-	 * 
-	 * @return the ID of the inserted image
+	 *
+	 * @param $gid
+	 * @param $filename
+	 * @param $alttext
+	 * @param $desc
+	 * @param int $exclude
+	 * @return int the ID of the inserted image
 	 */
-	function insert_image($gid, $filename, $alttext, $desc, $exclude = 0) {
+	static function insert_image($gid, $filename, $alttext, $desc, $exclude = 0) {
+		/** @var $wpdb wpdb */
 		global $wpdb;
 		
 		$result = $wpdb->query(
@@ -298,18 +312,19 @@ class flagdb {
 
 	/**
 	 * flagdb::update_image() - Insert an image in the database
-	 * 
+	 *
 	 * @param int $pid   id of the image
-	 * @param (optional) string | int $galleryid
-	 * @param (optional) string $filename
-	 * @param (optional) string $description
-	 * @param (optional) string $alttext
-     * @param (optional) int $exclude (0 or 1)
-	 * @param (optional) int $sortorder
+	 * @param bool $galleryid
+	 * @param bool $filename
+	 * @param bool $description
+	 * @param bool $alttext
+	 * @param int $exclude
+	 * @param bool $sortorder
 	 * @return bool result of the ID of the inserted image
 	 */
-	function update_image($pid, $galleryid = false, $filename = false, $description = false, $alttext = false, $exclude = 0, $sortorder = false) {
+	static function update_image($pid, $galleryid = false, $filename = false, $description = false, $alttext = false, $exclude = 0, $sortorder = false) {
 
+		/** @var $wpdb wpdb */
 		global $wpdb;
 		
 		$sql = array();
@@ -331,6 +346,7 @@ class flagdb {
 		// create the final string
 		$sql = implode(', ', $sql);
 		
+		$result = false;
 		if ( !empty($sql) && $pid != 0)
 			$result = $wpdb->query( "UPDATE $wpdb->flagpictures SET $sql WHERE pid = $pid" );
 
@@ -345,7 +361,8 @@ class flagdb {
 	 * @param int $id The image ID
 	 * @return object A flagImage object representing the image (false if not found)
 	 */
-	function find_image( $id ) {
+	static function find_image( $id ) {
+		/** @var $wpdb wpdb */
 		global $wpdb;
 		
         if ( $image = wp_cache_get($id, 'flag_image') )
@@ -362,14 +379,17 @@ class flagdb {
 		
 		return false;
 	}
-	
+
 	/**
-	 * Get images given a list of IDs 
-	 * 
+	 * Get images given a list of IDs
+	 *
 	 * @param $pids array of picture_ids
-	 * @return An array of flagImage objects representing the images
+	 * @param int $exclude
+	 * @param string $order
+	 * @return array of flagImage objects representing the images
 	 */
-    function find_images_in_list( $pids, $exclude = 0, $order = 'ASC' ) {
+    static function find_images_in_list( $pids, $exclude = 0, $order = 'ASC' ) {
+		/** @var $wpdb wpdb */
 		global $wpdb;
 	
 		$result = array();
@@ -394,24 +414,24 @@ class flagdb {
 		}
 		return $result;
 	}
-	
-    /**
-    * Add an image to the database
-    * 
-	* @param int $pid   id of the gallery
-    * @param (optional) string|int $galleryid
-    * @param (optional) string $filename
-    * @param (optional) string $description
-    * @param (optional) string $alttext
-    * @param (optional) array $meta data
-    * @param (optional) int $post_id (required for sync with WP media lib)
-    * @param (optional) string $imagedate
-    * @param (optional) int $exclude (0 or 1)
-    * @param (optional) int $sortorder
-    * @return bool result of the ID of the inserted image
-    */
+
+	/**
+	 * Add an image to the database
+	 *
+	 * @param bool $id
+	 * @param bool $filename
+	 * @param string $description
+	 * @param string $alttext
+	 * @param bool $meta_data
+	 * @param int $post_id
+	 * @param string $imagedate
+	 * @param int $exclude
+	 * @param int $sortorder
+	 * @return bool result of the ID of the inserted image
+	 */
     function add_image( $id = false, $filename = false, $description = '', $alttext = '', $meta_data = false, $post_id = 0, $imagedate = '0000-00-00 00:00:00', $exclude = 0, $sortorder = 0  ) {
-        global $wpdb;
+		/** @var $wpdb wpdb */
+		global $wpdb;
                 
 		if ( is_array($meta_data) )
 			$meta_data = serialize($meta_data);
@@ -434,29 +454,32 @@ class flagdb {
 	/**
 	* Delete an image entry from the database
 	*/
-	function delete_image($pid) {
+	static function delete_image($pid) {
+		/** @var $wpdb wpdb */
 		global $wpdb;
 		
 		// Delete the image row
 		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->flagpictures WHERE pid = %d", $pid) );
 		
         // Remove from cache
-        wp_cache_delete( $id, 'flag_image'); 
+        wp_cache_delete( $pid, 'flag_image');
         
         return $result;
 	}
-	
+
 	/**
 	 * Get the last images registered in the database with a maximum number of $limit results
-	 * 
+	 *
 	 * @param integer $page
 	 * @param integer $limit
-     * @param bool $use_exclude
-     * @param int $galleryId Only look for images with this gallery id, or in all galleries if id is 0
-     * @param string $orderby is one of "id" (default, order by pid), "date" (order by exif date), sort (order by user sort order)
-     * @return
+	 * @param int $exclude
+	 * @param int $galleryId Only look for images with this gallery id, or in all galleries if id is 0
+	 * @param string $orderby
+	 * @param string $orderby is one of "id" (default, order by pid), "date" (order by exif date), sort (order by user sort order)
+	 * @return array
 	 */
     function find_last_images($page = 0, $limit = 30, $exclude = 0, $galleryId = 0, $orderby = "id") {
+		/** @var $wpdb wpdb */
 		global $wpdb;
 		
         // Check for the exclude setting
@@ -503,15 +526,17 @@ class flagdb {
 		
 		return $result;
 	}
-	
+
 	/**
 	 * flagdb::get_random_images() - Get an random image from one ore more gally
-	 * 
+	 *
 	 * @param integer $number of images
 	 * @param integer $galleryID optional a Gallery
-	 * @return A flagImage object representing the image (null if not found)
+	 * @param int $exclude
+	 * @return object flagImage representing the image (null if not found)
 	 */
 	function get_random_images($number = 1, $galleryID = 0, $exclude = 0) {
+		/** @var $wpdb wpdb */
 		global $wpdb;
 		
         // Check for the exclude setting
@@ -546,7 +571,8 @@ class flagdb {
      * @return Array Result of the request
      */
     function search_for_images( $request ) {
-        global $wpdb;
+		/** @var $wpdb wpdb */
+		global $wpdb;
         
         // If a search pattern is specified, load the posts that match
         if ( !empty($request) ) {
@@ -558,8 +584,9 @@ class flagdb {
             $search_terms = array_map(create_function('$a', 'return trim($a, "\\"\'\\n\\r ");'), $matches[0]);
             
             $n = '%';
+            $search = '';
             $searchand = '';
-            
+
             foreach( (array) $search_terms as $term) {
                 $term = addslashes_gpc($term);
                 $search .= "{$searchand}((tt.description LIKE '{$n}{$term}{$n}') OR (tt.alttext LIKE '{$n}{$term}{$n}') OR (tt.filename LIKE '{$n}{$term}{$n}'))";
@@ -580,6 +607,7 @@ class flagdb {
 
         // Return the object from the query result
         if ($result) {
+			$images = array();
             foreach ($result as $image) {
                 $images[] = new flagImage( $image );
             }
@@ -589,23 +617,24 @@ class flagdb {
         return null;
     }
 
-    /**
-     * search for a filename
-     * 
-     * @since 0.40
-     * @param string $filename
-     * @param int (optional) $galleryID
-     * @return Array Result of the request
-     */
+	/**
+	 * search for a filename
+	 *
+	 * @since 0.40
+	 * @param string $filename
+	 * @param bool|int $galleryID
+	 * @return Array Result of the request
+	 */
     function search_for_file( $filename, $galleryID = false ) {
-        global $wpdb;
-        
-        // If a search pattern is specified, load the posts that match
+		/** @var $wpdb wpdb */
+		global $wpdb;
+
+		$where_clause = '';
+		// If a search pattern is specified, load the posts that match
         if ( !empty($filename) ) {
             // added slashes screw with quote grouping when done early, so done later
             $term = $wpdb->escape($filename);
             
-           	$where_clause = '';
             if ( is_numeric($galleryID) ) {
             	$id = (int) $galleryID;
             	$where_clause = " AND tt.galleryid = {$id}";
@@ -625,15 +654,17 @@ class flagdb {
         return null;
     }
 
-    /**
-     * Update or add meta data for an image
-     * 
-     * @param int $id The image ID
-     * @param array $values An array with existing or new values
-     * @return bool result of query
-     */ 
-    function update_image_meta( $id, $new_values ) {
-        global $wpdb;
+	/**
+	 * Update or add meta data for an image
+	 *
+	 * @param int $id The image ID
+	 * @param $new_values
+	 * @internal param array $values An array with existing or new values
+	 * @return bool result of query
+	 */
+    static function update_image_meta( $id, $new_values ) {
+		/** @var $wpdb wpdb */
+		global $wpdb;
         
         // Query database for existing values
         // Use cache object
