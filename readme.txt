@@ -41,6 +41,9 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 == Changelog ==
 
+= v2.16 - 17.12.2012 =
+* Added: Hooks for manage images/galleries
+
 = v2.15 - 04.12.2012 =
 * Optimized: Code optimized
 * Added: Hook for bulk actions dropdown

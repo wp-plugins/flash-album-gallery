@@ -57,7 +57,9 @@ class flagManageGallery {
 
 	function processor() {
 		global $wpdb, $flag, $flagdb;
-		
+
+		do_action('flag_manage_processor');
+
 		// Delete a gallery
 		if ($this->mode == 'delete') {
 
@@ -157,7 +159,9 @@ class flagManageGallery {
 		
 	function post_processor_galleries() {
 		global $wpdb, $flag, $flagdb;
-		
+
+		do_action('flag_manage_post_processor_galleries');
+
 		// bulk update in a single gallery
 		if (isset ($_POST['bulkaction']) && isset ($_POST['doaction']))  {
 
@@ -215,7 +219,9 @@ class flagManageGallery {
 
 	function post_processor_images() {
 		global $wpdb, $flag, $flagdb;
-		
+
+		do_action('flag_manage_post_processor_images');
+
 		// bulk update in a single gallery
 		if (isset ($_POST['bulkaction']) && isset ($_POST['doaction']))  {
 			

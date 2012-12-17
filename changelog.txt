@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v2.16 - 17.12.2012 =
+* Added: Hooks for manage images/galleries
+
 = v2.15 - 04.12.2012 =
 * Optimized: Code optimized
 * Added: Hook for bulk actions dropdown
