@@ -32,11 +32,11 @@ if($altColors['FullWindow'] && !$isCrawler){
 }
 $xml['alt'] .= '</style>'.PHP_EOL;
 if(!$isCrawler){
-	if(!$flag_options['jAlterGalScript']) {
+	if(!intval($flag_options['jAlterGalScript'])) {
 		$xml['alt'] .= '<link href="'.plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css').'" rel="stylesheet" type="text/css" />'.PHP_EOL;
 		$xml['alt'] .= "<script type='text/javascript' src='".plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js')."'></script>".PHP_EOL;
 		$xml['alt'] .= "<script type='text/javascript'>var ExtendVar='fancybox', hitajax = '".plugins_url('/lib/hitcounter.php', dirname(__FILE__))."';</script>".PHP_EOL;
-	} else if($flag_options['jAlterGalScript'] == 1) {
+	} else if(intval($flag_options['jAlterGalScript']) == 1) {
 	$xml['alt'] .= "<style type='text/css'>@import url('".plugins_url('/admin/js/photoswipe/photoswipe.css', dirname(__FILE__))."');</style>
 <script type='text/javascript' src='".plugins_url('/admin/js/photoswipe/klass.min.js', dirname(__FILE__))."'></script>
 <script type='text/javascript' src='".plugins_url('/admin/js/photoswipe/code.photoswipe.jquery-3.0.5.min.js', dirname(__FILE__))."'></script>
@@ -95,7 +95,7 @@ foreach ( $gID as $galID ) {
 			$pid = intval($picture['pid']);
 
 			if ($isCrawler){
-				$xml['alt'] .= '<a style="display:block; overflow: hidden; height: auto; width: auto; margin-bottom: 10px; background-color: #eeeeee; background-position: 22px 44px; text-align: left;" class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" rel="gid_'.$galID.'_'.$skinID.'"><img style="float:left; margin-right: 10px;" title="'.strip_tags($picture['alttext']).'" alt="'.strip_tags($picture['alttext']).'" src="'.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].'" width="115" height="100" /><span style="display: block; overflow: hidden; text-decoration: none; color: #000; font-weight: normal;" class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.strip_tags($picture['alttext']).'</strong><br />'.strip_tags($picture['description'],'<b><u><i><span>').'</span></a>'.PHP_EOL;
+				$xml['alt'] .= '<a style="display:block; overflow: hidden; height: 100px; width: 115px; margin-bottom: 10px; background-color: #eeeeee; background-position: 22px 44px; text-align: left;" class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" rel="gid_'.$galID.'_'.$skinID.'"><img style="float:left; margin-right: 10px; width: auto; height: auto; min-height:100px; min-width:115px;" title="'.strip_tags($picture['alttext']).'" alt="'.strip_tags($picture['alttext']).'" src="'.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].'" /><span style="display: block; overflow: hidden; text-decoration: none; color: #000; font-weight: normal;" class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.strip_tags($picture['alttext']).'</strong><br />'.strip_tags($picture['description'],'<b><u><i><span>').'</span></a>'.PHP_EOL;
 			} else {
 				$xml['alt'] .= '<a class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" rel="gid_'.$galID.'_'.$skinID.'" title="'.strip_tags($picture['alttext']).'">[img src='.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].']<span class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.htmlspecialchars($picture['alttext']).'</strong><br /><span>'.htmlspecialchars($picture['description']).'</span></span></a>'.PHP_EOL;
 			}

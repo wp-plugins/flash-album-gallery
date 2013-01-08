@@ -60,8 +60,8 @@ function flag_picturelist() {
 		// get the current author
 		$act_author_user    = get_userdata( (int) $gallery->author );
 
-	}	
-		
+	}
+
 	// list all galleries
 	$gallerylist = $flagdb->find_all_galleries();
 
@@ -314,7 +314,7 @@ jQuery(document).ready( function() {
 <?php foreach($gallery_columns as $key=>$value){
 		if ( in_array($key, $hidden_columns) )
 			continue;
-		if($key == 'cb' && !$header) { $value = ''; }
+		if($key == 'cb') { $value = ''; }
 		echo $cols = '<th class="manage-column column-'.$key.'">'.$value.'</td>';
 	}
 ?>

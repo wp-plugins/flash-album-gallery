@@ -216,9 +216,10 @@ jQuery(document).ready(function() {
 					<label><input name="galSort" type="radio" value="pid" <?php checked('pid', $flag_options['galSort']); ?> /> <?php _e('Image ID', 'flag'); ?></label><br />
 					<label><input name="galSort" type="radio" value="filename" <?php checked('filename', $flag_options['galSort']); ?> /> <?php _e('File name', 'flag'); ?></label><br />
 					<label><input name="galSort" type="radio" value="alttext" <?php checked('alttext', $flag_options['galSort']); ?> /> <?php _e('Alt / Title text', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="imagedate" <?php checked('imagedate', $flag_options['galSort']); ?> /> <?php _e('Date / Time', 'flag'); ?></label>
-					<label><input name="galSort" type="radio" value="hitcounter" <?php checked('hitcounter', $flag_options['galSort']); ?> /> <?php _e('Image views', 'flag'); ?></label>
-					<label><input name="galSort" type="radio" value="total_votes" <?php checked('total_votes', $flag_options['galSort']); ?> /> <?php _e('Image likes', 'flag'); ?></label>
+					<label><input name="galSort" type="radio" value="imagedate" <?php checked('imagedate', $flag_options['galSort']); ?> /> <?php _e('Date / Time', 'flag'); ?></label><br />
+					<label><input name="galSort" type="radio" value="hitcounter" <?php checked('hitcounter', $flag_options['galSort']); ?> /> <?php _e('Image views', 'flag'); ?></label><br />
+					<label><input name="galSort" type="radio" value="total_votes" <?php checked('total_votes', $flag_options['galSort']); ?> /> <?php _e('Image likes', 'flag'); ?></label><br />
+					<label><input name="galSort" type="radio" value="rand()" <?php checked('rand()', $flag_options['galSort']); ?> /> <?php _e('Randomly', 'flag'); ?></label>
 					</td>
 				</tr>
 				<tr>

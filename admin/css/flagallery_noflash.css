@@ -10,11 +10,11 @@
 user-select: none;
 }
 div.flashalbum br { display: none; }
-.flag_alternate { background-color: <?php echo $bg; ?>; margin: 7px 0; }
+.flag_alternate { margin: 7px 0; }
 .flag_alternate .flagcategory { width: 100%; height: auto; position: relative; text-align: center; padding-bottom: 4px; }
-.flag_alternate .flagcategory a.flag_pic_alt { display: inline-block; margin: 1px 0 0 1px; padding: 0; height: 100px; width: 115px; line-height: 96px; position:relative; z-index: 2; text-align: center; z-index:99; cursor:pointer; background-color: #ffffff; border: 2px solid #ffffff; text-decoration: none; background-image: url(../images/loadingAnimation.gif); background-repeat: no-repeat; background-position: 50% 50%; font-size: 8px; color: #ffffff; }
+.flag_alternate .flagcategory a.flag_pic_alt { display: inline-block; margin: 1px 0 0 1px; padding: 0; height: 100px; width: 115px; line-height: 96px; position:relative; overflow: hidden; text-align: center; z-index:99; cursor:pointer; background-color: #ffffff; border: 2px solid #ffffff; text-decoration: none; background-image: url(../images/loadingAnimation.gif); background-repeat: no-repeat; background-position: 50% 50%; font-size: 8px; color: #ffffff; }
 .flag_alternate .flagcategory a.flag_pic_alt > .flag_pic_desc { display: none; padding: 4px; line-height: 140%; font-size: 12px; }
 .flag_alternate .flagcategory a.flag_pic_alt > .flag_pic_desc * { display: none; line-height: 140%; font-size: 12px !important; }
 .flag_alternate .flagcategory a.flag_pic_alt:hover { background-color: #ffffff; border: 2px solid #4a4a4a; color: #4a4a4a; text-decoration: none; z-index: 3; }
 .flag_alternate .flagcategory a.flag_pic_alt.current, .flag_alternate .flagcategory a.flag_pic_alt.last { border-color: #4a4a4a; }
-.flag_alternate .flagcategory a.flag_pic_alt > img { vertical-align: middle; display:inline-block; position: static; margin: 0 auto; padding: 0; border: none; height: 100px !important; width: 115px !important; max-width: 115px; min-width: 115px; }
+.flag_alternate .flagcategory a.flag_pic_alt > img { vertical-align: middle; display:inline-block; position: static; margin: 0 auto; padding: 0; border: none; height: auto !important; width: auto !important; min-height: 100px !important; min-width: 115px !important; max-height: 130px; max-width: 150px; }

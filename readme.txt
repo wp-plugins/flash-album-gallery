@@ -41,6 +41,12 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 == Changelog ==
 
+= v2.17 - 08.01.2013 =
+* Added: Sort images option: Randomly
+* Changed: Alternative gallery thumbs for not square images
+* Fixed: Skin name was wrong when click delete skin
+* Fixed: Small fixes
+
 = v2.16 - 17.12.2012 =
 * Added: Hooks for manage images/galleries
 

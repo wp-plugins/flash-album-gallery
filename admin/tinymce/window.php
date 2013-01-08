@@ -145,7 +145,7 @@ if($_REQUEST['riched'] == "false") {
 		<div id="sort_panel" class="panel cptab">
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
-            <td nowrap="nowrap" valign="middle"><label for="galorderby"><?php _e("Order by", 'flag'); ?>:</label></td>
+            <td nowrap="nowrap" valign="middle"><label for="galorderby"><?php _e("Order galleries by", 'flag'); ?>:</label></td>
             <td valign="middle"><select id="galorderby" name="galorderby" style="width: 200px">
                     <option value="" selected="selected"><?php _e("Gallery IDs (default)", 'flag'); ?></option>
                     <option value="title"><?php _e("Gallery Title", 'flag'); ?></option>

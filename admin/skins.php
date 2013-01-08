@@ -11,6 +11,7 @@ if ( !is_user_logged_in() )
 if ( !current_user_can('FlAG Change skin') )
 	die('-1');
 
+global $flag;
 $flag_options = get_option('flag_options');
 
 require_once (dirname (__FILE__) . '/get_skin.php');
@@ -75,7 +76,8 @@ function upload_skin() {
 			} else {
 				$local_file = $uploads['basedir'] . '/' . $filename;
 			}
-			if( $installed_skin = do_skin_install_local_package($local_file, $filename) ) {
+			$installed_skin = do_skin_install_local_package($local_file, $filename);
+			if( $installed_skin && is_string($installed_skin) ) {
 				if ( file_exists($installed_skin.basename($installed_skin).'.png') ) {
 					@rename($installed_skin.basename($installed_skin).'.png', $installed_skin.'screenshot.png');
 				}
@@ -130,6 +132,7 @@ function flag_skin_options_tab() {
 if ( isset($_POST['updateskinoption']) ) {
 	check_admin_referer('skin_settings');
 	// get the hidden option fields, taken from WP core
+	$options = false;
 	if ( $_POST['skin_options'] )
 		$options = explode(',', stripslashes($_POST['skin_options']));
 	elseif ( $_POST['skinoptions'] )
@@ -156,7 +159,7 @@ if ( isset($_POST['updateskinoption']) ) {
 if ( isset($_POST['license_key']) ) {
 	check_admin_referer('skin-api');
 	$license_key = mysql_real_escape_string($_POST['license_key']);
-	$flag_options['license_key'] = $license_key;
+	$flag_options['license_key'] = trim($license_key);
 	update_option('flag_options', $flag_options);
  	flagGallery::show_message(__('License Key Updated','flag'));
 }
@@ -174,6 +177,8 @@ if(!empty($flag_options['license_key'])){
 			update_option('flag_options', $flag_options);
 			flagGallery::show_message(__('Your license key was deactivated','flag'));
 		} elseif($status === ''){
+			$flag_options['license_key'] = '';
+			update_option('flag_options', $flag_options);
 			flagGallery::show_message(__('Bad Licence Key','flag'));
 		}
 	} else {
@@ -184,6 +189,7 @@ if(!empty($flag_options['license_key'])){
 if ( isset($_POST['updateoption']) ) {
 	check_admin_referer('flag_settings');
 	// get the hidden option fields, taken from WP core
+	$options = false;
 	if ( $_POST['page_options'] )
 		$options = explode(',', stripslashes($_POST['page_options']));
 	if ($options) {
@@ -437,12 +443,7 @@ $total_all_skins = count($all_skins);
  		<?php }
 		if ( current_user_can('FlAG Delete skins') ) {
 		if ( dirname($skin_file) != $flag_options['flashSkin'] ) { ?>
-			<script type="text/javascript">
-				function flag_delskin(){
-					return confirm( '<?php echo sprintf(__('Delete "%s"' , 'flag'), $skin_data['Name']); ?>');
-				}
-			</script>
-			<br /><br /><a class="delete" onclick="javascript:return flag_delskin();" href="<?php echo admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)); ?>" title="<?php _e( 'Delete this skin', 'flag' ); ?>"><?php _e('Delete', 'flag' ); ?></a>
+			<br /><br /><a class="delete" onclick="javascript:return flag_delskin('<?php echo $skin_data['Name']; ?>');" href="<?php echo admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)); ?>" title="<?php _e( 'Delete this skin', 'flag' ); ?>"><?php _e('Delete', 'flag' ); ?></a>
 		<?php }
  		} ?>
 		</td>
@@ -450,6 +451,11 @@ $total_all_skins = count($all_skins);
 <?php } ?>
 	</tbody>
 </table>
+<script type="text/javascript">
+	function flag_delskin(skin_name){
+		return confirm( '<?php echo __('Delete' , 'flag'); ?> "'+skin_name+'"');
+	}
+</script>
 </div>
 
 <div class="postbox metabox-holder" id="newskins" style="width: 29%; float: right; padding-top: 5px;">
@@ -461,7 +467,7 @@ $total_all_skins = count($all_skins);
 		<div class="skin <?php echo $skin['type'].' '.$skin['status']; ?>" id="uid-<?php echo $skin['uid']; ?>" style="padding: 10px; float:left;">
 			<center>
 				<p><strong style="font-size: 120%;"><?php echo $skin['title']; ?></strong> <span class="version"><?php echo 'v'.$skin['version']; ?></span></p>
-				<div class="screenshot"><img src="<?php echo $skin['screenshot']; ?>" width="200" height="184" /></div>
+				<div class="screenshot"><img src="<?php echo $skin['screenshot']; ?>" width="200" height="184"  alt=""/></div>
 			</center>
 			<div class="content">
 				<div class="links" style="text-align: center;">
