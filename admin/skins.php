@@ -174,6 +174,8 @@ if(!empty($flag_options['license_key'])){
 			update_option('flag_options', $flag_options);
 			flagGallery::show_message(__('Your license key was deactivated','flag'));
 		} elseif($status === ''){
+			$flag_options['license_key'] = '';
+			update_option('flag_options', $flag_options);
 			flagGallery::show_message(__('Bad Licence Key','flag'));
 		}
 	} else {
