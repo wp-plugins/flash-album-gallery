@@ -50,14 +50,21 @@ echo "<xml>\n"; ?>
 	<plug data="<?php echo $url_plug; ?>"/>
 </color>
 <?php
+$order_dir = ( $flag_options['galSortDir'] == 'DESC') ? 'DESC' : 'ASC';
+$order_by  = ( empty($flag_options['galSort']) ) ? 'tt.sortorder' : 'tt.'.$flag_options['galSort'];
+if($order_by == 'tt.rand()'){
+	$order_by = 'rand()';
+	$order_dir = '';
+}
+
 echo "<gallery title='".attribute_escape(stripslashes($_GET['albumname']))."'>\n";
 // get the pictures
 foreach ( $gID as $galleryID ) {
 	$galleryID = (int) $galleryID;
 	if ( $galleryID == 0) {
-		$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE 1=1 {$exclude_clause} ORDER BY tt.{$flag_options['galSort']} {$flag_options['galSortDir']} ");
+		$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE 1=1 {$exclude_clause} ORDER BY {$order_by} {$order_dir} ");
 	} else {
-		$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '$galleryID' {$exclude_clause} ORDER BY tt.{$flag_options['galSort']} {$flag_options['galSortDir']} ");
+		$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = '$galleryID' {$exclude_clause} ORDER BY {$order_by} {$order_dir} ");
 	}
 
 	echo "  <category id='".$galleryID."' title='".attribute_escape(flagGallery::i18n(strip_tags(stripslashes($thepictures[0]->title))))."'>\n";
