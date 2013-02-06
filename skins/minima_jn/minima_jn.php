@@ -1,7 +1,7 @@
 <?php
 
 /*
-Skin Name: Minima
+Skin Name: Minima - Default Skin
 Version: 1.0
 uid: minima
 Skin URI: http://photogallerycreator.com/grand-flagallery/
