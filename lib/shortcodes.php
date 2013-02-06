@@ -98,7 +98,7 @@ class FlAG_shortcodes {
 		if($skin == '') $skin = $flag_options['flashSkin'];
 		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 		if(!is_dir($skinpath)) {
-			$skin = 'default';
+			$skin = 'minima_jn';
 			$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 		} 
 		$this->flag_shortcode = true;

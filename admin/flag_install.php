@@ -204,7 +204,7 @@ function flag_list_options() {
 	// Flash settings
 	$flag_options['skinsDirABS']			= str_replace("\\","/", WP_PLUGIN_DIR . '/flagallery-skins/' );
 	$flag_options['skinsDirURL']			= WP_PLUGIN_URL . '/flagallery-skins/';
-	$flag_options['flashSkin']				= 'default';
+	$flag_options['flashSkin']				= 'minima_jn';
 	$flag_options['flashWidth']				= '100%'; 
 	$flag_options['flashHeight']			= '500';
 
@@ -219,7 +219,7 @@ function flag_list_options() {
 	$flag_options['thumbFix']				= true;								// Fix the dimension
 	$flag_options['thumbQuality']			= 100;  							// Thumb Quality
 
-	// Flash default skin colors settings
+	// Flash default skin colors settings TODO remove old settings
 	$flag_options['flashBacktransparent'] 	= false;
 	$flag_options['flashBackcolor']			= '262626';
 	$flag_options['buttonsBG']				= '000000';

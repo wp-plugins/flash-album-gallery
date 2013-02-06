@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v2.50 - 05.02.2013 =
+* Added: New Default 'Minima' skin - better, faster, nicer.
+* Added: Image views and likes now visible in alternative gallery
+
 = v2.18 - 23.01.2013 =
 * Fixed: Minor fix for skin settings. Skin settings not saved on some servers.
 

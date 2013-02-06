@@ -21,15 +21,15 @@ New version of Banner Rotator!!! Now it is responsive. Full support of iPhone/iP
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
-* iPhone, iPad, Android, Blackberry 6 and Desktop friendly photo gallery, SEO optimized.
+* iPhone, iPad, Android, Blackberry and Desktop friendly photo gallery, SEO optimized.
 * Full-screen mobile friendly slideshow with touch controls (optional, if set PhotoSwipe library script for alternative gallery).
-* New: cool widgets for Banner Rotator, Photo Gallery and Video Gallery. 
+* Widgets for Banner Rotator, Photo Gallery and Video Gallery. 
 
 Added: GRAND Pages - Full Window Gallery Template. Now you can display your image gallery in full window separate page (gallery template). [View Demo 1](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/), [View Demo 2](http://photogallerycreator.com/flagallery/3d-sphere-v2-0-full-window-mode/)
 
-Starting with version 1.55 you have the opportunity to create image gallery, as separate pages. It looks very cool when you open image gallery, and gallery images occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
+You have the opportunity to create image gallery, as separate pages. It looks very cool when you open image gallery, and gallery images occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
 
-Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycreator.com/grand-flagallery/photoblog-skin-gallery/) you have the opportunity to see "Views" of each photo in the gallery and visitors can "Like" image and see image "Rating".
+Now you can see "Views" of each photo in the gallery and visitors can "Like" image and see image "Rating".
 
 * Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
 * Demo [Full Window Gallery Template](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
@@ -40,6 +40,10 @@ Starting with version 1.70 and with new [PhotoBlog skin](http://photogallerycrea
 
 
 == Changelog ==
+
+= v2.50 - 05.02.2013 =
+* Added: New Default 'Minima' skin - better, faster, nicer.
+* Added: Image views and likes now visible in alternative gallery
 
 = v2.18 - 23.01.2013 =
 * Fixed: Minor fix for skin settings. Skin settings not saved on some servers.

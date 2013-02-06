@@ -77,30 +77,6 @@ function upload_skin() {
 				$local_file = $uploads['basedir'] . '/' . $filename;
 			}
 			$installed_skin = do_skin_install_local_package($local_file, $filename);
-			if( $installed_skin && is_string($installed_skin) ) {
-				if ( file_exists($installed_skin.basename($installed_skin).'.png') ) {
-					@rename($installed_skin.basename($installed_skin).'.png', $installed_skin.'screenshot.png');
-				}
-				if( !file_exists( $installed_skin.'settings.php' ) ) {
-					if( file_exists( $installed_skin.'xml.php' ) ) {
-						if ( !@copy(dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php') ) {
-							echo "<p>".sprintf(__('Failed to copy and rename %1$s to %2$s','flag'),
-								dirname($installed_skin).'/default/old_colors.php', $installed_skin.'colors.php').'</p>';
-						}
-						$content = file_get_contents($installed_skin.'xml.php');
-						$pos = strpos($content,'/../../flash-album-gallery/flag-config.php');
-						if($pos === false) {
-							$content = str_replace('/../../flag-config.php','/../../flash-album-gallery/flag-config.php',$content);
-							$fp = fopen($installed_skin.'xml.php','w');
-							if( fwrite($fp,$content) === FALSE ) {
-								echo "<p>".sprintf(__('Failed to search string \'/../../flag-config.php\' and replace with \'/../../flash-album-gallery/flag-config.php\' in file \'%1$s\'','flag'),
-									$installed_skin.'xml.php').'</p>';
-							}
-							fclose($fp);
-						}
-					}
-				}
-			}
 		}
 	}
 	echo '</div>';
@@ -246,7 +222,7 @@ if( isset($_GET['skin']) ) {
 		$flag_options['flashSkin'] = $set_skin;
 		include_once($active_skin);
 		update_option('flag_options', $flag_options);
-		flagGallery::show_message( __('Skin','flag').' \''.$set_skin.'\' '.__('activated successfully','flag') );
+		flagGallery::show_message( __('Skin','flag').' \''.$set_skin.'\' '.__('activated successfully. Optionally it can be overwritten with shortcode parameter.','flag') );
 	}
 }
 $type = isset($_GET['type'])? $_GET['type'] : '';
@@ -416,7 +392,7 @@ $total_all_skins = count($all_skins);
 		?>
 		<?php echo implode(' | ', $skin_meta); ?>
 		</td>
-		<td class="skin-activate action-links">
+		<td class="skin-activate action-links" style="white-space: nowrap;">
 		<?php
 		if(isset($_GET['type']) && !empty($_GET['type'])) {
 		} else {

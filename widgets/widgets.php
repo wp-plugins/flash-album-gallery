@@ -234,7 +234,7 @@ class flagBannerWidget extends WP_Widget {
 // register it
 add_action('widgets_init', create_function('', 'return register_widget("flagBannerWidget");'));
 
-function flagBannerWidget($xml, $w = '100%', $h = '200', $skin = 'default') {
+function flagBannerWidget($xml, $w = '100%', $h = '200', $skin = 'banner_widget_default') {
 
 	echo flagBannerWidget::render_slideshow($xml, $w, $h, $skin);
 
@@ -669,7 +669,7 @@ class flagMusicWidget extends WP_Widget {
 // register it
 add_action('widgets_init', create_function('', 'return register_widget("flagMusicWidget");'));
 
-function flagMusicWidget($xml, $w = '100%', $h = '200', $skin = 'default') {
+function flagMusicWidget($xml, $w = '100%', $h = '200', $skin = 'music_default') {
 
 	echo flagMusicWidget::render_music($xml, $w, $h, $skin);
 

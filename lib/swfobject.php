@@ -28,7 +28,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	if($skin == '') $skin = $flag_options['flashSkin'];
 	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
 	if(!is_dir($skinpath)) {
-		$skin = 'default';
+		$skin = 'minima_jn';
 		$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
 	} 
 	$swfmousewheel = '';
@@ -71,6 +71,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	$altColors['DescrColor'] = $flag_options['DescrColor'];
 	$altColors['FullWindow'] = $fullwindow;
 
+	/** @var $xml array */
 	include(FLAG_ABSPATH."admin/jgallery.php");
 	if($flag_options['jAlterGal']) {
 		$alternate = $xml['alt'];
@@ -182,6 +183,11 @@ function flagShowVPlayer($playlist, $width, $height, $wmode='') {
 	$skin = $playlist_data['skin'];
 	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
+	if(isset($flag_options['license_key'])){
+		$lkey = $flag_options['license_key'];
+	} else {
+		$lkey = '';
+	}
 	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
 	$args = array(
 		'playlist'	=> $playlist, 
@@ -189,6 +195,7 @@ function flagShowVPlayer($playlist, $width, $height, $wmode='') {
 		'width' 	=> $width, 
 		'height' 	=> $height,
 		'wmode' 	=> $wmode,
+		'lkey' 		=> $lkey,
 		'crawler' 	=> $isCrawler
 	);
 	$out = apply_filters( 'flagShowVideoSkin', $args );
@@ -256,15 +263,21 @@ function flagShowBanner($xml, $width, $height, $wmode='') {
 	$items = $playlist_data['items'];
 	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
+	if(isset($flag_options['license_key'])){
+		$lkey = $flag_options['license_key'];
+	} else {
+		$lkey = '';
+	}
 	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
 	$args = array(
-		'xml'		=> $xml,
+		'xml'			=> $xml,
 		'skin' 		=> $skin,
 		'items' 	=> $items,
 		'width' 	=> $width,
 		'height' 	=> $height,
 		'wmode' 	=> $wmode,
-		'crawler' 	=> $isCrawler
+		'lkey' 		=> $lkey,
+		'crawler' => $isCrawler
 	);
 	$out = apply_filters( 'flagShowBannerSkin', $args );
 	return $out;
@@ -284,9 +297,15 @@ function flagShowWidgetBanner($xml, $width, $height, $skin) {
 	$items = $playlist_data['items'];
 	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
+	if(isset($flag_options['license_key'])){
+		$lkey = $flag_options['license_key'];
+	} else {
+		$lkey = '';
+	}
 	$args = array(
 		'xml'		=> $xml,
 		'skin' 		=> $skin,
+		'lkey' 		=> $lkey,
 		'items' 	=> $items,
 		'width' 	=> $width,
 		'height' 	=> $height
