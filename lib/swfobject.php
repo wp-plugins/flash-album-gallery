@@ -84,7 +84,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	else
 		$height = 'auto';
 	// init the flash output
-	$swfobject = new flag_swfobject( plugins_url('flagallery-skins/'.$skin.'/gallery.swf') , $skinID, '100%', '100%', '11.0.0', FLAG_URLPATH .'skins/expressInstall.swf');
+	$swfobject = new flag_swfobject( plugins_url('flagallery-skins/'.$skin.'/gallery.swf') , $skinID, '100%', '100%', '11.0.0', plugins_url('/skins/expressInstall.swf', dirname(__FILE__)));
 
 	$swfobject->add_params('wmode', $wmode);
 	$swfobject->add_params('allowfullscreen', 'true');
@@ -212,7 +212,7 @@ function flagShowVmPlayer($id, $w, $h, $autoplay) {
 	if (empty($autoplay)) $autoplay = $flag_options['vAutoplay'];
 
 	// init the flash output
-	$swfobject = new flag_swfobject( FLAG_URLPATH.'lib/video_mini.swf' , $vID, $w, $h, '10.1.52', FLAG_URLPATH .'skins/expressInstall.swf');
+	$swfobject = new flag_swfobject( plugins_url('/lib/video_mini.swf', dirname(__FILE__)) , $vID, $w, $h, '10.1.52', plugins_url('/skins/expressInstall.swf', dirname(__FILE__)));
 
 	$videoObject = get_post($id);
 	$url = wp_get_attachment_url($videoObject->ID);
@@ -233,7 +233,7 @@ function flagShowVmPlayer($id, $w, $h, $autoplay) {
 	$swfobject->add_attributes('id', $vID);
 
 	// adding the flash parameter	
-	$swfobject->add_flashvars( 'path', FLAG_URLPATH.'lib/' );
+	$swfobject->add_flashvars( 'path', plugins_url('/lib/', dirname(__FILE__)) );
 	$swfobject->add_flashvars( 'vID', $id );
 	$swfobject->add_flashvars( 'flashID', $vID );
 	$swfobject->add_flashvars( 'autoplay', $autoplay );

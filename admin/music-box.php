@@ -243,17 +243,15 @@ function send_to_editor(html) {
 <script type="text/javascript">
 /* <![CDATA[ */
 	  jQuery(function() {
-	    jQuery("span.browsefiles").show().click(function(){
-		    jQuery("#file_browser").fileTree({
-		      script: "admin-ajax.php?action=flag_file_browser&nonce=<?php echo wp_create_nonce( 'flag-ajax' ) ;?>",
-		      root: jQuery("#mp3folder").val()
-		    }, function(file) {
-		        //var path = file.replace("<?php echo WINABSPATH; ?>", "");
-		        jQuery("#mp3folder").val(file);
-		    });
-
-	    	jQuery("#file_browser").show("slide");
+	    jQuery("#file_browser").fileTree({
+	      script: "admin-ajax.php?action=flag_file_browser&nonce=<?php echo wp_create_nonce( 'flag-ajax' ) ;?>",
+	      root: jQuery("#mp3folder").val()
+	    }, function(file) {
+	        //var path = file.replace("<?php echo WINABSPATH; ?>", "");
+	        jQuery("#mp3folder").val(file);
 	    });
+
+    	jQuery("#file_browser").show("slide");
 	  });
 /* ]]> */
 </script>

@@ -7,9 +7,9 @@ extract($altColors);
 $bg = ($wmode == 'window')? '#'.$Background : 'transparent';
 $xml['alt'] .= '<style type="text/css">'.PHP_EOL;
 if(!$isCrawler) {
-	$xml['alt'] .= '@import url("'.FLAG_URLPATH.'admin/css/flagallery_nocrawler.css");'.PHP_EOL;
+	$xml['alt'] .= '@import url("'.plugins_url('/admin/css/flagallery_nocrawler.css', dirname(__FILE__)).'");'.PHP_EOL;
 }
-$xml['alt'] .= '@import url("'.FLAG_URLPATH.'admin/css/flagallery_noflash.css");'.PHP_EOL;
+$xml['alt'] .= '@import url("'.plugins_url('/admin/css/flagallery_noflash.css', dirname(__FILE__)).'");'.PHP_EOL;
 if($isCrawler) {
 	$xml['alt'] .= '.flag_alternate .flagCatMeta h4 { padding: 4px 10px; margin: 7px 0; border: none; font: 14px Tahoma; text-decoration: none; background:#292929 none; color: #ffffff; }
 .flag_alternate .flagCatMeta p { font-size: 12px; }'.PHP_EOL;

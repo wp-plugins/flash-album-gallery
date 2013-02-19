@@ -21,7 +21,7 @@ class flagMediaRss {
 	 * Get the URL of the general media RSS
 	 */
 	function get_mrss_url() {	
-		return FLAG_URLPATH . 'xml/media-rss.php';
+		return plugins_url('/xml/media-rss.php', dirname(__FILE__));
 	}
 	
 	/**

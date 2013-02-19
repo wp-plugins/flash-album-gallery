@@ -286,6 +286,7 @@ if( isset($_GET['skins_refresh']) ) {
 
 	<script type="text/javascript">
 		/* <![CDATA[ */
+		//noinspection JSPotentiallyInvalidConstructorUsage
 		var cptabs=new ddtabcontent("tabs");
 		cptabs.setpersist(false);
 		cptabs.setselectedClassTarget("linkparent");
@@ -320,10 +321,19 @@ if( isset($_GET['skins_refresh']) ) {
 $all_skins = get_skins(false,$type);
 $total_all_skins = count($all_skins);
 
+	$skins_remote_xml = 'https://dl.dropbox.com/u/104873029/flagallery_skins/skins_v2.xml';
 	// not installed skins
-	$skins_xml = @simplexml_load_file('https://dl.dropbox.com/u/104873029/flagallery_skins/skins_v2.xml', 'SimpleXMLElement', LIBXML_NOCDATA);
+	$skins_xml = @simplexml_load_file($skins_remote_xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 	$all_skins_arr = $skins_by_type = array();
 	$skins_xml_error = false;
+	if(empty($skins_xml)){
+		$ch = curl_init($skins_remote_xml);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		$skins_xml = @simplexml_load_string(curl_exec($ch));
+		curl_close ($ch);
+	}
 	if(!empty($skins_xml)) {
 		foreach($skins_xml as $skin){
 			$suid = (string) $skin->uid;
@@ -332,7 +342,8 @@ $total_all_skins = count($all_skins);
 			$skins_by_type[$skintype][$suid] = $all_skins_arr[$suid];
 		}
 	} else {
-		$skins_xml_error = __('URL file-access is disabled in the server configuration.', 'flag');
+		//$skins_xml_error = __('URL file-access is disabled in the server configuration.', 'flag');
+		$skins_xml_error = __('cURL library is not installed on your server.','flag');
 	}
 
 
@@ -441,10 +452,10 @@ $total_all_skins = count($all_skins);
 	if(isset($skins_by_type[$stype]) && !empty($skins_by_type[$stype])) {
 		foreach($skins_by_type[$stype] as $skin) { ?>
 		<div class="skin <?php echo $skin['type'].' '.$skin['status']; ?>" id="uid-<?php echo $skin['uid']; ?>" style="padding: 10px; float:left;">
-			<center>
+			<div style="text-align: center;">
 				<p><strong style="font-size: 120%;"><?php echo $skin['title']; ?></strong> <span class="version"><?php echo 'v'.$skin['version']; ?></span></p>
 				<div class="screenshot"><img src="<?php echo $skin['screenshot']; ?>" width="200" height="184"  alt=""/></div>
-			</center>
+			</div>
 			<div class="content">
 				<div class="links" style="text-align: center;">
 				<form action="<?php echo admin_url('admin.php?page=flag-skins').'&amp;type='.$type; ?>" method="post">

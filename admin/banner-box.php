@@ -273,18 +273,18 @@ function showDialog( windowId, height ) {
 <script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.js"></script>
 <script type="text/javascript">
 /* <![CDATA[ */
-	  jQuery(function() {								 
-	    jQuery("#file_browser").fileTree({
-	      root: "<?php echo WINABSPATH; ?>",
-	      script: "<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/connectors/jqueryFileTree.php"
-	    }, function(file) {
-	        var path = file.replace("<?php echo WINABSPATH; ?>", "");
-	        jQuery("#bannerfolder").val(path);
-	    });
-	    
-	    jQuery("span.browsefiles").show().click(function(){
-	    	jQuery("#file_browser").slideToggle();
-	    });	
+	  jQuery(function() {
+			jQuery("span.browsefiles").show().click(function(){
+				jQuery("#file_browser").fileTree({
+					script: "admin-ajax.php?action=flag_file_browser&nonce=<?php echo wp_create_nonce( 'flag-ajax' ) ;?>",
+					root: jQuery("#bannerfolder").val()
+				}, function(file) {
+						//var path = file.replace("<?php echo WINABSPATH; ?>", "");
+						jQuery("#bannerfolder").val(file);
+				});
+
+				jQuery("#file_browser").show("slide");
+			});
 	  });
 /* ]]> */
 </script>

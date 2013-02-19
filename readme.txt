@@ -41,6 +41,14 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v2.51 - 19.02.2013 =
+* Fixed: 'Import folder' for Banner Box
+* Fixed: Video preview in admin area
+* Fixed: https support for CSS and JS includes
+* Fixed: Error 'URL file-access is disabled in the server configuration.'
+* Updated: bundled skins
+* Added: License for Banners and Video Blog
+
 = v2.50 - 05.02.2013 =
 * Added: New Default 'Minima' skin - better, faster, nicer.
 * Added: Image views and likes now visible in alternative gallery

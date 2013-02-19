@@ -5,7 +5,7 @@ Skin URI:
 Description:
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 1.0
+Version: 1.1
 */
 
 function flagShowSkin_music_compact($args) {
@@ -52,7 +52,7 @@ function flagShowSkin_music_compact($args) {
 	}
 
 	// init the flash output
-	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , $skinID, $width, $height, '10.1.52', FLAG_URLPATH .'skins/expressInstall.swf');
+	$swfobject = new flag_swfobject( $flag_options['skinsDirURL'].$skin.'/gallery.swf' , $skinID, $width, $height, '10.1.52', plugins_url('/'.FLAGFOLDER.'/') .'skins/expressInstall.swf');
 	global $swfCounter;
 
 	$swfobject->add_params('wmode', $wmode);

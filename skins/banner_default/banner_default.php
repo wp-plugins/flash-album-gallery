@@ -5,7 +5,7 @@ Skin URI:
 Description: New version! Responsive layout. Themes available.
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 2.0
+Version: 2.1
 */
 
 function flagShowSkin_banner_default($args) {
@@ -39,9 +39,9 @@ function flagShowSkin_banner_default($args) {
 	$out = '';
 
 	if(count($items)) {
-		$out .= '<link rel="stylesheet" href="'.FLAG_URLPATH.'admin/js/themes/'.$theme.'/styles.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="'.FLAG_URLPATH.'admin/js/nivo-slider.css" type="text/css" media="screen" />
-<script src="'.FLAG_URLPATH.'admin/js/jquery.nivo.slider.pack.js" type="text/javascript"></script>
+		$out .= '<link rel="stylesheet" href="'.plugins_url('/'.FLAGFOLDER.'/').'admin/js/themes/'.$theme.'/styles.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="'.plugins_url('/'.FLAGFOLDER.'/').'admin/js/nivo-slider.css" type="text/css" media="screen" />
+<script src="'.plugins_url('/'.FLAGFOLDER.'/').'admin/js/jquery.nivo.slider.pack.js" type="text/javascript"></script>
 <script type="text/javascript">
 jQuery(window).load(function() {
     jQuery("#slider_'.$skinID.'").nivoSlider({
@@ -96,6 +96,7 @@ jQuery(window).load(function() {
 	}
 	$out .= '
     </div>
+	<div class="grandlovelink"><a href="http://wordpress.org/extend/plugins/flash-album-gallery/">GRAND FlAGallery WordPress plugin</a></div>
 </div>';
 
 	$out = apply_filters('flag_show_flash_b_content', $out);	

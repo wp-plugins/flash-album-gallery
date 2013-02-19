@@ -173,7 +173,7 @@ class FlAG_shortcodes {
 			$url = wp_get_attachment_url($id);
 			$url = str_replace(array('.mp3'), array(''), $url);
 			if(	! flagGallery::getUserNow($_SERVER['HTTP_USER_AGENT']) ){
-				$out = '<script type="text/javascript">swfobject.embedSWF("'.FLAG_URLPATH.'lib/mini.swf", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.$url.'",bgcolor:"'.$flag_options["mpBG"].'",color1:"'.$flag_options["mpColor1"].'",color2:"'.$flag_options["mpColor2"].'",autoplay:"'.$autoplay.'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>';
+				$out = '<script type="text/javascript">swfobject.embedSWF("'.plugins_url('/lib/mini.swf', dirname(__FILE__)).'", "c-'.$id.'", "250", "20", "10.1.52", "expressInstall.swf", {path:"'.$url.'",bgcolor:"'.$flag_options["mpBG"].'",color1:"'.$flag_options["mpColor1"].'",color2:"'.$flag_options["mpColor2"].'",autoplay:"'.$autoplay.'"}, {wmode:"transparent"}, {id:"f-'.$id.'",name:"f-'.$id.'"});</script>';
 			}
 			$out .= '<div id="c-'.$id.'" class="grandmp3"><audio src="'.$url.'.mp3" controls preload="none" autobuffer="false"></audio></div>';
 		}

@@ -39,6 +39,6 @@ if(file_exists($playlistPath)) {
 	$newXML = preg_replace("|<properties>.*?<category|si", $properties, $newXML);
 	echo $newXML;
 } else {
-	echo 'no such file or directory';
+	echo 'no such file or directory:'.$playlistPath;
 }
 ?>
