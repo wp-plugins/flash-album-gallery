@@ -41,6 +41,9 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v2.51 - 23.02.2013 =
+* Fixed: Install skins on some servers failed
+
 = v2.51 - 19.02.2013 =
 * Fixed: 'Import folder' for Banner Box
 * Fixed: Video preview in admin area

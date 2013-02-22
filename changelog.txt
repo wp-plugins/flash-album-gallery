@@ -1,6 +1,9 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v2.51 - 23.02.2013 =
+* Fixed: Install skins on some servers failed
+
 = v2.51 - 19.02.2013 =
 * Fixed: 'Import folder' for Banner Box
 * Fixed: Video preview in admin area

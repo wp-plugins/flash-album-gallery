@@ -21,10 +21,31 @@ if( isset($_POST['installskin']) ) {
 }
 if( isset($_POST['skinzipurl']) ) {
 	$url = $_POST['skinzipurl'];
-	$mzip = download_url($url);
-	$mzip = str_replace("\\", "/", $mzip);
-
 	$skins_dir = $flag_options['skinsDirABS'];
+	$mzip = download_url($url);
+	if(is_wp_error($mzip)){
+		$userAgent = 'Googlebot/2.1 (http://www.googlebot.com/bot.html)';
+		$filename = basename($url);
+		$mzip = rtrim($skins_dir,'/').'/'.$filename;
+		$ch = curl_init();
+		$fp = fopen("$mzip", "w");
+		curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
+		curl_setopt($ch, CURLOPT_URL,$url);
+		curl_setopt($ch, CURLOPT_FAILONERROR, true);
+		curl_setopt($ch, CURLOPT_HEADER,0);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER,true);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_FILE, $fp);
+		$data = curl_exec($ch);
+		curl_close($ch);
+		fclose($fp);
+	}
+
+	$mzip = str_replace("\\", "/", $mzip);
 
 	if( class_exists('ZipArchive') ){
 		$zip = new ZipArchive;
