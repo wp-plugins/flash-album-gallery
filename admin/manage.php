@@ -353,30 +353,34 @@ class flagManageGallery {
 		if ( is_array($description) ) {
 			foreach( $description as $key => $value ) {
 				$desc = $wpdb->escape($value);
+				$key =intval($key);
 				$wpdb->query( "UPDATE $wpdb->flagpictures SET description = '$desc' WHERE pid = $key");
 			}
 		}
 		if ( is_array($alttext) ){
 			foreach( $alttext as $key => $value ) {
 				$alttext = $wpdb->escape($value);
+				$key =intval($key);
 				$wpdb->query( "UPDATE $wpdb->flagpictures SET alttext = '$alttext' WHERE pid = $key");
 			}
 		}
 		if ( is_array($hitcounter) ){
 			foreach( $hitcounter as $key => $value ) {
 				$hitcounter = abs( intval($value) );
+				$key =intval($key);
 				$wpdb->query( "UPDATE $wpdb->flagpictures SET hitcounter = '$hitcounter' WHERE pid = $key");
 			}
 		}
 		if ( is_array($total_votes) ){
 			foreach( $total_votes as $key => $value ) {
 				$total_votes = abs( intval($value) );
+				$key =intval($key);
 				$wpdb->query( "UPDATE $wpdb->flagpictures SET total_votes = IF(hitcounter > $total_votes, $total_votes, hitcounter) WHERE pid = $key");
 			}
 		}
 		if ( is_array($pictures) ){
 			foreach( $pictures as $pid ){
-				$pid = (int) $pid;
+				$pid = intval($pid);
 				if (is_array($exclude)){
 					if ( array_key_exists($pid, $exclude) )
 						$wpdb->query("UPDATE $wpdb->flagpictures SET exclude = 1 WHERE pid = '$pid'");

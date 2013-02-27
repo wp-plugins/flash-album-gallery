@@ -1,5 +1,4 @@
 <?php
-
 add_action('wp_ajax_flag_ajax_operation', 'flag_ajax_operation' );
 
 function flag_ajax_operation() {
@@ -126,6 +125,7 @@ function flag_save_album() {
 	if(isset($_POST['form']))
 		parse_str($_POST['form']);
 	$result = false;
+	$album_id = intval($album_id);
 	if($album_name && $album_id) {
 		if(count($g))
 			$galstring = implode(',', $g);
@@ -240,7 +240,7 @@ function flag_ajax_file_browser() {
     // get the current directory
 	$dir = trailingslashit ( urldecode($_POST['dir']) );
 
-	if( file_exists($root . $dir) ) {
+	if( file_exists($root . $dir) && false === strpos($dir, '..') ) {
 		$files = scandir($root . $dir);
 		natcasesort($files);
 

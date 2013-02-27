@@ -4,6 +4,8 @@
  * @Docs http://codex.wordpress.org/Shortcode_API
  */
 
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
+
 class FlAG_shortcodes {
 	var $flag_shortcode;
 	var $flag_add_script;

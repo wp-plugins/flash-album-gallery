@@ -1,4 +1,6 @@
 <?php
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
+
 $meta = new flagMeta($image->pid);
 $dbdata = $meta->get_saved_meta();
 $exifdata = $meta->get_EXIF();

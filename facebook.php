@@ -20,7 +20,7 @@ if(isset($_GET['l'])) {
 }
 if(isset($_GET['i'])) {
 	$skin = '';
-	if(isset($_GET['f'])){
+	if(isset($_GET['f']) && false === strpos($_GET['f'], '..') ){
 		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$_GET['f'];
 		$skin = esc_js($_GET['f']);
 	}

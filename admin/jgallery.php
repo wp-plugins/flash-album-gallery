@@ -1,4 +1,7 @@
-<?php global $wpdb, $post;
+<?php
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
+
+global $wpdb, $post;
 $flag_options = get_option ('flag_options');
 $siteurl = site_url();
 $c = array();

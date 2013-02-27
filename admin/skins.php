@@ -206,7 +206,7 @@ if ( isset($_POST['updateoption']) ) {
 
 if ( isset($_GET['delete']) ) {
 	$delskin = $_GET['delete'];
-	if ( current_user_can('FlAG Delete skins') ) {
+	if ( current_user_can('FlAG Delete skins') && false === strpos($delskin, '..') ) {
 		if ( $flag_options['flashSkin'] != $delskin ) {
 			$skins_dir = trailingslashit( $flag_options['skinsDirABS'] );
 			$skin = $skins_dir.$delskin.'/';
