@@ -41,6 +41,10 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v2.54 - 05.03.2013 =
+* Fixed: Error opening pages "call this page directly" message
+* Changed: Decreased flash version detection (for Mac OS users)
+
 = v2.53 - 27.02.2013 =
 * Fixed: Multiple Vulnerabilities
 

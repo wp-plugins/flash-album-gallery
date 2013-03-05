@@ -5,7 +5,7 @@
 
 function flag_wp_upload_tabs ($tabs) {
 
-	$newtab = array('flag' => __('FlAG Gallery','flag'));
+	$newtab = array('flag' => __('FlAGallery','flag'));
  
     return array_merge($tabs,$newtab);
 }

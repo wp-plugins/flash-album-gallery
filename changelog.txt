@@ -1,6 +1,10 @@
 GRAND FlAGallery
 by Rattus & CodEasily DEV Team
 
+= v2.54 - 05.03.2013 =
+* Fixed: Error opening pages "call this page directly" message
+* Changed: Decreased flash version detection (for Mac OS users)
+
 = v2.53 - 27.02.2013 =
 * Fixed: Multiple Vulnerabilities
 

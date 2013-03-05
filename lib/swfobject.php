@@ -84,7 +84,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	else
 		$height = 'auto';
 	// init the flash output
-	$swfobject = new flag_swfobject( plugins_url('flagallery-skins/'.$skin.'/gallery.swf') , $skinID, '100%', '100%', '11.0.0', plugins_url('/skins/expressInstall.swf', dirname(__FILE__)));
+	$swfobject = new flag_swfobject( plugins_url('flagallery-skins/'.$skin.'/gallery.swf') , $skinID, '100%', '100%', '10.1.52', plugins_url('/skins/expressInstall.swf', dirname(__FILE__)));
 
 	$swfobject->add_params('wmode', $wmode);
 	$swfobject->add_params('allowfullscreen', 'true');

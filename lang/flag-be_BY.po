@@ -702,8 +702,8 @@ msgid "Update"
 msgstr "абнавіць"
 
 #: admin/media-upload.php:9
-msgid "FlAG Gallery"
-msgstr "FlAG галерэя"
+msgid "FlAGallery"
+msgstr "FlAGallery"
 
 #: admin/media-upload.php:126
 msgid "No gallery"
@@ -766,8 +766,8 @@ msgid "Save all changes"
 msgstr "захаваць усе змены"
 
 #: admin/overview.php:13
-msgid "FlAG Gallery Overview"
-msgstr "прагляд галерэі FlAG"
+msgid "FlAGallery Overview"
+msgstr "прагляд FlAGallery"
 
 #: admin/overview.php:106
 msgid "Reset all settings to default parameter"
@@ -872,8 +872,8 @@ msgid "News Box"
 msgstr "новыя Box"
 
 #: admin/overview.php:241
-msgid "Welcome to FlAG Gallery !"
-msgstr "сардэчна запрашаем у галерэю FlAG !"
+msgid "Welcome to FlAGallery !"
+msgstr "сардэчна запрашаем у FlAGallery !"
 
 #: admin/overview.php:242
 msgid "Server Settings"

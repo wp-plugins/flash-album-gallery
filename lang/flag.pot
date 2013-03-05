@@ -861,7 +861,7 @@ msgid "Update"
 msgstr ""
 
 #: admin/media-upload.php:9
-msgid "FlAG Gallery"
+msgid "FlAGallery"
 msgstr ""
 
 #: admin/media-upload.php:126
@@ -925,7 +925,7 @@ msgid "Save all changes"
 msgstr ""
 
 #: admin/overview.php:13
-msgid "FlAG Gallery Overview"
+msgid "FlAGallery Overview"
 msgstr ""
 
 #: admin/overview.php:118
@@ -1021,7 +1021,7 @@ msgid "News Box"
 msgstr ""
 
 #: admin/overview.php:255
-msgid "Welcome to FlAG Gallery !"
+msgid "Welcome to FlAGallery !"
 msgstr ""
 
 #: admin/overview.php:256

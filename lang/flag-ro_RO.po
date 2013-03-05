@@ -705,8 +705,8 @@ msgid "Update"
 msgstr "Actualizaţi"
 
 #: admin/media-upload.php:9
-msgid "FlAG Gallery"
-msgstr "FlAG Gallery"
+msgid "FlAGallery"
+msgstr "FlAGallery"
 
 #: admin/media-upload.php:126
 msgid "No gallery"
@@ -769,8 +769,8 @@ msgid "Save all changes"
 msgstr "Salvaţi toate modificările"
 
 #: admin/overview.php:13
-msgid "FlAG Gallery Overview"
-msgstr "FLAG Galerie Prezentare generală"
+msgid "FlAGallery Overview"
+msgstr "FlAGallery Prezentare generală"
 
 #: admin/overview.php:106
 msgid "Reset all settings to default parameter"
@@ -875,7 +875,7 @@ msgid "News Box"
 msgstr "Stiri Box"
 
 #: admin/overview.php:241
-msgid "Welcome to FlAG Gallery !"
+msgid "Welcome to FlAGallery !"
 msgstr "Bine ati venit la Galeria de steag!"
 
 #: admin/overview.php:242

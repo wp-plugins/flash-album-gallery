@@ -705,8 +705,8 @@ msgid "Update"
 msgstr "更新"
 
 #: admin/media-upload.php:9
-msgid "FlAG Gallery"
-msgstr "FlAG 相簿"
+msgid "FlAGallery"
+msgstr "FlAGallery"
 
 #: admin/media-upload.php:126
 msgid "No gallery"
@@ -769,7 +769,7 @@ msgid "Save all changes"
 msgstr "儲存更改"
 
 #: admin/overview.php:13
-msgid "FlAG Gallery Overview"
+msgid "FlAGallery Overview"
 msgstr "Flash相簿概要／總遊覽"
 
 #: admin/overview.php:106
@@ -874,8 +874,8 @@ msgid "News Box"
 msgstr "新聞盒"
 
 #: admin/overview.php:241
-msgid "Welcome to FlAG Gallery !"
-msgstr "歡迎來到 FIAG相簿！"
+msgid "Welcome to FlAGallery !"
+msgstr "歡迎來到 FlAGallery！"
 
 #: admin/overview.php:242
 msgid "Server Settings"

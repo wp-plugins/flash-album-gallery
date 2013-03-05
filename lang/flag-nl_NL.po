@@ -703,8 +703,8 @@ msgid "Update"
 msgstr "Update"
 
 #: admin/media-upload.php:9
-msgid "FlAG Gallery"
-msgstr "FLAG Galerij"
+msgid "FlAGallery"
+msgstr "FlAGallery"
 
 #: admin/media-upload.php:126
 msgid "No gallery"
@@ -767,8 +767,8 @@ msgid "Save all changes"
 msgstr "Alle wijzigingen opslaan"
 
 #: admin/overview.php:13
-msgid "FlAG Gallery Overview"
-msgstr "FLAG Albumoverzicht"
+msgid "FlAGallery Overview"
+msgstr "FlAGallery Albumoverzicht"
 
 #: admin/overview.php:106
 msgid "Reset all settings to default parameter"
@@ -870,8 +870,8 @@ msgid "News Box"
 msgstr "Nieuws"
 
 #: admin/overview.php:241
-msgid "Welcome to FlAG Gallery !"
-msgstr "Welkom bij de GRAND Flash Gallery!"
+msgid "Welcome to FlAGallery !"
+msgstr "Welkom bij de GRAND FlAGallery!"
 
 #: admin/overview.php:242
 msgid "Server Settings"

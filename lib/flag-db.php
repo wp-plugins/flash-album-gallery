@@ -1,7 +1,7 @@
 <?php
 if ( !class_exists('flagdb') ) :
 /**
- * FlAG Gallery Database Class
+ * FlAGallery Database Class
  * 
  */
 class flagdb {
@@ -41,7 +41,7 @@ class flagdb {
 	}
 
 	/**
-	 * Init the Database Abstraction layer for FlAG Gallery
+	 * Init the Database Abstraction layer for FlAGallery
 	 * 
 	 */	
 	function __construct() {

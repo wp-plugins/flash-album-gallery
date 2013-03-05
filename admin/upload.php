@@ -36,7 +36,7 @@ check_admin_referer('flag_swfupload');
 
 //check for flag
 if ( !defined('FLAG_ABSPATH') )
-	die('FlAG Gallery not available. -3');
+	die('FlAGallery not available. -3');
 	
 include_once (FLAG_ABSPATH. 'admin/functions.php');
 

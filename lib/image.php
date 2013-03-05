@@ -1,7 +1,7 @@
 <?php
 if ( !class_exists('flagImage') ) :
 /**
-* Image PHP class for the WordPress plugin FlAG Gallery
+* Image PHP class for the WordPress plugin FlAGallery
 * 
 */
 class flagImage{

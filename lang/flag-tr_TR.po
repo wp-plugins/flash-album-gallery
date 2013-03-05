@@ -586,8 +586,8 @@ msgid "Delete this skin"
 msgstr "Bu dış görünüm dosyasını sil"
 
 #: admin/media-upload.php:9
-msgid "FlAG Gallery"
-msgstr "FlAG Gallery"
+msgid "FlAGallery"
+msgstr "FlAGallery"
 
 #: admin/media-upload.php:126
 msgid "No gallery"
@@ -1627,8 +1627,8 @@ msgid "Failed to rename %1$s to %2$s"
 msgstr "Failed to rename %1$s to %2$s"
 
 #: admin/overview.php:13
-msgid "FlAG Gallery Overview"
-msgstr "FlAG Gallery Genel Bakış"
+msgid "FlAGallery Overview"
+msgstr "FlAGallery Genel Bakış"
 
 #: admin/overview.php:118
 msgid "Reset all settings to default parameter"
@@ -1726,8 +1726,8 @@ msgid "News Box"
 msgstr "Haber Kutusu"
 
 #: admin/overview.php:255
-msgid "Welcome to FlAG Gallery !"
-msgstr "FlAG Galeriye Hoş Geldiniz!"
+msgid "Welcome to FlAGallery !"
+msgstr "FlAGallery Hoş Geldiniz!"
 
 #: admin/overview.php:256
 msgid "Server Settings"

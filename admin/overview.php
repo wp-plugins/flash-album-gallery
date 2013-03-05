@@ -212,7 +212,7 @@ function flag_overview_right_now() {
 <?php
 }
 
-add_meta_box('dashboard_right_now', __('Welcome to FlAG Gallery !', 'flag'), 'flag_overview_right_now', 'flag-overview', 'normal', 'default');
+add_meta_box('dashboard_right_now', __('Welcome to FlAGallery !', 'flag'), 'flag_overview_right_now', 'flag-overview', 'normal', 'default');
 add_meta_box('flag_server', __('Server Settings', 'flag'), 'flag_overview_server', 'flag-overview', 'normal', 'default');
 add_meta_box('flag_gd_lib', __('Graphic Library', 'flag'), 'flag_overview_graphic_lib', 'flag-overview', 'normal', 'default');
 add_meta_box('dashboard_primary', __('Setup Box', 'flag'), 'flag_overview_setup', 'flag-overview', 'side', 'core');

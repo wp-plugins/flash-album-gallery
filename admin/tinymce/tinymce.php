@@ -4,7 +4,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 /**
  * add_flag_button
  * 
- * @package FlAG Gallery
+ * @package FlAGallery
  * @title TinyMCE V3 Button Integration (for WP2.5 and higher)
  */
 class add_flag_button {
