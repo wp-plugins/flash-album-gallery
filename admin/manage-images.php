@@ -228,11 +228,11 @@ jQuery(document).ready( function() {
 			<table class="form-table" >
 				<tr>
 					<th align="left" scope="row"><?php _e('Title', 'flag'); ?>:</th>
-					<td align="left"><input type="text" size="50" name="title" value="<?php echo $gallery->title; ?>"  /></td>
+					<td align="left"><input type="text" size="50" name="title" value="<?php echo stripslashes($gallery->title); ?>"  /></td>
 				</tr>
 				<tr>
 					<th align="left" scope="row"><?php _e('Description', 'flag'); ?>:</th> 
-					<td align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo $gallery->galdesc; ?></textarea></td>
+					<td align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo stripslashes($gallery->galdesc); ?></textarea></td>
 				</tr>
 				<tr>
 					<th align="left" scope="row"><?php _e('Path', 'flag'); ?>:</th> 

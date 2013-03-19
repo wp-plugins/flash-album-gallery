@@ -148,11 +148,11 @@ jQuery(document).ready(function(){
 				</tr>
 				<tr>
 					<th align="left" valign="middle" scope="row"><?php _e('Title', 'flag'); ?>:</th>
-					<td align="left" valign="middle"><input type="text" size="50" name="playlist_title" value="<?php echo $playlist['title']; ?>" /></td>
+					<td align="left" valign="middle"><input type="text" size="50" name="playlist_title" value="<?php echo stripslashes($playlist['title']); ?>" /></td>
 				</tr>
 				<tr>
-					<th align="left" valign="top" scope="row"><?php _e('Description', 'flag'); ?>:</th> 
-					<td align="left" valign="top"><textarea name="playlist_descr" cols="60" rows="2" style="width: 95%" ><?php echo $playlist['description']; ?></textarea></td>
+					<th align="left" valign="top" scope="row"><?php _e('Description', 'flag'); ?>:</th>
+					<td align="left" valign="top"><textarea name="playlist_descr" cols="60" rows="2" style="width: 95%" ><?php echo stripslashes($playlist['description']); ?></textarea></td>
 				</tr>
 				<!--<tr>
 					<th align="left" valign="top" scope="row"><?php _e('Path', 'flag'); ?>:</th> 

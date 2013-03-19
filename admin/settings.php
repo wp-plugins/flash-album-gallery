@@ -108,13 +108,13 @@ jQuery(document).ready(function() {
 	<div id="imageoptions" class="cptab">
 		<form name="generaloptions" method="post">
 		<?php wp_nonce_field('flag_settings'); ?>
-			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,deepLinks,useMediaRSS,jAlterGal,jAlterGalScript,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgResize,imgWidth,imgHeight,imgQuality,galSort,galSortDir" />
+			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,deepLinks,useMediaRSS,jAlterGal,jAlterGalScript,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgResize,imgWidth,imgHeight,imgQuality,galSort,galSortDir,disableViews" />
 			<h2><?php _e('Image Gallery Options','flag'); ?></h2>
 			<h3><?php _e('General Options','flag'); ?></h3>
 			<table class="form-table flag-options">
 				<tr valign="top">
 					<th align="left" width="200"><?php _e('Gallery path','flag'); ?></th>
-					<td><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="35" name="galleryPath" value="<?php echo $flag_options['galleryPath']; ?>" />
+					<td><input readonly="readonly" type="text" size="35" name="galleryPath" value="<?php echo $flag_options['galleryPath']; ?>" />
 					<span class="setting-description"><?php _e('This is the default path for all galleries','flag'); ?></span></td>
 				</tr>
 				<tr valign="top">
@@ -152,6 +152,10 @@ jQuery(document).ready(function() {
 							<option value="1" <?php selected('1', $flag_options['jAlterGalScript']); ?>>PhotoSwipe</option>
 						</select>
 					</td>
+				</tr>
+				<tr>
+					<th align="left"><?php _e('Disable image views/likes counter on thumbnails','flag'); ?></th>
+					<td><input type="checkbox" name="disableViews" value="1" <?php checked('1', $flag_options['disableViews']); ?> /></td>
 				</tr>
 				<tr>
 					<th width="200"><?php _e('Top Bar BG','flag'); ?>:</th>

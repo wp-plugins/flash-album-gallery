@@ -41,6 +41,13 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v2.55 - 19.03.2013 =
+* Fixed: Alternative gallery on mobile browsers not shows big image on tap
+* Fixed: Alternative gallery brokes if file name have spaces.
+* Added: Option to hide views/likes counter on alternative gallery
+* Fixed: Back button for GRAND Pages
+* Fixed: Playlists not worked if galleries path different from default
+
 = v2.54 - 05.03.2013 =
 * Fixed: Error opening pages "call this page directly" message
 * Changed: Decreased flash version detection (for Mac OS users)

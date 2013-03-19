@@ -18,8 +18,7 @@ div.flashalbum br { display: none; }
 .flag_alternate .flagcategory a.flag_pic_alt:hover { background-color: #ffffff; border: 2px solid #4a4a4a; color: #4a4a4a; text-decoration: none; z-index: 3; }
 .flag_alternate .flagcategory a.flag_pic_alt.current, .flag_alternate .flagcategory a.flag_pic_alt.last { border-color: #4a4a4a; }
 .flag_alternate .flagcategory a.flag_pic_alt > img { vertical-align: middle; display:inline-block; position: static; margin: 0 auto; padding: 0; border: none; height: 120px; width: 120px; min-height: 120px !important; min-width: 120px !important; max-height: 150px; max-width: 150px; line-height: 96px; font-size: 0; }
-.flag_alternate .flagcategory a.flag_pic_alt .flag_pic_counters { position: absolute; left: 0; bottom: 0; right: 0; height: 20px; display: block; line-height: 20px; margin: 0; padding: 0 10px; text-align: left; visibility: hidden; opacity: 0.85; filter: "alpha(opacity=85)"; }
-.flag_alternate .flagcategory a.flag_pic_alt:hover .flag_pic_counters { visibility: visible; }
+.flag_alternate .flagcategory a.flag_pic_alt .flag_pic_counters { position: absolute; left: 0; bottom: 0; right: 0; height: 20px; display: block; line-height: 20px; margin: 0; padding: 0 10px; text-align: left; opacity: 0.85; filter: "alpha(opacity=85)"; }
 .flag_alternate .flagcategory .flag_pic_counters i { display: inline-block; line-height: 20px; margin: 0; padding: 0 0 0 16px; background: url(../images/views.png) 0 50% no-repeat; font-style: normal; font-size: 12px; float: left; }
 .flag_alternate .flagcategory .flag_pic_counters b { display: inline-block; line-height: 20px; margin: 0; padding: 0 0 0 16px; background: url(../images/like.png) 0 50% no-repeat; font-weight: normal; font-size: 12px; float: right; width: 25%; }
 

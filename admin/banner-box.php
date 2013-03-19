@@ -170,10 +170,10 @@ if($all_playlists) {
 		<tr id="<?php echo $playlist_name; ?>" <?php echo $class; ?> >
 			<td>
 				<a href="<?php echo $filepath.'&amp;playlist='.$playlist_name.'&amp;mode=edit'; ?>" class='edit' title="<?php _e('Edit'); ?>" >
-					<?php echo $playlist_data['title']; ?>
+					<?php echo stripslashes($playlist_data['title']); ?>
 				</a>
 			</td>
-			<td><?php echo $playlist_data['description']; echo '&nbsp;('.__("player", "flag").': <strong>'.$playlist_data['skin'].'</strong>)' ?></td>
+			<td><?php echo stripslashes($playlist_data['description']); echo '&nbsp;('.__("player", "flag").': <strong>'.$playlist_data['skin'].'</strong>)' ?></td>
 			<td><?php echo count($query_m); ?></td>
 			<td style="white-space: nowrap;"><input type="text" class="shortcode1" style="width: 200px; font-size: 9px;" readonly="readonly" onfocus="this.select()" value="[grandbanner xml=<?php echo $playlist_name; ?>]" /></td>
 			<td>

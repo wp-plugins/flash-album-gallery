@@ -63,6 +63,9 @@ $gID = explode( '_', $galleryID ); // get the gallery id
 if ( is_user_logged_in() ) $exclude_clause = '';
 else $exclude_clause = ' AND exclude<>1 ';
 $i = 0;
+if(isset($flag_options['disableViews']) && !empty($flag_options['disableViews'])){
+	$disableViews = 1;
+} else { $disableViews = 0; }
 foreach ( $gID as $galID ) {
 	$galID = (int) $galID;
 	if ( $galID == 0) {
@@ -100,9 +103,14 @@ foreach ( $gID as $galID ) {
 			if ($isCrawler){
 				$xml['alt'] .= '<a style="display:block; overflow: hidden; height: 100px; width: 115px; margin-bottom: 10px; background-color: #eeeeee; background-position: 22px 44px; text-align: left;" class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" rel="gid_'.$galID.'_'.$skinID.'"><img style="float:left; margin-right: 10px; width: auto; height: auto; min-height:100px; min-width:115px;" title="'.strip_tags($picture['alttext']).'" alt="'.strip_tags($picture['alttext']).'" src="'.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].'" /><span style="display: block; overflow: hidden; text-decoration: none; color: #000; font-weight: normal;" class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.strip_tags($picture['alttext']).'</strong><br />'.strip_tags($picture['description'],'<b><u><i><span>').'</span></a>'.PHP_EOL;
 			} else {
-				$views = (intval($picture['hitcounter']) < 10000) ? $picture['hitcounter'] : round($picture['hitcounter']/1000, 1).'k';
-				$likes = (intval($picture['total_votes']) < 10000) ? $picture['total_votes'] : round($picture['total_votes']/1000, 1).'k';
-				$xml['alt'] .= '<a class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" rel="gid_'.$galID.'_'.$skinID.'" title="'.strip_tags($picture['alttext']).'">[img src='.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].']<span class="flag_pic_counters"><i>'.$views.'</i><b>'.$picture['total_votes'].'</b></span><span class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.htmlspecialchars($picture['alttext']).'</strong><br /><span>'.htmlspecialchars($picture['description']).'</span></span></a>'.PHP_EOL;
+				if(!$disableViews){
+					$views = (intval($picture['hitcounter']) < 10000) ? $picture['hitcounter'] : round($picture['hitcounter']/1000, 1).'k';
+					$likes = (intval($picture['total_votes']) < 10000) ? $picture['total_votes'] : round($picture['total_votes']/1000, 1).'k';
+					$views_panel = '<span class="flag_pic_counters"><i>'.$views.'</i><b>'.$likes.'</b></span>';
+				} else {
+					$views_panel = '';
+				}
+				$xml['alt'] .= '<a class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" rel="gid_'.$galID.'_'.$skinID.'" title="'.strip_tags($picture['alttext']).'">[img src='.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].']'.$views_panel.'<span class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.htmlspecialchars($picture['alttext']).'</strong><br /><span>'.htmlspecialchars($picture['description']).'</span></span></a>'.PHP_EOL;
 			}
 		}
 		$xml['alt'] .= '</div>'.PHP_EOL;

@@ -85,7 +85,8 @@ function alternate_flag_e(t, ExtendVar){
 		var d = jQuery(this).html();
 		if(d) {
 			d = d.replace(/\[/g, '<');
-			d = d.replace(/\]/g, ' />');
+			d = d.replace(/src=/g, 'src="');
+			d = d.replace(/\]/g, '" />');
 			jQuery(this).addClass('loaded').html(d);
 		}
 		jQuery(this).show();

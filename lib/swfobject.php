@@ -17,7 +17,7 @@
  * @return string the content
  */
 function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='', $playlist='', $wmode='', $linkto='', $fullwindow=false, $align='') {
- 	global $post;
+	global $post;
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
 
 	if($linkto) {
@@ -30,7 +30,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	if(!is_dir($skinpath)) {
 		$skin = 'minima_jn';
 		$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
-	} 
+	}
 	$swfmousewheel = '';
 	$flashBacktransparent = '';
 	$flashBackcolor = '';
@@ -119,13 +119,13 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 		switch($align){
 			case 'left':
 				$margin = 'margin-right: auto;';
-			break;
+				break;
 			case 'center':
 				$margin = 'margin:0 auto;';
-			break;
+				break;
 			case 'right':
 				$margin = 'margin-left: auto;';
-			break;
+				break;
 		}
 		$out = '<div class="flashalbumwraper" style="text-align:'.$align.';"><div class="flashalbum" style="width:'.$width.';height:'.$height.';'.$margin.'">' . $swfobject->output($alternate) . '</div></div>';
 	} else {
@@ -141,17 +141,18 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	}
 
 	$out = apply_filters('flag_show_flash_content', $out);
-			
-	return $out;	
+
+	return $out;
 }
 
 function flagShowMPlayer($playlist, $width, $height, $wmode='', $skin='', $isWidget=false) {
-	
+
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
-    require_once ( dirname(dirname(__FILE__)) . '/admin/playlist.functions.php');
+	require_once ( dirname(dirname(__FILE__)) . '/admin/playlist.functions.php');
 
 	$flag_options = get_option('flag_options');
-	$playlistPath = 'wp-content/flagallery/playlists/'.$playlist.'.xml';
+	$galleryPath = trim($flag_options['galleryPath'],'/');
+	$playlistPath = $galleryPath.'/playlists/'.$playlist.'.xml';
 	$playlist_data = get_playlist_data(ABSPATH.$playlistPath);
 	if(!$skin){
 		$skin = $playlist_data['skin'];
@@ -160,9 +161,9 @@ function flagShowMPlayer($playlist, $width, $height, $wmode='', $skin='', $isWid
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
 	$args = array(
-		'playlist' 	=> $playlist, 
-		'skin' 		=> $skin, 
-		'width' 	=> $width, 
+		'playlist' 	=> $playlist,
+		'skin' 		=> $skin,
+		'width' 	=> $width,
 		'height' 	=> $height,
 		'wmode' 	=> $wmode,
 		'crawler' 	=> $isCrawler,
@@ -173,12 +174,13 @@ function flagShowMPlayer($playlist, $width, $height, $wmode='', $skin='', $isWid
 }
 
 function flagShowVPlayer($playlist, $width, $height, $wmode='') {
-	
+
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
-    require_once ( dirname(dirname(__FILE__)) . '/admin/video.functions.php');
+	require_once ( dirname(dirname(__FILE__)) . '/admin/video.functions.php');
 
 	$flag_options = get_option('flag_options');
-	$playlistPath = 'wp-content/flagallery/playlists/video/'.$playlist.'.xml';
+	$galleryPath = trim($flag_options['galleryPath'],'/');
+	$playlistPath = $galleryPath.'/playlists/video/'.$playlist.'.xml';
 	$playlist_data = get_v_playlist_data(ABSPATH.$playlistPath);
 	$skin = $playlist_data['skin'];
 	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
@@ -190,9 +192,9 @@ function flagShowVPlayer($playlist, $width, $height, $wmode='') {
 	}
 	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
 	$args = array(
-		'playlist'	=> $playlist, 
-		'skin' 		=> $skin, 
-		'width' 	=> $width, 
+		'playlist'	=> $playlist,
+		'skin' 		=> $skin,
+		'width' 	=> $width,
 		'height' 	=> $height,
 		'wmode' 	=> $wmode,
 		'lkey' 		=> $lkey,
@@ -247,17 +249,18 @@ function flagShowVmPlayer($id, $w, $h, $autoplay) {
 	}
 
 	$out = apply_filters('flag_flv_mini', $out);
-			
+
 	return $out;
 }
 
 function flagShowBanner($xml, $width, $height, $wmode='') {
 
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
-    require_once ( dirname(dirname(__FILE__)) . '/admin/banner.functions.php');
+	require_once ( dirname(dirname(__FILE__)) . '/admin/banner.functions.php');
 
 	$flag_options = get_option('flag_options');
-	$playlistPath = 'wp-content/flagallery/playlists/banner/'.$xml.'.xml';
+	$galleryPath = trim($flag_options['galleryPath'],'/');
+	$playlistPath = $galleryPath.'/playlists/banner/'.$xml.'.xml';
 	$playlist_data = get_b_playlist_data(ABSPATH.$playlistPath);
 	$skin = $playlist_data['skin'];
 	$items = $playlist_data['items'];
@@ -286,10 +289,11 @@ function flagShowBanner($xml, $width, $height, $wmode='') {
 function flagShowWidgetBanner($xml, $width, $height, $skin) {
 
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
-    require_once ( dirname(dirname(__FILE__)) . '/admin/banner.functions.php');
+	require_once ( dirname(dirname(__FILE__)) . '/admin/banner.functions.php');
 
 	$flag_options = get_option('flag_options');
-	$playlistPath = 'wp-content/flagallery/playlists/banner/'.$xml.'.xml';
+	$galleryPath = trim($flag_options['galleryPath'],'/');
+	$playlistPath = $galleryPath.'/playlists/banner/'.$xml.'.xml';
 	$playlist_data = get_b_playlist_data(ABSPATH.$playlistPath);
 	if(!$skin) {
 		$skin = $playlist_data['skin'];
@@ -315,32 +319,32 @@ function flagShowWidgetBanner($xml, $width, $height, $skin) {
 }
 
 function flagGetBetween($content,$start,$end){
-    $r = explode($start, $content);
-    if (isset($r[1])){
-        $r = explode($end, $r[1]);
-        return $r[0];
-    }
-    return '';
+	$r = explode($start, $content);
+	if (isset($r[1])){
+		$r = explode($end, $r[1]);
+		return $r[0];
+	}
+	return '';
 }
 
 function flagGetUserNow($userAgent) {
-    $crawlers = 'Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|FeedBurner|' .
-    'AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|' .
-    'GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby|yandex';
-    $isCrawler = (preg_match("/$crawlers/i", $userAgent) > 0);
-    return $isCrawler;
+	$crawlers = 'Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|FeedBurner|' .
+			'AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|' .
+			'GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby|yandex';
+	$isCrawler = (preg_match("/$crawlers/i", $userAgent) > 0);
+	return $isCrawler;
 }
 
 function get_include_contents($filename, $galleryID, $skin, $skinID, $width, $height, $altColors) {
-    if (is_file($filename)) {
-        ob_start();
+	if (is_file($filename)) {
+		ob_start();
 		extract($altColors);
-        include $filename;
-        $contents = ob_get_contents();
-        ob_end_clean();
-        return $contents;
-    }
-    return false;
+		include $filename;
+		$contents = ob_get_contents();
+		ob_end_clean();
+		return $contents;
+	}
+	return false;
 }
 
 ?>

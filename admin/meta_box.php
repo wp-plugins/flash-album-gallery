@@ -9,8 +9,8 @@ $skinname = $flag_custom["mb_skinname"][0];
 $scode = $flag_custom["mb_scode"][0];
 $button_text = $flag_custom["mb_button"][0];
 $button_link = $flag_custom["mb_button_link"][0];
-if(!$button_text) $button_text = __('Back','flag');
-if(!$button_link) $button_link = 'http://';
+if(!$button_text) $button_text = '';
+if(!$button_link) $button_link = '';
 $bg_link = $flag_custom["mb_bg_link"][0];
 $bg_pos = $flag_custom["mb_bg_pos"][0];
 $bg_repeat = $flag_custom["mb_bg_repeat"][0];
@@ -125,11 +125,12 @@ function short_code(galleries,skin,wmode) {
         </tr>
 		<tr>
 			<td nowrap="nowrap" valign="top"><div style="padding-top: 3px;"><?php _e("Back Button Text", 'flag'); ?>: &nbsp; </div></td>
-            <td valign="top"><input id="mb_button" name="mb_button" type="text" style="width: 49%;"  value="<?php echo $button_text; ?>" /></td>
+            <td valign="top"><input id="mb_button" name="mb_button" type="text" style="width: 49%;" placeholder="Home" value="<?php echo $button_text; ?>" /><br />
+							<small><?php _e("Leave empty to hide Back button", 'flag'); ?></small></td>
 		</tr>
 		<tr>
 			<td nowrap="nowrap" valign="top"><div style="padding-top: 3px;"><?php _e("Back Button Link", 'flag'); ?>: &nbsp; </div></td>
-            <td valign="top"><input id="mb_button_link" name="mb_button_link" type="text" style="width: 49%;"  value="<?php echo $button_link; ?>" /><br />
+            <td valign="top"><input id="mb_button_link" name="mb_button_link" type="text" style="width: 49%;" placeholder="<?php echo home_url(); ?>" value="<?php echo $button_link; ?>" /><br />
 				<small><?php _e("Leave empty to use referer link", 'flag'); ?></small></td>
 		</tr>
 		<tr>
