@@ -122,7 +122,7 @@ if($all_playlists) {
 		<tr id="<?php echo $playlist_name; ?>" <?php echo $class; ?> >
 			<td>
 				<a href="<?php echo $filepath.'&amp;playlist='.$playlist_name.'&amp;mode=edit'; ?>" class='edit' title="<?php _e('Edit'); ?>" >
-					<?php echo stripslashes($playlist_data['title']$playlist_data['title']); ?>
+					<?php echo stripslashes($playlist_data['title']); ?>
 				</a>
 			</td>
 			<td><?php echo stripslashes($playlist_data['description']); echo '&nbsp;('.__("player", "flag").': <strong>'.$playlist_data['skin'].'</strong>)' ?></td>
