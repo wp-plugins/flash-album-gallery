@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 2.55
+Version: 2.56
 Author: Rattus
 Author URI: http://codeasily.com/
 
@@ -23,7 +23,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 
-	var $version     = '2.55';
+	var $version     = '2.56';
 	var $dbversion   = '1.24';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '3.0';
@@ -324,6 +324,11 @@ class flagLoad {
 	}
 
 	function flag_fullwindow_page_init() {
+		if(current_user_can('FlAG Use TinyMCE')){
+			$visibility = true;
+		} else {
+			$visibility = false;
+		}
 	  $labels = array(
 	    'name' => _x('GRAND Galleries', 'post type general name', 'flag'),
 	    'singular_name' => __('FlAGallery Page', 'flag'),
@@ -346,7 +351,7 @@ class flagLoad {
 	    'public' => true,
 	    'publicly_queryable' => true,
 	    'show_ui' => true,
-	    'show_in_menu' => true,
+	    'show_in_menu' => $visibility,
 	    'menu_position' => 20,
 	    'menu_icon' => FLAG_URLPATH .'admin/images/flag.png',
 	    'capability_type' => 'post',
@@ -356,7 +361,7 @@ class flagLoad {
 		'rewrite' => array( 'slug' => 'flagallery','with_front' => FALSE),
 	    'query_var' => true,
 	  );
-	  register_post_type('flagallery',$args);
+		  register_post_type('flagallery',$args);
 	}
 
 	/* Adds a meta box to the main column on the flagallery edit screens */
@@ -438,10 +443,15 @@ class flagLoad {
 
 	function addFlAGMediaIcon($context){
 	    global $post_ID, $temp_ID, $wpdb;
-		$flag_upload_iframe_src = FLAG_URLPATH."admin/tinymce/window.php?media_button=true&riched=false";
-		$flag_iframe_src = apply_filters('flag_iframe_src', "$flag_upload_iframe_src&amp;tab=flagallery");
-		$title = __('Add GRAND FlAGallery');
-	    return $context.'<a href="'.$flag_upload_iframe_src.'&amp;TB_iframe=1&amp;width=360&amp;height=210" class="thickbox" id="add_flagallery" title="'.$title.'"><span style="margin:0 5px;">FlAGallery</span></a>';
+		if(current_user_can('FlAG Use TinyMCE')){
+			$flag_upload_iframe_src = FLAG_URLPATH."admin/tinymce/window.php?media_button=true&riched=false";
+			$flag_iframe_src = apply_filters('flag_iframe_src', "$flag_upload_iframe_src&amp;tab=flagallery");
+			$title = __('Add GRAND FlAGallery');
+			$button = '<a href="'.$flag_upload_iframe_src.'&amp;TB_iframe=1&amp;width=360&amp;height=210" class="thickbox" id="add_flagallery" title="'.$title.'"><span style="margin:0 5px;">FlAGallery</span></a>';
+		} else {
+			$button = '';
+		}
+	  return $context.$button;
 	}
 
 

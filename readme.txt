@@ -41,6 +41,13 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v2.56 - 25.03.2013 =
+* Fixed: SQL injection vulnerability
+* Fixed: Video Box admin shows parse error
+* Fixed: Restrict access to menu "GRAND Pages"
+* Added: Informative descriptions on skins and options pages
+* Updated: Minima skin now have option to hide views/likes counter
+
 = v2.55 - 19.03.2013 =
 * Fixed: Alternative gallery on mobile browsers not shows big image on tap
 * Fixed: Alternative gallery brokes if file name have spaces.

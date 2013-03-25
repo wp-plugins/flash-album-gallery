@@ -139,7 +139,7 @@ jQuery(document).ready(function() {
 				</tr>
 			</table>
 			
-			<h3><?php _e('Flash Alternative Options','flag'); ?></h3>
+			<h3><?php _e('Alternative Gallery Options','flag'); ?> <br><small style="color: red;"><?php _e('(Attention: this is not skin option, only for browsers without flash support)','flag'); ?></small></h3>
 			<table class="flag_colors form-table flag-options">
 				<tr>
 					<th align="left"><?php _e('Show jQuery gallery for browsers without flashplayer','flag'); ?></th>
@@ -334,7 +334,7 @@ jQuery(document).ready(function() {
 				<td><label for="general"><select style="width: 150px;" name="general" id="general"><?php wp_dropdown_roles( flag_get_role('FlAG overview') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Use TinyMCE Button / Upload tab', 'flag'); ?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('View TinyMCE Button / GRAND Pages', 'flag'); ?>:</th>
 				<td><label for="tinymce"><select style="width: 150px;" name="tinymce" id="tinymce"><?php wp_dropdown_roles( flag_get_role('FlAG Use TinyMCE') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 

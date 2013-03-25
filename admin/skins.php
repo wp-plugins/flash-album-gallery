@@ -250,22 +250,28 @@ $type = isset($_GET['type'])? $_GET['type'] : '';
 switch($type){
 	case '':
 		$stype = 'gallery';
-	break;
+		$new_skins = __('New Photo Skins', 'flag');
+		break;
 	case 'm':
 		$stype = 'music';
-	break;
+		$new_skins = __('New Music Skins', 'flag');
+		break;
 	case 'v':
 		$stype = 'video';
-	break;
+		$new_skins = __('New Video Skins', 'flag');
+		break;
 	case 'b':
 		$stype = 'banner';
-	break;
+		$new_skins = __('New Banner Skins', 'flag');
+		break;
 	case 'w':
 		$stype = 'widget';
-	break;
+		$new_skins = __('New Widget Skins', 'flag');
+		break;
 	default:
 		$stype = 'gallery';
-	break;
+		$new_skins = __('New Photo Skins', 'flag');
+		break;
 }
 
 if( isset($_GET['skins_refresh']) ) {
@@ -467,7 +473,7 @@ $total_all_skins = count($all_skins);
 </div>
 
 <div class="postbox metabox-holder" id="newskins" style="width: 29%; float: right; padding-top: 5px;">
-	<h3 style="font-size: 16px; line-height: 100%; font-weight: bold; color: #2583AD;">New Skins</h3>
+	<h3 style="font-size: 16px; line-height: 100%; font-weight: bold; color: #2583AD;"><?php echo $new_skins; ?></h3>
 	<div class="inside">
 	<?php
 	if(isset($skins_by_type[$stype]) && !empty($skins_by_type[$stype])) {
