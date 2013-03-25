@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<panel title="Minima 1.0">	
+<panel title="Minima 1.2">	
 	<item type="checkBox" name="autoSlideshow">
 		<title><![CDATA[AutoSlideshow]]></title>
 		<description><![CDATA[]]></description>
@@ -50,11 +50,15 @@
 		<title><![CDATA[Background Color]]></title>
 		<description><![CDATA[]]></description>
 		<showTextField>true</showTextField>
-		<selectedColor>0xffffff</selectedColor>
+	<selectedColor>0xffffff</selectedColor>
 	</item>
+	<item type="checkBox" name="counterStatus">
+		<title><![CDATA[Show image views/likes counter]]></title>
+		<selected>true</selected>
+	</item>	
 	<item type="colorPicker" name="barBgColor">
 		<title><![CDATA[Header & Footer Background Color]]></title>
-		<description><![CDATA[]]></description>
+	<description><![CDATA[]]></description>
 		<showTextField>true</showTextField>
 		<selectedColor>0x282828</selectedColor>	
 	</item>	
@@ -62,10 +66,10 @@
 		<title><![CDATA[Label Color (Buttons)]]></title>
 		<description><![CDATA[]]></description>
 		<showTextField>true</showTextField>
-		<selectedColor>0x75c30f</selectedColor>
+	<selectedColor>0x75c30f</selectedColor>
 	</item>	
 	<item type="colorPicker" name="labelColorOver">
-		<title><![CDATA[Label MouseOver Color (Buttons)]]></title>
+	<title><![CDATA[Label MouseOver Color (Buttons)]]></title>
 		<description><![CDATA[]]></description>
 		<showTextField>true</showTextField>
 		<selectedColor>0xffffff</selectedColor>
@@ -170,5 +174,7 @@
   <galleryTitleFontSize>15</galleryTitleFontSize>
   <linkColor>0xffffff</linkColor>
   <descriptionFontSize>12</descriptionFontSize>
+  <counterStatus>true</counterStatus>
 </properties>
+
 </panel>
