@@ -345,6 +345,7 @@ class flagManageGallery {
 		
 		$description = 	$_POST['description'];
 		$alttext = 		$_POST['alttext'];
+		$link = 		$_POST['link'];
 		$exclude = 		$_POST['exclude'];
 		$pictures = 	$_POST['pid'];
 		$hitcounter = 	$_POST['hitcounter'];
@@ -362,6 +363,13 @@ class flagManageGallery {
 				$alttext = $wpdb->escape($value);
 				$key =intval($key);
 				$wpdb->query( "UPDATE $wpdb->flagpictures SET alttext = '$alttext' WHERE pid = $key");
+			}
+		}
+		if ( is_array($link) ){
+			foreach( $link as $key => $value ) {
+				$link = $wpdb->escape($value);
+				$key =intval($key);
+				$wpdb->query( "UPDATE $wpdb->flagpictures SET link = '$link' WHERE pid = $key");
 			}
 		}
 		if ( is_array($hitcounter) ){

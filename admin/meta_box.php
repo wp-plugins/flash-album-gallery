@@ -2,7 +2,9 @@
 
 global $flagdb, $post;
 require_once (dirname(__FILE__) . '/get_skin.php');
+require_once (dirname(__FILE__) . '/playlist.functions.php');
 $i_skins = get_skins();
+$all_playlists = get_playlists();
 $flag_custom = get_post_custom($post->ID);
 $items_array = $flag_custom["mb_items_array"][0];
 $skinname = $flag_custom["mb_skinname"][0];
@@ -32,9 +34,11 @@ jQuery(document).ready(function() {
 	var galleries = 'gid='+jQuery('#mb_items_array').val();
 	var skin = jQuery('#mb_skinname option:selected').val();
 	if(skin) skin = ' skin='+skin; else skin = '';
+	var playlist = jQuery('#mb_playlist option:selected').val();
+	if(playlist) playlist = ' playlist='+playlist; else playlist = '';
 	var wmode = jQuery('#mb_bg_link').val();
 	if(wmode) wmode = ' wmode=transparent'; else wmode = ' wmode=window';
-	short_code(galleries,skin,wmode);
+	short_code(galleries,skin,wmode,playlist);
 	jQuery('#galleries :checkbox').click(function(){
 		var cur, arr, del;
 		if(jQuery(this).is(':checked')){
@@ -60,32 +64,38 @@ jQuery(document).ready(function() {
 			}
 		}
 		galleries = 'gid='+jQuery('#mb_items_array').val();
-		skin = jQuery('#mb_skinname option:selected').val(); if(skin) skin = ' skin='+skin; else skin = '';
-		short_code(galleries,skin,wmode);
+		short_code(galleries,skin,wmode,playlist);
 	});
 	jQuery('#mb_skinname').change(function(){
-		var skin = jQuery(this).val();
+		skin = jQuery(this).val();
 		if(skin) {
 			skin = ' skin='+skin;
 		} else {
 			skin = '';
 		}
-		galleries = 'gid='+jQuery('#mb_items_array').val();
-		short_code(galleries,skin,wmode);
+		short_code(galleries,skin,wmode,playlist);
+	});
+	jQuery('#mb_playlist').change(function(){
+		playlist = jQuery(this).val();
+		if(playlist) {
+			playlist = ' playlist='+playlist;
+		} else {
+			playlist = '';
+		}
+		short_code(galleries,skin,wmode,playlist);
 	});
 	jQuery('#mb_bg_link').change(function(){
-		var wmode = jQuery(this).val();
+		wmode = jQuery(this).val();
 		if(wmode) {
 			wmode = ' wmode=transparent';
 		} else {
 			wmode = ' wmode=window';
 		}
-		galleries = 'gid='+jQuery('#mb_items_array').val();
-		short_code(galleries,skin,wmode);
+		short_code(galleries,skin,wmode,playlist);
 	});
 });
-function short_code(galleries,skin,wmode) {
-	jQuery('#mb_scode').val('[flagallery '+galleries+' name=Gallery w=100% h=100%'+skin+wmode+' fullwindow=true]');
+function short_code(galleries,skin,wmode,playlist) {
+	jQuery('#mb_scode').val('[flagallery '+galleries+' w=100% h=100%'+skin+wmode+playlist+' fullwindow=true name=Gallery]');
 }
 /*]]>*/</script>
 <div class="wrap">
@@ -132,6 +142,21 @@ function short_code(galleries,skin,wmode) {
 			<td nowrap="nowrap" valign="top"><div style="padding-top: 3px;"><?php _e("Back Button Link", 'flag'); ?>: &nbsp; </div></td>
             <td valign="top"><input id="mb_button_link" name="mb_button_link" type="text" style="width: 49%;" placeholder="<?php echo home_url(); ?>" value="<?php echo $button_link; ?>" /><br />
 				<small><?php _e("Leave empty to use referer link", 'flag'); ?></small></td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap" valign="top"><div style="padding-top: 3px;"><?php _e("Music", 'flag'); ?>: &nbsp; </div></td>
+      	<td valign="top"><select id="mb_playlist" name="mb_playlist">
+						<option value="" selected="selected"><?php _e("choose playlist", 'flag'); ?></option>
+						<?php
+						foreach((array)$all_playlists as $playlist_file => $playlist_data) {
+							$playlist_name = basename($playlist_file, '.xml');
+							?>
+							<option value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+						<?php
+						}
+						?>
+					</select><br />
+					<small><?php _e("(optional) Read Skin specification for supporting this function.", 'flag'); ?></small></td>
 		</tr>
 		<tr>
 			<td nowrap="nowrap" valign="top"><div style="padding-top: 3px;"><?php _e("Background Image Link", 'flag'); ?>: &nbsp; </div></td>

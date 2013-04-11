@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 2.56
+Version: 2.70
 Author: Rattus
 Author URI: http://codeasily.com/
 
@@ -23,8 +23,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 
-	var $version     = '2.56';
-	var $dbversion   = '1.24';
+	var $version     = '2.70';
+	var $dbversion   = '2.70';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '3.0';
 	var $flagAdminPanel;
@@ -113,6 +113,13 @@ class flagLoad {
 			include_once (dirname (__FILE__) . '/admin/flag_install.php');
 			// check for tables
 			flag_capabilities();
+		}
+		// check for upgrade
+		if( get_option( 'flag_db_version' ) < FLAG_DBVERSION ) {
+			include_once ( dirname (__FILE__) . '/admin/functions.php' );
+			include_once ( dirname (__FILE__) . '/admin/upgrade.php' );
+			flag_upgrade();
+			add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="updated"><p>\' . __(\'GRAND FlAGallery database upgraded\', "flag" ) . \'</p></div>\';') );
 		}
 	}
 
@@ -405,6 +412,7 @@ class flagLoad {
 	  // OK, we're authenticated: we need to find and save the data
 	  $items_array = $_POST["mb_items_array"];
 	  $skinname = $_POST["mb_skinname"];
+	  $playlist = $_POST["mb_playlist"];
 	  $scode = $_POST["mb_scode"];
 	  $button_text = $_POST["mb_button"];
 	  $button_link = $_POST["mb_button_link"];
@@ -413,6 +421,7 @@ class flagLoad {
 	  $bg_repeat = $_POST["mb_bg_repeat"];
 	  update_post_meta($post_id, "mb_items_array", $_POST["mb_items_array"]);
 	  update_post_meta($post_id, "mb_skinname", $_POST["mb_skinname"]);
+	  update_post_meta($post_id, "mb_playlist", $_POST["mb_playlist"]);
 	  update_post_meta($post_id, "mb_scode", $_POST["mb_scode"]);
 	  update_post_meta($post_id, "mb_button", $_POST["mb_button"]);
 	  update_post_meta($post_id, "mb_button_link", $_POST["mb_button_link"]);

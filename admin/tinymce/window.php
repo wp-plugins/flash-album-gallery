@@ -50,7 +50,7 @@ if($_REQUEST['riched'] == "false") {
 			<li><a href="#" rel="album_panel"><span><?php _e( 'Albums', 'flag' ); ?></span></a></li>
 			<li id="sort_tab"><a href="#" rel="sort_panel"><span><?php _e('Sort', 'flag'); ?></span></a></li>
 			<li><a href="#" rel="custom_panel"><span><?php _e( 'Skin', 'flag' ); ?></span></a></li>
-			<li style="display:none;"><a href="#" rel="music_panel"><span><?php _e( 'Music', 'flag' ); ?></span></a></li>
+			<li><a href="#" rel="music_panel"><span><?php _e( 'Music', 'flag' ); ?></span></a></li>
 		</ul>
 <?php } else { ?>
 	<div class="tabs" style="position:relative; overflow:hidden; margin-bottom:-1px;">
@@ -59,7 +59,7 @@ if($_REQUEST['riched'] == "false") {
 			<li id="album_tab"><span><a href="javascript:mcTabs.displayTab('album_tab','album_panel');" onmousedown="return false;"><?php _e( 'Albums', 'flag' ); ?></a></span></li>
 			<li id="sort_tab"><span><a href="javascript:mcTabs.displayTab('sort_tab','sort_panel');" onmousedown="return false;"><?php _e('Sort', 'flag'); ?></a></span></li>
 			<li id="custom_tab"><span><a href="javascript:mcTabs.displayTab('custom_tab','custom_panel');" onmousedown="return false;"><?php _e( 'Skin', 'flag' ); ?></a></span></li>
-			<li id="music_tab" style="display:none;"><span><a href="javascript:mcTabs.displayTab('music_tab','music_panel');" onmousedown="return false;"><?php _e( 'Music', 'flag' ); ?></a></span></li>
+			<li id="music_tab"><span><a href="javascript:mcTabs.displayTab('music_tab','music_panel');" onmousedown="return false;"><?php _e( 'Music', 'flag' ); ?></a></span></li>
 		</ul>
 	</div>
 	<div class="panel_wrapper" style="border:1px solid #919B9C; height:130px;">
@@ -265,7 +265,7 @@ if($_REQUEST['riched'] == "false") {
 				skinalign = " align=" + skinalign;
 			} else skinalign = '';
 			if (playlist) {
-				skinname = " play=" + playlist;
+				playlist = " playlist=" + playlist;
 			} else playlist = '';
 
 			if (galleryid || album ) {

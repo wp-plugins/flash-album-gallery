@@ -1,5 +1,9 @@
 GRAND FlAGallery
-by Rattus & CodEasily DEV Team
+by CodEasily.com
+
+= v2.70 - 11.04.2013 =
+* Fixed: Compatibility with some modern themes
+* Added: Music for gallery skins
 
 = v2.56 - 25.03.2013 =
 * Fixed: SQL injection vulnerability

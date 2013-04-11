@@ -54,6 +54,18 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	} else if(file_exists($skinpath . "/settings.php")) {
 		include( $skinpath . "/settings.php");
 	}
+	$musicData = array();
+	if(!empty($playlist) && false === strpos($playlist, '..')){
+		$galleryPath = trim($flag_options['galleryPath'],'/');
+		$playlistPath = $galleryPath.'/playlists/'.$playlist.'.xml';
+		if(file_exists(ABSPATH.$playlistPath)) {
+			if ($playlist_xml = @simplexml_load_file(ABSPATH.$playlistPath, 'SimpleXMLElement', LIBXML_NOCDATA)){
+				foreach($playlist_xml->category->items->item as $item){
+					$musicData['sound'][] = array('track' => (string) $item->track, 'title' => (string) $item->title);
+				}
+			}
+		}
+	}
 	if(empty($wmode)) $wmode = $flashBacktransparent? 'transparent' : 'opaque';
 	if(empty($flashBackcolor)) $flashBackcolor = $flag_options['flashBackcolor'];
 	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);

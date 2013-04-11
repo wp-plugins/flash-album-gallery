@@ -13,21 +13,24 @@ Try GRAND Flash Album Gallery - powerfull flash & jQuery media content plugin. I
 
 Edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **image gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc. 
 
+* iPhone, iPad, Android, Blackberry and Desktop friendly photo gallery, SEO optimized.
+* Full-screen mobile friendly slideshow with touch controls (optional, if set PhotoSwipe library script for alternative gallery).
+* Widgets for Banner Rotator, Photo Gallery and Video Gallery.
+* Background music in gallery for desktop browsers.
+
 **[How to add gallery to your Wordpress site](http://mypgc.co/how-add-gallery-to-wordpress-website-or-blog)** - full HowTo guide.
 
 For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page")** and see demos created with "GRAND FlAGallery" WordPress Plugin.
 
-New version of Banner Rotator!!! Now it is responsive. Full support of iPhone/iPad. Ideal for mobile themes. [See demo](http://skins.mypgc.co) in the site's header.
+Responsive Banner Rotator! Full support of iPhone/iPad. Ideal for mobile themes. [See demo](http://skins.mypgc.co) in the site's header.
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
-* iPhone, iPad, Android, Blackberry and Desktop friendly photo gallery, SEO optimized.
-* Full-screen mobile friendly slideshow with touch controls (optional, if set PhotoSwipe library script for alternative gallery).
-* Widgets for Banner Rotator, Photo Gallery and Video Gallery. 
-
-Added: GRAND Pages - Full Window Gallery Template. Now you can display your image gallery in full window separate page (gallery template). [View Demo 1](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/), [View Demo 2](http://photogallerycreator.com/flagallery/3d-sphere-v2-0-full-window-mode/)
+GRAND Pages - Full Window Gallery Template. You can display your image gallery in full window separate page (gallery template). [View Demo 1](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/), [View Demo 2](http://photogallerycreator.com/flagallery/3d-sphere-v2-0-full-window-mode/)
 
 You have the opportunity to create image gallery, as separate pages. It looks very cool when you open image gallery, and gallery images occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
+
+Added music playlist support in gallery skins. Now your visitors can listen music while watching gallery. [View Demo](http://photogallerycreator.com/grand-flagallery/optima/)
 
 Now you can see "Views" of each photo in the gallery and visitors can "Like" image and see image "Rating".
 
@@ -40,6 +43,10 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 
 == Changelog ==
+
+= v2.70 - 11.04.2013 =
+* Fixed: Compatibility with some modern themes
+* Added: Music for gallery skins
 
 = v2.56 - 25.03.2013 =
 * Fixed: SQL injection vulnerability

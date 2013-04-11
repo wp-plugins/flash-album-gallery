@@ -138,8 +138,45 @@ jQuery(document).ready(function() {
 					<span class="setting-description"><?php _e('A RSS feed will be added to you blog header.','flag'); ?></span></td>
 				</tr>
 			</table>
-			
-			<h3><?php _e('Alternative Gallery Options','flag'); ?> <br><small style="color: red;"><?php _e('(Attention: this is not skin option, only for browsers without flash support)','flag'); ?></small></h3>
+
+			<h3><?php _e('Image settings','flag'); ?></h3>
+			<table class="form-table flag-options">
+				<tr valign="top">
+					<th scope="row" width="200"><label><?php _e('Resize Images','flag'); ?></label><br /><small>(Manage Gallery -> 'Resize Images' action)</small></th>
+					<td><input type="hidden" name="imgResize" value="1" <?php checked('1', $flag_options['imgResize']); ?> />
+						<input type="text" size="5" name="imgWidth" value="<?php echo $flag_options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $flag_options['imgHeight']; ?>" />
+						<span class="setting-description"><?php _e('Width x Height (in pixel). Flash Album Gallery will keep ratio size','flag'); ?></span></td>
+				</tr>
+				<tr valign="top">
+					<th align="left"><?php _e('Image quality','flag'); ?></th>
+					<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $flag_options['imgQuality']; ?>" /> %</td>
+				</tr>
+			</table>
+
+			<h3><?php _e('Sort options','flag'); ?></h3>
+			<table class="form-table flag-options">
+				<tr>
+					<th valign="top" width="200"><?php _e('Sort thumbnails','flag'); ?>:</th>
+					<td>
+						<label><input name="galSort" type="radio" value="sortorder" <?php checked('sortorder', $flag_options['galSort']); ?> /> <?php _e('Custom order', 'flag'); ?></label><br />
+						<label><input name="galSort" type="radio" value="pid" <?php checked('pid', $flag_options['galSort']); ?> /> <?php _e('Image ID', 'flag'); ?></label><br />
+						<label><input name="galSort" type="radio" value="filename" <?php checked('filename', $flag_options['galSort']); ?> /> <?php _e('File name', 'flag'); ?></label><br />
+						<label><input name="galSort" type="radio" value="alttext" <?php checked('alttext', $flag_options['galSort']); ?> /> <?php _e('Alt / Title text', 'flag'); ?></label><br />
+						<label><input name="galSort" type="radio" value="imagedate" <?php checked('imagedate', $flag_options['galSort']); ?> /> <?php _e('Date / Time', 'flag'); ?></label><br />
+						<label><input name="galSort" type="radio" value="hitcounter" <?php checked('hitcounter', $flag_options['galSort']); ?> /> <?php _e('Image views', 'flag'); ?></label><br />
+						<label><input name="galSort" type="radio" value="total_votes" <?php checked('total_votes', $flag_options['galSort']); ?> /> <?php _e('Image likes', 'flag'); ?></label><br />
+						<label><input name="galSort" type="radio" value="rand()" <?php checked('rand()', $flag_options['galSort']); ?> /> <?php _e('Randomly', 'flag'); ?></label>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top"><?php _e('Sort direction','flag'); ?>:</th>
+					<td><label><input name="galSortDir" type="radio" value="ASC" <?php checked('ASC', $flag_options['galSortDir']); ?> /> <?php _e('Ascending', 'flag'); ?></label><br />
+						<label><input name="galSortDir" type="radio" value="DESC" <?php checked('DESC', $flag_options['galSortDir']); ?> /> <?php _e('Descending', 'flag'); ?></label>
+					</td>
+				</tr>
+			</table>
+
+			<h3><?php _e('Alternative Gallery Options','flag'); ?> <br><small style="color: darkgreen;"><?php _e('(Note: this is not flash skin option. Options below only for alternative gallery in mobile browsers)','flag'); ?></small></h3>
 			<table class="flag_colors form-table flag-options">
 				<tr>
 					<th align="left"><?php _e('Show jQuery gallery for browsers without flashplayer','flag'); ?></th>
@@ -194,43 +231,6 @@ jQuery(document).ready(function() {
 				<tr>
 					<th><?php _e('Fancybox Description Text','flag'); ?>:<br /><small><?php _e('Only if FancyBox script is selected','flag'); ?></small></th>
 					<td><input class="colorPick" type="text" size="7" maxlength="6" id="DescrColor" name="DescrColor" value="<?php echo $flag_options['DescrColor']; ?>" /><div id="cp_DescrColor" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
-				</tr>
-			</table>
-
-			<h3><?php _e('Image settings','flag'); ?></h3>
-			<table class="form-table flag-options">
-				<tr valign="top">
-					<th scope="row" width="200"><label><?php _e('Resize Images','flag'); ?></label><br /><small>(Manage Gallery -> 'Resize Images' action)</small></th>
-					<td><input type="hidden" name="imgResize" value="1" <?php checked('1', $flag_options['imgResize']); ?> />
-					<input type="text" size="5" name="imgWidth" value="<?php echo $flag_options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $flag_options['imgHeight']; ?>" />
-					<span class="setting-description"><?php _e('Width x Height (in pixel). Flash Album Gallery will keep ratio size','flag'); ?></span></td>
-				</tr>
-				<tr valign="top">
-					<th align="left"><?php _e('Image quality','flag'); ?></th>
-					<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $flag_options['imgQuality']; ?>" /> %</td>
-				</tr>
-			</table>
-
-			<h3><?php _e('Sort options','flag'); ?></h3>
-			<table class="form-table flag-options">
-				<tr>
-					<th valign="top" width="200"><?php _e('Sort thumbnails','flag'); ?>:</th>
-					<td>
-					<label><input name="galSort" type="radio" value="sortorder" <?php checked('sortorder', $flag_options['galSort']); ?> /> <?php _e('Custom order', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="pid" <?php checked('pid', $flag_options['galSort']); ?> /> <?php _e('Image ID', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="filename" <?php checked('filename', $flag_options['galSort']); ?> /> <?php _e('File name', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="alttext" <?php checked('alttext', $flag_options['galSort']); ?> /> <?php _e('Alt / Title text', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="imagedate" <?php checked('imagedate', $flag_options['galSort']); ?> /> <?php _e('Date / Time', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="hitcounter" <?php checked('hitcounter', $flag_options['galSort']); ?> /> <?php _e('Image views', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="total_votes" <?php checked('total_votes', $flag_options['galSort']); ?> /> <?php _e('Image likes', 'flag'); ?></label><br />
-					<label><input name="galSort" type="radio" value="rand()" <?php checked('rand()', $flag_options['galSort']); ?> /> <?php _e('Randomly', 'flag'); ?></label>
-					</td>
-				</tr>
-				<tr>
-					<th valign="top"><?php _e('Sort direction','flag'); ?>:</th>
-					<td><label><input name="galSortDir" type="radio" value="ASC" <?php checked('ASC', $flag_options['galSortDir']); ?> /> <?php _e('Ascending', 'flag'); ?></label><br />
-					<label><input name="galSortDir" type="radio" value="DESC" <?php checked('DESC', $flag_options['galSortDir']); ?> /> <?php _e('Descending', 'flag'); ?></label>
-					</td>
 				</tr>
 			</table>
 			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>

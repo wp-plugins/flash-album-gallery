@@ -70,10 +70,10 @@ foreach ( $gID as $galID ) {
 	$galID = (int) $galID;
 	if ( $galID == 0) {
 		$thegalleries = array();
-		$thepictures = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, imagedate, sortorder, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE 1=1 {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
+		$thepictures = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, imagedate, sortorder, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE 1=1 {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
 	} else {
 		$thegalleries = $wpdb->get_row("SELECT gid, name, path, title, galdesc FROM $wpdb->flaggallery WHERE gid={$galID}", ARRAY_A);
-		$thepictures = $wpdb->get_results("SELECT pid, filename, description, alttext, imagedate, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE galleryid = '{$galID}' {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
+		$thepictures = $wpdb->get_results("SELECT pid, filename, description, alttext, link, imagedate, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE galleryid = '{$galID}' {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
 	}
 	$captions = '';
 
@@ -118,6 +118,6 @@ foreach ( $gID as $galID ) {
 	}
 }
 $xml['alt'] .= '</div>'.PHP_EOL;
-$d = array('properties'=>$data) + $c;
+$d = array('properties'=>$data) + $c + $musicData;
 $xml['json'] = json_encode($d);
 ?>

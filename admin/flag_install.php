@@ -45,6 +45,7 @@ function flag_install () {
 		filename VARCHAR(255) NOT NULL ,
 		description MEDIUMTEXT NULL ,
 		alttext MEDIUMTEXT NULL ,
+		link TEXT NULL ,
 		imagedate DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 		exclude TINYINT NULL DEFAULT '0',
 		sortorder BIGINT(20) DEFAULT '0' NOT NULL ,
