@@ -30,7 +30,7 @@ GRAND Pages - Full Window Gallery Template. You can display your image gallery i
 
 You have the opportunity to create image gallery, as separate pages. It looks very cool when you open image gallery, and gallery images occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
 
-Added music playlist support in gallery skins. Now your visitors can listen music while watching gallery. [View Demo](http://photogallerycreator.com/grand-flagallery/optima/)
+Added music playlist support in gallery skins. Now your visitors can listen music while watching gallery. [View Demo](http://photogallerycreator.com/flagallery/optima-grandpage/)
 
 Now you can see "Views" of each photo in the gallery and visitors can "Like" image and see image "Rating".
 
