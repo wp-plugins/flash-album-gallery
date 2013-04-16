@@ -10,8 +10,6 @@ GRAND Flash Album Gallery is a Photo Gallery, Video Gallery, Music Album & Banne
 
 == Description ==
 
-> Try **new plugin** called [Gmedia Gallery](http://wordpress.org/extend/plugins/grand-media/) - easily manage galleries and media files. New skins will be added soon. Afflux Skin for free with new look on mobile browsers.
-
 GRAND Flash Album Gallery - powerfull flash & jQuery media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
 Edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **image gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc. 
@@ -20,6 +18,9 @@ Edit your media content the way you want: upload images, import music and video,
 * Full-screen mobile friendly slideshow with touch controls (optional, if set PhotoSwipe library script for alternative gallery).
 * Widgets for Banner Rotator, Photo Gallery and Video Gallery.
 * Background music in gallery for desktop browsers.
+
+New plugin:
+> Try our **new plugin** called [Gmedia Gallery](http://wordpress.org/extend/plugins/grand-media/). Help me make it best gallery plugin: test it and write suggestions how I can improve it in feature versions.
 
 **[How to add gallery to your Wordpress site](http://mypgc.co/how-add-gallery-to-wordpress-website-or-blog)** - full HowTo guide.
 
