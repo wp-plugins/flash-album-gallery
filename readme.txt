@@ -1,4 +1,4 @@
-﻿=== GRAND FlAGallery ===
+﻿=== Grand Flagallery ===
 Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
 Tags: admin, flash, fullscreen gallery, gallery, image, images, image gallery, mp3, music, page, photo, slider, plugin, Post, posts, slideshow, video, widget, iOS gallery, iphone gallery, best gallery
@@ -9,7 +9,10 @@ Stable tag: trunk
 GRAND Flash Album Gallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
 
 == Description ==
-Try GRAND Flash Album Gallery - powerfull flash & jQuery media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
+
+Try **new plugin** called [Gmedia Gallery](http://wordpress.org/extend/plugins/grand-media/) - easily manage galleries and media files. New skins will be added soon. Afflux Skin for free with new look on mobile browsers.
+
+GRAND Flash Album Gallery - powerfull flash & jQuery media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
 Edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **image gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc. 
 
@@ -522,14 +525,7 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 * Bugfix : Fix for Upload Images button on Overview page 
 * Bugfix : Fixed conflict with NextGEN Gallery (creating thumbnails cause error) 
  
-== Upgrade Notice ==
-
-* After plugin update go to Skins page and update skins with 'Update skins' button.
-* If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
-* If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
-* Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
-
-== Credits == 
+== Credits ==
 
 Copyright 2009 by Sergey Pasyuk & CodEasily.com DevTeam 
  
@@ -558,12 +554,6 @@ See more tags in the FAQ section
  
 That's it ... Have fun! 
  
-= Upgrade Notice =
-* After plugin update go to Skins page and update skins with 'Update skins' button.
-* If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
-* If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
-* Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
-
 
 == Screenshots == 
 
@@ -579,13 +569,7 @@ That's it ... Have fun!
  
 == Frequently Asked Questions == 
  
-= Upgrade Notice =
-* After plugin update go to Skins page and update skins with 'Update skins' button.
-* If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
-* If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
-* Have some troubles with plugin? Try first reseting settings, **deactivate and reactivate plugin.**
-
-= Read as startup : = 
+= Read as startup : =
 http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review/
  
 = The flash didn't work. I only see the message "The Flash Player and a browser with Javascript  needed..", but everything is installed and activated. =
