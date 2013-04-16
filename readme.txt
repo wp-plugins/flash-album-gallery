@@ -10,7 +10,7 @@ GRAND Flash Album Gallery is a Photo Gallery, Video Gallery, Music Album & Banne
 
 == Description ==
 
-Try **new plugin** called [Gmedia Gallery](http://wordpress.org/extend/plugins/grand-media/) - easily manage galleries and media files. New skins will be added soon. Afflux Skin for free with new look on mobile browsers.
+> Try **new plugin** called [Gmedia Gallery](http://wordpress.org/extend/plugins/grand-media/) - easily manage galleries and media files. New skins will be added soon. Afflux Skin for free with new look on mobile browsers.
 
 GRAND Flash Album Gallery - powerfull flash & jQuery media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
