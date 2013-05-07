@@ -84,8 +84,8 @@ class flagManageGallery {
 				}
 			}
 	
-			$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE galleryid = $this->gid");
-			$delete_galllery = $wpdb->query("DELETE FROM $wpdb->flaggallery WHERE gid = $this->gid");
+			$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE galleryid = '$this->gid'");
+			$delete_galllery = $wpdb->query("DELETE FROM $wpdb->flaggallery WHERE gid = '$this->gid'");
 			
 			if($delete_galllery) {
 				
@@ -130,7 +130,7 @@ class flagManageGallery {
 					@unlink($image->imagePath);
 					@unlink($image->thumbPath);	
 				//} 
-				$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = $image->pid");
+				$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = '$image->pid'");
 			}
 			if($delete_pic)
 				flagGallery::show_message( __('Picture','flag').' \''.$this->pid.'\' '.__('deleted successfully','flag') );

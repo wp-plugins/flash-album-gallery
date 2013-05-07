@@ -95,7 +95,7 @@ function flag_upgrade() {
 
 		// v2.56 -> v2.70
 		if (version_compare($installed_ver, '2.70', '<')) {
-			flag_add_sql_column( $wpdb->flagpictures, 'link', "TEXT AFTER alttext;");
+			flag_add_sql_column( $wpdb->flagpictures, 'link', "TEXT NULL AFTER alttext;");
 		}
 
 		// update now the database

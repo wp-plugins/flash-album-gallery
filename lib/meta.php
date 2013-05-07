@@ -292,6 +292,8 @@ class flagMeta {
 						if ($list_element == false)
 							array_pop($stack);
 						$list_element = true;
+						// do not parse empty tags
+						if ( empty($val['value']) ) continue;
 						// save it in our temp array
 						$list_array[] = $val['value'];
 						// in the case it's a list element we seralize it
@@ -300,7 +302,9 @@ class flagMeta {
 					}
 					else {
 						array_push($stack, $val['tag']);
-						$this->setArrayValue($xmlarray, $stack, $val['value']);
+						// do not parse empty tags
+						if ( !empty($val['value']) )
+							$this->setArrayValue($xmlarray, $stack, $val['value']);
 						array_pop($stack);
 					}
 				}
@@ -347,8 +351,7 @@ class flagMeta {
 	function setArrayValue(& $array, $stack, $value) {
 		if ($stack) {
 			$key = array_shift($stack);
-			//TODO:Review this, reports sometimes a error "Fatal error: Only variables can be passed by reference" (PHP 5.2.6)
-			$this->setArrayValue($array [$key], $stack, $value);
+			$this->setArrayValue($array[$key], $stack, $value);
 		} else {
 			$array = $value;
 		}

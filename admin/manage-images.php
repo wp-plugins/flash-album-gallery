@@ -39,7 +39,7 @@ function flag_picturelist() {
 		}	
 		
 		// look for pagination	
-		if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
+		if ( ! isset( $_GET['paged'] ) || intval($_GET['paged']) < 1 )
 			$_GET['paged'] = 1;
 		
 		$start = ( $_GET['paged'] - 1 ) * 50;
@@ -194,7 +194,7 @@ jQuery(document).ready( function() {
 
 <br style="clear: both;" />
 
-<form id="updategallery" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;mode=edit&amp;s=' . $_GET['s']; ?>" accept-charset="utf-8">
+<form id="updategallery" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;mode=edit&amp;s=' . get_search_query(); ?>" accept-charset="utf-8">
 <?php wp_nonce_field('flag_updategallery'); ?>
 <input type="hidden" name="page" value="manage-images" />
 

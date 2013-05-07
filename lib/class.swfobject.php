@@ -123,7 +123,7 @@ class flag_swfobject {
 			foreach ($params as $key => $value) {
 				if  ( !empty($list) )
 					$list .= ",";	
-				$list .= "\n\t\t" . $key . ' : ' . '"' . $value .'"';
+				$list .= "\n\t\t" . $key . " : " . "'" . $value ."'";
 			}
 		}
 		$js = "\t" . $name . ' : {' . $list . '}';		

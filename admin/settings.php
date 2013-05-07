@@ -30,22 +30,43 @@ function flag_admin_options()  {
 		// Save options
 		update_option('flag_options', $flag->options);
 
-		if(!isset($_POST['access_key']))
-			flagGallery::show_message(__('Update Successfully','flag'));
+		flagGallery::show_message(__('Update Successfully','flag'));
 	}
-	if( isset($_POST['access_key']) ){
-		if(function_exists('curl_init')){
-			check_admin_referer('flag_settings');
-			$ch = curl_init('http://mypgc.co/app/account_st.php');
-			curl_setopt ($ch, CURLOPT_POST, 1);
-			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt ($ch, CURLOPT_POSTFIELDS, array('access_key'=>$_POST['access_key'], 'access_url'=>$_POST['access_url']));
-			$access_key_return = curl_exec ($ch);
-			curl_close ($ch);
+	if( isset($_POST['membership']) ){
+		if(!empty($_POST['license_key'])){
+			if(function_exists('curl_init')){
+				check_admin_referer('flag_settings');
+				$ch = curl_init('http://mypgc.co/app/account_st.php');
+				curl_setopt ($ch, CURLOPT_REFERER, home_url());
+				curl_setopt ($ch, CURLOPT_POST, 1);
+				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt ($ch, CURLOPT_POSTFIELDS, array('access_key'=>$_POST['access_key'], 'access_url'=>$_POST['access_url'], 'license_key'=>$_POST['license_key']));
+				$access_key_return = curl_exec ($ch);
+				curl_close ($ch);
+			} else {
+				$access_key_return = __('cURL library is not installed on your server.','flag');
+			}
+			if(strpos($access_key_return, 'Error') !== FALSE){
+				$_POST['license_key'] = '';
+			}
+			$options = explode(',', stripslashes($_POST['page_options']));
+			foreach ($options as $option) {
+					$option = trim($option);
+					$value = trim($_POST[$option]);
+					$flag->options[$option] = $value;
+			}
+			// Save options
+			update_option('flag_options', $flag->options);
+
+			if(strpos($access_key_return, 'Error') === FALSE){
+				flagGallery::show_message($access_key_return);
+			} else {
+				flagGallery::show_error($access_key_return);
+			}
 		} else {
-			$access_key_return = '<div class="updated"><p>cURL library is not installed on your server.</p></div>';
+			$access_key_return = __('Enter License Key. License Key is required','flag');
+			flagGallery::show_error($access_key_return);
 		}
-		echo $access_key_return;
 	}
 	
 
@@ -82,7 +103,9 @@ function flag_admin_options()  {
 
 	<ul id="tabs" class="tabs">
 		<li class="selected"><a href="#" rel="imageoptions"><?php _e('Image Gallery Options', 'flag'); ?></a></li>
-		<li><a href="#" rel="rControl"><?php _e('Remote Control', 'flag'); ?></a></li>
+		<?php if(current_user_can('administrator')){ ?>
+		<li><a href="#" rel="rControl"><?php _e('License Key & Remote Control', 'flag'); ?></a></li>
+		<?php } ?>
 		<li><a href="#" rel="vPlayer"><?php _e('FLV Single Player Options', 'flag'); ?></a></li>
 		<li><a href="#" rel="mPlayer"><?php _e('MP3 Single Player Options', 'flag'); ?></a></li>
 <?php if (flagGallery::flag_wpmu_enable_function('wpmuRoles')) : ?>
@@ -237,22 +260,32 @@ jQuery(document).ready(function() {
 		</form>	
 	</div>
 
+<?php if(current_user_can('administrator')){ ?>
 	<div id="rControl" class="cptab">
 		<form name="rControl"  method="post">
 			<?php wp_nonce_field('flag_settings'); ?>
-			<input type="hidden" name="page_options" value="access_key" />
+			<input type="hidden" name="page_options" value="access_key,license_key" />
+			<h2><?php _e('License Key & Remote Control','flag'); ?></h2>
 			<input type="hidden" name="access_url" value="<?php echo plugins_url() . '/' . FLAGFOLDER . '/lib/app.php'; ?>" />
-			<h2><?php _e('Remote Control App Settings','flag'); ?></h2>
 			<table class="form-table flag-options">
 				<tr>
-					<th valign="top" width="200"><?php _e('App Access Key','flag'); ?>:</th>
-					<td valign="top"><input type="text" size="54" id="access_key" name="access_key" value="<?php echo $flag_options['access_key']?>" /></td>
+					<th valign="top" width="200"><?php _e('License Key','flag'); ?>:</th>
+					<td valign="top"><input type="text" size="54" id="license_key" name="license_key" value="<?php echo $flag_options['license_key']?>" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><br><i><?php _e('If you want to upload photos to FlAGallery right from your iPhone download application (comming soon) and enter access key below. License Key is required.', 'flag'); ?></i></td>
+				</tr>
+				<tr>
+					<th valign="top" width="200"><?php _e('Remote App Access Key','flag'); ?>:</th>
+					<td valign="top"><input type="text" size="54" id="access_key" name="access_key" value="<?php echo $flag_options['access_key']?>" /><br>
+						<small><?php _e('Leave blank to disable access from application', 'flag'); ?></small></td>
 				</tr>
 			</table>
-			<h3>Coming soon...</h3>
-			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
+			<h3>iOS application coming soon...</h3>
+			<div class="submit"><input class="button-primary" type="submit" name="membership" value="<?php _e('Update Settings for Remote Access', 'flag'); ?>"/></div>
 		</form>
 	</div>
+<?php } ?>
 
 	<div id="vPlayer" class="cptab">
 		<form name="vPlayer"  method="post">

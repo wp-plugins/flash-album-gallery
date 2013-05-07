@@ -164,6 +164,7 @@ if ( isset($_POST['license_key']) ) {
 if(!empty($flag_options['license_key'])){
 	if(function_exists('curl_init')){
 		$ch = curl_init('http://mypgc.co/app/account_st.php');
+		curl_setopt ($ch, CURLOPT_REFERER, home_url());
 		curl_setopt ($ch, CURLOPT_POST, 1);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt ($ch, CURLOPT_POSTFIELDS, array('check_status'=>$flag_options['license_key']));

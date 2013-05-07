@@ -69,8 +69,14 @@ function flag_banner_controler() {
 				flag_banner_wp_media_lib();
 			}
 		break;
-	  	case 'add':
-			$added = $_POST['items'];
+	  case 'add':
+			if(isset($_POST['items']) && isset($_GET['playlist'])){
+				$added = $_POST['items'];
+			} elseif(isset($_GET['playlist'])) {
+				$added = $_COOKIE['bannerboxplaylist_'.$_GET['playlist']];
+			} else {
+				$added = false;
+			}
 			flag_banner_wp_media_lib($added);
 		break;
 		case 'delete':
@@ -204,26 +210,64 @@ function flag_banner_wp_media_lib($added=false) {
 		$playlistPath = $flag_options['galleryPath'].'playlists/banner/'.$_GET['playlist'].'.xml';
 		$playlist = get_b_playlist_data(ABSPATH.$playlistPath);
 		$exclude = explode(',', $added);
+	} else {
+		$items_array_default = isset($_COOKIE['bannerboxplaylist_default'])? $_COOKIE['bannerboxplaylist_default'] : '';
+		$exclude = explode(',', $items_array_default);
+	}
+	if(isset($_GET['playlist'])){
+		$playlist_cookie = $_GET['playlist'];
+	} else {
+		$playlist_cookie = 'default';
 	}
 ?>
 <script type="text/javascript"> 
 <!--
 jQuery(document).ready(function(){
-    jQuery('.cb :checkbox').click(function() {
+	var storedData = getStorage('bannerboxplaylist_');
+	<?php if(isset($_POST['items'])){
+	?>
+	storedData.set('<?php echo $playlist_cookie; ?>', '<?php echo $_POST['items']; ?>');
+	<?php } ?>
+  jQuery('.cb :checkbox').click(function() {
 		var cur, arr, del;
 		if(jQuery(this).is(':checked')){
 			cur = jQuery(this).val();
 			arr = jQuery('#items_array').val();
 			if(arr) { del = ','; } else { del = ''; }
 			jQuery('#items_array').val(arr+del+cur);
+			jQuery(this).closest('tr').css('background-color','#DDFFBB');
 		} else {
 			cur = jQuery(this).val();
 			arr = jQuery('#items_array').val().split(',');
 			arr = jQuery.grep(arr, function(a){ return a != cur; }).join(',');
 			jQuery('#items_array').val(arr);
+			jQuery(this).closest('tr').removeAttr('style');
 		}
+		storedData.set('<?php echo $playlist_cookie; ?>', jQuery('#items_array').val());
  	});
+	jQuery('.clear_selected').click(function(){
+		jQuery('#items_array').val('');
+		jQuery('.cb :checkbox').each(function(){
+			jQuery(this).prop('checked', false).closest('tr').removeAttr('style');
+		});
+		storedData.set('<?php echo $playlist_cookie; ?>', jQuery('#items_array').val());
+	});
 });
+function getStorage(key_prefix) {
+	return {
+		set: function (id, data) {
+			document.cookie = key_prefix + id + '=' + encodeURIComponent(data);
+		},
+		get: function (id, data) {
+			var cookies = document.cookie, parsed = {};
+			cookies.replace(/([^=]+)=([^;]*);?\s*/g, function (whole, key, value) {
+				parsed[key] = decodeURIComponent(value);
+			});
+			return parsed[key_prefix + id];
+		}
+	};
+}
+
 function checkAll(form)	{
 	for (i = 0, n = form.elements.length; i < n; i++) {
 		if(form.elements[i].type == "checkbox") {
@@ -240,7 +284,7 @@ function checkAll(form)	{
 }
 // this function check for a the number of selected images, sumbmit false when no one selected
 function checkSelected() {
-	if(!jQuery('.cb input:checked')) { 
+	if(!jQuery('#items_array').val()) {
 		alert('<?php echo esc_js(__("No items selected", "flag")); ?>');
 		return false; 
 	}
@@ -250,11 +294,7 @@ function checkSelected() {
 			showDialog('new_playlist', 160);
 			return false;
 			break;
-		case "add_to_playlist":
-			return confirm('<?php echo sprintf(esc_js(__("You are about to add %s items to playlist \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
-			break;
 	}
-	return confirm('<?php echo sprintf(esc_js(__("You are about to start the bulk edit for %s items \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 }
 
 function showDialog( windowId, height ) {
@@ -310,6 +350,45 @@ function showDialog( windowId, height ) {
 <?php } ?>
 
 		<h2><?php _e('WordPress Image Library', 'flag'); ?></h2>
+
+<?php
+// look for pagination
+if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
+	$_GET['paged'] = 1;
+
+$objects_per_page = 25;
+$start = ( $_GET['paged'] - 1 ) * $objects_per_page;
+$img_total_count = $wpdb->get_var("SELECT COUNT(ID) FROM $wpdb->posts WHERE `post_mime_type` LIKE 'image/%' AND `post_type` = 'attachment' AND `post_status` = 'inherit'");
+$bannerlist = get_posts( $args = array(
+		'numberposts'     => $objects_per_page,
+		'offset'			    => $start,
+		'orderby'         => 'ID',
+		'order'           => 'DESC',
+		'post_type'       => 'attachment',
+		'post_mime_type'  => array('image') )
+);
+
+// build pagination
+$page_links = paginate_links( array(
+	'base' => add_query_arg( 'paged', '%#%' ),
+	'format' => '',
+	'prev_text' => __('&laquo;'),
+	'next_text' => __('&raquo;'),
+	'total' => ceil( $img_total_count / $objects_per_page),
+	'current' => $_GET['paged']
+));
+	?>
+<div class="tablenav" style="overflow: hidden; height: auto;">
+	<?php if($added===false) { ?>
+		<div class="alignleft"><b><?php _e('Selected Media','flag'); ?>: </b><input style="width:500px;" type="text" readonly="readonly" id="items_array" name="items_array" value="<?php echo $items_array_default; ?>" /> <span class="clear_selected button"><?php _e('Clear Selected','flag'); ?></span></div>
+	<?php } ?>
+	<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
+			number_format_i18n( ( $_GET['paged'] - 1 ) * $objects_per_page + 1 ),
+			number_format_i18n( min( $_GET['paged'] * $objects_per_page, $img_total_count ) ),
+			number_format_i18n( $img_total_count ),
+			$page_links
+		); echo $page_links_text; ?></div>
+</div>
 		<form id="bannerlib" class="flagform" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8">
 		<?php wp_nonce_field('flag_bulkbanner'); ?>
 		<input type="hidden" name="page" value="banner-box" />
@@ -327,15 +406,14 @@ function showDialog( windowId, height ) {
 				<input name="showThickbox" class="button-secondary" type="submit" value="<?php _e('Apply','flag'); ?>" onclick="if ( !checkSelected() ) return false;" />
 				<?php } ?>
                 <a href="<?php echo admin_url( 'media-new.php'); ?>" class="button"><?php _e('Upload Banner(s)','flag'); ?></a>
-				<input type="hidden" id="items_array" name="items_array" value="" />
 <?php } else { ?>
 				<input type="hidden" name="mode" value="save" />
-				<input style="width: 80%;" type="text" id="items_array" name="items_array" value="<?php echo $added; ?>" />
+				<input style="width: 80%;" type="text" id="items_array" name="items_array" readonly="readonly" value="<?php echo $added; ?>" />
 				<input type="hidden" name="playlist_title" value="<?php echo $playlist['title']; ?>" />
 				<input type="hidden" name="skinname" value="<?php echo $playlist['skin']; ?>" />
 				<input type="hidden" name="skinaction" value="<?php echo $playlist['skin']; ?>" />
 				<textarea style="display: none;" name="playlist_descr" cols="40" rows="1"><?php echo $playlist['description']; ?></textarea>
-				<input name="addToPlaylist" class="button-secondary" type="submit" value="<?php _e('Update Playlist','flag'); ?>" onclick="if ( !checkSelected() ) return false;" />
+				<input name="addToPlaylist" class="button-secondary" type="submit" value="<?php _e('Update Playlist','flag'); ?>" />
 <?php } ?>
 			</div>
 			
@@ -360,13 +438,7 @@ function showDialog( windowId, height ) {
 			</tr>
 			</tfoot>
 			<tbody>
-<?php $bannerlist = get_posts( $args = array(
-    'numberposts'     => -1,
-    'orderby'         => 'ID',
-    'order'           => 'DESC',
-    'post_type'       => 'attachment',
-    'post_mime_type'  => array('image') ) 
-); 
+<?php
 $uploads = wp_upload_dir();
 $flag_options = get_option('flag_options');	
 if($bannerlist) {
@@ -378,7 +450,7 @@ if($bannerlist) {
 		$class = ( empty($class) ) ? ' class="alternate"' : '';
 		$class2 = ( empty($class) ) ? '' : ' alternate';
 		$ex = $checked = '';
-		if($added!==false && in_array($ban->ID, $exclude) ) { 
+		if( ($added!==false || !empty($items_array_default)) && in_array($ban->ID, $exclude) )  {
 			$ex = ' style="background-color:#DDFFBB;" title="'.__("Already Added", "flag").'"';
 			$checked = ' checked="checked"';
 		}
