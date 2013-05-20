@@ -68,7 +68,13 @@ function flag_music_controler() {
 			}
 		break;
 	  	case 'add':
-			$added = $_POST['items'];
+			if(isset($_POST['items']) && isset($_GET['playlist'])){
+				$added = $_POST['items'];
+			} elseif(isset($_GET['playlist'])) {
+				$added = $_COOKIE['musicboxplaylist_'.$_GET['playlist']];
+			} else {
+				$added = false;
+			}
 			flag_music_wp_media_lib($added);
 		break;
 		case 'delete':
@@ -156,32 +162,70 @@ function flag_music_wp_media_lib($added=false) {
 		$playlistPath = $flag_options['galleryPath'].'playlists/'.$_GET['playlist'].'.xml';
 		$playlist = get_playlist_data(ABSPATH.$playlistPath);
 		$exclude = explode(',', $added);
+	} else {
+		$items_array_default = isset($_COOKIE['musicboxplaylist_default'])? $_COOKIE['musicboxplaylist_default'] : '';
+		$exclude = explode(',', $items_array_default);
+	}
+	if(isset($_GET['playlist'])){
+		$playlist_cookie = $_GET['playlist'];
+	} else {
+		$playlist_cookie = 'default';
 	}
 ?>
 <script type="text/javascript"> 
 <!--
 jQuery(document).ready(function(){
-    jQuery('.cb :checkbox').click(function() {
+	var storedData = getStorage('musicboxplaylist_');
+	<?php if(isset($_POST['items'])){
+	?>
+	storedData.set('<?php echo $playlist_cookie; ?>', '<?php echo $_POST['items']; ?>');
+	<?php } ?>
+	jQuery('.cb :checkbox').click(function() {
 		var cur, arr, del;
 		if(jQuery(this).is(':checked')){
 			cur = jQuery(this).val();
 			arr = jQuery('#items_array').val();
 			if(arr) { del = ','; } else { del = ''; }
 			jQuery('#items_array').val(arr+del+cur);
+			jQuery(this).closest('tr').css('background-color','#DDFFBB').next().css('background-color','#DDFFBB');
 		} else {
 			cur = jQuery(this).val();
 			arr = jQuery('#items_array').val().split(',');
 			arr = jQuery.grep(arr, function(a){ return a != cur; }).join(',');
 			jQuery('#items_array').val(arr);
+			jQuery(this).closest('tr').removeAttr('style').next().removeAttr('style');
 		}
+		storedData.set('<?php echo $playlist_cookie; ?>', jQuery('#items_array').val());
  	});
-    jQuery('.del_thumb').click(function(){
-      var id = jQuery(this).attr('data-id');
-      jQuery('#mp3thumb-'+id).attr('value', '');
-      jQuery('#thumb-'+id).attr('src', '<?php echo site_url()."/wp-includes/images/crystal/audio.png"; ?>');
-      return false;
-    })
+	jQuery('.clear_selected').click(function(){
+		jQuery('#items_array').val('');
+		jQuery('.cb :checkbox').each(function(){
+			jQuery(this).prop('checked', false).closest('tr').removeAttr('style').next().removeAttr('style');
+		});
+		storedData.set('<?php echo $playlist_cookie; ?>', jQuery('#items_array').val());
+	});
+	jQuery('.del_thumb').click(function(){
+		var id = jQuery(this).attr('data-id');
+		jQuery('#mp3thumb-'+id).attr('value', '');
+		jQuery('#thumb-'+id).attr('src', '<?php echo site_url()."/wp-includes/images/crystal/audio.png"; ?>');
+		return false;
+	});
 });
+function getStorage(key_prefix) {
+	return {
+		set: function (id, data) {
+			document.cookie = key_prefix + id + '=' + encodeURIComponent(data);
+		},
+		get: function (id, data) {
+			var cookies = document.cookie, parsed = {};
+			cookies.replace(/([^=]+)=([^;]*);?\s*/g, function (whole, key, value) {
+				parsed[key] = decodeURIComponent(value);
+			});
+			return parsed[key_prefix + id];
+		}
+	};
+}
+
 function checkAll(form)	{
 	for (i = 0, n = form.elements.length; i < n; i++) {
 		if(form.elements[i].type == "checkbox") {
@@ -198,21 +242,17 @@ function checkAll(form)	{
 }
 // this function check for a the number of selected images, sumbmit false when no one selected
 function checkSelected() {
-	if(!jQuery('.cb input:checked')) { 
-		alert('<?php echo esc_js(__('No items selected', 'flag')); ?>');
-		return false; 
-	} 
-	actionId = jQuery('#bulkaction').val();
+	if(!jQuery('#items_array').val()) {
+		alert('<?php echo esc_js(__("No items selected", "flag")); ?>');
+		return false;
+	}
+	var actionId = jQuery('#bulkaction').val();
 	switch (actionId) {
 		case "new_playlist":
 			showDialog('new_playlist', 160);
 			return false;
 			break;
-		case "add_to_playlist":
-			return confirm('<?php echo sprintf(esc_js(__("You are about to add %s items to playlist \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
-			break;
 	}
-	return confirm('<?php echo sprintf(esc_js(__("You are about to start the bulk edit for %s items \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 }
 
 function showDialog( windowId, height ) {
@@ -243,15 +283,17 @@ function send_to_editor(html) {
 <script type="text/javascript">
 /* <![CDATA[ */
 	  jQuery(function() {
-	    jQuery("#file_browser").fileTree({
-	      script: "admin-ajax.php?action=flag_file_browser&nonce=<?php echo wp_create_nonce( 'flag-ajax' ) ;?>",
-	      root: jQuery("#mp3folder").val()
-	    }, function(file) {
-	        //var path = file.replace("<?php echo WINABSPATH; ?>", "");
-	        jQuery("#mp3folder").val(file);
-	    });
+			jQuery("span.browsefiles").show().click(function(){
+				jQuery("#file_browser").fileTree({
+					script: "admin-ajax.php?action=flag_file_browser&nonce=<?php echo wp_create_nonce( 'flag-ajax' ) ;?>",
+					root: jQuery("#mp3folder").val()
+				}, function(file) {
+					//var path = file.replace("<?php echo WINABSPATH; ?>", "");
+					jQuery("#mp3folder").val(file);
+				});
 
-    	jQuery("#file_browser").show("slide");
+				jQuery("#file_browser").show("slide");
+			});
 	  });
 /* ]]> */
 </script>
@@ -266,7 +308,7 @@ function send_to_editor(html) {
 					<th scope="row"><?php _e('Import from Server path:', 'flag'); ?></th> 
 					<td><input type="text" size="35" id="mp3folder" name="mp3folder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Browse...',"flag"); ?></span>
 						<div id="file_browser"></div><br />
-						<p><label><input type="checkbox" name="delete_files" value="delete" checked="checked" /> &nbsp;
+						<p><label><input type="checkbox" name="delete_files" value="delete" /> &nbsp;
 						<?php _e('delete files after import in WordPress Media Library','flag'); ?></label></p>
 					</td> 
 				</tr>
@@ -278,7 +320,45 @@ function send_to_editor(html) {
 <?php } ?>
 
 		<h2><?php _e('WordPress Music Library', 'flag'); ?></h2>
-		<form id="musiclib" class="flagform" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8">
+<?php
+// look for pagination
+if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
+	$_GET['paged'] = 1;
+
+$objects_per_page = 5;
+$start = ( $_GET['paged'] - 1 ) * $objects_per_page;
+$img_total_count = $wpdb->get_var("SELECT COUNT(ID) FROM $wpdb->posts WHERE `post_mime_type` = 'audio/mpeg' AND `post_type` = 'attachment' AND `post_status` = 'inherit'");
+$musiclist = get_posts( $args = array(
+		'numberposts'     => $objects_per_page,
+		'offset'			    => $start,
+		'orderby'         => 'ID',
+		'order'           => 'DESC',
+		'post_type'       => 'attachment',
+		'post_mime_type'  => 'audio/mpeg' )
+);
+
+// build pagination
+$page_links = paginate_links( array(
+	'base' => add_query_arg( 'paged', '%#%' ),
+	'format' => '',
+	'prev_text' => __('&laquo;'),
+	'next_text' => __('&raquo;'),
+	'total' => ceil( $img_total_count / $objects_per_page),
+	'current' => $_GET['paged']
+));
+?>
+<div class="tablenav" style="overflow: hidden; height: auto;">
+	<?php if($added===false) { ?>
+		<div class="alignleft"><b><?php _e('Selected Media','flag'); ?>: </b><input style="width:500px;" type="text" readonly="readonly" id="items_array" name="items_array" value="<?php echo $items_array_default; ?>" /> <span class="clear_selected button"><?php _e('Clear Selected','flag'); ?></span></div>
+	<?php } ?>
+	<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
+			number_format_i18n( ( $_GET['paged'] - 1 ) * $objects_per_page + 1 ),
+			number_format_i18n( min( $_GET['paged'] * $objects_per_page, $img_total_count ) ),
+			number_format_i18n( $img_total_count ),
+			$page_links
+		); echo $page_links_text; ?></div>
+</div>
+<form id="musiclib" class="flagform" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8">
 		<?php wp_nonce_field('flag_bulkmusic'); ?>
 		<input type="hidden" name="page" value="music-box" />
 		
@@ -287,7 +367,6 @@ function send_to_editor(html) {
 			<div class="actions">
 <?php if($added===false) { ?>
 				<input name="updateMedia" class="button-primary" style="float: right;" type="submit" value="<?php _e('Update Media','flag'); ?>" />
-
 				<?php if ( function_exists('json_encode') ) { ?>
 				<select name="bulkaction" id="bulkaction">
 					<option value="no_action" ><?php _e("No action",'flag'); ?></option>
@@ -299,12 +378,12 @@ function send_to_editor(html) {
 				<input type="hidden" id="items_array" name="items_array" value="" />
 <?php } else { ?>
 				<input type="hidden" name="mode" value="save" />
-				<input style="width: 80%;" type="text" id="items_array" name="items_array" value="<?php echo $added; ?>" />
+				<input style="width: 80%;" type="text" id="items_array" name="items_array" readonly="readonly" value="<?php echo $added; ?>" />
 				<input type="hidden" name="playlist_title" value="<?php echo $playlist['title']; ?>" />
 				<input type="hidden" name="skinname" value="<?php echo $playlist['skin']; ?>" />
 				<input type="hidden" name="skinaction" value="<?php echo $playlist['skin']; ?>" />
 				<textarea style="display: none;" name="playlist_descr" cols="40" rows="1"><?php echo $playlist['description']; ?></textarea>
-				<input name="addToPlaylist" class="button-secondary" type="submit" value="<?php _e('Update Playlist','flag'); ?>" onclick="if ( !checkSelected() ) return false;" />
+				<input name="addToPlaylist" class="button-secondary" type="submit" value="<?php _e('Update Playlist','flag'); ?>" />
 <?php } ?>
 			</div>
 			
@@ -331,13 +410,7 @@ function send_to_editor(html) {
 			</tr>
 			</tfoot>
 			<tbody>
-<?php $musiclist = get_posts( $args = array(
-    'numberposts'     => -1,
-    'orderby'         => 'ID',
-    'order'           => 'DESC',
-    'post_type'       => 'attachment',
-    'post_mime_type'  => 'audio/mpeg' ) 
-); 
+<?php
 $uploads = wp_upload_dir();
 $flag_options = get_option('flag_options');
 if($musiclist) {
@@ -349,7 +422,7 @@ if($musiclist) {
 		$class = ( empty($class) ) ? ' class="alternate"' : '';
 		$class2 = ( empty($class) ) ? '' : ' alternate';
 		$ex = $checked = '';
-		if($added!==false && in_array($mp3->ID, $exclude) ) { 
+		if( ($added!==false || !empty($items_array_default)) && in_array($mp3->ID, $exclude) ) {
 			$ex = ' style="background-color:#DDFFBB;" title="'.__("Already Added", "flag").'"';
 			$checked = ' checked="checked"';
 		}

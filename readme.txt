@@ -48,6 +48,17 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v2.72 - 20.05.2013 =
+* Added: pagination on Music Box page
+* Fixed: small fixes for Banner Box page
+
+= v2.71 - 07.05.2013 =
+* Added: pagination on Banner Box page
+* Fixed: reports sometimes a error "Fatal error: Only variables can be passed by reference"
+* Fixed: compatibility with SEO plugin
+* Changed: Options page
+* Fixed: Vulnerability on Search images.
+
 = v2.70 - 11.04.2013 =
 * Fixed: Compatibility with some modern themes
 * Added: Music for gallery skins

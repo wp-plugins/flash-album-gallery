@@ -286,7 +286,7 @@ function checkAll(form)	{
 function checkSelected() {
 	if(!jQuery('#items_array').val()) {
 		alert('<?php echo esc_js(__("No items selected", "flag")); ?>');
-		return false; 
+		return false;
 	}
 	var actionId = jQuery('#bulkaction').val();
 	switch (actionId) {
@@ -305,7 +305,7 @@ function showDialog( windowId, height ) {
 //-->
 </script>
 	<div class="wrap">
-
+<?php if($added===false) { ?>
 <?php if( current_user_can('FlAG Import folder') ) { 
 	$defaultpath = 'wp-content/';
 ?>
@@ -337,7 +337,7 @@ function showDialog( windowId, height ) {
 				<table class="form-table"> 
 				<tr valign="top"> 
 					<th scope="row"><?php _e('Import from Server path:', 'flag'); ?></th> 
-					<td><input type="text" size="35" id="bannerfolder" name="bannerfolder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Toggle DIR Browser',"flag"); ?></span>
+					<td><input type="text" size="35" id="bannerfolder" name="bannerfolder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Browse...',"flag"); ?></span>
 						<div id="file_browser"></div><br />
 						<p><label><input type="checkbox" name="delete_files" value="delete" /> &nbsp;
 						<?php _e('delete files after import in WordPress Media Library','flag'); ?></label></p>
@@ -347,6 +347,7 @@ function showDialog( windowId, height ) {
 				<div class="submit"><input class="button-primary" type="submit" name="importfolder" value="<?php _e('Import folder', 'flag'); ?>"/></div>
 			</form>
 		</div>
+<?php } ?>
 <?php } ?>
 
 		<h2><?php _e('WordPress Image Library', 'flag'); ?></h2>
@@ -406,6 +407,7 @@ $page_links = paginate_links( array(
 				<input name="showThickbox" class="button-secondary" type="submit" value="<?php _e('Apply','flag'); ?>" onclick="if ( !checkSelected() ) return false;" />
 				<?php } ?>
                 <a href="<?php echo admin_url( 'media-new.php'); ?>" class="button"><?php _e('Upload Banner(s)','flag'); ?></a>
+				<input type="hidden" id="items_array" name="items_array" value="" />
 <?php } else { ?>
 				<input type="hidden" name="mode" value="save" />
 				<input style="width: 80%;" type="text" id="items_array" name="items_array" readonly="readonly" value="<?php echo $added; ?>" />
