@@ -564,8 +564,8 @@ You should have received a copy of the GNU General Public License along with thi
 2. Activate the plugin. 
 3. Be sure that after activation 'wp-content/plugins/flagallery-skins' folder (chmod 755) created successfully. If not, create it manually and install skins through admin Skins page or via ftp.
 3. Add a gallery and upload some images (the main gallery folder must have write permission). 
-4. Go to your post/page an enter the tag '[flagallery gid=X name="ALBUM TITLE"]', where X - gallery IDs separated by comma;  ALBUM TITLE - title of your album (default 'Gallery'). Easy way is click FlAGallery button on the Editor panel. 
-5. If you would like to use additional Flash Skins (only a option), go to <a href="http://photogallerycreator.com/grand-flagallery/" title="Flash Skins">Flash Skins</a>, download the skin and upload the file through Skins page in Wordpress admin panel. 
+4. Go to your post/page an enter the tag '[flagallery gid=X]', where X - gallery IDs separated by comma. Easy way is click FlAGallery button on the Editor panel.
+5. If you would like to use additional Skins (only a option), go to <a href="http://photogallerycreator.com/grand-flagallery/" title="Skins">Skins</a>, download the skin and upload the file through Skins page in Wordpress admin panel.
  
 See more tags in the FAQ section 
  
@@ -615,9 +615,9 @@ It's because your theme use some function different from <?php the_content('Read
 
 = How to create a categories in flash album? I only have one category, which is the name of the gallery. =
 
-You can do it easily with FlAGallery button on editor panel, when you edit post. In trhe popup window hold down 'Ctrl' button and choose galleries left mouse button. Or just write gallery IDs separated by comma in "gid" attribute: [flagallery gid=7,3,5,2 name="My Galleries"]
+You can do it easily with FlAGallery button on editor panel, when you edit post. In trhe popup window hold down 'Ctrl' button and choose galleries left mouse button. Or just write gallery IDs separated by comma in "gid" attribute: [flagallery gid=7,3,5,2]
 
-To display ALL galleries as categories: [flagallery gid=all name="My Galleries"]
+To display ALL galleries as categories: [flagallery gid=all]
 
 = How can I set it to auto slideshow when open the page? =
 
@@ -634,9 +634,9 @@ Make sure that you have equal number of images in Manage Gallery and in ftp fold
 
 = How do I set a specific category as the first one that is displayed? =
 
-if you have three galleries and shortcode like: [flagallery gid=3,1,2 name=Gallery]
+if you have three galleries and shortcode like: [flagallery gid=3,1,2]
 first gallery will be with ID=3, then ID=1, and then ID=2
-if you have: [flagallery gid=all name=Gallery orderby=title order=ASC exclude=1]
+if you have: [flagallery gid=all orderby=title order=ASC exclude=1]
 it will display all galleries except ID=1 sorted by title of gallery.
 
 = [IOErrorEvent type="ioError" bubbles=false cancelable=false eventPhase=2 text="Error #2032"] =
