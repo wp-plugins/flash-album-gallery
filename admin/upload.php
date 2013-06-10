@@ -21,14 +21,14 @@ unset($current_user);
 // admin.php require a proper login cookie
 require_once(ABSPATH . '/wp-admin/admin.php');
 
-header('Content-Type: text/plain; charset=' . get_option('blog_charset'));
+//header('Content-Type: text/plain; charset=' . get_option('blog_charset'));
 
 //check for correct capability
 if ( !is_user_logged_in() )
 	die('Login failure. -1');
 
 //check for correct capability
-if ( !current_user_can('FlAG Upload images') ) 
+if ( !current_user_can('FlAG Upload images') )
 	die('You do not have permission to upload files. -2');
 
 //check for correct nonce 
@@ -37,7 +37,7 @@ check_admin_referer('flag_swfupload');
 //check for flag
 if ( !defined('FLAG_ABSPATH') )
 	die('FlAGallery not available. -3');
-	
+
 include_once (FLAG_ABSPATH. 'admin/functions.php');
 
 // get the gallery

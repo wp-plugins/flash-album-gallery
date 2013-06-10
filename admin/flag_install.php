@@ -47,6 +47,7 @@ function flag_install () {
 		alttext MEDIUMTEXT NULL ,
 		link TEXT NULL ,
 		imagedate DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+		modified TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
 		exclude TINYINT NULL DEFAULT '0',
 		sortorder BIGINT(20) DEFAULT '0' NOT NULL ,
 		location TEXT,
@@ -79,6 +80,7 @@ function flag_install () {
 		previewpic BIGINT(20) NULL DEFAULT '0' ,
 		sortorder BIGINT(20) DEFAULT '0' NOT NULL ,
 		author BIGINT(20) NOT NULL DEFAULT '0' ,
+		status TINYINT NULL DEFAULT '0' ,
 		PRIMARY KEY gid (gid)
 		) $charset_collate;";
 	

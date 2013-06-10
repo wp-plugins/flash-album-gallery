@@ -37,7 +37,7 @@ function get_skin_data( $skin_file, $type='' ) {
 	fclose($fp);
 
 	preg_match( '|^'.$type.'Skin Name:(.*)$|mi', $skin_data, $name );
-    if($name[1]) {
+    if($name) {
     	preg_match( '|Skin URI:(.*)$|mi', $skin_data, $uri );
     	preg_match( '|uid:(.*)|i', $skin_data, $uid );
     	preg_match( '|Version:(.*)|i', $skin_data, $version );

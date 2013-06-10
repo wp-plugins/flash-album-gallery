@@ -90,7 +90,8 @@ function uploadComplete(fileObj) {
 function uploadSuccess(fileObj, server_data) {
 	// Show any error message
 	if (server_data != 0){
-		jQuery("#progressbar-wrap").append("<div><strong>ERROR</strong>: " + fileObj.name + " : " + server_data + "</div>");
+		//jQuery("#progressbar-wrap").append("<div><strong>ERROR</strong>: " + fileObj.name + " : " + server_data + "</div>");
+		console.log('s: ' + fileObj.name + " : " + server_data);
 	}
 	// Upload the next file until queue is empty
 	if ( flag_swf_upload.getStats().files_queued > 0) {
@@ -141,12 +142,13 @@ function uploadError(fileObj, error_code, message) {
 		break;
 	}
 	jQuery("#progressbar-wrap").append("<div><strong>ERROR " + error_name + " </strong>: " + fileObj.name + " : " + message + "</div>");
+	console.log('e: ' + error_name + " : " + fileObj.name + " : " + message);
 	jQuery("#" + fileObj.id).hide("slow");
 	jQuery("#" + fileObj.id).remove();
 	if ( flag_swf_upload.getStats().files_queued > 0) {
 		flag_swf_upload.startUpload();
 	} else {
-		jQuery("#progressbar-wrap").hide()
+		jQuery("#progressbar-wrap").hide();
 		jQuery('#uploadimage_form').prepend("<input type=\"hidden\" name=\"swf_callback\" value=\"" + error_name + "\">");
 		jQuery("#uploadimage_form").submit();
 	}

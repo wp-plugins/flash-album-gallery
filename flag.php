@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 2.72
+Version: 2.75
 Author: Rattus
 Author URI: http://codeasily.com/
 
@@ -23,8 +23,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 
-	var $version     = '2.72';
-	var $dbversion   = '2.70';
+	var $version     = '2.75';
+	var $dbversion   = '2.75';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '3.0';
 	var $flagAdminPanel;
@@ -65,7 +65,7 @@ class flagLoad {
 			add_filter('transient_update_plugins', array(&$this, 'disable_upgrade'));
 		
 		//Add some message on the plugin page
-		add_action( 'after_plugin_row', array(&$this, 'flag_check_message_version') );
+		//add_action( 'after_plugin_row', array(&$this, 'flag_check_message_version') );
 
 		add_action( 'init', array(&$this, 'flag_fullwindow_page_init') );
 		add_action( 'add_meta_boxes', array(&$this, 'flag_fullwindow_page_add_meta_box') );
@@ -105,7 +105,7 @@ class flagLoad {
 	}
 
 	function wp_flag_tune_messages() {
-		if($this->options['flagVersion'] != $this->version) {
+		if(get_option('flagVersion') != $this->version) {
 			// upgrade plugin
 			require_once(FLAG_ABSPATH . 'admin/tuning.php');
 			$ok = flag_tune($show_error=false);
@@ -173,7 +173,9 @@ class flagLoad {
 		define('FLAG_DBVERSION', $this->dbversion);
 
 		// required for Windows & XAMPP
-		define('WINABSPATH', str_replace("\\", "/", ABSPATH) );
+		if ( !defined('WINABSPATH') ) {
+			define('WINABSPATH', str_replace("\\", "/", ABSPATH) );
+		}
 			
 		// define URL
 		define('FLAGFOLDER', plugin_basename( dirname(__FILE__)) );
@@ -182,12 +184,14 @@ class flagLoad {
 		define('FLAG_URLPATH', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) . '/' );
 		
 		// get value for safe mode
-		if ( (gettype( ini_get('safe_mode') ) == 'string') ) {
-			// if sever did in in a other way
-			if ( ini_get('safe_mode') == 'off' ) define('SAFE_MODE', FALSE);
-			else define( 'SAFE_MODE', ini_get('safe_mode') );
-		} else
-		define( 'SAFE_MODE', ini_get('safe_mode') );
+		if ( !defined('SAFE_MODE') ) {
+			if ( (gettype( ini_get('safe_mode') ) == 'string') ) {
+				// if sever did in in a other way
+				if ( ini_get('safe_mode') == 'off' ) define('SAFE_MODE', FALSE);
+				else define( 'SAFE_MODE', ini_get('safe_mode') );
+			} else
+			define( 'SAFE_MODE', ini_get('safe_mode') );
+		}
 		
 	}
 	
@@ -395,7 +399,7 @@ class flagLoad {
 	  // verify this came from the our screen and with proper authorization,
 	  // because save_post can be triggered at other times
 
-	  if ( !wp_verify_nonce( $_POST['flag_meta_box'], plugin_basename( __FILE__ ) ) )
+	  if ( !isset($_POST['flag_meta_box']) || !wp_verify_nonce( $_POST['flag_meta_box'], plugin_basename( __FILE__ ) ) )
 	      return;
 
 	  // Check permissions
@@ -435,7 +439,7 @@ class flagLoad {
 	function flag_fullwindow_page_template_redirect() {
 		global $wp;
 		global $wp_query;
-		if ($wp->query_vars["post_type"] == "flagallery")
+		if (isset($wp->query_vars["post_type"]) && $wp->query_vars["post_type"] == "flagallery")
 		{
 			// Let's look for the full_window_template.php template file
 			if (have_posts())

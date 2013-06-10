@@ -6,7 +6,6 @@ if ( !defined('ABSPATH') )
 // reference thumbnail class
 include_once( flagGallery::graphic_library() );
 include_once('lib/core.php');
-
 // get the plugin options
 $flag_options = get_option('flag_options');	
 

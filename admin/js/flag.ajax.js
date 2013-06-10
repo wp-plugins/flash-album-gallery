@@ -49,10 +49,12 @@ flagAjax = {
 					index++;
 					flagProgressBar.increase( index );
 					// parse the whole array
-					if (index < flagAjax.settings.ids.length)
+					if (index < flagAjax.settings.ids.length) {
 						flagAjax.run( index );
-					else 
+					}
+					else {
 						flagProgressBar.finished();
+					}
 				} 
 			});
 		},

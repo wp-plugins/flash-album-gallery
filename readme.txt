@@ -48,6 +48,11 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v2.75 - 10.06.2013 =
+* Added: Link feald for image (optional for skin)
+* Added: Draft for galleries
+* Fixed: PHP and CSS improvements
+
 = v2.72 - 20.05.2013 =
 * Added: pagination on Music Box page
 * Fixed: small fixes for Banner Box page

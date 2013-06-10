@@ -21,10 +21,10 @@ class flagManageGallery {
 		if(isset($_GET['mode']))
 			$this->mode = trim ($_GET['mode']);
 		// Should be only called via manage galleries overview
-		if ( $_POST['page'] == 'manage-galleries' )
+		if (isset($_POST['page']) && $_POST['page'] == 'manage-galleries' )
 			$this->post_processor_galleries();
 		// Should be only called via a edit single gallery page	
-		if ( $_POST['page'] == 'manage-images' )
+		if (isset($_POST['page']) && $_POST['page'] == 'manage-images' )
 			$this->post_processor_images();
 		//Look for other POST process
 		if ( !empty($_POST) || !empty($_GET) )
@@ -98,13 +98,29 @@ class flagManageGallery {
 					}
 				}
 			
-				flagGallery::show_message( __ngettext( 'Gallery', 'Galleries', 1, 'flag' ) . ' \''.$this->gid.'\' '.__('deleted successfully','flag'));
+				flagGallery::show_message( _n( 'Gallery', 'Galleries', 1, 'flag' ) . ' \''.$this->gid.'\' '.__('deleted successfully','flag'));
 				
 			}
 				
 		 	$this->mode = 'main'; // show mainpage
 		}
 	
+		// Draft gallery
+		if ($this->mode == 'draft') {
+			check_admin_referer('flag_editgallery');
+			if($wpdb->query( "UPDATE $wpdb->flaggallery SET status = 1 WHERE gid = '$this->gid'" ))
+				flagGallery::show_message( __( 'Gallery', 'flag' ) . ' \''.$this->gid.'\' '.__('now in draft','flag'));
+		 	$this->mode = 'main'; // show mainpage
+		}
+	
+		// Publish gallery
+		if ($this->mode == 'publish') {
+			check_admin_referer('flag_editgallery');
+			if($wpdb->query( "UPDATE $wpdb->flaggallery SET status = 0 WHERE gid = '$this->gid'" ))
+				flagGallery::show_message( __( 'Gallery', 'flag' ) . ' \''.$this->gid.'\' '.__('now visible','flag'));
+		 	$this->mode = 'main'; // show mainpage
+		}
+
 		// New Album
 		if (isset($_POST['album_name'])) {
 
@@ -346,10 +362,10 @@ class flagManageGallery {
 		$description = 	$_POST['description'];
 		$alttext = 		$_POST['alttext'];
 		$link = 		$_POST['link'];
-		$exclude = 		$_POST['exclude'];
+		$exclude = 		isset($_POST['exclude'])? $_POST['exclude'] : 0;
 		$pictures = 	$_POST['pid'];
-		$hitcounter = 	$_POST['hitcounter'];
-		$total_votes = 	$_POST['total_votes'];
+		$hitcounter = 	isset($_POST['hitcounter'])? $_POST['hitcounter'] : 0;
+		$total_votes = 	isset($_POST['total_votes'])? $_POST['total_votes'] : 0;
 
 		if ( is_array($description) ) {
 			foreach( $description as $key => $value ) {
@@ -367,6 +383,9 @@ class flagManageGallery {
 		}
 		if ( is_array($link) ){
 			foreach( $link as $key => $value ) {
+				if (!empty($value) && parse_url($value, PHP_URL_SCHEME) === null) {
+					$value = 'http://'.$value;
+				}
 				$link = $wpdb->escape($value);
 				$key =intval($key);
 				$wpdb->query( "UPDATE $wpdb->flagpictures SET link = '$link' WHERE pid = $key");

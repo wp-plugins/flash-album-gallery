@@ -238,6 +238,9 @@ if($_REQUEST['riched'] == "false") {
 				galleryname = jQuery('#album option:selected').text();
 				album = ' album='+album;
 			}
+			if (galleryname.indexOf(' ') >= 0) {
+				galleryname = "'"+galleryname+"'";
+			}
 			if (gallerywidth && galleryheight)
 				gallerysize = " w=" + gallerywidth + " h=" + galleryheight;
 			else
@@ -269,7 +272,7 @@ if($_REQUEST['riched'] == "false") {
 			} else playlist = '';
 
 			if (galleryid || album ) {
-				tagtext = '[flagallery' + galleryid + album + gallerysize + galorderby + galorder + galexclude + skinname + skinalign + playlist + ' name=' + galleryname + ']';
+				tagtext = '[flagallery' + galleryid + album + gallerysize + galorderby + galorder + galexclude + skinname + skinalign + playlist + ']';
 				win.send_to_editor(tagtext);
 				win.bind_resize();
 <?php if($_REQUEST['riched'] != "false") { ?>

@@ -13,7 +13,7 @@ function flag_manage_gallery_main() {
 	
 	$perpage = 50;
 	$start = ( $_GET['paged'] - 1 ) * $perpage;
-	$gallerylist = $flagdb->find_all_galleries('gid', 'asc', TRUE, $perpage, $start, false);
+	$gallerylist = $flagdb->find_all_galleries('gid', 'asc', $counter = true, $perpage, $start, $exclude = false, $draft = true);
 
 	$page_links = paginate_links( array(
 		'base' => add_query_arg( 'paged', '%#%' ),
@@ -160,12 +160,12 @@ function flag_manage_gallery_main() {
 <?php
 if($gallerylist) {
 	foreach($gallerylist as $gallery) {
-		$class = ( !isset($class) || $class == 'class="alternate"' ) ? '' : 'class="alternate"';
+		$class = ( !isset($class) || $class == 'alt ' ) ? '' : 'alt ';
 		$gid = $gallery->gid;
 		$name = (empty($gallery->title) ) ? $gallery->name : $gallery->title;
 		$author_user = get_userdata( (int) $gallery->author );
 		?>
-		<tr id="gallery-<?php echo $gid; ?>" <?php echo $class; ?> >
+		<tr id="gallery-<?php echo $gid; ?>" class="<?php echo $class; echo ( $gallery->status ) ? 'flag_draft' : 'flag_public'; ?>" >
 			<th scope="row" class="cb column-cb">
 				<?php if (flagAdmin::can_manage_this_gallery($gallery->author)) { ?>
 					<input name="doaction[]" type="checkbox" value="<?php echo $gid; ?>" />
@@ -179,7 +179,8 @@ if($gallerylist) {
 					</a>
 				<?php } else { ?>
 					<?php echo flagGallery::i18n($gallery->title); ?>
-				<?php } ?>
+				<?php }
+				if($gallery->status){ echo ' <b>- '.__('Draft', 'flag').'</b>'; }?>
 			</td>
 			<td><?php echo flagGallery::i18n($gallery->galdesc); ?>&nbsp;</td>
 			<td><?php echo $author_user->display_name; ?></td>
@@ -187,6 +188,11 @@ if($gallerylist) {
 			<td>
 				<?php if (flagAdmin::can_manage_this_gallery($gallery->author)) : ?>
 					<a href="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=delete&amp;gid=" . $gid, 'flag_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'flag')?>');if(check==false) return false;"><?php _e('Delete','flag'); ?></a>
+					<?php if($gallery->status) { ?>
+					| <a href="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=publish&amp;gid=" . $gid, 'flag_editgallery')?>" class="status" onclick="javascript:check=confirm( '<?php _e("Publish this gallery?",'flag')?>');if(check==false) return false;"><?php _e('Publish','flag'); ?></a>
+					<?php } else { ?>
+					| <a href="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=draft&amp;gid=" . $gid, 'flag_editgallery')?>" class="status" onclick="javascript:check=confirm( '<?php _e("Make this gallery draft?",'flag')?>');if(check==false) return false;"><?php _e('Draft','flag'); ?></a>
+					<?php } ?>
 				<?php endif; ?>
 			</td>
 		</tr>

@@ -31,10 +31,16 @@ class flagSlideshowWidget extends WP_Widget {
 			$flag_custom = get_post_custom($gp_ID);
 			$gal_array = array_filter( array_map ( 'intval', explode( ',', $flag_custom["mb_items_array"][0] ) ) );
 			$gid = $gal_array[0];
-			if($gid)
+			if($gid){
+				$galID = (int) $gid;
+				$status = $wpdb->get_var("SELECT status FROM $wpdb->flaggallery WHERE gid={$galID}");
+				if(intval($status)){
+					continue;
+				}
 				$imageList[$gp_ID] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.gid = {$gid} ORDER by rand() LIMIT 1");
+			}
 			else if ($gid == 0) {
-				$imageList[$gp_ID] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 ORDER by rand() LIMIT 1");
+				$imageList[$gp_ID] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.status = 0 ORDER by rand() LIMIT 1");
 			} else {
 				return false;
 			}
@@ -362,19 +368,25 @@ class flagWidget extends WP_Widget {
 
 		extract( $args );
 
-        $title = apply_filters('widget_title', empty($instance['title']) ? '&nbsp;' : $instance['title'], $instance, $this->id_base);
+		$title = apply_filters('widget_title', empty($instance['title']) ? '&nbsp;' : $instance['title'], $instance, $this->id_base);
 
 		$album = $instance['album'];
 
-       	$gallerylist = $flagdb->get_album($album);
-        $ids = explode( ',', $gallerylist );
-		$gids = str_replace(',','_',$gallerylist);
-   		foreach ($ids as $id) {
-			if ( $instance['type'] == 'random' )
+		$gallerylist = $flagdb->get_album($album);
+		$ids = explode( ',', $gallerylist );
+		foreach ($ids as $id) {
+			$galID = (int) $id;
+			$status = $wpdb->get_var("SELECT status FROM $wpdb->flaggallery WHERE gid={$galID}");
+			if(intval($status)){
+				continue;
+			}
+			if ( $instance['type'] == 'random' ){
 				$imageList[$id] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.gid = {$id} ORDER by rand() LIMIT 1");
-			else
+			}
+			else {
 				$imageList[$id] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.gid = {$id} ORDER by tt.sortorder ASC LIMIT 1");
-   		}
+			}
+		}
 		echo $before_widget . $before_title . $title . $after_title;
 		echo "\n" . '<div class="flag-widget">'. "\n";
 

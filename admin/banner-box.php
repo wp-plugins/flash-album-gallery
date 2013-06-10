@@ -16,7 +16,7 @@ require_once (dirname (__FILE__) . '/banner.functions.php');
 
 function flag_banner_controler() {
 	$mode = isset($_REQUEST['mode'])? $_REQUEST['mode'] : 'main';
-	if ($_POST['importfolder']){
+	if (isset($_POST['importfolder']) && $_POST['importfolder']){
 		check_admin_referer('flag_addbanner');
 		$bannerfolder = $_POST['bannerfolder'];
 		if ( !empty($bannerfolder) ) {

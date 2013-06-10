@@ -68,6 +68,11 @@ if(isset($flag_options['disableViews']) && !empty($flag_options['disableViews'])
 } else { $disableViews = 0; }
 foreach ( $gID as $galID ) {
 	$galID = (int) $galID;
+	$status = $wpdb->get_var("SELECT status FROM $wpdb->flaggallery WHERE gid={$galID}");
+	if(intval($status)){
+		continue;
+	}
+
 	if ( $galID == 0) {
 		$thegalleries = array();
 		$thepictures = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, imagedate, sortorder, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE 1=1 {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);

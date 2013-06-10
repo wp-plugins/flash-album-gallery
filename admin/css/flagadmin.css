@@ -77,6 +77,8 @@
 
 /* SETTINGS FOR MANAGE TABLE */
 
+.alt.flag_draft {background-color: #FFEBE8;}
+
 p#flag-inlinebutton {
 	float:right;
 	margin:0pt;
@@ -126,6 +128,8 @@ p#flag-inlinebutton {
 .fixed .column-exclude, .fixed .column-action, .fixed .column-delete {
 	width: 2.2em; text-align: center;
 }
+.fixed .column-exclude { width: 70px; white-space: nowrap; }
+.fixed th.column-exclude img { vertical-align: text-top; }
 .fixed .column-exclude input {
 	margin-top:4px;
 }
@@ -139,7 +143,7 @@ p#flag-inlinebutton {
 .flagform .widefat thead th.cb { width: 54px; text-align: center; }
 .flagform .widefat tfoot th.cb { text-align: center; }
 
-.albums_table { width: 600px; position: relative; background: #ffffff; border: 1px solid #cccccc; border-radius: 4px; margin: 7px 0; padding: 1px 3px; float: left; }
+.albums_table { width: 600px; position: relative; background: #ffffff; border: 1px solid #cccccc; border-radius: 4px; margin: 7px 0; padding: 1px 3px; float: left; max-height: 550px; overflow: auto; }
 .albums_table .album { position: relative; background: #f8f8f8; border: 1px solid #cccccc; border-radius: 4px; margin:2px 0; padding: 3px 3px 3px 36px; }
 .albums_table .album form { margin: 0; padding: 0; display: inline; }
 .albums_table .albID { position: absolute; display: block; width: 30px; top: 6px; left: 0px; text-align: right; }
@@ -155,7 +159,7 @@ p#flag-inlinebutton {
 .flag-ajax-post { cursor: pointer; text-decoration: underline; }
 .flag-ajax-post:hover { color: #ff0000; }
 
-.all_galleries { float: left; white-space: nowrap; margin: 7px 0 0px 50px; }
+.all_galleries { float: left; white-space: nowrap; margin: 7px 0 0px 50px; max-height: 550px; overflow: auto; padding-right: 20px; }
 .all_galleries .acat { border: 1px solid #cccccc; padding: 3px 6px; margin: 3px 0; background: #fefefe; cursor: move; }
 .all_galleries .acat .drop { display: none; }
 .all_galleries .acat:hover { background-color: #FFFFEE; }

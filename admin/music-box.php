@@ -15,7 +15,7 @@ require_once (dirname (__FILE__) . '/functions.php');
 require_once (dirname (__FILE__) . '/playlist.functions.php');
 
 function flag_music_controler() {
-	if ($_POST['importfolder']){
+	if (isset($_POST['importfolder']) && $_POST['importfolder']){
 		check_admin_referer('flag_addmp3');
 		$mp3folder = $_POST['mp3folder'];
 		if ( !empty($mp3folder) )

@@ -50,50 +50,52 @@ class FlAG_shortcodes {
 		
 		$out = '';
 		// make an array out of the ids
-        if($album) {
-        	$gallerylist = $flagdb->get_album($album);
-            $ids = explode( ',', $gallerylist );
-			$gids = str_replace(',','_',$gallerylist);
-			$galleryID = false;
-    		foreach ($ids as $id) {
-    			$galleryID = $wpdb->get_var($wpdb->prepare("SELECT gid FROM $wpdb->flaggallery WHERE gid = %d", $id));
-    			if(!$galleryID) return $out =  sprintf(__('[Gallery %s not found]','flag'),$id);
-    		}
+		if($album) {
+			$gallerylist = $flagdb->get_album($album);
+			$ids = explode( ',', $gallerylist );
+			$galleryIDs = array();
+			foreach ($ids as $id) {
+				$galleryIDs[] = $wpdb->get_var($wpdb->prepare("SELECT gid FROM {$wpdb->flaggallery} WHERE status = 0 AND gid = %d", $id));
+			}
+			$galleryIDs = array_filter($galleryIDs);
+			if(empty($galleryIDs))
+				return $out =  sprintf(__('[Gallery %s not found]','flag'),$gallerylist);
 
-    		if( $galleryID )
-    			$out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode, false, $fullwindow, $align);
+			$gids = implode('_',$galleryIDs);
+			$out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode, false, $fullwindow, $align);
 
-        } elseif($gid == "all") {
+    } elseif($gid == "all") {
 			if(!in_array($orderby, array('title','rand'))) $orderby='gid';
 			if(!$order) $order='DESC';
-            $gallerylist = $flagdb->find_all_galleries($orderby, $order);
-            if(is_array($gallerylist)) {
+			$gallerylist = $flagdb->find_all_galleries($orderby, $order);
+			if(is_array($gallerylist)) {
 				$excludelist = explode(',',$exclude);
 				foreach($gallerylist as $gallery) {
 					if (in_array($gallery->gid, $excludelist))
 						continue;
 					$gids.='_'.$gallery->gid;
 				}
-                $gids = ltrim($gids,'_');
-                $out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode, false, $fullwindow, $align);
+				$gids = ltrim($gids,'_');
+				$out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode, false, $fullwindow, $align);
 			} else {
-            	$out = __('[Gallery not found]','flag');
+        $out = __('[Galleries not found]','flag');
 			}
-        } else {
-            $ids = explode( ',', $gid );
-    		$gids = str_replace(',','_',$gid);
+		} else {
+			$ids = explode( ',', $gid );
 
-			$galleryID = false;
+			$galleryIDs = array();
 			foreach ($ids as $id) {
-    			$galleryID = $wpdb->get_var($wpdb->prepare("SELECT gid FROM $wpdb->flaggallery WHERE gid = %d", $id));
-    			if(!$galleryID) $galleryID = $wpdb->get_var($wpdb->prepare("SELECT gid FROM $wpdb->flaggallery WHERE name = %s", $id));
-    			if(!$galleryID) return $out =  sprintf(__('[Gallery %s not found]','flag'),$id);
-    		}
+				$id = intval($id);
+    		$galleryIDs[] = $wpdb->get_var($wpdb->prepare("SELECT gid FROM {$wpdb->flaggallery} WHERE status = 0 AND gid = %d", $id));
+   		}
+			$galleryIDs = array_filter($galleryIDs);
+			if(empty($galleryIDs)){
+				$out =  sprintf(__('[Galleries %s not found]','flag'),$gid);
+				return $out;
+			}
 
-    		if( $galleryID )
-    			$out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode, false, $fullwindow, $align);
-    		else
-    			$out = __('[Gallery not found]','flag');
+			$gids = implode('_',$galleryIDs);
+ 			$out = flagShowFlashAlbum($gids, $name, $w, $h, $skin, $playlist, $wmode, false, $fullwindow, $align);
     	}
 
 		$flag_options = get_option('flag_options');
@@ -117,7 +119,7 @@ class FlAG_shortcodes {
 		}
 		if($swfmousewheel == 'true') $this->flag_add_mousewheel = true;
 
-        return $out;
+    return $out;
 	}
 
 	function add_script() {

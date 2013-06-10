@@ -73,20 +73,22 @@ class flagdb {
 	 * @param int $limit number of paged galleries, 0 shows all galleries
 	 * @param int $start the start index for paged galleries
 	 * @param bool|int $exclude
+	 * @param bool|int $draft
 	 * @return array $galleries
 	 */
-    function find_all_galleries($order_by = 'gid', $order_dir = 'ASC', $counter = false, $limit = 0, $start = 0, $exclude = 0) {
+  function find_all_galleries($order_by = 'gid', $order_dir = 'ASC', $counter = false, $limit = 0, $start = 0, $exclude = 0, $draft = false) {
 		/** @var $wpdb wpdb */
-		global $wpdb; 
+		global $wpdb;
 		
-        $exclude_clause = ($exclude) ? ' AND exclude<>1 ' : '';
+    $exclude_clause = ($exclude) ? ' AND exclude<>1 ' : '';
+    $draft_clause = ($draft) ? '' : 'WHERE status=0';
 		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
 		if( !in_array($order_by, array('title','rand')) ) {
 			$order_by = 'gid';
 		}
 		if( $order_by == 'rand') $order_by = 'RAND()';
 		$limit_by  = ( $limit > 0 ) ? 'LIMIT ' . intval($start) . ',' . intval($limit) : '';
-		$this->galleries = $wpdb->get_results( "SELECT SQL_CALC_FOUND_ROWS * FROM $wpdb->flaggallery ORDER BY {$order_by} {$order_dir} {$limit_by}", OBJECT_K );
+		$this->galleries = $wpdb->get_results( "SELECT SQL_CALC_FOUND_ROWS * FROM $wpdb->flaggallery {$draft_clause} ORDER BY {$order_by} {$order_dir} {$limit_by}", OBJECT_K );
 		
 		// Count the number of galleries and calculate the pagination
 		if ($limit > 0) {
@@ -545,16 +547,17 @@ class flagdb {
 		
         // Check for the exclude setting
         $exclude_clause = ($exclude) ? ' AND tt.exclude != 1 ' : '';
-        
+        $draft_clause = ' AND t.status == 0 ';
+
 		$number = (int) $number;
 		$galleryID = (int) $galleryID;
 		$images = array();
 		
 		// Query database
 		if ($galleryID == 0)
-			$result = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE 1=1 $exclude_clause ORDER by rand() limit $number");
+			$result = $wpdb->get_results("SELECT t.*, tt.* FROM {$wpdb->flaggallery} AS t INNER JOIN {$wpdb->flagpictures} AS tt ON t.gid = tt.galleryid WHERE 1=1 {$draft_clause} {$exclude_clause} ORDER by rand() limit {$number}");
 		else
-			$result = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE t.gid = $galleryID $exclude_clause ORDER by rand() limit {$number}");
+			$result = $wpdb->get_results("SELECT t.*, tt.* FROM {$wpdb->flaggallery} AS t INNER JOIN {$wpdb->flagpictures} AS tt ON t.gid = tt.galleryid WHERE t.gid = {$galleryID} {$exclude_clause} ORDER by rand() limit {$number}");
 		
 		// Return the object from the query result
 		if ($result) {
@@ -684,6 +687,21 @@ class flagdb {
         return $result;
     }
 
+		function update_picture($args) {
+			global $wpdb;
+
+			$pid =intval($args['pid']);
+			$alttext = $wpdb->escape($args['alttext']);
+			$desc = $wpdb->escape($args['description']);
+			$link = $wpdb->escape($args['link']);
+			$sortorder = intval($args['sortorder']);
+			$exclude = intval($args['exclude']);
+
+			$result = $wpdb->query( "UPDATE $wpdb->flagpictures SET alttext = '$alttext', description = '$desc', link = '$link', sortorder = $sortorder, exclude = $exclude WHERE pid = $pid");
+
+			return $result;
+		}
+
 }
 endif;
 
@@ -693,6 +711,6 @@ if ( ! isset($GLOBALS['flagdb']) ) {
      * @global object $flagdb Creates a new flagdb object
      */
     unset($GLOBALS['flagdb']);
-    $GLOBALS['flagdb'] =& new flagdb();
+    $GLOBALS['flagdb'] = new flagdb();
 }
 ?>

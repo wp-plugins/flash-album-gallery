@@ -98,6 +98,12 @@ function flag_upgrade() {
 			flag_add_sql_column( $wpdb->flagpictures, 'link', "TEXT NULL AFTER alttext;");
 		}
 
+		// v2.72 -> v2.75
+		if (version_compare($installed_ver, '2.75 ', '<')) {
+			flag_add_sql_column( $wpdb->flagpictures, 'modified', "TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP AFTER imagedate;");
+			flag_add_sql_column( $wpdb->flaggallery, 'status', "TINYINT NULL DEFAULT '0' AFTER author;");
+		}
+
 		// update now the database
 		update_option( "flag_db_version", FLAG_DBVERSION );
 		$wpdb->hide_errors();

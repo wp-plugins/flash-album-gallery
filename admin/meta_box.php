@@ -95,7 +95,7 @@ jQuery(document).ready(function() {
 	});
 });
 function short_code(galleries,skin,wmode,playlist) {
-	jQuery('#mb_scode').val('[flagallery '+galleries+' w=100% h=100%'+skin+wmode+playlist+' fullwindow=true name=Gallery]');
+	jQuery('#mb_scode').val('[flagallery '+galleries+' w=100% h=100%'+skin+wmode+playlist+' fullwindow=true]');
 }
 /*]]>*/</script>
 <div class="wrap">

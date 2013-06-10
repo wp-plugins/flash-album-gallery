@@ -322,10 +322,10 @@ jQuery(document).ready( function() {
 	</tfoot>
 	<tbody>
 <?php
+$counter	= 0;
 if($picturelist) {
 	
 	$thumbsize = '';
-	$counter	= 0;
 
 	if ($flag->options['thumbFix']) {
 		$thumbsize = 'width="'.$flag->options['thumbWidth'].'" height="'.$flag->options['thumbHeight'].'"';
@@ -445,7 +445,7 @@ if($picturelist) {
 						<td <?php echo $attributes; ?>>
 							<input name="alttext[<?php echo $pid; ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext); ?>" /><br/>
 							<textarea name="description[<?php echo $pid; ?>]" style="width:95%; margin-top: 2px;" rows="2" ><?php echo stripslashes($picture->description); ?></textarea>
-							<input name="link[<?php echo $pid; ?>]" type="hidden" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->link); ?>" placeholder="(optional for skin) URL for linked button" /><br/>
+							<input name="link[<?php echo $pid; ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->link); ?>" placeholder="(optional for skin) URL for linked button" /><br/>
 						</td>
 						<?php
 					break;
@@ -603,7 +603,7 @@ function flag_manage_gallery_columns() {
 	$gallery_columns['views_likes'] = __('Views / Likes', 'flag');
 	$gallery_columns['rating'] = __('Rating', 'flag');
 	$gallery_columns['alt_title_desc'] = __('Alt &amp; Title Text', 'flag') . ' / ' . __('Description', 'flag');// . ' / ' . __('Link', 'flag');
-	$gallery_columns['exclude'] = '<img src="'.FLAG_URLPATH.'admin/images/lock.png" alt="member view" title="'.__('Only for logged in users', 'flag').'" />';
+	$gallery_columns['exclude'] = '<span title="'.__('Only for logged in users', 'flag').'"><img src="'.FLAG_URLPATH.'admin/images/lock.png" alt="member view" /> Private</span>';
 	$gallery_columns = apply_filters('flag_manage_images_columns', $gallery_columns);
 
 	return $gallery_columns;

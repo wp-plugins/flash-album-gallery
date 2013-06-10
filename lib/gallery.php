@@ -49,6 +49,10 @@ else
 // get the pictures
 foreach ( $gID as $galleryID ) {
 	$galleryID = (int) $galleryID;
+	$status = $wpdb->get_var("SELECT status FROM $wpdb->flaggallery WHERE gid={$galleryID}");
+	if(intval($status)){
+		continue;
+	}
 	if ( $galleryID == 0) {
 		$thepictures = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE 1=1 {$exclude_clause} ORDER BY tt.{$flag_options['galSort']} {$flag_options['galSortDir']} ");
 	} else {

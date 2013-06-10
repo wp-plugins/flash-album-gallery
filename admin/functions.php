@@ -104,7 +104,7 @@ class flagAdmin{
 
 			if ($result) {
 				$message  = __('Gallery \'%1$s\' successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','flag');
-				$message  = sprintf($message, stripcslashes($gallerytitle), '[flagallery gid=' . $gallery_id . ' name="' . stripcslashes($gallerytitle) . '"]');
+				$message  = sprintf($message, stripcslashes($gallerytitle), '[flagallery gid=' . $gallery_id . ']');
 				$message .= '<a href="' . admin_url() . 'admin.php?page=flag-manage-gallery&mode=edit&gid=' . $gallery_id . '" >';
 				$message .= __('Edit gallery','flag');
 				$message .= '</a>';
@@ -508,12 +508,12 @@ class flagAdmin{
 			
 			// add them to the database
 			flagdb::update_image_meta($image->pid, array( 'thumbnail' => $size) );
-} 
+		}
 				
 		$thumb->destruct();
 		
 		if ( !empty($thumb->errmsg) )
-			return ' <strong>' . $image->filename . ' (Error : '.$thumb->errmsg .')</strong>';
+			return $image->filename . ' (Error : '.$thumb->errmsg .')';
 		
 		// success
 		return '1'; 

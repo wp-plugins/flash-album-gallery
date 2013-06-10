@@ -15,7 +15,7 @@ require_once (dirname (__FILE__) . '/functions.php');
 require_once (dirname (__FILE__) . '/video.functions.php');
 
 function flag_video_controler() {
-	if ($_POST['importfolder']){
+	if (isset($_POST['importfolder']) && $_POST['importfolder']){
 		check_admin_referer('flag_addvideo');
 		$videofolder = $_POST['videofolder'];
 		if ( !empty($videofolder) )
@@ -264,7 +264,7 @@ function send_to_editor(html) {
 					<th scope="row"><?php _e('Import from Server path:', 'flag'); ?></th> 
 					<td><input type="text" size="35" id="videofolder" name="videofolder" value="<?php echo $defaultpath; ?>" /><span class="browsefiles button" style="display:none"><?php _e('Browse...',"flag"); ?></span>
 						<div id="file_browser"></div><br />
-						<p><label><input type="checkbox" name="delete_files" value="delete" checked="checked" /> &nbsp;
+						<p><label><input type="checkbox" name="delete_files" value="delete" /> &nbsp;
 						<?php _e('delete files after import in WordPress Media Library','flag'); ?></label></p>
 					</td> 
 				</tr>
