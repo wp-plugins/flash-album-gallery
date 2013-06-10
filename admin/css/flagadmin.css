@@ -77,7 +77,7 @@
 
 /* SETTINGS FOR MANAGE TABLE */
 
-.alt.flag_draft {background-color: #FFEBE8;}
+.flag_draft, .alt.flag_draft {background-color: #FFEBE8;}
 
 p#flag-inlinebutton {
 	float:right;
