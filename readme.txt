@@ -19,12 +19,11 @@ Edit your media content the way you want: upload images, import music and video,
 * Widgets for Banner Rotator, Photo Gallery and Video Gallery.
 * Background music in gallery for desktop browsers.
 
-New plugin:
-> Try our **new plugin** called [Gmedia Gallery](http://wordpress.org/extend/plugins/grand-media/). Help me make it best gallery plugin: test it and write suggestions how I can improve it in feature versions.
-
 **[How to add gallery to your Wordpress site](http://mypgc.co/how-add-gallery-to-wordpress-website-or-blog)** - full HowTo guide.
 
 For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page")** and see demos created with "GRAND FlAGallery" WordPress Plugin.
+
+Image Link support now available in skins. [See Slider Skin demo](http://photogallerycreator.com/grand-flagallery/slider-gallery-skin-for-wordpress/).
 
 Responsive Banner Rotator! Full support of iPhone/iPad. Ideal for mobile themes. [See demo](http://skins.mypgc.co) in the site's header.
 
@@ -44,6 +43,9 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 * Demo [mp3 Music Players](http://photogallerycreator.com/mp3-music-players/)
 * Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
 * Demo [Facebook Integration](http://www.facebook.com/#!/PhotoGalleryCreator?sk=app_206659789371708)
+
+New plugin:
+> Try our **new plugin** called [Gmedia Gallery](http://wordpress.org/extend/plugins/grand-media/). Help me make it best gallery plugin: test it and write suggestions how I can improve it in feature versions.
 
 
 == Changelog ==
