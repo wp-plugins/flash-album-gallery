@@ -79,24 +79,36 @@ if(isset($_REQUEST['account'])){
 			$r['data'] = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, UNIX_TIMESTAMP(imagedate) AS imagedate, UNIX_TIMESTAMP(modified) AS modified, sortorder, exclude, location, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE galleryid = '{$gid}' ORDER BY pid DESC");
 			echo json_encode($r);
 			die();
-		} else {
-			die('{"status":"item_error"}');
 		}
-	} else {
-		//$account_data='{"status":"OK"}';
-		$gallerylist = $wpdb->get_results( "SELECT * FROM $wpdb->flaggallery ORDER BY gid DESC", ARRAY_A );
-		if(!count($gallerylist)){ die('{"status":"gallery_error"}'); }
+		die('{"status":"item_error"}');
+	} elseif(isset($account->add_category)){
+		$args = get_object_vars($account->add_category);
+		$args['title'] = esc_attr( trim($args['title']) );
+		if ( empty($args['title']) ) {
+			$args['title'] = str_replace(' ', '_', current_time('mysql'));
+		}
+		@ require_once (dirname(dirname(__FILE__)). '/admin/functions.php');
+		$defaultpath = $flag->options['galleryPath'];
+		if(!flagAdmin::create_gallery($args, $defaultpath, $output = false)) {
+			die('{"status":"gallery_error"}');
+		}
+	}
+
+	//$account_data='{"status":"OK"}';
+	$gallerylist = $wpdb->get_results( "SELECT * FROM $wpdb->flaggallery ORDER BY gid DESC", ARRAY_A );
+	$r['data'] = array();
+	if(count($gallerylist)){
 		foreach($gallerylist as $gallery){
 			$gid = (int) $gallery['gid'];
 			$thepictures = $wpdb->get_var("SELECT filename FROM $wpdb->flagpictures WHERE galleryid = '{$gid}' ORDER BY pid DESC");
 			$r['data'][] = $gallery + array( 'thumbnail' => $thepictures );
 		}
-		echo json_encode($r);
-		die();
 	}
+	echo json_encode($r);
+	die();
 }
 
 function flagallery_utf8_urldecode($str) {
 	$str = preg_replace("/%u([0-9a-f]{3,4})/i","&#x\\1;",urldecode($str));
-	return html_entity_decode($str,null,'UTF-8');;
+	return html_entity_decode($str,null,'UTF-8');
 }

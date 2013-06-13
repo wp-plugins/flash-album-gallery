@@ -50,6 +50,12 @@ New plugin:
 
 == Changelog ==
 
+= v2.76 - 13.06.2013 =
+* Fixed: Size for thumbs on Manage Images page
+* Fixed: Create New Thumbnails not working properly with fix dimensions
+* Fixed: First activation of plugin do not move free skins to 'flagallery-skins' folder
+* Fixed: GRAND Page do not remembers playlist option
+
 = v2.75 - 10.06.2013 =
 * Added: Link feald for image (optional for skin)
 * Added: Draft for galleries

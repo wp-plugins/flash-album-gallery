@@ -325,12 +325,6 @@ jQuery(document).ready( function() {
 $counter	= 0;
 if($picturelist) {
 	
-	$thumbsize = '';
-
-	if ($flag->options['thumbFix']) {
-		$thumbsize = 'width="'.$flag->options['thumbWidth'].'" height="'.$flag->options['thumbHeight'].'"';
-	}
-	
 	$rt=array(24.5, 45.7, 54.8, 59.3, 64.7, 68.9, 71.5, 73.7, 75.9, 77.1);
 
 	foreach($picturelist as $picture) {
@@ -377,7 +371,7 @@ if($picturelist) {
 					case 'thumbnail' :
 						?>
 						<td <?php echo $attributes; ?>><a href="<?php echo $picture->imageURL; ?>" class="thickbox" title="<?php echo $picture->filename; ?>">
-								<img class="thumb" src="<?php echo $picture->thumbURL; ?>" <?php echo $thumbsize; ?> id="thumb-<?php echo $pid; ?>" />
+								<img class="thumb" src="<?php echo $picture->thumbURL; ?>" id="thumb-<?php echo $pid; ?>" />
 							</a>
 						</td>
 						<?php

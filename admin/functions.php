@@ -11,17 +11,26 @@ class flagAdmin{
 	 * create a new gallery & folder
 	 *
 	 * @class flagAdmin
-	 * @param string $gallerytitle
+	 * @param string $gallery
 	 * @param string $defaultpath
 	 * @param bool $output if the function should show an error messsage or not
 	 * @return bool|int
 	 */
-	static function create_gallery($gallerytitle, $defaultpath, $output = true) {
+	static function create_gallery($gallery, $defaultpath, $output = true) {
 		global $wpdb, $user_ID;
  
 		// get the current user ID
 		get_currentuserinfo();
 
+		$description = '';
+		$status = 0;
+		if(is_array($gallery)){
+			$gallerytitle = $gallery['title'];
+			$description = $gallery['description'];
+			$status = intval($gallery['status']);
+		} else {
+			$gallerytitle = $gallery;
+		}
 		//cleanup pathname
 		$galleryname = sanitize_file_name( $gallerytitle );
 		$galleryname = apply_filters('flag_gallery_name', $galleryname);
@@ -94,9 +103,9 @@ class flagAdmin{
 		
 		if ($result) {
 			if ($output) flagGallery::show_error( _n( 'Gallery', 'Galleries', 1, 'flag' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'flag'));
-			return false;			
+			return true;
 		} else { 
-			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flaggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $flagpath, $gallerytitle , $user_ID) );
+			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flaggallery (name, path, title, galdesc, author, status) VALUES (%s, %s, %s, %s, %s, %d)", $galleryname, $flagpath, $gallerytitle, $description, $user_ID, $status) );
 			// and give me the new id
 			$gallery_id = (int) $wpdb->insert_id;
 			// here you can inject a custom function
@@ -104,7 +113,7 @@ class flagAdmin{
 
 			if ($result) {
 				$message  = __('Gallery \'%1$s\' successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','flag');
-				$message  = sprintf($message, stripcslashes($gallerytitle), '[flagallery gid=' . $gallery_id . ']');
+				$message  = sprintf($message, stripcslashes($gallery), '[flagallery gid=' . $gallery_id . ']');
 				$message .= '<a href="' . admin_url() . 'admin.php?page=flag-manage-gallery&mode=edit&gid=' . $gallery_id . '" >';
 				$message .= __('Edit gallery','flag');
 				$message .= '</a>';
@@ -474,12 +483,13 @@ class flagAdmin{
 				return $image->filename . __(' is not writeable ','flag');
 
 		$thumb = new flag_Thumbnail($image->imagePath, TRUE);
+		$img_size = @getimagesize ( $image->imagePath );
 
 		// skip if file is not there
 		if (!$thumb->error) {
 			if ($flag->options['thumbFix'])  {
 				// check for portrait format
-				if ($thumb->currentDimensions['height'] > $thumb->currentDimensions['width']) {
+				if ( ($flag->options['thumbWidth']/$flag->options['thumbHeight'] > $img_size[0]/$img_size[1]) ) {
 					// first resize to the wanted width
 					$thumb->resize($flag->options['thumbWidth'], 0);
 					// get optimal y startpos

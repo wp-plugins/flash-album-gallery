@@ -134,6 +134,9 @@ function flag_install () {
 	// if all is passed , save the VERSIONs
 	add_option("flag_db_version", FLAG_DBVERSION);
 	add_option("flagVersion", FLAGVERSION);
+
+	include_once( dirname (__FILE__). '/tuning.php');
+	flag_tune();
 }
 
 function flag_capabilities() {

@@ -9,8 +9,10 @@ $flag_custom = get_post_custom($post->ID);
 $items_array = $flag_custom["mb_items_array"][0];
 $skinname = $flag_custom["mb_skinname"][0];
 $scode = $flag_custom["mb_scode"][0];
+$music = $flag_custom["mb_playlist"][0];
 $button_text = $flag_custom["mb_button"][0];
 $button_link = $flag_custom["mb_button_link"][0];
+if(!$music) $music = '';
 if(!$button_text) $button_text = '';
 if(!$button_link) $button_link = '';
 $bg_link = $flag_custom["mb_bg_link"][0];
@@ -146,12 +148,12 @@ function short_code(galleries,skin,wmode,playlist) {
 		<tr>
 			<td nowrap="nowrap" valign="top"><div style="padding-top: 3px;"><?php _e("Music", 'flag'); ?>: &nbsp; </div></td>
       	<td valign="top"><select id="mb_playlist" name="mb_playlist">
-						<option value="" selected="selected"><?php _e("choose playlist", 'flag'); ?></option>
+						<option value="" selected="selected" <?php selected($music,''); ?>><?php _e("choose playlist", 'flag'); ?></option>
 						<?php
 						foreach((array)$all_playlists as $playlist_file => $playlist_data) {
 							$playlist_name = basename($playlist_file, '.xml');
 							?>
-							<option value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+							<option value="<?php echo $playlist_name; ?>" <?php selected($music,$playlist_name); ?>><?php echo $playlist_data['title']; ?></option>
 						<?php
 						}
 						?>

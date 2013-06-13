@@ -86,7 +86,7 @@ function flagCreateNewThumb() {
 			$thumb->resize(0,$flag_options['thumbHeight']);
 		}
 	} else {
-		$thumb->resize($flag_options['thumbWidth'],$flag_options['thumbHeight'],$flag_options['thumbResampleMode']);
+		$thumb->resize($flag_options['thumbWidth'],$flag_options['thumbHeight']);
 	}
 
 	if ( $thumb->save($picture->thumbPath, 100)) {
