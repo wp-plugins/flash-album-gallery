@@ -371,7 +371,7 @@ $total_all_skins = count($all_skins);
 		}
 	} else {
 		//$skins_xml_error = __('URL file-access is disabled in the server configuration.', 'flag');
-		$skins_xml_error = __('cURL library is not installed on your server.','flag');
+		$skins_xml_error = __('cURL library is not installed on your server.','flag').'<br>'.__('Download skins from http://photogallerycreator.com', 'flag');
 	}
 
 

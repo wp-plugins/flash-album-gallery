@@ -19,9 +19,19 @@
 #fancybox-loading div { position: absolute; top: 0; left: 0; width: 40px; height: 480px; background-image: url('images/fancybox.png'); }
 #fancybox-overlay { position: absolute; top: 0; left: 0; width: 100%; z-index: 10100; display: none; }
 #fancybox-tmp { padding: 0; margin: 0; border: 0; overflow: auto; display: none; }
-#fancybox-wrap { position: absolute; top: 0; left: 0; padding: 20px; z-index: 10101; outline: none; display: none; }
+#fancybox-wrap { position: absolute; top: 0; left: 0; padding: 20px; z-index: 10101; outline: none; display: none;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	-o-box-sizing: content-box;
+	box-sizing: content-box;
+}
 #fancybox-outer { position: relative; width: 100%; height: 100%; background: #fff; }
-#fancybox-content { width: 0; height: 0; padding: 0; outline: none; position: relative; overflow: hidden; z-index: 10102; border: 0px solid #fff; }
+#fancybox-content { width: 0; height: 0; padding: 0; outline: none; position: relative; overflow: hidden; z-index: 10102; border: 0px solid #fff;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	-o-box-sizing: content-box;
+	box-sizing: content-box;
+}
 #fancybox-hide-sel-frame { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 10101; }
 #fancybox-close { position: absolute; top: -15px; right: -15px; width: 30px; height: 30px; background: transparent url('images/fancybox.png') -40px 0px; cursor: pointer; z-index: 10103; display: none; border: none; padding: 0; margin: 0; }
 #fancybox-error { color: #444; font: normal 12px/20px Arial; padding: 14px; margin: 0; }

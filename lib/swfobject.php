@@ -16,7 +16,7 @@
  * @param string $align
  * @return string the content
  */
-function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='', $playlist='', $wmode='', $linkto='', $fullwindow=false, $align='') {
+function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', $skin='', $playlist='', $wmode='', $linkto='', $fullwindow=false, $align='') {
 	global $post;
 	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
 
@@ -34,6 +34,7 @@ function flagShowFlashAlbum($galleryID, $name='', $width='', $height='', $skin='
 	$swfmousewheel = '';
 	$flashBacktransparent = '';
 	$flashBackcolor = '';
+	if (empty($name) ) $name  = 'Gallery';
 	if (empty($width) ) $width  = $flag_options['flashWidth'];
 	if (empty($height)) $height = (int) $flag_options['flashHeight'];
 	$data = '';
