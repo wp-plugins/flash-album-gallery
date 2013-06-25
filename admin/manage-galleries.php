@@ -206,6 +206,7 @@ if($gallerylist) {
 		</table>
 		</form>
 	</div>
+<?php if ( current_user_can('FlAG Manage others gallery') ) { ?>
 <script type="text/javascript">
 /*<![CDATA[*/
 jQuery(document).ready(function(){
@@ -308,7 +309,7 @@ if($gallerylist) {
 			</div>
 		</div>
 	</div>
-
+<?php } ?>
 	<!-- #resize_images -->
 	<div id="resize_images" style="display: none;" >
 		<form id="form_resize_images" method="POST" accept-charset="utf-8">

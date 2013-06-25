@@ -146,14 +146,23 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 	}
 	// add now the script code
 	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT']) && !preg_match("/Android/i", $_SERVER['HTTP_USER_AGENT'])){
-		$out .= "\n".'<script type="text/javascript" defer="defer">';
-		$out .= "\n".'function json_xml_'.$skinID.'(e){ return '.$xml['json'].'; }';
-		$out .= "\n".'flag_alt[\''.$skinID.'\'] = jQuery("div#'.$skinID.'_jq").clone().wrap(document.createElement(\'div\')).parent().html();';
+		$out .= '<script type="text/javascript" defer="defer">';
+		$out .= 'function json_xml_'.$skinID.'(e){ return '.$xml['json'].'; }';
+		$out .= 'flag_alt[\''.$skinID.'\'] = jQuery("div#'.$skinID.'_jq").clone().wrap(document.createElement(\'div\')).parent().html();';
 		$out .= $swfobject->javascript();
-		$out .= "\n".'</script>';
+		$out .= '</script>';
 	}
 
 	$out = apply_filters('flag_show_flash_content', $out);
+
+	// Replace doubled spaces with single ones (ignored in HTML any way)
+	// Remove single and multiline comments, tabs and newline chars
+	$out = preg_replace('@(\s){2,}@', '\1', $out);
+	$out = preg_replace(
+		'@(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|((?<!:)//.*)|[\t\r\n]@i',
+		'',
+		$out
+	);
 
 	return $out;
 }
@@ -183,6 +192,16 @@ function flagShowMPlayer($playlist, $width, $height, $wmode='', $skin='', $isWid
 		'isWidget'	=> $isWidget
 	);
 	$out = apply_filters( 'flagShowMusicSkin', $args );
+
+	// Replace doubled spaces with single ones (ignored in HTML any way)
+	// Remove single and multiline comments, tabs and newline chars
+	//$out = preg_replace('@(\s){2,}@', '\1', $out);
+	//$out = preg_replace(
+	//	'@(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|((?<!:)//.*)|[\t\r\n]@i',
+	//	'',
+	//	$out
+	//);
+
 	return $out;
 }
 
@@ -214,6 +233,16 @@ function flagShowVPlayer($playlist, $width, $height, $wmode='') {
 		'crawler' 	=> $isCrawler
 	);
 	$out = apply_filters( 'flagShowVideoSkin', $args );
+
+	// Replace doubled spaces with single ones (ignored in HTML any way)
+	// Remove single and multiline comments, tabs and newline chars
+	//$out = preg_replace('@(\s){2,}@', '\1', $out);
+	//$out = preg_replace(
+	//	'@(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|((?<!:)//.*)|[\t\r\n]@i',
+	//	'',
+	//	$out
+	//);
+
 	return $out;
 }
 
@@ -256,12 +285,21 @@ function flagShowVmPlayer($id, $w, $h, $autoplay) {
 	$out = '<div class="grandflv">' . $swfobject->output($alternative) . '</div>';
 	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT'])){
 		// add now the script code
-		$out .= "\n".'<script type="text/javascript" defer="defer">';
+		$out .= '<script type="text/javascript" defer="defer">';
 		$out .= $swfobject->javascript();
-		$out .= "\n".'</script>';
+		$out .= '</script>';
 	}
 
 	$out = apply_filters('flag_flv_mini', $out);
+
+	// Replace doubled spaces with single ones (ignored in HTML any way)
+	// Remove single and multiline comments, tabs and newline chars
+	//$out = preg_replace('@(\s){2,}@', '\1', $out);
+	//$out = preg_replace(
+	//	'@(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|((?<!:)//.*)|[\t\r\n]@i',
+	//	'',
+	//	$out
+	//);
 
 	return $out;
 }
@@ -296,6 +334,16 @@ function flagShowBanner($xml, $width, $height, $wmode='') {
 		'crawler' => $isCrawler
 	);
 	$out = apply_filters( 'flagShowBannerSkin', $args );
+
+	// Replace doubled spaces with single ones (ignored in HTML any way)
+	// Remove single and multiline comments, tabs and newline chars
+	//$out = preg_replace('@(\s){2,}@', '\1', $out);
+	//$out = preg_replace(
+	//	'@(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|((?<!:)//.*)|[\t\r\n]@i',
+	//	'',
+	//	$out
+	//);
+
 	return $out;
 }
 
@@ -328,6 +376,16 @@ function flagShowWidgetBanner($xml, $width, $height, $skin) {
 		'height' 	=> $height
 	);
 	$out = apply_filters( 'flagShowWidgetBannerSkin', $args );
+
+	// Replace doubled spaces with single ones (ignored in HTML any way)
+	// Remove single and multiline comments, tabs and newline chars
+	//$out = preg_replace('@(\s){2,}@', '\1', $out);
+	//$out = preg_replace(
+	//	'@(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|((?<!:)//.*)|[\t\r\n]@i',
+	//	'',
+	//	$out
+	//);
+
 	return $out;
 }
 
@@ -343,7 +401,7 @@ function flagGetBetween($content,$start,$end){
 function flagGetUserNow($userAgent) {
 	$crawlers = 'Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|FeedBurner|' .
 			'AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|' .
-			'GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby|yandex';
+			'GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby|yandex|facebook';
 	$isCrawler = (preg_match("/$crawlers/i", $userAgent) > 0);
 	return $isCrawler;
 }

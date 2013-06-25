@@ -50,6 +50,14 @@ New plugin:
 
 == Changelog ==
 
+= v2.77 - 25.06.2013 =
+* Fix: vulnerability with albums
+* Fix: PHP Notices
+* Fix: Compatibility with some modern themes
+* Update: New version of swfupload
+* Update: Compatibility with Wordpress SEO plugin
+* Update: Update code for default skins
+
 = v2.76 - 13.06.2013 =
 * Fixed: Size for thumbs on Manage Images page
 * Fixed: Create New Thumbnails not working properly with fix dimensions

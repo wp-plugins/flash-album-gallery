@@ -118,7 +118,7 @@ function flag_save_album() {
 	if ( !is_user_logged_in() )
 		die('-1');
 	// check for correct FlAG capability
-	if ( !current_user_can('FlAG Manage gallery') ) 
+	if ( !current_user_can('FlAG Manage others gallery') )
 		die('-1');	
 		
 	$g = array();
@@ -126,6 +126,7 @@ function flag_save_album() {
 		parse_str($_POST['form']);
 	$result = false;
 	$album_id = intval($album_id);
+	$album_name = preg_replace('/[^\w\s\._-]+/', '', $album_name);
 	if($album_name && $album_id) {
 		if(count($g))
 			$galstring = implode(',', $g);

@@ -5,7 +5,7 @@ Skin URI:
 Description: New version! Responsive layout. Themes available.
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 2.1
+Version: 2.2
 */
 
 function flagShowSkin_banner_default($args) {
@@ -45,24 +45,24 @@ function flagShowSkin_banner_default($args) {
 <script type="text/javascript">
 jQuery(window).load(function() {
     jQuery("#slider_'.$skinID.'").nivoSlider({
-        effect:"'.$effect.'", // Specify sets like: fold,fade,sliceDown
-        slices:'.$slices.', // For slice animations
-        boxCols:8, // For box animations
-        boxRows:4, // For box animations
-        animSpeed:'.$animSpeed.', // Slide transition speed
-        pauseTime:'.$pauseTime.', // How long each slide will show
-        startSlide:'.$startSlide.', // Set starting Slide (0 index)
-        directionNav:'.$directionNav.', // Next & Prev navigation
-        controlNav:'.$controlNav.', // 1,2,3... navigation
-        controlNavThumbs:false, // Use thumbnails for Control Nav
-        pauseOnHover:'.$pauseOnHover.', // Stop animation while hovering
-        prevText:"Prev", // Prev directionNav text
-        nextText:"Next", // Next directionNav text
+        effect:"'.$effect.'",
+        slices:'.$slices.',
+        boxCols:8,
+        boxRows:4,
+        animSpeed:'.$animSpeed.',
+        pauseTime:'.$pauseTime.',
+        startSlide:'.$startSlide.',
+        directionNav:'.$directionNav.',
+        controlNav:'.$controlNav.',
+        controlNavThumbs:false,
+        pauseOnHover:'.$pauseOnHover.',
+        prevText:"Prev",
+        nextText:"Next",
 		randomStart: '.$randomStart.'
     });
 });
 </script>';
-		$marginBot = $keyboardNav? '55px' : '0';
+		$marginBot = (isset($keyboardNav) && $keyboardNav)? '55px' : '0';
 		$out .= '
 <div class="slider-wrapper theme-'.$theme.'" style="position: relative; margin-bottom:'.$marginBot.'">
     <div class="ribbon"></div>

@@ -45,7 +45,6 @@ filter:alpha(opacity=90);
 .grandBannerAlternative span strong { font-size: 14px; margin-bottom: 3px; }
 </style>
 <script type="text/javascript">
-//<![CDATA[
 jQuery(document).ready(function() {
 	var fv = swfobject.getFlashPlayerVersion();
 	if(fv.major<9){	
@@ -70,19 +69,18 @@ jQuery(document).ready(function() {
 			    	jQuery(nextSlideElement).addClass('loaded').html(d);
 				}
 		    },
-		    containerResize: 0,   // resize container to fit largest slide 
-		    fx:            'fade',// name of transition effect (or comma separated names, ex: 'fade,scrollUp,shuffle') 
-		    next:          '#<?php echo $skinID; ?>_next',  // element, jQuery object, or jQuery selector string for the element to use as event trigger for next slide 
-		    pause:         1,     // true to enable "pause on hover" 
-		    prev:          '#<?php echo $skinID; ?>_prev',  // element, jQuery object, or jQuery selector string for the element to use as event trigger for previous slide 
-		    requeueOnImageNotLoaded: true, // requeue the slideshow if any image slides are not yet loaded 
-		    speed:         1000,  // speed of the transition (any valid fx speed value) 
-		    startingSlide: 0,     // zero-based index of the first slide to be displayed 
-		    timeout:       <?php if($autoPlay){ echo ($slideshowDelay * 1000); } else { echo '0'; } ?>,  // milliseconds between slide transitions (0 to disable auto advance) 
+		    containerResize: 0,
+		    fx:            'fade',
+		    next:          '#<?php echo $skinID; ?>_next',
+		    pause:         1,
+		    prev:          '#<?php echo $skinID; ?>_prev',
+		    requeueOnImageNotLoaded: true,
+		    speed:         1000,
+		    startingSlide: 0,
+		    timeout:       <?php if($autoPlay){ echo ($slideshowDelay * 1000); } else { echo '0'; } ?>
 		});
 	}
 });
-//]]>	
 </script>
 <div id="<?php echo $skinID; ?>_jq"><div class="grandBannerAlternative">
 <?php 

@@ -17,16 +17,17 @@ class flag_swfobject {
 
 	/**
 	 * flag_swfobject::flag_swfobject()
-	 * 
-	 * @param string $swfUrl (required) specifies the URL of your SWF
-	 * @param string $id (required) specifies the id of the HTML element (containing your alternative content) you would like to have replaced by your Flash content
-	 * @param string $width (required) specifies the width of your SWF
-	 * @param string $height (required) specifies the height of your SWF
-	 * @param string $version (required) specifies the Flash player version your SWF is published for (format is: "major.minor.release")
-	 * @param string $expressInstallSwfurl (optional) specifies the URL of your express install SWF and activates Adobe express install
-	 * @param array $flashvars (optional) specifies your flashvars with name:value pairs
-	 * @param array $params (optional) specifies your nested object element params with name:value pair
-	 * @param array $attributes (optional) specifies your object's attributes with name:value pairs
+	 *
+	 * @param string      $swfUrl               (required) specifies the URL of your SWF
+	 * @param string      $id                   (required) specifies the id of the HTML element (containing your alternative content) you would like to have replaced by your Flash content
+	 * @param string      $width                (required) specifies the width of your SWF
+	 * @param string      $height               (required) specifies the height of your SWF
+	 * @param string      $version              (required) specifies the Flash player version your SWF is published for (format is: "major.minor.release")
+	 * @param bool|string $expressInstallSwfurl (optional) specifies the URL of your express install SWF and activates Adobe express install
+	 * @param array|bool  $flashvars            (optional) specifies your flashvars with name:value pairs
+	 * @param array|bool  $params               (optional) specifies your nested object element params with name:value pair
+	 * @param array|bool  $attributes           (optional) specifies your object's attributes with name:value pairs
+	 *
 	 * @return string the content
 	 */
 	function flag_swfobject( $swfUrl, $id, $width, $height, $version, $expressInstallSwfurl = false, $flashvars = false, $params = false, $attributes = false ) {
@@ -45,9 +46,9 @@ class flag_swfobject {
 		$this->params     = ( is_array($params) )     ? $params : array();
 		$this->attributes = ( is_array($attributes) ) ? $attributes : array();
 
-		$this->embedSWF = 'if(jQuery.isFunction(swfobject.switchOffAutoHideShow)){ swfobject.switchOffAutoHideShow(); }'."\n";
-		$this->embedSWF .= 'swfobject.embedSWF("'. $swfUrl .'", "'. $this->id .'", "'. $width .'", "'. $height .'", "'. $version .'", "'. $expressInstallSwfurl .'", this.flashvars, this.params , this.attr );' . "\n";
-		$this->embedSWF .= 'swfobject.createCSS("#'. $id . '","outline:none");' . "\n";
+		$this->embedSWF = 'if(jQuery.isFunction(swfobject.switchOffAutoHideShow)){ swfobject.switchOffAutoHideShow(); }';
+		$this->embedSWF .= 'swfobject.embedSWF("'. $swfUrl .'", "'. $this->id .'", "'. $width .'", "'. $height .'", "'. $version .'", "'. $expressInstallSwfurl .'", this.flashvars, this.params , this.attr );';
+		$this->embedSWF .= 'swfobject.createCSS("#'. $id . '","outline:none");';
 	}
 	
 	function output ($alternate = '') {
@@ -59,9 +60,9 @@ class flag_swfobject {
 		}
 		// count up if we have more than one swfobject
 		$swfCounter++;
-		$out  = "\n".'<div class="'. $this->classname .'" id="'. $this->id  .'">';
+		$out  = '<div class="'. $this->classname .'" id="'. $this->id  .'">';
 		$out .= $alternate;
-		$out .= "\n".'</div>';
+		$out .= '</div>';
 		
 		return $out;
 	}
@@ -69,13 +70,13 @@ class flag_swfobject {
 	function javascript () {
 
 		//Build javascript
-		$this->js  = "\nvar " . $this->id  . " = {\n";
-		$this->js .= $this->add_js_parameters('params', $this->params) . ",\n";
-		$this->js .= $this->add_js_parameters('flashvars', $this->flashvars) . ",\n";
-		$this->js .= $this->add_js_parameters('attr', $this->attributes) . ",\n";
-		$this->js .= "\tstart : function() {" . "\n\t\t";
+		$this->js  = "var " . $this->id  . " = {";
+		$this->js .= $this->add_js_parameters('params', $this->params) . ",";
+		$this->js .= $this->add_js_parameters('flashvars', $this->flashvars) . ",";
+		$this->js .= $this->add_js_parameters('attr', $this->attributes) . ",";
+		$this->js .= "start : function() {";
 		$this->js .= $this->embedSWF;
-		$this->js .= "\t}\n}\n";
+		$this->js .= "}};";
 		$this->js .= $this->id  . '.start();';
 	
 		return $this->js;
@@ -123,10 +124,10 @@ class flag_swfobject {
 			foreach ($params as $key => $value) {
 				if  ( !empty($list) )
 					$list .= ",";	
-				$list .= "\n\t\t" . $key . " : " . "'" . $value ."'";
+				$list .= $key . ": " . "'" . $value ."'";
 			}
 		}
-		$js = "\t" . $name . ' : {' . $list . '}';		
+		$js = $name . ': {' . $list . '}';
 		return $js;		
 	}
 	

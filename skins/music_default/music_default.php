@@ -5,7 +5,7 @@ Skin URI:
 Description:
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 1.3
+Version: 1.4
 */
 
 function flagShowSkin_music_default($args) {
@@ -76,9 +76,9 @@ function flagShowSkin_music_default($args) {
 	$out = '<div class="grandmusic">' . $swfobject->output($alternative) . '</div>';
 	// add now the script code
 	if(!$crawler){
-		$out .= "\n".'<script type="text/javascript" defer="defer">';
+		$out .= '<script type="text/javascript" defer="defer">';
 		$out .= $swfobject->javascript();
-		$out .= "\n".'</script>';
+		$out .= '</script>';
 	}
 
 	$out = apply_filters('flag_show_flash_content', $out);	

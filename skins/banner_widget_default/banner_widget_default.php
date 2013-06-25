@@ -5,7 +5,7 @@ Skin URI:
 Description:
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 1.1
+Version: 1.2
 */
 
 function flagShowSkin_banner_widget_default($args) {

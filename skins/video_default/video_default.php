@@ -5,7 +5,7 @@ Skin URI:
 Description:
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 1.1
+Version: 1.2
 */
 
 function flagShowSkin_video_default($args) {
@@ -67,9 +67,9 @@ function flagShowSkin_video_default($args) {
 	// create the output
 	$out = '<div class="grandvideo">' . $swfobject->output($alternative) . '</div>';
 	// add now the script code
-	$out .= "\n".'<script type="text/javascript" defer="defer">';
+	$out .= '<script type="text/javascript" defer="defer">';
 	$out .= $swfobject->javascript();
-	$out .= "\n".'</script>';
+	$out .= '</script>';
 
 	$out = apply_filters('flag_show_flash_v_content', $out);	
 			

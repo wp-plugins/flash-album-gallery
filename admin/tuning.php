@@ -34,8 +34,8 @@ function flag_tune($show_error=true) {
 						if( is_dir( $skins_dir.$file ) ) {
 							flagGallery::flagFolderDelete( $skins_dir.$file );
 						}
-						if ( !@rename($old_skins_dir.$file, $skins_dir.$file) ) {
-							$errors .= sprintf(__('Failed to move files from %1$s to %2$s','flag'),
+						if ( !@copy($old_skins_dir.$file, $skins_dir.$file) ) {
+							$errors .= sprintf(__('Failed to copy files from %1$s to %2$s','flag'),
 								'<strong>'.$old_skins_dir.$file.'</strong>', $skins_dir.$file).'<br />';
 						}
 					}

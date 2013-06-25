@@ -382,7 +382,7 @@ jQuery(document).ready(function() {
 				<td><label for="manage_gallery"><select style="width: 150px;" name="manage_gallery" id="manage_gallery"><?php wp_dropdown_roles( flag_get_role('FlAG Manage gallery') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Manage others gallery', 'flag'); ?>:</th> 
+				<th scope="row" style="white-space: nowrap"><?php _e('Manage others galleries and Albums', 'flag'); ?>:</th>
 				<td><label for="manage_others"><select style="width: 150px;" name="manage_others" id="manage_others"><?php wp_dropdown_roles( flag_get_role('FlAG Manage others gallery') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 

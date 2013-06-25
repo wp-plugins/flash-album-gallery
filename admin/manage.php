@@ -122,15 +122,16 @@ class flagManageGallery {
 		}
 
 		// New Album
-		if (isset($_POST['album_name'])) {
+		if ( isset($_POST['album_name']) && !empty($_POST['album_name']) ) {
 
 			check_admin_referer('flag_album');
-			$newalbum = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flagalbum (name) VALUES (%s)", $_POST['album_name']) );
+			$album_name = preg_replace('/[^\w\s\._-]+/', '', $_POST['album_name']);
+			$newalbum = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flagalbum (name) VALUES (%s)", $album_name) );
 			// and give me the new id
 			$newalbum_id = (int) $wpdb->insert_id;
 		
 			if($newalbum)
-				flagGallery::show_message( __( 'Album', 'flag' ) . ' \''.$_POST["album_name"].'\' '.__('successfully created','flag'));
+				flagGallery::show_message( __( 'Album', 'flag' ) . ' \''.$album_name.'\' '.__('successfully created','flag'));
 				
 		 	$this->mode = 'main'; // show mainpage
 		}

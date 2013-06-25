@@ -754,13 +754,14 @@ class flagAdmin{
 	function maybe_import_meta( $id ) {
 				
 		require_once(FLAG_ABSPATH . 'lib/meta.php');
-				
-		$image = new flagMeta( $id );
+
+		$meta_obj = new flagMeta( $id );
 		
-		if ( $image->meta_data['saved'] != true ) {
-			//this flag will inform us the import is already one time performed
-			$meta['saved']  = true; 
-			$result = flagdb::update_image_meta($image->pid, $meta['common']);
+		if ( $meta_obj->image->meta_data['saved'] != true ) {
+			$common = $meta_obj->get_common_meta();
+			//this flag will inform us that the import is already one time performed
+			$common['saved']  = true;
+			$result = flagdb::update_image_meta($id, $common);
 		} else
 			return false;
 		
