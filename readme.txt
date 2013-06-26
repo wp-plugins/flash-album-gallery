@@ -50,6 +50,9 @@ New plugin:
 
 == Changelog ==
 
+= v2.78 - 26.06.2013 =
+* Fix: bundled free skins not copied to flagallery-skins directory
+
 = v2.77 - 25.06.2013 =
 * Fix: vulnerability with albums
 * Fix: PHP Notices

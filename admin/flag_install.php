@@ -136,7 +136,7 @@ function flag_install () {
 	add_option("flagVersion", FLAGVERSION);
 
 	include_once( dirname (__FILE__). '/tuning.php');
-	flag_tune();
+	flag_tune(false);
 }
 
 function flag_capabilities() {
@@ -314,6 +314,7 @@ function flag_uninstall() {
 	delete_option( 'flag_options' );
 	delete_option( 'flag_db_version' );
 	delete_option( 'flagVersion' );
+	delete_option( 'flag_plugin_error' );
 
 	// now remove the capability
 	flag_remove_capability("FlAG overview");

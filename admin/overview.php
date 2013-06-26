@@ -7,7 +7,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
  * Add the admin overview in wp2.7 style 
  * @return mixed content
  */
-function flag_admin_overview()  {	
+function flag_admin_overview()  {
+	echo get_option('flag_plugin_error');
 ?>
 <div class="wrap flag-wrap">
 	<h2><?php _e('GRAND FlAGallery Overview', 'flag'); echo ' v'.FLAGVERSION; ?></h2>
