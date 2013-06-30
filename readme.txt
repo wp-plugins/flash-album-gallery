@@ -54,7 +54,7 @@ New plugin:
 * Fix: bundled free skins not copied to flagallery-skins directory
 
 = v2.77 - 25.06.2013 =
-* Fix: vulnerability with albums
+* Fix: XSS vulnerability with albums (thanks to Ken S - for the White Fir Design Bug Bounty)
 * Fix: PHP Notices
 * Fix: Compatibility with some modern themes
 * Update: New version of swfupload
