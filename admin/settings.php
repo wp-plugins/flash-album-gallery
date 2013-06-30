@@ -272,7 +272,7 @@ jQuery(document).ready(function() {
 					<td valign="top"><input type="text" size="54" id="license_key" name="license_key" value="<?php echo $flag_options['license_key']?>" /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><br><?php _e('If you want to upload photos to FlAGallery right from your iPhone <a href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=663405181&mt=8">download application</a> and enter access key below.', 'flag'); ?> <a href="http://mypgc.co/membership/"><strong><u><?php _e('License Key is required.', 'flag') ?></u></strong></a></td>
+					<td colspan="2"><br><?php _e('If you want to upload photos to FlAGallery right from your iPhone <a href="https://itunes.apple.com/us/app/mypgc/id663405181?ls=1&mt=8">download application</a> and enter access key below.', 'flag'); ?> <a href="http://mypgc.co/membership/"><strong><u><?php _e('License Key is required.', 'flag') ?></u></strong></a></td>
 				</tr>
 				<tr>
 					<th valign="top" width="200"><?php _e('Remote App Access Key','flag'); ?>:</th>
@@ -280,7 +280,7 @@ jQuery(document).ready(function() {
 						<small><?php _e('Leave blank to disable access from application', 'flag'); ?></small></td>
 				</tr>
 			</table>
-			<p><a href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=663405181&mt=8"><img src="<?php echo plugins_url() . '/' . FLAGFOLDER; ?>/admin/images/appstore_button.png" alt="Download from AppStore" /></a></p>
+			<p><a href="https://itunes.apple.com/us/app/mypgc/id663405181?ls=1&mt=8"><img src="<?php echo plugins_url() . '/' . FLAGFOLDER; ?>/admin/images/appstore_button.png" alt="Download from AppStore" /></a></p>
 			<div class="submit"><input class="button-primary" type="submit" name="membership" value="<?php _e('Update Settings for Remote Access', 'flag'); ?>"/></div>
 		</form>
 	</div>
