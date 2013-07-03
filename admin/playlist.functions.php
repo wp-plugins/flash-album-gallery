@@ -64,6 +64,8 @@ function flagSavePlaylist($title,$descr,$data,$file='',$skinaction='') {
 	if(!trim($title)) {
 		$title = 'default';
 	}
+	$title = htmlspecialchars_decode(stripslashes($title), ENT_QUOTES);
+	$descr = htmlspecialchars_decode(stripslashes($descr), ENT_QUOTES);
 	if (!$file) {
 		$file = sanitize_title($title);
 	}
@@ -129,8 +131,8 @@ function flagSavePlaylistSkin($file) {
 	$flag_options = get_option('flag_options');
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/'.$file.'.xml';
 	// Save options
-	$title = $_POST['playlist_title'];
-	$descr = $_POST['playlist_descr'];
+	$title = esc_html($_POST['playlist_title']);
+	$descr = esc_html($_POST['playlist_descr']);
 	$items = get_playlist_data($playlistPath);
 	$data = $items['items'];
 	flagSavePlaylist($title,$descr,$data,$file,$skinaction='update');

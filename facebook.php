@@ -60,9 +60,10 @@ if(isset($_GET['i'])) {
 
 <?php
 if(isset($_GET['m'])) {
-	$playlistpath = $flag_options['galleryPath'].'playlists/'.$_GET['m'].'.xml';
+	$file = sanitize_title($_GET['m']);
+	$playlistpath = $flag_options['galleryPath'].'playlists/'.$file.'.xml';
 	if(file_exists($playlistpath))
-		echo flagShowMPlayer($playlist=$_GET['m'], $width='', $height='', $wmode='opaque');
+		echo flagShowMPlayer($file, $width='', $height='', $wmode='opaque');
 	else
 		_e("Can't find playlist");
 }
@@ -71,9 +72,10 @@ if(isset($_GET['m'])) {
 if(isset($_GET['v'])) {
 	$height = isset($_GET['h'])? intval($_GET['h']) : '';
 	$width = isset($_GET['w'])? '100%' : '';
-	$playlistpath = $flag_options['galleryPath'].'playlists/video/'.$_GET['v'].'.xml';
+	$file = sanitize_title($_GET['v']);
+	$playlistpath = $flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
 	if(file_exists($playlistpath))
-		echo flagShowVPlayer($playlist=$_GET['v'], $width, $height, $wmode='opaque');
+		echo flagShowVPlayer($file, $width, $height, $wmode='opaque');
 	else
 		_e("Can't find playlist");
 }
@@ -88,9 +90,10 @@ if(isset($_GET['mv'])) {
 ?>
 <?php
 if(isset($_GET['b'])) {
-	$playlistpath = $flag_options['galleryPath'].'playlists/banner/'.$_GET['b'].'.xml';
+	$file = sanitize_title($_GET['b']);
+	$playlistpath = $flag_options['galleryPath'].'playlists/banner/'.$file.'.xml';
 	if(file_exists($playlistpath))
-		echo flagShowBanner($playlist=$_GET['b'], $width='', $height='', $wmode='opaque');
+		echo flagShowBanner($file, $width='', $height='', $wmode='opaque');
 	else
 		_e("Can't find playlist");
 }

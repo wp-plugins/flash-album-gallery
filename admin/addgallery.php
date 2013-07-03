@@ -9,7 +9,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	global $wpdb, $flagdb, $flag;
 	
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath    = admin_url() . 'admin.php?page=' . $_GET['page'];
+	$filepath    = admin_url() . 'admin.php?page=' . urlencode($_GET['page']);
 	
 	// check for the max image size
 	$maxsize    = flagGallery::check_memory_limit();
@@ -24,7 +24,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	if ($_POST['addgallery']){
 		check_admin_referer('flag_addgallery');
-		$newgallery = esc_attr( $_POST['galleryname']);
+		$newgallery = $_POST['galleryname'];
 		if ( !empty($newgallery) )
 			flagAdmin::create_gallery($newgallery, $defaultpath);
 	}
@@ -39,7 +39,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	if ($_POST['importfolder']){
 		check_admin_referer('flag_addgallery');
 		$galleryfolder = $_POST['galleryfolder'];
-		if ( ( !empty($galleryfolder) ) AND ($defaultpath != $galleryfolder) )
+		if ( ( !empty($galleryfolder) ) AND ($defaultpath != $galleryfolder) AND false === strpos($galleryfolder, '..') )
 			flagAdmin::import_gallery($galleryfolder);
 	}
 
@@ -246,7 +246,7 @@ if($flag->options['swfUpload']) { ?>
 							foreach($gallerylist as $gallery) {
 									if ( !flagAdmin::can_manage_this_gallery($gallery->author) )
 										continue;
-									$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
+									$name = ( empty($gallery->title) ) ? $gallery->name : esc_html(stripslashes($gallery->title));
 									$sel = ($ingallery == $gallery->gid) ? 'selected="selected" ' : '';
 									echo '<option ' . $sel . 'value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
 							} ?>

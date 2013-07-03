@@ -165,7 +165,7 @@ function fb_url(galleries,skin,h,l) {
 				$gallerylist = $flagdb->find_all_galleries('gid', 'ASC');
 				if(is_array($gallerylist)) {
 					foreach($gallerylist as $gallery) {
-						$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
+						$name = ( empty($gallery->title) ) ? $gallery->name : esc_html(stripslashes($gallery->title));
 						echo '<div class="row"><input type="checkbox" value="' . $gallery->gid . '" /> <span>' . $gallery->gid . ' - ' . $name . '</span></div>' . "\n";
 					}
 				}
@@ -211,7 +211,7 @@ function fb_url(galleries,skin,h,l) {
 					foreach((array)$all_m_playlists as $playlist_file => $playlist_data) {
 						$playlist_name = basename($playlist_file, '.xml');
 				?>
-					<option value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+					<option value="<?php echo $playlist_name; ?>"><?php echo esc_html(stripslashes($playlist_data['title'])); ?></option>
 				<?php 
 					}
 				?>
@@ -233,7 +233,7 @@ function fb_url(galleries,skin,h,l) {
 					foreach((array)$all_v_playlists as $playlist_file => $playlist_data) {
 						$playlist_name = basename($playlist_file, '.xml');
 				?>
-					<option value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+					<option value="<?php echo $playlist_name; ?>"><?php echo esc_html(stripslashes($playlist_data['title'])); ?></option>
 				<?php 
 					}
 				?>
@@ -255,7 +255,7 @@ function fb_url(galleries,skin,h,l) {
 					foreach((array)$all_b_playlists as $playlist_file => $playlist_data) {
 						$playlist_name = basename($playlist_file, '.xml');
 				?>
-					<option value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+					<option value="<?php echo $playlist_name; ?>"><?php echo esc_html(stripslashes($playlist_data['title'])); ?></option>
 				<?php 
 					}
 				?>

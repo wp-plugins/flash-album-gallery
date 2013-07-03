@@ -178,7 +178,7 @@ class flagAdmin{
 				flagGallery::show_error(__('Database error. Could not add gallery!','flag'));
 				return;
 			}
-			$created_msg = __ngettext( 'Gallery', 'Galleries', 1, 'flag' ) . ' <strong>' . $galleryname . '</strong> ' . __('successfully created!','flag') . '<br />';
+			$created_msg = _n( 'Gallery', 'Galleries', 1, 'flag' ) . ' <strong>' . $galleryname . '</strong> ' . __('successfully created!','flag') . '<br />';
 			$gallery_id  = $wpdb->insert_id;  // get index_id
 		}
 		
@@ -652,7 +652,7 @@ class flagAdmin{
 				// get the file date/time from exif
 				$timestamp = $meta['timestamp'];
 				// update database
-				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", esc_attr($alttext), esc_attr($description), $timestamp, $image->pid) );
+				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", $alttext, $description, $timestamp, $image->pid) );
 				if ($result === false)
 					return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not update data base)', 'flag') . '</strong>';		
 				
@@ -705,7 +705,7 @@ class flagAdmin{
 				// get the file date/time from exif
 				$makedescription = $alttext.$description.$makedescription;
 				// update database
-				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", '', esc_attr($makedescription), $timestamp, $image->pid) );
+				$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext = %s, description = %s, imagedate = %s WHERE pid = %d", '', $makedescription, $timestamp, $image->pid) );
 				if ($result === false)
 					return ' <strong>' . $image->filename . ' ' . __('(Error : Couldn\'t not update data base)', 'flag') . '</strong>';		
 				

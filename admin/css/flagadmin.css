@@ -144,6 +144,8 @@ p#flag-inlinebutton {
 .flagform .widefat thead th.cb { width: 54px; text-align: center; }
 .flagform .widefat tfoot th.cb { text-align: center; }
 
+#flag-listmusic tbody td { height: 50px; }
+
 .albums_table { width: 600px; position: relative; background: #ffffff; border: 1px solid #cccccc; border-radius: 4px; margin: 7px 0; padding: 1px 3px; float: left; max-height: 550px; overflow: auto; }
 .albums_table .album { position: relative; background: #f8f8f8; border: 1px solid #cccccc; border-radius: 4px; margin:2px 0; padding: 3px 3px 3px 36px; }
 .albums_table .album form { margin: 0; padding: 0; display: inline; }

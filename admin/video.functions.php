@@ -64,6 +64,8 @@ function flagSave_vPlaylist($title,$descr,$data,$file='',$skinaction='') {
 	if(!trim($title)) {
 		$title = 'default';
 	}
+	$title = htmlspecialchars_decode(stripslashes($title), ENT_QUOTES);
+	$descr = htmlspecialchars_decode(stripslashes($descr), ENT_QUOTES);
 	if (!$file) {
 		$file = sanitize_title($title);
 	}
@@ -72,9 +74,9 @@ function flagSave_vPlaylist($title,$descr,$data,$file='',$skinaction='') {
 		$data = explode(',', $data);
 
 	$flag_options = get_option('flag_options');
-    $skin = isset($_POST['skinname'])? $_POST['skinname'] : 'video_default';
+    $skin = isset($_POST['skinname'])? sanitize_key($_POST['skinname']) : 'video_default';
 	if(empty($skinaction))
-    	$skinaction = isset($_POST['skinaction'])? $_POST['skinaction'] : 'update';
+    	$skinaction = isset($_POST['skinaction'])? sanitize_key($_POST['skinaction']) : 'update';
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
 	if( file_exists($playlistPath) && ($skin == $skinaction) ) {
@@ -129,8 +131,8 @@ function flagSave_vPlaylistSkin($file) {
 	$flag_options = get_option('flag_options');
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
 	// Save options
-	$title = $_POST['playlist_title'];
-	$descr = $_POST['playlist_descr'];
+	$title = esc_html($_POST['playlist_title']);
+	$descr = esc_html($_POST['playlist_descr']);
 	$items = get_v_playlist_data($playlistPath);
 	$data = $items['items'];
 	flagSave_vPlaylist($title,$descr,$data,$file,$skinaction='update');

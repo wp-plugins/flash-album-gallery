@@ -6,7 +6,7 @@ function flag_admin_options()  {
 	global $flag;
 	
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath    = admin_url() . 'admin.php?page='.$_GET['page'];
+	$filepath    = admin_url() . 'admin.php?page='.urlencode($_GET['page']);
 
 	if ( isset($_POST['updateoption']) ) {	
 		check_admin_referer('flag_settings');
@@ -37,7 +37,7 @@ function flag_admin_options()  {
 			if(function_exists('curl_init')){
 				check_admin_referer('flag_settings');
 				$ch = curl_init('http://mypgc.co/app/account_st.php');
-				curl_setopt ($ch, CURLOPT_REFERER, home_url());
+				curl_setopt ($ch, CURLOPT_REFERER, site_url());
 				curl_setopt ($ch, CURLOPT_POST, 1);
 				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt ($ch, CURLOPT_POSTFIELDS, array('access_key'=>$_POST['access_key'], 'access_url'=>$_POST['access_url'], 'license_key'=>$_POST['license_key']));

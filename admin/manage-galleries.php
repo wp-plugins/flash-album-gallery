@@ -11,6 +11,7 @@ function flag_manage_gallery_main() {
 	if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
 		$_GET['paged'] = 1;
 	
+	$_GET['paged'] = intval($_GET['paged']);
 	$perpage = 50;
 	$start = ( $_GET['paged'] - 1 ) * $perpage;
 	$gallerylist = $flagdb->find_all_galleries('gid', 'asc', $counter = true, $perpage, $start, $exclude = false, $draft = true);
@@ -111,7 +112,7 @@ function flag_manage_gallery_main() {
 			<input type="submit" value="<?php _e( 'Search Images', 'flag' ); ?>" class="button" />
 		</p>
 		</form>
-		<form id="editgalleries" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;paged=' . $_GET['paged']; ?>" accept-charset="utf-8">
+		<form id="editgalleries" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;paged=' . intval($_GET['paged']); ?>" accept-charset="utf-8">
 		<?php wp_nonce_field('flag_bulkgallery'); ?>
 		<input type="hidden" name="page" value="manage-galleries" />
 		
@@ -162,7 +163,7 @@ if($gallerylist) {
 	foreach($gallerylist as $gallery) {
 		$class = ( !isset($class) || $class == 'alt ' ) ? '' : 'alt ';
 		$gid = $gallery->gid;
-		$name = (empty($gallery->title) ) ? $gallery->name : $gallery->title;
+		$name = (empty($gallery->title) ) ? $gallery->name : stripslashes($gallery->title);
 		$author_user = get_userdata( (int) $gallery->author );
 		?>
 		<tr id="gallery-<?php echo $gid; ?>" class="<?php echo $class; echo ( $gallery->status ) ? 'flag_draft' : 'flag_public'; ?>" >
@@ -175,14 +176,14 @@ if($gallerylist) {
 			<td>
 				<?php if (flagAdmin::can_manage_this_gallery($gallery->author)) { ?>
 					<a href="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gid, 'flag_editgallery')?>" class='edit' title="<?php _e('Edit'); ?>" >
-						<?php echo flagGallery::i18n($name); ?>
+						<?php echo esc_html(flagGallery::i18n($name)); ?>
 					</a>
 				<?php } else { ?>
-					<?php echo flagGallery::i18n($gallery->title); ?>
+					<?php echo esc_html(flagGallery::i18n(stripslashes($gallery->title))); ?>
 				<?php }
 				if($gallery->status){ echo ' <b>- '.__('Draft', 'flag').'</b>'; }?>
 			</td>
-			<td><?php echo flagGallery::i18n($gallery->galdesc); ?>&nbsp;</td>
+			<td><?php echo esc_html(flagGallery::i18n(stripslashes($gallery->galdesc))); ?>&nbsp;</td>
 			<td><?php echo $author_user->display_name; ?></td>
 			<td><?php echo $gallery->counter; ?></td>
 			<td>
@@ -257,7 +258,7 @@ jQuery(document).ready(function(){
 </script>
 	<div class="wrap">
 		<h2><?php _e('Albums', 'flag'); ?></h2>
-		<form method="post" style="width: 658px; float: left;"><?php wp_nonce_field('flag_album'); ?>
+		<form method="post" style="width: 658px; float: left;" action="<?php echo admin_url('admin.php?page=flag-manage-gallery'); ?>"><?php wp_nonce_field('flag_album'); ?>
 		<p><input type="text" id="album_name" name="album_name" value="" /> &nbsp; <input type="submit" value="<?php _e('Create New Album','flag'); ?>" class="button-primary" /></p></form>
 		<h2><?php _e('Categories', 'flag'); ?></h2>
 		<div class="clear"></div>
@@ -277,7 +278,7 @@ if($albumlist) {
 								$acat = $flagdb->find_gallery($galid);
 					?>
 								
-						<div class="acat" id="g_<?php echo $acat->gid; ?>"><?php echo $acat->title; ?><span class="drop">x</span></div>
+						<div class="acat" id="g_<?php echo $acat->gid; ?>"><?php echo esc_html(stripslashes($acat->title)); ?><span class="drop">x</span></div>
 						<?php }
 						} else {
 							echo '<p style="text-align:center; padding: 7px 0; margin: 0;">'.__('Drag&Drop Categories Here','flag').'</p>';
@@ -296,7 +297,7 @@ if($albumlist) {
 if($gallerylist) {
 	foreach($gallerylist as $gallery) {
 		$gid = $gallery->gid;
-		$name = (empty($gallery->title) ) ? $gallery->name : $gallery->title;
+		$name = (empty($gallery->title) ) ? $gallery->name : esc_html(stripslashes($gallery->title));
 		$author_user = get_userdata( (int) $gallery->author );
 		if (flagAdmin::can_manage_this_gallery($gallery->author)) {
 ?>

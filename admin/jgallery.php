@@ -85,14 +85,15 @@ foreach ( $gID as $galID ) {
 
 	if (is_array ($thepictures) && count($thegalleries) && count($thepictures)){
 		$thegalleries = array_map('stripslashes', $thegalleries);
-		$thegalleries['galdesc'] = htmlspecialchars_decode($thegalleries['galdesc']);
+		$galdesc = $thegalleries['galdesc'];
+		$thegalleries['galdesc'] = htmlspecialchars_decode($galdesc);
 		$a = $thegalleries;
 
 		$xml['alt'] .= '<div class="flagCatMeta">';
-		$xml['alt'] .= '<h4>'.$thegalleries['title'].'</h4>';
-		$xml['alt'] .= '<p>'.$thegalleries['galdesc'].'</p>';
+		$xml['alt'] .= '<h4>'.htmlspecialchars_decode($thegalleries['title'], ENT_QUOTES).'</h4>';
+		$xml['alt'] .= '<p>'.str_replace('"','', strip_tags(htmlspecialchars_decode($galdesc, ENT_QUOTES))).'</p>';
 		$xml['alt'] .= '</div>';
-		$xml['alt'] .= '<div class="flagcategory" id="gid_'.$galID.'_'.$skinID.'">';
+		$xml['alt'] .= '<div class="flagcategory" id="gid_'.$galID.'_'.$skinID.'">."\n"';
 			$n = count($thepictures);
 			$var = floor($n/5);
 			if($var==0 || $var > 4) $var=4;
@@ -106,7 +107,7 @@ foreach ( $gID as $galID ) {
 			$pid = intval($picture['pid']);
 
 			if ($isCrawler){
-				$xml['alt'] .= '<a style="display:block; overflow: hidden; height: 100px; width: 115px; margin-bottom: 10px; background-color: #eeeeee; background-position: 22px 44px; text-align: left;" class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" rel="gid_'.$galID.'_'.$skinID.'"><img style="float:left; margin-right: 10px; width: auto; height: auto; min-height:100px; min-width:115px;" title="'.strip_tags($picture['alttext']).'" alt="'.strip_tags($picture['alttext']).'" src="'.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].'" /><span style="display: block; overflow: hidden; text-decoration: none; color: #000; font-weight: normal;" class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.strip_tags($picture['alttext']).'</strong><br />'.strip_tags($picture['description'],'<b><u><i><span>').'</span></a>';
+				$xml['alt'] .= '<a style="display:block; overflow: hidden; height: 100px; width: 115px; margin-bottom: 10px; background-color: #eeeeee; background-position: 22px 44px; text-align: left;" class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" rel="gid_'.$galID.'_'.$skinID.'"><img style="float:left; margin-right: 10px; width: auto; height: auto; min-height:100px; min-width:115px;" title="'.esc_attr(strip_tags($picture['alttext'])).'" alt="'.esc_attr(strip_tags($picture['alttext'])).'" src="'.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].'" /><span style="display: block; overflow: hidden; text-decoration: none; color: #000; font-weight: normal;" class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.htmlspecialchars_decode($picture['alttext']).'</strong><br />'.htmlspecialchars_decode($picture['description'],'<b><u><i><span>').'</span></a>';
 			} else {
 				if(!$disableViews){
 					$views = (intval($picture['hitcounter']) < 10000) ? $picture['hitcounter'] : round($picture['hitcounter']/1000, 1).'k';
@@ -115,7 +116,7 @@ foreach ( $gID as $galID ) {
 				} else {
 					$views_panel = '';
 				}
-				$xml['alt'] .= '<a class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" rel="gid_'.$galID.'_'.$skinID.'" title="'.strip_tags($picture['alttext']).'">[img src='.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].']'.$views_panel.'<span class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.htmlspecialchars($picture['alttext']).'</strong><br /><span>'.htmlspecialchars($picture['description']).'</span></span></a>';
+				$xml['alt'] .= '<a class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" rel="gid_'.$galID.'_'.$skinID.'" title="'.esc_attr(strip_tags($picture['alttext'])).'">[img src='.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].']'.$views_panel.'<span class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.htmlspecialchars_decode($picture['alttext']).'</strong><br /><span>'.htmlspecialchars_decode($picture['description']).'</span></span></a>';
 			}
 		}
 		$xml['alt'] .= '</div>';

@@ -3,7 +3,7 @@ Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
 Tags: admin, flash, fullscreen gallery, gallery, image, images, image gallery, mp3, music, page, photo, slider, plugin, Post, posts, slideshow, video, widget, iOS gallery, iphone gallery, best gallery
 Requires at least: 3.0
-Tested up to: 3.5.1
+Tested up to: 3.5.2
 Stable tag: trunk
 
 GRAND Flagallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
@@ -49,6 +49,12 @@ New plugin:
 
 
 == Changelog ==
+
+= v3.00 - 26.06.2013 =
+* Fix: Free skins settings reset to default after plugin update
+* Fix: XSS bugs reported by Ken S for the White Fir Design Bug Bounty
+* Fix: small bugfixes
+* New: iOS application 'MyPGC' for Flagallery plugin now available on the App Store
 
 = v2.78 - 26.06.2013 =
 * Fix: bundled free skins not copied to flagallery-skins directory

@@ -4,10 +4,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {	die('You 
 
 function flag_b_playlist_edit() {
 
-	$filepath = admin_url() . 'admin.php?page=' . $_GET['page'];
+	$filepath = admin_url() . 'admin.php?page=' . urlencode($_GET['page']);
 	$all_playlists = get_b_playlists();
 	$flag_options = get_option('flag_options');
-	$playlistPath = $flag_options['galleryPath'].'playlists/banner/'.$_GET['playlist'].'.xml';
+	$playlistPath = $flag_options['galleryPath'].'playlists/banner/'.urlencode($_GET['playlist']).'.xml';
 	$playlist = get_b_playlist_data(ABSPATH.$playlistPath);
 	$items_a = $playlist['items'];
 	$items = implode(',',$playlist['items']);
@@ -97,7 +97,7 @@ jQuery(document).ready(function(){
 </script>
 
 <div class="wrap">
-<h2><?php _e( 'Playlist', 'flag' ); ?>: <?php echo $playlist['title']; ?></h2>
+<h2><?php _e( 'Playlist', 'flag' ); ?>: <?php echo esc_html(stripslashes($playlist['title'])); ?></h2>
 <div style="float: right; margin: -20px 3px 0 0;">
 <span><a href="<?php echo $filepath; ?>"><?php _e('Back to Banner Box', 'flag'); ?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 <select name="select_playlist" onchange="window.location.href=this.options[this.selectedIndex].value">
@@ -105,15 +105,15 @@ jQuery(document).ready(function(){
 <?php
 	foreach((array)$all_playlists as $playlist_file => $playlist_data) {
 		$playlist_name = basename($playlist_file, '.xml');
-		if ($playlist_file == $_GET['playlist']) continue; 
+		if ($playlist_name == urlencode($_GET['playlist'])) continue;
 ?>
-	<option value="<?php echo $filepath."&amp;playlist=".$playlist_name."&amp;mode=edit"; ?>"><?php echo $playlist_data['title']; ?></option>
+	<option value="<?php echo esc_url($filepath."&playlist=".$playlist_name."&mode=edit"); ?>"><?php echo esc_html(stripslashes($playlist_data['title'])); ?></option>
 <?php 
 	}
 ?>
 </select>
 </div>
-<form id="updatePlaylist" class="flagform" method="POST" action="<?php echo $filepath."&amp;playlist=".$_GET['playlist']."&amp;mode=edit"; ?>" accept-charset="utf-8">
+<form id="updatePlaylist" class="flagform" method="POST" action="<?php echo esc_url($filepath."&playlist=".urlencode($_GET['playlist'])."&mode=edit"); ?>" accept-charset="utf-8">
 <?php wp_nonce_field('flag_updateplaylist'); ?>
 <input type="hidden" name="page" value="manage-playlist" />
 
@@ -125,7 +125,7 @@ jQuery(document).ready(function(){
 			<table cellspacing="8" cellpadding="0" border="0">
 				<tr>
 					<th align="left" valign="middle" scope="row"><?php _e('Shortcode', 'flag'); ?>:</th>
-					<td align="left" valign="middle"><input type="text" readonly="readonly" size="50" onfocus="this.select()" value="[grandbanner xml=<?php echo $_GET['playlist']; ?>]" /></td>
+					<td align="left" valign="middle"><input type="text" readonly="readonly" size="50" onfocus="this.select()" value="[grandbanner xml=<?php echo urlencode($_GET['playlist']); ?>]" /></td>
 					<td rowspan="3" align="left" valign="top"><div style="font-size:11px;"><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
 						<input id="skinaction" type="hidden" name="skinaction" value="<?php echo $playlist['skin']; ?>" />
                         <select id="skinname" name="skinname" style="width: 200px; height: 24px; font-size: 11px;">
@@ -147,11 +147,11 @@ jQuery(document).ready(function(){
 				</tr>
 				<tr>
 					<th align="left" valign="middle" scope="row"><?php _e('Title', 'flag'); ?>:</th>
-					<td align="left" valign="middle"><input type="text" size="50" name="playlist_title" value="<?php echo stripslashes($playlist['title']); ?>" /></td>
+					<td align="left" valign="middle"><input type="text" size="50" name="playlist_title" value="<?php echo esc_html(stripslashes($playlist['title'])); ?>" /></td>
 				</tr>
 				<tr>
 					<th align="left" valign="top" scope="row"><?php _e('Description', 'flag'); ?>:</th> 
-					<td align="left" valign="top"><textarea name="playlist_descr" cols="60" rows="2" style="width: 95%" ><?php echo stripslashes($playlist['description']); ?></textarea></td>
+					<td align="left" valign="top"><textarea name="playlist_descr" cols="60" rows="2" style="width: 95%" ><?php echo esc_html(stripslashes($playlist['description'])); ?></textarea></td>
 				</tr>
 				<!--<tr>
 					<th align="left" valign="top" scope="row"><?php _e('Path', 'flag'); ?>:</th> 
@@ -169,8 +169,8 @@ jQuery(document).ready(function(){
 		<option value="delete_items" ><?php _e("Delete items",'flag')?></option>
 	</select>
 	<input class="button-secondary alignleft" style="margin-right:10px;" type="submit" name="updatePlaylist" value="<?php _e("OK",'flag')?>" onclick="if ( !checkSelected() ) return false;" />
-	<a href="<?php echo $filepath."&amp;playlist=".$_GET['playlist']."&amp;mode=sort"; ?>" class="button-secondary alignleft" style="margin:1px 10px 0 0;"><?php _e("Sort Playlist",'flag')?></a>
-	<a href="<?php echo $filepath."&amp;playlist=".$_GET['playlist']."&amp;mode=add"; ?>" onClick="jQuery('#form_listitems').submit();return false;" class="button-secondary alignleft" style="margin:1px 10px 0 0;"><?php _e("Add/Remove Items from Playlist",'flag')?></a>
+	<a href="<?php echo esc_url($filepath."&playlist=".urlencode($_GET['playlist'])."&mode=sort"); ?>" class="button-secondary alignleft" style="margin:1px 10px 0 0;"><?php _e("Sort Playlist",'flag')?></a>
+	<a href="<?php echo esc_url($filepath."&playlist=".urlencode($_GET['playlist'])."&mode=add"); ?>" onClick="jQuery('#form_listitems').submit();return false;" class="button-secondary alignleft" style="margin:1px 10px 0 0;"><?php _e("Add/Remove Items from Playlist",'flag')?></a>
 	<input type="submit" name="updatePlaylist" class="button-primary action alignright"  value="<?php _e("Update Playlist",'flag')?>" />
 </div>
 
@@ -222,11 +222,11 @@ if(count($items_a)) {
 			</td>
 			<td class="title_filename">
 				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
-				<textarea title="Title" name="item_a[<?php echo $ban->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $ban->post_title; ?></textarea><br />
-				<?php _e('URL', 'flag'); ?>: <input id="banlink-<?php echo $ban->ID; ?>" name="item_a[<?php echo $ban->ID; ?>][link]" style="width:50%;" type="text" value="<?php echo $link; ?>" /><br />
+				<textarea title="Title" name="item_a[<?php echo $ban->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo esc_html(stripslashes($ban->post_title)); ?></textarea><br />
+				<?php _e('URL', 'flag'); ?>: <input id="banlink-<?php echo $ban->ID; ?>" name="item_a[<?php echo $ban->ID; ?>][link]" style="width:50%;" type="text" value="<?php echo esc_url($link); ?>" /><br />
 			</td>
 			<td class="description">
-				<textarea name="item_a[<?php echo $ban->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo $ban->post_content; ?></textarea>
+				<textarea name="item_a[<?php echo $ban->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo esc_html(stripslashes($ban->post_content)); ?></textarea>
 			</td>
 		</tr>
 		<?php
@@ -243,7 +243,7 @@ if ( $counter==0 )
 	</table>
 	<p class="submit" style="text-align: right;"><input type="submit" class="button-primary action" name="updatePlaylist" value="<?php _e("Update Playlist",'flag')?>" /></p>
 	</form>	
-	<form id="form_listitems" name="form_listitems" method="POST" action="<?php echo $filepath."&amp;playlist=".$_GET['playlist']."&amp;mode=add"; ?>">
+	<form id="form_listitems" name="form_listitems" method="POST" action="<?php echo esc_url($filepath."&playlist=".urlencode($_GET['playlist'])."&mode=add"); ?>">
 		<input type="hidden" name="items" value="<?php echo $items; ?>" />
 	</form>
 	<br class="clear"/>

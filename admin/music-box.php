@@ -29,13 +29,13 @@ function flag_music_controler() {
 	switch($mode) {
 		case 'sort':
 			include_once (dirname (__FILE__) . '/playlist-sort.php');
-			flag_playlist_order($_GET['playlist']);
+			flag_playlist_order();
 		break;
 		case 'edit':
+			$file = urlencode($_GET['playlist']);
 			if(isset($_POST['updatePlaylist'])) {
-				$title = $_POST['playlist_title'];
-				$descr = $_POST['playlist_descr'];
-				$file = $_GET['playlist'];
+				$title = esc_html($_POST['playlist_title']);
+				$descr = esc_html($_POST['playlist_descr']);
 				$data = array();
 				foreach($_POST['item_a'] as $item_id => $item) {
 					if($action=='delete_items' && in_array($item_id, $_POST['doaction']))
@@ -46,22 +46,23 @@ function flag_music_controler() {
 				flagSavePlaylist($title,$descr,$data,$file);
 			}
 			if(isset($_POST['updatePlaylistSkin'])) {
-				$file = $_GET['playlist'];
 				flagSavePlaylistSkin($file);
 			}
 			include_once (dirname (__FILE__) . '/manage-playlist.php');
-			flag_playlist_edit($_GET['playlist']);
+			flag_playlist_edit();
 		break;
 		case 'save':
-			$title = $_POST['playlist_title'];
-			$descr = $_POST['playlist_descr'];
-			$data = $_POST['items_array'];
-			$file = isset($_REQUEST['playlist'])? $_REQUEST['playlist'] : false;
-			flagGallery::flagSaveWpMedia();
-			flagSavePlaylist($title,$descr,$data, $file);
+			if(isset($_POST['items_array'])){
+				$title = esc_html($_POST['playlist_title']);
+				$descr = esc_html($_POST['playlist_descr']);
+				$data = $_POST['items_array'];
+				$file = isset($_REQUEST['playlist'])? urlencode($_REQUEST['playlist']) : false;
+				flagGallery::flagSaveWpMedia();
+				flagSavePlaylist($title,$descr,$data, $file);
+			}
 			if(isset($_GET['playlist'])) {
 				include_once (dirname (__FILE__) . '/manage-playlist.php');
-				flag_playlist_edit($_GET['playlist']);
+				flag_playlist_edit();
 			} else {
 				flag_created_playlists();
 				flag_music_wp_media_lib();
@@ -71,14 +72,14 @@ function flag_music_controler() {
 			if(isset($_POST['items']) && isset($_GET['playlist'])){
 				$added = $_POST['items'];
 			} elseif(isset($_GET['playlist'])) {
-				$added = $_COOKIE['musicboxplaylist_'.$_GET['playlist']];
+				$added = $_COOKIE['musicboxplaylist_'.urlencode($_GET['playlist'])];
 			} else {
 				$added = false;
 			}
 			flag_music_wp_media_lib($added);
 		break;
 		case 'delete':
-			flag_playlist_delete($_GET['playlist']);
+			flag_playlist_delete(urlencode($_GET['playlist']));
 	  	case 'main':
 			if(isset($_POST['updateMedia'])) {
 				flagGallery::flagSaveWpMedia();
@@ -95,7 +96,7 @@ function flag_music_controler() {
 function flag_created_playlists() {
 
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath = admin_url() . 'admin.php?page=' . $_GET['page'];
+	$filepath = admin_url() . 'admin.php?page=' . urlencode($_GET['page']);
 
 	$all_playlists = get_playlists();
 	$total_all_playlists = count($all_playlists);
@@ -128,10 +129,10 @@ if($all_playlists) {
 		<tr id="<?php echo $playlist_name; ?>" <?php echo $class; ?> >
 			<td>
 				<a href="<?php echo $filepath.'&amp;playlist='.$playlist_name.'&amp;mode=edit'; ?>" class='edit' title="<?php _e('Edit'); ?>" >
-					<?php echo stripslashes($playlist_data['title']); ?>
+					<?php echo esc_html(stripslashes($playlist_data['title'])); ?>
 				</a>
 			</td>
-			<td><?php echo stripslashes($playlist_data['description']); echo '&nbsp;('.__("player", "flag").': <strong>'.$playlist_data['skin'].'</strong>)' ?></td>
+			<td><?php echo esc_html(stripslashes($playlist_data['description'])); echo '&nbsp;('.__("player", "flag").': <strong>'.$playlist_data['skin'].'</strong>)' ?></td>
 			<td><?php echo count($query_m); ?></td>
 			<td style="white-space: nowrap;"><input type="text" class="shortcode1" style="width: 200px; font-size: 9px;" readonly="readonly" onfocus="this.select()" value="[grandmusic playlist=<?php echo $playlist_name; ?>]" /></td>
 			<td>
@@ -155,11 +156,11 @@ if($all_playlists) {
 function flag_music_wp_media_lib($added=false) {
 	global $wpdb;
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath = admin_url() . 'admin.php?page=' . $_GET['page'];
+	$filepath = admin_url() . 'admin.php?page=' . urlencode($_GET['page']);
 	if($added!==false) {
-		$filepath .= '&amp;playlist='.$_GET['playlist'].'&amp;mode=save';
+		$filepath .= '&playlist='.urlencode($_GET['playlist']).'&mode=save';
 		$flag_options = get_option('flag_options');
-		$playlistPath = $flag_options['galleryPath'].'playlists/'.$_GET['playlist'].'.xml';
+		$playlistPath = $flag_options['galleryPath'].'playlists/'.urlencode($_GET['playlist']).'.xml';
 		$playlist = get_playlist_data(ABSPATH.$playlistPath);
 		$exclude = explode(',', $added);
 	} else {
@@ -167,10 +168,11 @@ function flag_music_wp_media_lib($added=false) {
 		$exclude = explode(',', $items_array_default);
 	}
 	if(isset($_GET['playlist'])){
-		$playlist_cookie = $_GET['playlist'];
+		$playlist_cookie = urlencode($_GET['playlist']);
 	} else {
 		$playlist_cookie = 'default';
 	}
+	$filepath = esc_url($filepath);
 ?>
 <script type="text/javascript"> 
 <!--
@@ -325,7 +327,8 @@ function send_to_editor(html) {
 if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
 	$_GET['paged'] = 1;
 
-$objects_per_page = 5;
+$_GET['paged'] = intval($_GET['paged']);
+$objects_per_page = 25;
 $start = ( $_GET['paged'] - 1 ) * $objects_per_page;
 $img_total_count = $wpdb->get_var("SELECT COUNT(ID) FROM $wpdb->posts WHERE `post_mime_type` = 'audio/mpeg' AND `post_type` = 'attachment' AND `post_status` = 'inherit'");
 $musiclist = get_posts( $args = array(
@@ -379,10 +382,10 @@ $page_links = paginate_links( array(
 <?php } else { ?>
 				<input type="hidden" name="mode" value="save" />
 				<input style="width: 80%;" type="text" id="items_array" name="items_array" readonly="readonly" value="<?php echo $added; ?>" />
-				<input type="hidden" name="playlist_title" value="<?php echo $playlist['title']; ?>" />
+				<input type="hidden" name="playlist_title" value="<?php echo esc_html(stripslashes($playlist['title'])); ?>" />
 				<input type="hidden" name="skinname" value="<?php echo $playlist['skin']; ?>" />
 				<input type="hidden" name="skinaction" value="<?php echo $playlist['skin']; ?>" />
-				<textarea style="display: none;" name="playlist_descr" cols="40" rows="1"><?php echo $playlist['description']; ?></textarea>
+				<textarea style="display: none;" name="playlist_descr" cols="40" rows="1"><?php echo esc_html(stripslashes($playlist['description'])); ?></textarea>
 				<input name="addToPlaylist" class="button-secondary" type="submit" value="<?php _e('Update Playlist','flag'); ?>" />
 <?php } ?>
 			</div>
@@ -443,15 +446,15 @@ if($musiclist) {
 				echo round($size/1024/1024,2).' Mb';
 			?></td>
 			<td class="thumb" rowspan="2">
-				<img id="thumb-<?php echo $mp3->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" />
+				<img id="thumb-<?php echo $mp3->ID; ?>" src="<?php echo esc_url($thumb); ?>" width="100" height="100" alt="" />
 			</td>
 			<td class="title_filename" rowspan="2">
 				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
-				<textarea title="Title" name="item_a[<?php echo $mp3->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $mp3->post_title; ?></textarea><br />
-				<p><?php _e('Thumb URL:', 'flag'); ?> <input id="mp3thumb-<?php echo $mp3->ID; ?>" name="item_a[<?php echo $mp3->ID; ?>][post_thumb]" type="text" value="<?php echo $mp3thumb; ?>" /> <a class="thickbox" onclick="actInp=<?php echo $mp3->ID; ?>" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="<?php _e('Add an Image','flag'); ?>"><?php _e('assist', 'flag'); ?></a></p>
+				<textarea title="Title" name="item_a[<?php echo $mp3->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo esc_html(stripslashes($mp3->post_title)); ?></textarea><br />
+				<p><?php _e('Thumb URL:', 'flag'); ?> <input id="mp3thumb-<?php echo $mp3->ID; ?>" name="item_a[<?php echo $mp3->ID; ?>][post_thumb]" type="text" value="<?php echo esc_url($mp3thumb); ?>" /> <a class="thickbox" onclick="actInp=<?php echo $mp3->ID; ?>" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="<?php _e('Add an Image','flag'); ?>"><?php _e('assist', 'flag'); ?></a></p>
 			</td>
 			<td class="description" rowspan="2">
-				<textarea name="item_a[<?php echo $mp3->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo $mp3->post_content; ?></textarea>
+				<textarea name="item_a[<?php echo $mp3->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo esc_html(stripslashes($mp3->post_content)); ?></textarea>
 			</td>
 		</tr>
         <tr class="mp3-<?php echo $mp3->ID.$class2; ?>"<?php echo $ex; ?>>

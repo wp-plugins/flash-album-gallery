@@ -10,7 +10,7 @@ if ( !current_user_can('FlAG Change skin') )
 	die('-1');	
 
 $flag_options = get_option('flag_options');
-$act_skin = isset($_GET['skin'])? $_GET['skin'] : $flag_options['flashSkin'];
+$act_skin = isset($_GET['skin'])? urlencode($_GET['skin']) : $flag_options['flashSkin'];
 $settings = $flag_options['skinsDirABS'].$act_skin.'/settings';
 $settingsXML =  $settings.'/settings.xml';
 
@@ -47,7 +47,7 @@ if(isset($_GET['show_options'])) {
 
 function flag_skin_options() {
 	$flag_options = get_option('flag_options');
-	$act_skin = isset($_GET['skin'])? $_GET['skin'] : $flag_options['flashSkin'];
+	$act_skin = isset($_GET['skin'])? urlencode($_GET['skin']) : $flag_options['flashSkin'];
 	$settings = $flag_options['skinsDirURL'].$act_skin.'/settings';
 	$settingsXML =  $flag_options['skinsDirABS'].$act_skin.'/settings/settings.xml';
 	$fp = fopen($settingsXML, "r");

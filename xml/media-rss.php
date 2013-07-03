@@ -9,7 +9,7 @@ require_once(dirname(__FILE__) . "/../flag-config.php");
 require_once(dirname(__FILE__) . "/../lib/media-rss.php");
 
 // Check we have the required GET parameters
-$mode = $_GET["mode"];
+$mode = urlencode($_GET["mode"]);
 if (!isset($mode) || $mode == '')
 	$mode = 'last_pictures';
 

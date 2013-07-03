@@ -76,7 +76,7 @@ class flag_swfobject {
 		$this->js .= $this->add_js_parameters('attr', $this->attributes) . ",";
 		$this->js .= "start : function() {";
 		$this->js .= $this->embedSWF;
-		$this->js .= "}};";
+		$this->js .= "} };";
 		$this->js .= $this->id  . '.start();';
 	
 		return $this->js;

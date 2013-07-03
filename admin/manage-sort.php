@@ -132,7 +132,7 @@ if($picturelist) {
 				</a></td>
 				<td><?php echo $picture->filename; ?></td>
 				<td><?php echo $date; ?></td>
-				<td><?php echo stripslashes($picture->alttext); ?></td>
+				<td><?php echo esc_html(stripslashes($picture->alttext)); ?></td>
 		</tr>
 		<?php
 	}

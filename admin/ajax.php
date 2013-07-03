@@ -38,7 +38,7 @@ function flag_ajax_operation() {
 				$result = flagAdmin::get_image_ids( $id );
 			break;
 			default :
-				do_action( 'flag_ajax_' . $_POST['operation'] );
+				do_action( 'flag_ajax_' . sanitize_key($_POST['operation']) );
 				die('-1');
 			break;
 		}

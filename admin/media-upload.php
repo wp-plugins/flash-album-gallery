@@ -61,8 +61,8 @@ function media_upload_flag_save_image() {
 		if ( !empty($_POST['image']) ) foreach ( $_POST['image'] as $image_id => $image ) {
 		
 		// Function save desription
-		$alttext   		= esc_attr($image['alttext']);
-		$description    = esc_attr($image['description']);
+		$alttext   		= esc_html($image['alttext']);
+		$description    = esc_html($image['description']);
 		
 		$wpdb->query("UPDATE $wpdb->flagpictures SET alttext= '$alttext', description = '$description' WHERE pid = '$image_id'");
 
@@ -174,15 +174,15 @@ function media_upload_flag_form($errors) {
 					<td><?php _e('Image ID:', "flag"); ?><?php echo $picid; ?></td>
 				  </tr>
 				  <tr><td><?php echo esc_attr( $picture->filename ); ?></td></tr>
-				  <tr><td><?php echo esc_attr( stripslashes($picture->alttext) ); ?></td></tr>
+				  <tr><td><?php echo esc_html( stripslashes($picture->alttext) ); ?></td></tr>
 				  <tr><td>&nbsp;</td></tr>
 				  <tr>
 					<td class="label"><label for="image[<?php echo $picid; ?>][alttext]"><?php _e('Alt/Title text', "flag"); ?></label></td>
-					<td class="field"><input id="image[<?php echo $picid; ?>][alttext]" name="image[<?php echo $picid; ?>][alttext]" value="<?php echo esc_attr( stripslashes($picture->alttext) ); ?>" type="text"/></td>
+					<td class="field"><input id="image[<?php echo $picid; ?>][alttext]" name="image[<?php echo $picid; ?>][alttext]" value="<?php echo esc_html( stripslashes($picture->alttext) ); ?>" type="text"/></td>
 				  </tr>	
 				  <tr>
 					<td class="label"><label for="image[<?php echo $picid; ?>][description]"><?php _e("Description","flag"); ?></label></td>
-						<td class="field"><textarea name="image[<?php echo $picid; ?>][description]" id="image[<?php echo $picid; ?>][description]"><?php echo esc_attr( stripslashes($picture->description) ); ?></textarea></td>
+						<td class="field"><textarea name="image[<?php echo $picid; ?>][description]" id="image[<?php echo $picid; ?>][description]"><?php echo esc_html( stripslashes($picture->description) ); ?></textarea></td>
 				  </tr>
 					<tr class="align">
 						<td class="label"><label for="image[<?php echo $picid; ?>][align]"><?php _e("Alignment"); ?></label></td>

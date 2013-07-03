@@ -4,9 +4,10 @@ require_once( $_m[1] . 'wp-load.php');
 $flag_options = get_option ('flag_options');
 if(isset($_GET['vID'])) {
 	header("content-type:text/xml;charset=utf-8");
-	$vid = get_post($_GET['vID']);
+	$id = intval($_GET['vID']);
+	$vid = get_post($id);
 	if(in_array($vid->post_mime_type, array('video/x-flv'))) {
-		$thumb = get_post_meta($_GET['vID'], 'thumbnail', true);
+		$thumb = get_post_meta($id, 'thumbnail', true);
 		$content = '<item id="'.$vid->ID.'">
 	<properties>
 		<property0>0x'.$flag_options["vmColor1"].'</property0>

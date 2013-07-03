@@ -80,7 +80,7 @@ if($_REQUEST['riched'] == "false") {
 					$gallerylist = $flagdb->find_all_galleries('gid', 'ASC');
 					if(is_array($gallerylist)) {
 						foreach($gallerylist as $gallery) {
-							$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
+							$name = ( empty($gallery->title) ) ? $gallery->name : esc_html(stripslashes($gallery->title));
 							echo '<option value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
 						}
 					}
@@ -178,7 +178,7 @@ if($_REQUEST['riched'] == "false") {
 					foreach((array)$all_playlists as $playlist_file => $playlist_data) {
 						$playlist_name = basename($playlist_file, '.xml');
 				?>
-					<option value="<?php echo $playlist_name; ?>"><?php echo $playlist_data['title']; ?></option>
+					<option value="<?php echo $playlist_name; ?>"><?php echo esc_html(stripslashes($playlist_data['title'])); ?></option>
 				<?php 
 					}
 				?>

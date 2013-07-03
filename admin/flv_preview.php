@@ -15,6 +15,7 @@ if ( !current_user_can('FlAG Manage video') )
 	<script type="text/javascript" src="<?php echo plugins_url('/'.FLAGFOLDER.'/'); ?>admin/js/swfobject.js"></script>
 </head>
 <body style="margin: 0; padding: 0; background: #555555; overflow: hidden;">
-<?php echo flagShowVmPlayer($_GET['vid'], $w='520', $h='304', $autoplay=true); ?>
+<?php $vidID = intval($_GET['vid']);
+echo flagShowVmPlayer($vidID, $w='520', $h='304', $autoplay=true); ?>
 </body>
 </html>

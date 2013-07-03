@@ -325,9 +325,9 @@ class flagManageGallery {
 		
 			check_admin_referer('flag_updategallery');
 		
-			$gallery_title   = esc_attr($_POST['title']);
-			$gallery_path    = esc_attr($_POST['path']);
-			$gallery_desc    = esc_attr($_POST['gallerydesc']);
+			$gallery_title   = esc_html($_POST['title']);
+			$gallery_path    = esc_attr(str_replace('..','',$_POST['path']));
+			$gallery_desc    = esc_html($_POST['gallerydesc']);
 			$gallery_preview = (int) $_POST['previewpic'];
 			
 			$wpdb->query("UPDATE $wpdb->flaggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', previewpic = '$gallery_preview' WHERE gid = '$this->gid'");

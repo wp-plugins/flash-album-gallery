@@ -18,7 +18,7 @@ function flag_video_controler() {
 	if (isset($_POST['importfolder']) && $_POST['importfolder']){
 		check_admin_referer('flag_addvideo');
 		$videofolder = $_POST['videofolder'];
-		if ( !empty($videofolder) )
+		if ( !empty($videofolder) && false === strpos($videofolder, '..') )
 			flagAdmin::import_video($videofolder);
 	}
 	$mode = isset($_REQUEST['mode'])? $_REQUEST['mode'] : 'main';
@@ -29,13 +29,13 @@ function flag_video_controler() {
 	switch($mode) {
 		case 'sort':
 			include_once (dirname (__FILE__) . '/video-sort.php');
-			flag_v_playlist_order($_GET['playlist']);
+			flag_v_playlist_order();
 		break;
 		case 'edit':
+			$file = urlencode($_GET['playlist']);
 			if(isset($_POST['updatePlaylist'])) {
-				$title = $_POST['playlist_title'];
-				$descr = $_POST['playlist_descr'];
-				$file = $_GET['playlist'];
+				$title = esc_html($_POST['playlist_title']);
+				$descr = esc_html($_POST['playlist_descr']);
 				$data = array();
 				foreach($_POST['item_a'] as $item_id => $item) {
 					if($action=='delete_items' && in_array($item_id, $_POST['doaction']))
@@ -46,22 +46,23 @@ function flag_video_controler() {
 				flagSave_vPlaylist($title,$descr,$data,$file);
 			}
 			if(isset($_POST['updatePlaylistSkin'])) {
-				$file = $_GET['playlist'];
 				flagSave_vPlaylistSkin($file);
 			}
 			include_once (dirname (__FILE__) . '/manage-video.php');
-			flag_v_playlist_edit($_GET['playlist']);
+			flag_v_playlist_edit();
 		break;
 		case 'save':
-			$title = $_POST['playlist_title'];
-			$descr = $_POST['playlist_descr'];
-			$data = $_POST['items_array'];
-			$file = isset($_REQUEST['playlist'])? $_REQUEST['playlist'] : false;
-			flagGallery::flagSaveWpMedia();
-			flagSave_vPlaylist($title,$descr,$data, $file);
+			if(isset($_POST['items_array'])){
+				$title = esc_html($_POST['playlist_title']);
+				$descr = esc_html($_POST['playlist_descr']);
+				$data = $_POST['items_array'];
+				$file = isset($_REQUEST['playlist'])? urlencode($_REQUEST['playlist']) : false;
+				flagGallery::flagSaveWpMedia();
+				flagSave_vPlaylist($title,$descr,$data, $file);
+			}
 			if(isset($_GET['playlist'])) {
 				include_once (dirname (__FILE__) . '/manage-video.php');
-				flag_v_playlist_edit($_GET['playlist']);
+				flag_v_playlist_edit();
 			} else {
 				flag_created_v_playlists();
 				flag_video_wp_media_lib();
@@ -72,7 +73,7 @@ function flag_video_controler() {
 			flag_video_wp_media_lib($added);
 		break;
 		case 'delete':
-			flag_v_playlist_delete($_GET['playlist']);
+			flag_v_playlist_delete(urlencode($_GET['playlist']));
 	  	case 'main':
 			if(isset($_POST['updateMedia'])) {
 				flagGallery::flagSaveWpMedia();
@@ -89,7 +90,7 @@ function flag_video_controler() {
 function flag_created_v_playlists() {
 
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath = admin_url() . 'admin.php?page=' . $_GET['page'];
+	$filepath = admin_url() . 'admin.php?page=' . urlencode($_GET['page']);
 
 	$all_playlists = get_v_playlists();
 	$total_all_playlists = count($all_playlists);
@@ -122,10 +123,10 @@ if($all_playlists) {
 		<tr id="<?php echo $playlist_name; ?>" <?php echo $class; ?> >
 			<td>
 				<a href="<?php echo $filepath.'&amp;playlist='.$playlist_name.'&amp;mode=edit'; ?>" class='edit' title="<?php _e('Edit'); ?>" >
-					<?php echo stripslashes($playlist_data['title']); ?>
+					<?php echo esc_html(stripslashes($playlist_data['title'])); ?>
 				</a>
 			</td>
-			<td><?php echo stripslashes($playlist_data['description']); echo '&nbsp;('.__("player", "flag").': <strong>'.$playlist_data['skin'].'</strong>)' ?></td>
+			<td><?php echo esc_html(stripslashes($playlist_data['description'])); echo '&nbsp;('.__("player", "flag").': <strong>'.$playlist_data['skin'].'</strong>)' ?></td>
 			<td><?php echo count($query_m); ?></td>
 			<td style="white-space: nowrap;"><input type="text" class="shortcode1" style="width: 200px; font-size: 9px;" readonly="readonly" onfocus="this.select()" value="[grandvideo playlist=<?php echo $playlist_name; ?>]" /></td>
 			<td>
@@ -148,14 +149,15 @@ if($all_playlists) {
 function flag_video_wp_media_lib($added=false) {
 	global $wpdb;
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath = admin_url() . 'admin.php?page=' . $_GET['page'];
+	$filepath = admin_url() . 'admin.php?page=' . urlencode($_GET['page']);
 	if($added!==false) {
-		$filepath .= '&amp;playlist='.$_GET['playlist'].'&amp;mode=save';
+		$filepath .= '&playlist='.urlencode($_GET['playlist']).'&mode=save';
 		$flag_options = get_option('flag_options');
-		$playlistPath = $flag_options['galleryPath'].'playlists/video/'.$_GET['playlist'].'.xml';
+		$playlistPath = $flag_options['galleryPath'].'playlists/video/'.urlencode($_GET['playlist']).'.xml';
 		$playlist = get_v_playlist_data(ABSPATH.$playlistPath);
 		$exclude = explode(',', $added);
 	}
+	$filepath = esc_url($filepath);
 ?>
 <script type="text/javascript"> 
 <!--
@@ -167,11 +169,13 @@ jQuery(document).ready(function(){
 			arr = jQuery('#items_array').val();
 			if(arr) { del = ','; } else { del = ''; }
 			jQuery('#items_array').val(arr+del+cur);
+			jQuery(this).closest('tr').css('background-color','#DDFFBB').next().css('background-color','#DDFFBB');
 		} else {
 			cur = jQuery(this).val();
 			arr = jQuery('#items_array').val().split(',');
 			arr = jQuery.grep(arr, function(a){ return a != cur; }).join(',');
 			jQuery('#items_array').val(arr);
+			jQuery(this).closest('tr').removeAttr('style').next().removeAttr('style');
 		}
  	});
     jQuery('.del_thumb').click(function(){
@@ -207,11 +211,7 @@ function checkSelected() {
 			showDialog('new_playlist', 160);
 			return false;
 			break;
-		case "add_to_playlist":
-			return confirm('<?php echo sprintf(esc_js(__("You are about to add %s items to playlist \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
-			break;
 	}
-	return confirm('<?php echo sprintf(esc_js(__("You are about to start the bulk edit for %s items \n \n 'Cancel' to stop, 'OK' to proceed.",'flag')), "' + numchecked + '") ; ?>');
 }
 
 function showDialog( windowId, height ) {
@@ -230,8 +230,8 @@ function send_to_editor(html) {
 //-->
 </script>
 	<div class="wrap">
-
-<?php if( current_user_can('FlAG Import folder') ) { 
+<?php if($added===false) { ?>
+<?php if( current_user_can('FlAG Import folder') ) {
 	$defaultpath = 'wp-content/';
 ?>
 <link rel="stylesheet" type="text/css" href="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.css" />
@@ -273,6 +273,7 @@ function send_to_editor(html) {
 			</form>
 		</div>
 <?php } ?>
+<?php } ?>
 
 		<h2><?php _e('WordPress Video Library', 'flag'); ?></h2>
 		<form id="videolib" class="flagform" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8">
@@ -296,10 +297,10 @@ function send_to_editor(html) {
 <?php } else { ?>
 				<input type="hidden" name="mode" value="save" />
 				<input style="width: 80%;" type="text" id="items_array" name="items_array" value="<?php echo $added; ?>" />
-				<input type="hidden" name="playlist_title" value="<?php echo $playlist['title']; ?>" />
+				<input type="hidden" name="playlist_title" value="<?php echo esc_html(stripslashes($playlist['title'])); ?>" />
 				<input type="hidden" name="skinname" value="<?php echo $playlist['skin']; ?>" />
 				<input type="hidden" name="skinaction" value="<?php echo $playlist['skin']; ?>" />
-				<textarea style="display: none;" name="playlist_descr" cols="40" rows="1"><?php echo $playlist['description']; ?></textarea>
+				<textarea style="display: none;" name="playlist_descr" cols="40" rows="1"><?php echo esc_html(stripslashes($playlist['description'])); ?></textarea>
 				<input name="addToPlaylist" class="button-secondary" type="submit" value="<?php _e('Update Playlist','flag'); ?>" onclick="if ( !checkSelected() ) return false;" />
 <?php } ?>
 			</div>
@@ -371,15 +372,15 @@ if($videolist) {
 				}
 			?></td>
 			<td class="thumb" rowspan="2">
-				<a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo FLAG_URLPATH; ?>admin/flv_preview.php?vid=<?php echo $flv->ID; ?>&amp;TB_iframe=1&amp;width=490&amp;height=293"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo $thumb; ?>" width="100" height="100" alt="" /></a>
+				<a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo FLAG_URLPATH; ?>admin/flv_preview.php?vid=<?php echo $flv->ID; ?>&amp;TB_iframe=1&amp;width=490&amp;height=293"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo esc_url($thumb); ?>" width="100" height="100" alt="" /></a>
 			</td>
 			<td class="title_filename" rowspan="2">
 				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />
-				<textarea title="Title" name="item_a[<?php echo $flv->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo $flv->post_title; ?></textarea><br />
-				<p><?php _e('Thumb URL:', 'flag'); ?> <input id="flvthumb-<?php echo $flv->ID; ?>" name="item_a[<?php echo $flv->ID; ?>][post_thumb]" type="text" value="<?php echo $flvthumb; ?>" /> <a class="thickbox" onclick="actInp=<?php echo $flv->ID; ?>" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="<?php _e('Add an Image','flag'); ?>"><?php _e('assist', 'flag'); ?></a></p>
+				<textarea title="Title" name="item_a[<?php echo $flv->ID; ?>][post_title]" cols="20" rows="1" style="width:95%; height: 25px; overflow:hidden;"><?php echo esc_html(stripslashes($flv->post_title)); ?></textarea><br />
+				<p><?php _e('Thumb URL:', 'flag'); ?> <input id="flvthumb-<?php echo $flv->ID; ?>" name="item_a[<?php echo $flv->ID; ?>][post_thumb]" type="text" value="<?php echo esc_url($flvthumb); ?>" /> <a class="thickbox" onclick="actInp=<?php echo $flv->ID; ?>" href="media-upload.php?type=image&amp;TB_iframe=1&amp;width=640&amp;height=400" title="<?php _e('Add an Image','flag'); ?>"><?php _e('assist', 'flag'); ?></a></p>
 			</td>
 			<td class="description" rowspan="2">
-				<textarea name="item_a[<?php echo $flv->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo $flv->post_content; ?></textarea>
+				<textarea name="item_a[<?php echo $flv->ID; ?>][post_content]" style="width:95%; height: 96px; margin-top: 2px; font-size:12px; line-height:115%;" rows="1" ><?php echo esc_html(stripslashes($flv->post_content)); ?></textarea>
 			</td>
 		</tr>
         <tr class="flv-<?php echo $flv->ID.$class2; ?>"<?php echo $ex; ?>>

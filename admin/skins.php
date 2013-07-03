@@ -78,7 +78,7 @@ function upload_skin() {
 		if ( !empty($_FILES) ) {
 			$filename = $_FILES['skinzip']['name'];
 		}	else if ( isset($_GET['package']) ) {
-			$filename = $_GET['package'];
+			$filename = urlencode($_GET['package']);
 		}
 		if ( !$filename ) {
 			echo "<p>".__('No skin Specified', 'flag')."</p>\n";
@@ -206,7 +206,7 @@ if ( isset($_POST['updateoption']) ) {
 
 
 if ( isset($_GET['delete']) ) {
-	$delskin = $_GET['delete'];
+	$delskin = urlencode($_GET['delete']);
 	if ( current_user_can('FlAG Delete skins') && false === strpos($delskin, '..') ) {
 		if ( $flag_options['flashSkin'] != $delskin ) {
 			$skins_dir = trailingslashit( $flag_options['skinsDirABS'] );
@@ -231,7 +231,7 @@ if ( isset($_GET['delete']) ) {
 }
 
 if( isset($_GET['skin']) ) {
-	$set_skin = $_GET['skin'];
+	$set_skin = urlencode($_GET['skin']);
 	if($flag_options['flashSkin'] != $set_skin) {
 		$aValid = array('-', '_');
 		if(!ctype_alnum(str_replace($aValid, '', $set_skin))){
@@ -247,7 +247,7 @@ if( isset($_GET['skin']) ) {
 		flagGallery::show_message( __('Skin','flag').' \''.$set_skin.'\' '.__('activated successfully. Optionally it can be overwritten with shortcode parameter.','flag') );
 	}
 }
-$type = isset($_GET['type'])? $_GET['type'] : '';
+$type = isset($_GET['type'])? urlencode($_GET['type']) : '';
 switch($type){
 	case '':
 		$stype = 'gallery';

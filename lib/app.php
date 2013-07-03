@@ -2,13 +2,22 @@
 // include the flag function
 @ require_once (dirname(dirname(__FILE__)). '/flag-config.php');
 
-//$account_data='{"status":"KO"}';
-
+$r['data'] = array();
 if(isset($_REQUEST['account'])){
 	global $wpdb, $flagdb;
 	$account = json_decode(stripslashes($_REQUEST['account']));
 	$flag_options = get_option ('flag_options');
 	if($account->access_key != $flag_options['access_key']){ die('{"status":"key_error"}'); }
+
+	$current_plugins = get_option('active_plugins', array());
+	if (!in_array('flash-album-gallery/flag.php', (array) $current_plugins)) {
+		if(isset($account->add_category)) {
+			die('{"status":"gallery_error"}');
+		}
+		echo json_encode($r);
+		die();
+	}
+
 	if(isset($account->gid)){
 		$gid = $wpdb->get_var($wpdb->prepare("SELECT gid FROM $wpdb->flaggallery WHERE gid = %d", $account->gid));
 		if(!$gid){ die('{"status":"gallery_error"}'); }
@@ -67,6 +76,8 @@ if(isset($_REQUEST['account'])){
 			}
 		}
 		$r['data'] = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, UNIX_TIMESTAMP(imagedate) AS imagedate, UNIX_TIMESTAMP(modified) AS modified, sortorder, exclude, location, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE galleryid = '{$gid}' ORDER BY pid DESC");
+		$r['data'] = stripslashes_deep($r['data']);
+
 		echo json_encode($r);
 		die();
 	} elseif(isset($account->updated_item)){
@@ -77,38 +88,59 @@ if(isset($_REQUEST['account'])){
 			$flagdb->update_picture($args);
 			$gid = intval($args['galleryid']);
 			$r['data'] = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, UNIX_TIMESTAMP(imagedate) AS imagedate, UNIX_TIMESTAMP(modified) AS modified, sortorder, exclude, location, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE galleryid = '{$gid}' ORDER BY pid DESC");
+			$r['data'] = stripslashes_deep($r['data']);
+
 			echo json_encode($r);
 			die();
 		}
 		die('{"status":"item_error"}');
 	} elseif(isset($account->add_category)){
 		$args = get_object_vars($account->add_category);
-		$args['title'] = esc_attr( trim($args['title']) );
+		$args['title'] = esc_html( trim($args['title']) );
 		if ( empty($args['title']) ) {
 			$args['title'] = str_replace(' ', '_', current_time('mysql'));
 		}
 		@ require_once (dirname(dirname(__FILE__)). '/admin/functions.php');
-		$defaultpath = $flag->options['galleryPath'];
-		if(!flagAdmin::create_gallery($args, $defaultpath, $output = false)) {
-			die('{"status":"gallery_error"}');
+		$defaultpath = $flag_options['galleryPath'];
+
+		if(isset($args['id'])){
+			$gid = $wpdb->get_var($wpdb->prepare("SELECT gid FROM $wpdb->flaggallery WHERE gid = %d", $args['id']));
+			if($gid){
+				$gallerytitle = $args['title'];
+				$description = $args['description'];
+				$status = intval($args['status']);
+				$wpdb->query( $wpdb->prepare("UPDATE $wpdb->flaggallery SET title = %s, galdesc = %s, status = %d WHERE gid = %d", $gallerytitle, $description, $status, $gid) );
+			} else {
+				if(!flagAdmin::create_gallery($args, $defaultpath, $output = false)) {
+					die('{"status":"gallery_error"}');
+				}
+			}
+		} else {
+			if(!flagAdmin::create_gallery($args, $defaultpath, $output = false)) {
+				die('{"status":"gallery_error"}');
+			}
 		}
 	}
 
-	//$account_data='{"status":"OK"}';
 	$gallerylist = $wpdb->get_results( "SELECT * FROM $wpdb->flaggallery ORDER BY gid DESC", ARRAY_A );
-	$r['data'] = array();
 	if(count($gallerylist)){
 		foreach($gallerylist as $gallery){
 			$gid = (int) $gallery['gid'];
+			$gallery['title'] = htmlspecialchars_decode($gallery['title'], ENT_QUOTES);
+			$gallery['galdesc'] = htmlspecialchars_decode($gallery['galdesc'], ENT_QUOTES);
 			$thepictures = $wpdb->get_var("SELECT filename FROM $wpdb->flagpictures WHERE galleryid = '{$gid}' ORDER BY pid DESC");
 			$r['data'][] = $gallery + array( 'thumbnail' => $thepictures );
 		}
 	}
+	$r['data'] = stripslashes_deep($r['data']);
+
 	echo json_encode($r);
 	die();
 }
 
 function flagallery_utf8_urldecode($str) {
 	$str = preg_replace("/%u([0-9a-f]{3,4})/i","&#x\\1;",urldecode($str));
-	return html_entity_decode($str,null,'UTF-8');
+	$str = stripslashes($str);
+	$str = html_entity_decode($str,null,'UTF-8');
+	return wp_specialchars_decode($str, ENT_QUOTES);
 }

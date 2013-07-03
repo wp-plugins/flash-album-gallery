@@ -96,7 +96,7 @@ class flagSlideshowWidget extends WP_Widget {
             'width' => '75',
             'height'=> '65',
             'pages' =>  '') );
-		$title  = esc_attr( $instance['title'] );
+		$title  = esc_html( $instance['title'] );
 		$width  = esc_attr( $instance['width'] );
         $height = esc_attr( $instance['height'] );
         $pages = esc_attr( $instance['pages'] );
@@ -195,7 +195,7 @@ class flagBannerWidget extends WP_Widget {
 
 		//Defaults
 		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Banner', 'xml' => '', 'width' => '100%', 'height' => '200', 'skin' => 'banner_widget_default') );
-		$title  = esc_attr( $instance['title'] );
+		$title  = esc_html( $instance['title'] );
 		$width  = esc_attr( $instance['width'] );
 		$height = esc_attr( $instance['height'] );
 		$skin  = esc_attr( $instance['skin'] );
@@ -293,7 +293,7 @@ class flagWidget extends WP_Widget {
             'fheight'=> '480',
             'album' =>  '',
 			'skin'	=> '' ) );
-		$title  = esc_attr( $instance['title'] );
+		$title  = esc_html( $instance['title'] );
 		$width  = esc_attr( $instance['width'] );
         $height = esc_attr( $instance['height'] );
 		$fwidth  = esc_attr( $instance['fwidth'] );
@@ -467,7 +467,7 @@ class flagVideoWidget extends WP_Widget {
             'fwidth' => '640',
             'fheight'=> '480',
             'vxml' =>  '' ) );
-		$title  = esc_attr( $instance['title'] );
+		$title  = esc_html( $instance['title'] );
 		$width  = esc_attr( $instance['width'] );
         $height = esc_attr( $instance['height'] );
 		$fwidth  = esc_attr( $instance['fwidth'] );
@@ -636,7 +636,7 @@ class flagMusicWidget extends WP_Widget {
 
 		//Defaults
 		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Music', 'xml' => '', 'width' => '100%', 'height' => '200', 'skin' => 'music_default') );
-		$title  = esc_attr( $instance['title'] );
+		$title  = esc_html( $instance['title'] );
 		$width  = esc_attr( $instance['width'] );
 		$height = esc_attr( $instance['height'] );
 		$skin  = esc_attr( $instance['skin'] );

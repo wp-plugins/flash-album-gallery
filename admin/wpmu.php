@@ -5,16 +5,13 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		global $wpdb;
 	
 	//to be sure
-	if (!is_site_admin())
+	if (!is_multisite())
  		die('You are not allowed to call this page.');
 
 	// get the options
 	$flag_options = get_site_option('flag_options');
 	
-	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
-	$filepath    = site_url( 'wp-admin/wpmu-admin.php?page=' . $_GET['page'], 'admin' );
-
-	if ( isset($_POST['updateoption']) ) {	
+	if ( isset($_POST['updateoption']) ) {
 		check_admin_referer('flag_wpmu_settings');
 		// get the hidden option fields, taken from WP core
 		if ( $_POST['page_options'] )	

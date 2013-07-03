@@ -10,7 +10,8 @@ global $wpdb;
 $siteurl = get_option ('siteurl');
 // get the gallery id
 $gID = explode( '_', $_GET['gid'] );
-$skin = $_GET['skinName'];
+$gID = array_filter($gID, 'intval');
+$skin = urlencode($_GET['skinName']);
 $flag_options = get_option ('flag_options');
 
 $file =  str_replace("\\","/", dirname(dirname(dirname(__FILE__))).'/flagallery-skins/'.$skin.'/settings/settings.xml');
@@ -62,7 +63,7 @@ foreach ( $gID as $galleryID ) {
   if (is_array ($thepictures) && count($thepictures)){
 	echo "	<category id='".$galleryID."'>\n";
 	echo "		<properties>\n";
-	echo "			<title>".esc_attr(flagGallery::i18n(stripslashes($thepictures[0]->title)))."</title>\n";
+	echo "			<title>".esc_html(flagGallery::i18n(stripslashes($thepictures[0]->title)))."</title>\n";
 	echo "		</properties>\n";
 	echo "		<items>\n";
 
@@ -70,8 +71,8 @@ foreach ( $gID as $galleryID ) {
 		foreach ($thepictures as $picture) {
 	echo "			<item id='".$picture->pid."'>\n";
 	echo "				<thumbnail>".$siteurl."/".$picture->path."/thumbs/thumbs_".$picture->filename."</thumbnail>\n";
-	echo "				<title><![CDATA[".esc_attr(flagGallery::i18n(stripslashes($picture->alttext)))."]]></title>\n";
-	echo "				<description><![CDATA[".html_entity_decode(esc_attr(flagGallery::i18n(stripslashes($picture->description))))."]]></description>\n";
+	echo "				<title><![CDATA[".esc_html(flagGallery::i18n(stripslashes($picture->alttext)))."]]></title>\n";
+	echo "				<description><![CDATA[".html_entity_decode(esc_html(flagGallery::i18n(stripslashes($picture->description))))."]]></description>\n";
 	//echo "				<link>".$picture->link."</link>\n";
 	echo "				<photo>".$siteurl."/".$picture->path."/".$picture->filename."</photo>\n";
 	echo "				<date>".$picture->imagedate."</date>\n";

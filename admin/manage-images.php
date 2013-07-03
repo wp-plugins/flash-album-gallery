@@ -41,7 +41,8 @@ function flag_picturelist() {
 		// look for pagination	
 		if ( ! isset( $_GET['paged'] ) || intval($_GET['paged']) < 1 )
 			$_GET['paged'] = 1;
-		
+
+		$_GET['paged'] = intval($_GET['paged']);
 		$start = ( $_GET['paged'] - 1 ) * 50;
 		
 		// get picture values
@@ -68,6 +69,7 @@ function flag_picturelist() {
 	//get the columns
 	$gallery_columns = flag_manage_gallery_columns();
 	$hidden_columns  = get_hidden_columns('flag-manage-images');
+	$hidden_columns = array_filter($hidden_columns);
 	if($picturelist){
 		$a_hits = array();
 		foreach($picturelist as $p){
@@ -182,7 +184,7 @@ jQuery(document).ready( function() {
 <div class="wrap">
 
 <?php if ($is_search) :?>
-<h2><?php printf( __('Search results for &#8220;%s&#8221;', 'flag'), esc_html( get_search_query() ) ); ?></h2>
+<h2><?php printf( __('Search results for &#8220;%s&#8221;', 'flag'), esc_html( stripslashes(get_search_query()) ) ); ?></h2>
 <form class="search-form" action="" method="get">
 <p class="search-box">
 	<label class="hidden" for="media-search-input"><?php _e( 'Search Images', 'flag' ); ?>:</label>
@@ -194,27 +196,27 @@ jQuery(document).ready( function() {
 
 <br style="clear: both;" />
 
-<form id="updategallery" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;mode=edit&amp;s=' . get_search_query(); ?>" accept-charset="utf-8">
+<form id="updategallery" class="flagform" method="POST" action="<?php echo esc_url($flag->manage_page->base_page . '&mode=edit&s=' . urlencode(get_search_query())); ?>" accept-charset="utf-8">
 <?php wp_nonce_field('flag_updategallery'); ?>
 <input type="hidden" name="page" value="manage-images" />
 
 <?php else :?>
 
-<h2><?php echo _n( 'Gallery', 'Galleries', 1, 'flag' ); ?> : <?php echo $gallery->title; ?></h2>
+<h2><?php echo _n( 'Gallery', 'Galleries', 1, 'flag' ); ?> : <?php echo esc_html(stripslashes($gallery->title)); ?></h2>
 <select name="select_gid" style="width:180px; float: right; margin: -20px 3px 0 0;" onchange="window.location.href=this.options[this.selectedIndex].value">
 	<option selected="selected"><?php _e('Choose another gallery', 'flag'); ?></option>
 <?php 
 	foreach ($gallerylist as $gal) { 
 		if ($gal->gid != $act_gid) { 
 ?>
-	<option value="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gal->gid, 'flag_editgallery')?>" ><?php echo $gal->gid; ?> - <?php echo esc_attr(stripslashes($gal->title)); ?></option>
+	<option value="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gal->gid, 'flag_editgallery')?>" ><?php echo $gal->gid; ?> - <?php echo esc_html(stripslashes($gal->title)); ?></option>
 <?php 
 		} 
 	}
 ?>
 </select>
 
-<form id="updategallery" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $act_gid . '&amp;paged=' . $_GET['paged']; ?>" accept-charset="utf-8">
+<form id="updategallery" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;mode=edit&amp;gid=' . $act_gid . '&amp;paged=' . intval($_GET['paged']); ?>" accept-charset="utf-8">
 <?php wp_nonce_field('flag_updategallery'); ?>
 <input type="hidden" name="page" value="manage-images" />
 
@@ -228,15 +230,15 @@ jQuery(document).ready( function() {
 			<table class="form-table" >
 				<tr>
 					<th align="left" scope="row"><?php _e('Title', 'flag'); ?>:</th>
-					<td align="left"><input type="text" size="50" name="title" value="<?php echo stripslashes($gallery->title); ?>"  /></td>
+					<td align="left"><input type="text" size="50" name="title" value="<?php echo esc_html(stripslashes($gallery->title)); ?>"  /></td>
 				</tr>
 				<tr>
 					<th align="left" scope="row"><?php _e('Description', 'flag'); ?>:</th> 
-					<td align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo stripslashes($gallery->galdesc); ?></textarea></td>
+					<td align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo esc_html(stripslashes($gallery->galdesc)); ?></textarea></td>
 				</tr>
 				<tr>
 					<th align="left" scope="row"><?php _e('Path', 'flag'); ?>:</th> 
-					<td align="left"><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="50" name="path" value="<?php echo $gallery->path; ?>"  /></td>
+					<td align="left"><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="50" name="path" value="<?php echo esc_attr($gallery->path); ?>"  /></td>
 				</tr>
 				<tr>
 					<th align="right" scope="row"><?php _e('Author', 'flag'); ?>:</th>
@@ -437,9 +439,9 @@ if($picturelist) {
 					case 'alt_title_desc' :
 						?>
 						<td <?php echo $attributes; ?>>
-							<input name="alttext[<?php echo $pid; ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext); ?>" /><br/>
-							<textarea name="description[<?php echo $pid; ?>]" style="width:95%; margin-top: 2px;" rows="2" ><?php echo stripslashes($picture->description); ?></textarea>
-							<input name="link[<?php echo $pid; ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->link); ?>" placeholder="(optional for skin) URL for linked button" /><br/>
+							<input name="alttext[<?php echo $pid; ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo esc_html(stripslashes($picture->alttext)); ?>" /><br/>
+							<textarea name="description[<?php echo $pid; ?>]" style="width:95%; margin-top: 2px;" rows="2" ><?php echo esc_html(stripslashes($picture->description)); ?></textarea>
+							<input name="link[<?php echo $pid; ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo esc_attr(stripslashes($picture->link)); ?>" placeholder="(optional for skin) URL for linked button" /><br/>
 						</td>
 						<?php
 					break;
@@ -497,7 +499,7 @@ if ( $counter==0 )
 		    				foreach ($gallerylist as $gallery) { 
 		    					if ($gallery->gid != $act_gid) { 
 		    			?>
-						<option value="<?php echo $gallery->gid; ?>" ><?php echo $gallery->gid; ?> - <?php echo stripslashes($gallery->title); ?></option>
+						<option value="<?php echo $gallery->gid; ?>" ><?php echo $gallery->gid; ?> - <?php echo esc_html(stripslashes($gallery->title)); ?></option>
 						<?php 
 		    					} 
 		    				}
