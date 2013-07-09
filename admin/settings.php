@@ -32,43 +32,72 @@ function flag_admin_options()  {
 
 		flagGallery::show_message(__('Update Successfully','flag'));
 	}
+	$regform = 0;
 	if( isset($_POST['membership']) ){
-		if(!empty($_POST['license_key'])){
+		if(function_exists('curl_init')){
+			check_admin_referer('flag_settings');
+			$ch = curl_init('http://mypgc.co/app/account_st.php');
+			curl_setopt ($ch, CURLOPT_REFERER, site_url());
+			curl_setopt ($ch, CURLOPT_POST, 1);
+			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt ($ch, CURLOPT_POSTFIELDS, array('access_key'=>$_POST['access_key'], 'access_url'=>$_POST['access_url'], 'license_key'=>$_POST['license_key']));
+			$access_key_return = curl_exec ($ch);
+			curl_close ($ch);
+		} else {
+			$access_key_return = __('cURL library is not installed on your server.','flag');
+		}
+		if(strpos($access_key_return, 'Error') !== FALSE){
+			$_POST['license_key'] = '';
+		}
+		$options = explode(',', stripslashes($_POST['page_options']));
+		foreach ($options as $option) {
+				$option = trim($option);
+				$value = trim($_POST[$option]);
+				$flag->options[$option] = $value;
+		}
+
+		if(strpos($access_key_return, 'Error') === FALSE || strpos($access_key_return, 'not a member') !== FALSE){
+			flagGallery::show_message($access_key_return);
+			if(strpos($access_key_return, 'not a member') !== FALSE){
+				$regform = 1;
+				//$flag->options['access_key'] = '';
+			}
+		} else {
+			flagGallery::show_error($access_key_return);
+			//$flag->options['access_key'] = '';
+		}
+
+		// Save options
+		update_option('flag_options', $flag->options);
+	}
+	
+	if( isset($_POST['register_subscriber']) ){
+		if(empty($_POST['customer_first_name']) || empty($_POST['customer_last_name']) || empty($_POST['customer_email'])){
+			$regform = 1;
+			flagGallery::show_error(__('Error: All fields required.'));
+		} else {
 			if(function_exists('curl_init')){
 				check_admin_referer('flag_settings');
 				$ch = curl_init('http://mypgc.co/app/account_st.php');
 				curl_setopt ($ch, CURLOPT_REFERER, site_url());
 				curl_setopt ($ch, CURLOPT_POST, 1);
 				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-				curl_setopt ($ch, CURLOPT_POSTFIELDS, array('access_key'=>$_POST['access_key'], 'access_url'=>$_POST['access_url'], 'license_key'=>$_POST['license_key']));
-				$access_key_return = curl_exec ($ch);
+				curl_setopt ($ch, CURLOPT_POSTFIELDS, array('access_key'=>$_POST['access_key'], 'access_url'=>$_POST['access_url'], 'customer_first_name'=>$_POST['customer_first_name'], 'customer_last_name'=>$_POST['customer_last_name'], 'customer_email'=>$_POST['customer_email']));
+				$reg_return = curl_exec ($ch);
 				curl_close ($ch);
 			} else {
-				$access_key_return = __('cURL library is not installed on your server.','flag');
+				$reg_return = __('cURL library is not installed on your server.','flag');
 			}
-			if(strpos($access_key_return, 'Error') !== FALSE){
-				$_POST['license_key'] = '';
-			}
-			$options = explode(',', stripslashes($_POST['page_options']));
-			foreach ($options as $option) {
-					$option = trim($option);
-					$value = trim($_POST[$option]);
-					$flag->options[$option] = $value;
-			}
-			// Save options
-			update_option('flag_options', $flag->options);
 
-			if(strpos($access_key_return, 'Error') === FALSE){
-				flagGallery::show_message($access_key_return);
+			if(strpos($reg_return, 'Error') === FALSE){
+				flagGallery::show_message($reg_return);
 			} else {
-				flagGallery::show_error($access_key_return);
+				flagGallery::show_error($reg_return);
+				$regform = 1;
 			}
-		} else {
-			$access_key_return = __('Enter License Key. License Key is required','flag');
-			flagGallery::show_error($access_key_return);
 		}
 	}
-	
+
 
 	if ( isset($_POST['update_cap']) ) {	
 
@@ -102,7 +131,7 @@ function flag_admin_options()  {
 <div id="slider" class="wrap">
 
 	<ul id="tabs" class="tabs">
-		<li class="selected"><a href="#" rel="imageoptions"><?php _e('Image Gallery Options', 'flag'); ?></a></li>
+		<li class="selected"><a href="#" rel="imageoptions"><?php _e('Gallery Options', 'flag'); ?></a></li>
 		<?php if(current_user_can('administrator')){ ?>
 		<li><a href="#" rel="rControl"><?php _e('License Key & Remote Control', 'flag'); ?></a></li>
 		<?php } ?>
@@ -261,28 +290,47 @@ jQuery(document).ready(function() {
 
 <?php if(current_user_can('administrator')){ ?>
 	<div id="rControl" class="cptab">
-		<form name="rControl"  method="post">
+		<form name="rControl"  method="post" style="float: left;width: 50%;">
 			<?php wp_nonce_field('flag_settings'); ?>
 			<input type="hidden" name="page_options" value="access_key,license_key" />
 			<h2><?php _e('License Key & Remote Control','flag'); ?></h2>
 			<input type="hidden" name="access_url" value="<?php echo plugins_url() . '/' . FLAGFOLDER . '/lib/app.php'; ?>" />
-			<table class="form-table flag-options">
+			<table class="form-table flag-options" style="">
 				<tr>
-					<th valign="top" width="200"><?php _e('License Key','flag'); ?>:</th>
-					<td valign="top"><input type="text" size="54" id="license_key" name="license_key" value="<?php echo $flag_options['license_key']?>" /></td>
+					<th valign="top" width="200"><a href="http://mypgc.co/membership/" target="_blank"><?php _e('License Key', 'flag') ?></a>:</th>
+					<td valign="top"><input type="text" size="40" id="license_key" name="license_key" value="<?php echo $flag_options['license_key']?>" /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><br><?php _e('If you want to upload photos to FlAGallery right from your iPhone <a href="https://itunes.apple.com/us/app/mypgc/id663405181?ls=1&mt=8">download application</a> and enter access key below.', 'flag'); ?> <a href="http://mypgc.co/membership/"><strong><u><?php _e('License Key is required.', 'flag') ?></u></strong></a></td>
+					<td colspan="2"><br><?php _e('If you want to upload photos to FlAGallery right from your iPhone <a href="https://itunes.apple.com/us/app/mypgc/id663405181?ls=1&mt=8">download application</a> and enter access key below. You can enter your own access key. You can change these at any point in time and this will force all users to have to log in again in application.', 'flag'); ?> </td>
 				</tr>
 				<tr>
 					<th valign="top" width="200"><?php _e('Remote App Access Key','flag'); ?>:</th>
-					<td valign="top"><input type="text" size="54" id="access_key" name="access_key" value="<?php echo $flag_options['access_key']?>" /><br>
+					<td valign="top"><input type="text" size="40" id="access_key" name="access_key" value="<?php echo $flag_options['access_key']?>" /><br>
 						<small><?php _e('Leave blank to disable access from application', 'flag'); ?></small></td>
 				</tr>
 			</table>
 			<p><a href="https://itunes.apple.com/us/app/mypgc/id663405181?ls=1&mt=8"><img src="<?php echo plugins_url() . '/' . FLAGFOLDER; ?>/admin/images/appstore_button.png" alt="Download from AppStore" /></a></p>
 			<div class="submit"><input class="button-primary" type="submit" name="membership" value="<?php _e('Update Settings for Remote Access', 'flag'); ?>"/></div>
 		</form>
+		<?php if($regform){ ?>
+			<form name="reg_on_mypgc" method="post" style="float: left; border: 1px solid #666666; background-color: #ffffee; margin-top: 95px; width: 49%;">
+				<?php wp_nonce_field('flag_settings'); ?>
+				<h3 style="padding-left: 10px;"><?php _e('Register with form below or <a href="http://mypgc.co/membership/" target="_blank">purchase license key</a>','flag'); ?></h3>
+				<input type="hidden" name="access_key" value="<?php echo $flag_options['access_key']?>" />
+				<input type="hidden" name="access_url" value="<?php echo plugins_url() . '/' . FLAGFOLDER . '/lib/app.php'; ?>" />
+				<table class="form-table" style="100%;">
+					<tr>
+						<td valign="top" style="width: 50%;"><?php _e('First Name', 'flag') ?>:<br><input type="text" id="customer_first_name" name="customer_first_name" value="" style="width: 95%;" /></td>
+						<td valign="top"><?php _e('Last Name', 'flag') ?>:<br><input type="text" id="customer_last_name" name="customer_last_name" value="" style="width: 95%;" /></td>
+					</tr>
+					<tr>
+						<td valign="top"><?php _e('Email', 'flag') ?>:<br><input type="text" size="54" id="customer_email" name="customer_email" value="" style="width: 95%;" /></td>
+						<td valign="top"><div class="submit"><input class="button-primary" type="submit" name="register_subscriber" value="<?php _e('Register', 'flag'); ?>"/></div></td>
+					</tr>
+				</table>
+			</form>
+		<?php } ?>
+		<div style="clear: both;"> </div>
 	</div>
 <?php } ?>
 

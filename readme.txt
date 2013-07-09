@@ -10,6 +10,8 @@ GRAND Flagallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator
 
 == Description ==
 
+> Now You can upload and manage your photos, anywhere. Download new **[application for iPhone](http://mypgc.co/ios-app/)**
+
 GRAND Flagallery - powerfull media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
 Edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **image gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc. 
@@ -50,7 +52,10 @@ New plugin:
 
 == Changelog ==
 
-= v3.00 - 26.06.2013 =
+= v3.01 - 09.07.2013 =
+* New: iOS application 'MyPGC' for Flagallery plugin now available on the App Store for everyone
+
+= v3.00 - 03.07.2013 =
 * Fix: Free skins settings reset to default after plugin update
 * Fix: XSS bugs reported by Ken S for the White Fir Design Bug Bounty
 * Fix: small bugfixes
