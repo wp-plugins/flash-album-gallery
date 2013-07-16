@@ -1,5 +1,10 @@
-GRAND FlAGallery
+Grand Flagallery
 by CodEasily.com
+
+= v3.10 - 17.07.2013 =
+* Fix: Security bugs reported by Nikolai Tschacher for the White Fir Design Bug Bounty
+* Fix: Small bugs and improvements
+* Added: 2 new languages
 
 = v3.01 - 09.07.2013 =
 * New: iOS application 'MyPGC' for Flagallery plugin now available on the App Store for everyone

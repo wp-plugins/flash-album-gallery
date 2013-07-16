@@ -9,17 +9,19 @@ if ( !is_user_logged_in() )
 if ( !current_user_can('FlAG Change skin') ) 
 	die('-1');	
 
-$flag_options = get_option('flag_options');
-$act_skin = isset($_GET['skin'])? urlencode($_GET['skin']) : $flag_options['flashSkin'];
-$settings = $flag_options['skinsDirABS'].$act_skin.'/settings';
-$settingsXML =  $settings.'/settings.xml';
-
 $flashPost = file_get_contents("php://input");
 // parse properties_skin
 $arr = array();
 parse_str($flashPost, $arr);
+
+$flag_options = get_option('flag_options');
+$act_skin = isset($_GET['skin'])? $_GET['skin'] : $flag_options['flashSkin'];
+$act_skin = sanitize_flagname($act_skin);
+$settings = $flag_options['skinsDirABS'].$act_skin.'/settings';
+$settingsXML =  $settings.'/settings.xml';
+
 if(isset($arr['skin_name']))
-	$settingsXML =  str_replace("\\","/", dirname(dirname(dirname(__FILE__))).'/flagallery-skins/'.$arr['skin_name'].'/settings/settings.xml');
+	$settingsXML =  str_replace("\\","/", dirname(dirname(dirname(__FILE__))).'/flagallery-skins/'.sanitize_flagname($arr['skin_name']).'/settings/settings.xml');
 if(isset($arr['properties_skin']) && !empty($arr['properties_skin'])) {
 	$fp = fopen($settingsXML, "r");
 	if(!$fp) {
@@ -48,6 +50,7 @@ if(isset($_GET['show_options'])) {
 function flag_skin_options() {
 	$flag_options = get_option('flag_options');
 	$act_skin = isset($_GET['skin'])? urlencode($_GET['skin']) : $flag_options['flashSkin'];
+	$act_skin = sanitize_flagname($act_skin);
 	$settings = $flag_options['skinsDirURL'].$act_skin.'/settings';
 	$settingsXML =  $flag_options['skinsDirABS'].$act_skin.'/settings/settings.xml';
 	$fp = fopen($settingsXML, "r");

@@ -102,7 +102,7 @@ if($_REQUEST['riched'] == "false") {
 					if(is_array($albumlist)) {
 						foreach($albumlist as $album) {
 							$name = $album->name;
-							echo '<option value="' . $album->id . '" >' . $name . '</option>' . "\n";
+							echo '<option value="' . $album->id . '" >' . esc_html($name) . '</option>' . "\n";
 						}
 					}
 				?>

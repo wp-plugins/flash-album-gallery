@@ -6,16 +6,16 @@ Requires at least: 3.0
 Tested up to: 3.5.2
 Stable tag: trunk
 
-GRAND Flagallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
+Grand Flagallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
 
 == Description ==
 
-GRAND Flagallery - powerfull media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
+Grand Flagallery - powerfull media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
 
 > Now You can upload and manage your photos, anywhere.
 > Download new **[application for iPhone](http://mypgc.co/ios-app/)**
 
-Edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - GRAND FlAGallery is the smart choice when showing the best of your product or describing in brief any event. GRAND FlAGallery can easily beautify your site with **image gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc. 
+Edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - Grand Flagallery is the smart choice when showing the best of your product or describing in brief any event. Grand Flagallery can easily beautify your site with **image gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc.
 
 * iPhone, iPad, Android, Blackberry and Desktop friendly photo gallery, SEO optimized.
 * Full-screen mobile friendly slideshow with touch controls (optional, if set PhotoSwipe library script for alternative gallery).
@@ -24,7 +24,7 @@ Edit your media content the way you want: upload images, import music and video,
 
 **[How to add gallery to your Wordpress site](http://mypgc.co/how-add-gallery-to-wordpress-website-or-blog)** - full HowTo guide.
 
-For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "GRAND FlAGallery Home Page")** and see demos created with "GRAND FlAGallery" WordPress Plugin.
+For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "Grand Flagallery Home Page")** and see demos created with "Grand Flagallery" WordPress Plugin.
 
 Image Link support now available in skins. [See Slider Skin demo](http://photogallerycreator.com/grand-flagallery/slider-gallery-skin-for-wordpress/).
 
@@ -52,6 +52,11 @@ New plugin:
 
 
 == Changelog ==
+
+= v3.10 - 17.07.2013 =
+* Fix: Security bugs reported by Nikolai Tschacher for the White Fir Design Bug Bounty
+* Fix: Small bugs and improvements
+* Added: 2 new languages
 
 = v3.01 - 09.07.2013 =
 * New: iOS application 'MyPGC' for Flagallery plugin now available on the App Store for everyone
@@ -586,7 +591,7 @@ You should have received a copy of the GNU General Public License along with thi
 = Upgrade Notice =
 * After plugin update go to Skins page and update skins with 'Update skins' button.
 * If you use Facebook template and copied it in the root directory, then after each plugin update click 'Copy facebook.php file to root directory'.
-* If GRAND FlAGallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
+* If Grand Flagallery displays an error message after upgrade, go to FlAGallery Overview page and press 'Reset settings'.
 * Have some troubles with plugin? Try first reseting settings, deactivate and reactivate plugin.
 
 == Installation == 
@@ -630,7 +635,7 @@ That line would go in between your <HEAD> </HEAD> tags
 
 = When I try to activate the plugin I get the message : "Plugin could not be activated because it triggered a fatal error." =
 
-This problem could happened if you have a low memory_limit in your php environment and a lot of plugins installed. For a simple test deactivate all other plugins and try then to activate GRAND FlAGallery again. Please check also if you have a minimum memory_limit of 16Mbyte (as much as possible).
+This problem could happened if you have a low memory_limit in your php environment and a lot of plugins installed. For a simple test deactivate all other plugins and try then to activate Grand Flagallery again. Please check also if you have a minimum memory_limit of 16Mbyte (as much as possible).
 
 = I get the message "Fatal error: Allowed memory size of xxx bytes exhausted" or get the "Error: Exceed Memory limit.". What does this means? =
 

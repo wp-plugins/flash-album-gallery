@@ -11,7 +11,7 @@ function flag_admin_overview()  {
 	echo get_option('flag_plugin_error');
 ?>
 <div class="wrap flag-wrap">
-	<h2><?php _e('GRAND FlAGallery Overview', 'flag'); echo ' v'.FLAGVERSION; ?></h2>
+	<h2><?php _e('Grand Flagallery Overview', 'flag'); echo ' v'.FLAGVERSION; ?></h2>
 	<div id="flag-overview" class="metabox-holder">
 		<div id="post-body" class="has-sidebar">
 			<div class="has-sidebar-content">

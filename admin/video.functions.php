@@ -67,24 +67,32 @@ function flagSave_vPlaylist($title,$descr,$data,$file='',$skinaction='') {
 	$title = htmlspecialchars_decode(stripslashes($title), ENT_QUOTES);
 	$descr = htmlspecialchars_decode(stripslashes($descr), ENT_QUOTES);
 	if (!$file) {
-		$file = sanitize_title($title);
+		$file = sanitize_flagname($title);
 	}
 
 	if(!is_array($data))
 		$data = explode(',', $data);
 
 	$flag_options = get_option('flag_options');
-    $skin = isset($_POST['skinname'])? sanitize_key($_POST['skinname']) : 'video_default';
+    $skin = isset($_POST['skinname'])? sanitize_flagname($_POST['skinname']) : 'video_default';
 	if(empty($skinaction))
     	$skinaction = isset($_POST['skinaction'])? sanitize_key($_POST['skinaction']) : 'update';
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
+	$settings = '';
 	if( file_exists($playlistPath) && ($skin == $skinaction) ) {
 		$settings = file_get_contents($playlistPath);
-	} else {
+	} elseif( file_exists($skinpath . "/settings/settings.xml") ) {
 		$settings = file_get_contents($skinpath . "/settings/settings.xml");
+	} else {
+		flagGallery::show_message(__("Can't find skin settings", 'flag'));
+		return;
 	}
 	$properties = flagGallery::flagGetBetween($settings,'<properties>','</properties>');
+	if(empty($properties)) {
+		flagGallery::show_message(__("Can't find skin settings", 'flag'));
+		return;
+	}
 
 	if(count($data)) {
 		$content = '<gallery>
@@ -127,7 +135,7 @@ function flagSave_vPlaylist($title,$descr,$data,$file='',$skinaction='') {
 }
 
 function flagSave_vPlaylistSkin($file) {
-	global $wpdb;
+	$file = sanitize_flagname($file);
 	$flag_options = get_option('flag_options');
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
 	// Save options
@@ -139,6 +147,7 @@ function flagSave_vPlaylistSkin($file) {
 }
 
 function flag_v_playlist_delete($playlist) {
+	$playlist = sanitize_flagname($playlist);
 	$flag_options = get_option('flag_options');
 	$playlistXML = ABSPATH.$flag_options['galleryPath'].'playlists/video/'.$playlist.'.xml';
 	if(file_exists($playlistXML)){

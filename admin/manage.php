@@ -66,11 +66,11 @@ class flagManageGallery {
 			check_admin_referer('flag_editgallery');
 		
 			// get the path to the gallery
-			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = '$this->gid' ");
+			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = '{$this->gid}' ");
 			if ($gallerypath){
 		
 				// delete pictures
-				$imagelist = $wpdb->get_col("SELECT filename FROM $wpdb->flagpictures WHERE galleryid = '$this->gid' ");
+				$imagelist = $wpdb->get_col("SELECT filename FROM $wpdb->flagpictures WHERE galleryid = '{$this->gid}' ");
 				if ($flag->options['deleteImg']) {
 					if (is_array($imagelist)) {
 						foreach ($imagelist as $filename) {
@@ -84,17 +84,20 @@ class flagManageGallery {
 				}
 			}
 	
-			$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE galleryid = '$this->gid'");
-			$delete_galllery = $wpdb->query("DELETE FROM $wpdb->flaggallery WHERE gid = '$this->gid'");
+			$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE galleryid = '{$this->gid}'");
+			$delete_galllery = $wpdb->query("DELETE FROM $wpdb->flaggallery WHERE gid = '{$this->gid}'");
 			
 			if($delete_galllery) {
 				
 				$albums = $wpdb->get_results("SELECT id, categories FROM $wpdb->flagalbum WHERE categories LIKE '%{$this->gid}%' ");
 				if($albums) {
 					foreach ($albums as $album) {
-						$strsearch = array(','.$this->gid, $this->gid.',', strval($this->gid) );
-						$galstring = str_replace($strsearch,'',$album->categories);
-						$wpdb->query( "UPDATE $wpdb->flagalbum SET categories = '{$galstring}' WHERE id = $album->id" );
+						$cats = explode(',',$album->categories);
+						if(($key = array_search($this->gid, $cats)) !== false) {
+							unset($cats[$key]);
+						}
+						$cats = implode(',',$cats);
+						$wpdb->query( "UPDATE $wpdb->flagalbum SET categories = '{$cats}' WHERE id = {$album->id}" );
 					}
 				}
 			
@@ -108,7 +111,7 @@ class flagManageGallery {
 		// Draft gallery
 		if ($this->mode == 'draft') {
 			check_admin_referer('flag_editgallery');
-			if($wpdb->query( "UPDATE $wpdb->flaggallery SET status = 1 WHERE gid = '$this->gid'" ))
+			if($wpdb->query( "UPDATE $wpdb->flaggallery SET status = 1 WHERE gid = '{$this->gid}'" ))
 				flagGallery::show_message( __( 'Gallery', 'flag' ) . ' \''.$this->gid.'\' '.__('now in draft','flag'));
 		 	$this->mode = 'main'; // show mainpage
 		}
@@ -116,7 +119,7 @@ class flagManageGallery {
 		// Publish gallery
 		if ($this->mode == 'publish') {
 			check_admin_referer('flag_editgallery');
-			if($wpdb->query( "UPDATE $wpdb->flaggallery SET status = 0 WHERE gid = '$this->gid'" ))
+			if($wpdb->query( "UPDATE $wpdb->flaggallery SET status = 0 WHERE gid = '{$this->gid}'" ))
 				flagGallery::show_message( __( 'Gallery', 'flag' ) . ' \''.$this->gid.'\' '.__('now visible','flag'));
 		 	$this->mode = 'main'; // show mainpage
 		}
@@ -147,7 +150,7 @@ class flagManageGallery {
 					@unlink($image->imagePath);
 					@unlink($image->thumbPath);	
 				//} 
-				$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = '$image->pid'");
+				$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = '{$image->pid}'");
 			}
 			if($delete_pic)
 				flagGallery::show_message( __('Picture','flag').' \''.$this->pid.'\' '.__('deleted successfully','flag') );
@@ -306,6 +309,7 @@ class flagManageGallery {
 			check_admin_referer('flag_thickbox_form');
 			
 			$pic_ids  = explode(',', $_POST['TB_imagelist']);
+			$pic_ids  = array_filter($pic_ids, 'intval');
 			$dest_gid = (int) $_POST['dest_gid'];
 			
 			switch ($_POST['TB_bulkaction']) {
@@ -330,11 +334,11 @@ class flagManageGallery {
 			$gallery_desc    = esc_html($_POST['gallerydesc']);
 			$gallery_preview = (int) $_POST['previewpic'];
 			
-			$wpdb->query("UPDATE $wpdb->flaggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', previewpic = '$gallery_preview' WHERE gid = '$this->gid'");
+			$wpdb->query("UPDATE $wpdb->flaggallery SET title= '$gallery_title', path= '$gallery_path', galdesc = '$gallery_desc', previewpic = '$gallery_preview' WHERE gid = '{$this->gid}'");
 	
 			if (isset ($_POST['author']))  {		
 				$gallery_author  = (int) $_POST['author'];
-				$wpdb->query("UPDATE $wpdb->flaggallery SET author = '$gallery_author' WHERE gid = '$this->gid'");
+				$wpdb->query("UPDATE $wpdb->flaggallery SET author = '$gallery_author' WHERE gid = '{$this->gid}'");
 			}
 	
 			$this->update_pictures();
@@ -349,7 +353,7 @@ class flagManageGallery {
 		// Rescan folder
 			check_admin_referer('flag_updategallery');
 		
-			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = '$this->gid' ");
+			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = '{$this->gid}' ");
 			flagAdmin::import_gallery($gallerypath);
 		}
 	}

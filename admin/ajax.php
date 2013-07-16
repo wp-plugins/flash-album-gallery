@@ -1,4 +1,5 @@
 <?php
+
 add_action('wp_ajax_flag_ajax_operation', 'flag_ajax_operation' );
 
 function flag_ajax_operation() {
@@ -132,7 +133,7 @@ function flag_save_album() {
 			$galstring = implode(',', $g);
 		else
 			$galstring = '';
-		$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->flagalbum SET name = %s, categories = %s WHERE id = %s", $album_name, $galstring, $album_id) );
+		$result = $wpdb->query( $wpdb->prepare("UPDATE `{$wpdb->flagalbum}` SET `name` = %s, `categories` = %s WHERE `id` = %s", $album_name, $galstring, $album_id) );
 	}
 
 	if($result) {
@@ -158,7 +159,7 @@ function flag_delete_album() {
 
 	$result = false;
 	if(isset($_POST['post'])) {
-		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->flagalbum WHERE id = %d", $_POST['post']) );
+		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM `{$wpdb->flagalbum}` WHERE `id` = %d", $_POST['post']) );
 	}
 
 	if($result) {

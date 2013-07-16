@@ -163,7 +163,7 @@ if($gallerylist) {
 	foreach($gallerylist as $gallery) {
 		$class = ( !isset($class) || $class == 'alt ' ) ? '' : 'alt ';
 		$gid = $gallery->gid;
-		$name = (empty($gallery->title) ) ? $gallery->name : stripslashes($gallery->title);
+		$name = (empty($gallery->title) ) ? $gallery->name : $gallery->title;
 		$author_user = get_userdata( (int) $gallery->author );
 		?>
 		<tr id="gallery-<?php echo $gid; ?>" class="<?php echo $class; echo ( $gallery->status ) ? 'flag_draft' : 'flag_public'; ?>" >
@@ -179,11 +179,11 @@ if($gallerylist) {
 						<?php echo esc_html(flagGallery::i18n($name)); ?>
 					</a>
 				<?php } else { ?>
-					<?php echo esc_html(flagGallery::i18n(stripslashes($gallery->title))); ?>
+					<?php echo esc_html(flagGallery::i18n($gallery->title)); ?>
 				<?php }
 				if($gallery->status){ echo ' <b>- '.__('Draft', 'flag').'</b>'; }?>
 			</td>
-			<td><?php echo esc_html(flagGallery::i18n(stripslashes($gallery->galdesc))); ?>&nbsp;</td>
+			<td><?php echo esc_html(flagGallery::i18n($gallery->galdesc)); ?>&nbsp;</td>
 			<td><?php echo $author_user->display_name; ?></td>
 			<td><?php echo $gallery->counter; ?></td>
 			<td>
@@ -270,7 +270,7 @@ if($albumlist) {
 	foreach($albumlist as $album) {
 ?>
 				<div class="album">
-					<div class="album_name"><span class="albID"><?php echo $album->id; ?>.</span> <form method="post" id="albName_<?php echo $album->id; ?>" name="albName_<?php echo $album->id; ?>"><input type="text" name="album_name" value="<?php echo $album->name; ?>" /><input type="hidden" name="album_id" value="<?php echo $album->id; ?>" /></form> <span class="album_actions"><span class="alb_msg"></span>&nbsp;&nbsp;&nbsp;<span class="del flag-ajax-post" data-action="flag_delete_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-post="<?php echo $album->id; ?>"><?php _e('Delete', 'flag'); ?></span>&nbsp;<span class="album_save flag-ajax-post button" data-action="flag_save_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-form="albName_<?php echo $album->id; ?>"><strong><?php _e('Save', 'flag'); ?></strong></span></span></div>
+					<div class="album_name"><span class="albID"><?php echo $album->id; ?>.</span> <form method="post" id="albName_<?php echo $album->id; ?>" name="albName_<?php echo $album->id; ?>"><input type="text" name="album_name" value="<?php echo esc_html($album->name); ?>" /><input type="hidden" name="album_id" value="<?php echo $album->id; ?>" /></form> <span class="album_actions"><span class="alb_msg"></span>&nbsp;&nbsp;&nbsp;<span class="del flag-ajax-post" data-action="flag_delete_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-post="<?php echo $album->id; ?>"><?php _e('Delete', 'flag'); ?></span>&nbsp;<span class="album_save flag-ajax-post button" data-action="flag_save_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-form="albName_<?php echo $album->id; ?>"><strong><?php _e('Save', 'flag'); ?></strong></span></span></div>
 					<div class="album_categoties">
 					<?php $galids = explode(',',$album->categories);
 						if($album->categories) {
@@ -278,7 +278,7 @@ if($albumlist) {
 								$acat = $flagdb->find_gallery($galid);
 					?>
 								
-						<div class="acat" id="g_<?php echo $acat->gid; ?>"><?php echo esc_html(stripslashes($acat->title)); ?><span class="drop">x</span></div>
+						<div class="acat" id="g_<?php echo $acat->gid; ?>"><?php echo esc_html($acat->title); ?><span class="drop">x</span></div>
 						<?php }
 						} else {
 							echo '<p style="text-align:center; padding: 7px 0; margin: 0;">'.__('Drag&Drop Categories Here','flag').'</p>';
@@ -297,7 +297,7 @@ if($albumlist) {
 if($gallerylist) {
 	foreach($gallerylist as $gallery) {
 		$gid = $gallery->gid;
-		$name = (empty($gallery->title) ) ? $gallery->name : esc_html(stripslashes($gallery->title));
+		$name = (empty($gallery->title) ) ? $gallery->name : esc_html($gallery->title);
 		$author_user = get_userdata( (int) $gallery->author );
 		if (flagAdmin::can_manage_this_gallery($gallery->author)) {
 ?>

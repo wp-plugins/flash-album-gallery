@@ -17,10 +17,12 @@ $flag_options = get_option('flag_options');
 require_once (dirname (__FILE__) . '/get_skin.php');
 
 if( isset($_POST['installskin']) ) {
+	check_admin_referer('skin-upload');
 	require_once (dirname (__FILE__) . '/skin_install.php');
 }
 if( isset($_POST['skinzipurl']) ) {
-	$url = $_POST['skinzipurl'];
+	check_admin_referer('skin_install');
+	$url = 'http://photogallerycreator.com/depository/'.sanitize_flagname(basename($_POST['skinzipurl']));
 	$skins_dir = $flag_options['skinsDirABS'];
 	$mzip = download_url($url);
 	if(is_wp_error($mzip)){
@@ -206,7 +208,8 @@ if ( isset($_POST['updateoption']) ) {
 
 
 if ( isset($_GET['delete']) ) {
-	$delskin = urlencode($_GET['delete']);
+	check_admin_referer('delete_skin');
+	$delskin = sanitize_flagname($_GET['delete']);
 	if ( current_user_can('FlAG Delete skins') && false === strpos($delskin, '..') ) {
 		if ( $flag_options['flashSkin'] != $delskin ) {
 			$skins_dir = trailingslashit( $flag_options['skinsDirABS'] );
@@ -226,12 +229,13 @@ if ( isset($_GET['delete']) ) {
 			flagGallery::show_message( __('You need activate another skin before delete it','flag') );
 		}
 	} else {
-		wp_die(__('You do not have sufficient permissions to delete skins of GRAND FlAGallery.'));
+		wp_die(__('You do not have sufficient permissions to delete skins of Grand Flagallery.'));
 	}
 }
 
 if( isset($_GET['skin']) ) {
-	$set_skin = urlencode($_GET['skin']);
+	check_admin_referer('set_default_skin');
+	$set_skin = sanitize_flagname($_GET['skin']);
 	if($flag_options['flashSkin'] != $set_skin) {
 		$aValid = array('-', '_');
 		if(!ctype_alnum(str_replace($aValid, '', $set_skin))){
@@ -247,7 +251,7 @@ if( isset($_GET['skin']) ) {
 		flagGallery::show_message( __('Skin','flag').' \''.$set_skin.'\' '.__('activated successfully. Optionally it can be overwritten with shortcode parameter.','flag') );
 	}
 }
-$type = isset($_GET['type'])? urlencode($_GET['type']) : '';
+$type = isset($_GET['type'])? sanitize_key($_GET['type']) : '';
 switch($type){
 	case '':
 		$stype = 'gallery';
@@ -276,6 +280,7 @@ switch($type){
 }
 
 if( isset($_GET['skins_refresh']) ) {
+	check_admin_referer('skins_refresh');
 	// upgrade plugin
 	require_once(FLAG_ABSPATH . 'admin/tuning.php');
 	$ok = flag_tune();
@@ -337,7 +342,7 @@ if( isset($_GET['skins_refresh']) ) {
 
 <div class="wrap" style="min-width: 878px;">
 <h2><?php _e('Skins', 'flag'); ?>:</h2>
-<!--<p style="float: right;"><a class="button" href="<?php echo admin_url('admin.php?page=flag-skins&amp;skins_refresh=1'); ?>"><?php _e('Refresh / Update Skins', 'flag'); ?></a></p>-->
+<p style="float: right; display:none;"><a class="button" href="<?php echo wp_nonce_url('admin.php?page=flag-skins&amp;skins_refresh=1', 'skins_refresh'); ?>"><?php _e('Refresh / Update Skins', 'flag'); ?></a></p>
 <p><a class="button<?php if(!$type) echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins'); ?>"><span style="font-size: 14px;"><?php _e('Photo skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
 <a class="button<?php if($type == 'm') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=m'); ?>"><span style="font-size: 14px;"><?php _e('Music skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
 <a class="button<?php if($type == 'v') echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins&amp;type=v'); ?>"><span style="font-size: 14px;"><?php _e('Video skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
@@ -436,7 +441,7 @@ $total_all_skins = count($all_skins);
 		if(isset($_GET['type']) && !empty($_GET['type'])) {
 		} else {
 			if ( dirname($skin_file) != $flag_options['flashSkin'] ) { ?>
-				<strong><a href="<?php echo admin_url('admin.php?page=flag-skins&skin='.dirname($skin_file)); ?>" title="<?php _e( 'Activate this skin', 'flag' ); ?>"><?php _e('Activate', 'flag' ); ?></a></strong>
+				<strong><a href="<?php echo wp_nonce_url('admin.php?page=flag-skins&skin='.dirname($skin_file), 'set_default_skin'); ?>" title="<?php _e( 'Activate this skin', 'flag' ); ?>"><?php _e('Activate', 'flag' ); ?></a></strong>
 			<?php } else { ?>
 	 			<strong><?php _e('Activated by default', 'flag' ); ?></strong>
 			<?php
@@ -458,7 +463,7 @@ $total_all_skins = count($all_skins);
  		<?php }
 		if ( current_user_can('FlAG Delete skins') ) {
 		if ( dirname($skin_file) != $flag_options['flashSkin'] ) { ?>
-			<br /><br /><a class="delete" onclick="javascript:return flag_delskin('<?php echo $skin_data['Name']; ?>');" href="<?php echo admin_url('admin.php?page=flag-skins&delete='.dirname($skin_file)); ?>" title="<?php _e( 'Delete this skin', 'flag' ); ?>"><?php _e('Delete', 'flag' ); ?></a>
+			<br /><br /><a class="delete" onclick="javascript:return flag_delskin('<?php echo $skin_data['Name']; ?>');" href="<?php echo wp_nonce_url('admin.php?page=flag-skins&delete='.dirname($skin_file), 'delete_skin'); ?>" title="<?php _e( 'Delete this skin', 'flag' ); ?>"><?php _e('Delete', 'flag' ); ?></a>
 		<?php }
  		} ?>
 		</td>
@@ -487,6 +492,7 @@ $total_all_skins = count($all_skins);
 			<div class="content">
 				<div class="links" style="text-align: center;">
 				<form action="<?php echo admin_url('admin.php?page=flag-skins').'&amp;type='.$type; ?>" method="post">
+					<?php wp_nonce_field('skin_install'); ?>
 					<input type="hidden" name="skinzipurl" value="<?php echo $skin['download']; ?>" />
  					<p><a class="install button-primary" onclick="jQuery(this).closest('form').submit(); return false" href="<?php echo $skin['download']; ?>"><?php _e('Install', 'gmLang') ?></a>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="button" href="<?php echo $skin['demo']; ?>" target="_blank"><?php _e('Preview', 'gmLang') ?></a></p>

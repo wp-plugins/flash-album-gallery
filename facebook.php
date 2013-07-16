@@ -21,8 +21,8 @@ if(isset($_GET['l'])) {
 if(isset($_GET['i'])) {
 	$skin = '';
 	if(isset($_GET['f']) && false === strpos($_GET['f'], '..') ){
-		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$_GET['f'];
-		$skin = esc_js($_GET['f']);
+		$skin = sanitize_flagname($_GET['f']);
+		$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	}
 	$h = isset($_GET['h'])? intval($_GET['h']) : (int) $flag_options['flashHeight'];
 
@@ -60,7 +60,7 @@ if(isset($_GET['i'])) {
 
 <?php
 if(isset($_GET['m'])) {
-	$file = sanitize_title($_GET['m']);
+	$file = sanitize_flagname($_GET['m']);
 	$playlistpath = $flag_options['galleryPath'].'playlists/'.$file.'.xml';
 	if(file_exists($playlistpath))
 		echo flagShowMPlayer($file, $width='', $height='', $wmode='opaque');
@@ -72,7 +72,7 @@ if(isset($_GET['m'])) {
 if(isset($_GET['v'])) {
 	$height = isset($_GET['h'])? intval($_GET['h']) : '';
 	$width = isset($_GET['w'])? '100%' : '';
-	$file = sanitize_title($_GET['v']);
+	$file = sanitize_flagname($_GET['v']);
 	$playlistpath = $flag_options['galleryPath'].'playlists/video/'.$file.'.xml';
 	if(file_exists($playlistpath))
 		echo flagShowVPlayer($file, $width, $height, $wmode='opaque');
@@ -90,7 +90,7 @@ if(isset($_GET['mv'])) {
 ?>
 <?php
 if(isset($_GET['b'])) {
-	$file = sanitize_title($_GET['b']);
+	$file = sanitize_flagname($_GET['b']);
 	$playlistpath = $flag_options['galleryPath'].'playlists/banner/'.$file.'.xml';
 	if(file_exists($playlistpath))
 		echo flagShowBanner($file, $width='', $height='', $wmode='opaque');

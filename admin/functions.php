@@ -32,7 +32,7 @@ class flagAdmin{
 			$gallerytitle = $gallery;
 		}
 		//cleanup pathname
-		$galleryname = sanitize_file_name( $gallerytitle );
+		$galleryname = sanitize_flagname( $gallerytitle );
 		$galleryname = apply_filters('flag_gallery_name', $galleryname);
 		$galleryname = preg_replace('/[^\w\._-]+/', '', $galleryname);
 		if(!$galleryname) $galleryname = date('y-m-j_h-i-s');
@@ -99,7 +99,7 @@ class flagAdmin{
 			return false;
 		}
 		
-		$result = $wpdb->get_var("SELECT name FROM $wpdb->flaggallery WHERE name = '$galleryname' ");
+		$result = $wpdb->get_var($wpdb->prepare("SELECT `name` FROM `{$wpdb->flaggallery}` WHERE `name` = '%s' ", $galleryname));
 		
 		if ($result) {
 			if ($output) flagGallery::show_error( _n( 'Gallery', 'Galleries', 1, 'flag' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'flag'));
@@ -113,7 +113,7 @@ class flagAdmin{
 
 			if ($result) {
 				$message  = __('Gallery \'%1$s\' successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','flag');
-				$message  = sprintf($message, stripcslashes($gallery), '[flagallery gid=' . $gallery_id . ']');
+				$message  = sprintf($message, esc_html(stripcslashes($gallery)), '[flagallery gid=' . $gallery_id . ']');
 				$message .= '<a href="' . admin_url() . 'admin.php?page=flag-manage-gallery&mode=edit&gid=' . $gallery_id . '" >';
 				$message .= __('Edit gallery','flag');
 				$message .= '</a>';
@@ -146,18 +146,19 @@ class flagAdmin{
 		$created_msg = '';
 		
 		// remove trailing slash at the end, if somebody use it
+		$galleryfolder = str_replace('../','', $galleryfolder );
 		$galleryfolder = rtrim($galleryfolder, '/');
 		$gallerypath = WINABSPATH . $galleryfolder;
 		
 		if (!is_dir($gallerypath)) {
-			flagGallery::show_error(__('Directory', 'flag').' <strong>'.$gallerypath.'</strong> '.__('doesn&#96;t exist!', 'flag'));
+			flagGallery::show_error(__('Directory', 'flag').' <strong>'.esc_html($gallerypath).'</strong> '.__('doesn&#96;t exist!', 'flag').' '.__('Or imported folder name contains special characters.', 'flag'));
 			return ;
 		}
 		
 		// read list of images
 		$new_imageslist = flagAdmin::scandir($gallerypath);
 		if (empty($new_imageslist)) {
-			flagGallery::show_message(__('Directory', 'flag').' <strong>'.$gallerypath.'</strong> '.__('contains no pictures', 'flag'));
+			flagGallery::show_message(__('Directory', 'flag').' <strong>'.esc_html($gallerypath).'</strong> '.__('contains no pictures', 'flag'));
 			return;
 		}
 		
@@ -167,13 +168,12 @@ class flagAdmin{
 		
 		// take folder name as gallery name		
 		$galleryname = basename($galleryfolder);
-		$galleryname = apply_filters('flag_gallery_name', $galleryname);
-		
+
 		// check for existing gallery folder
-		$gallery_id = $wpdb->get_var("SELECT gid FROM $wpdb->flaggallery WHERE path = '$galleryfolder' ");
+		$gallery_id = $wpdb->get_var($wpdb->prepare("SELECT gid FROM {$wpdb->flaggallery} WHERE path = '%s' ", $galleryfolder));
 
 		if (!$gallery_id) {
-			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flaggallery (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $galleryfolder, $galleryname , $user_ID) );
+			$result = $wpdb->query( $wpdb->prepare("INSERT INTO {$wpdb->flaggallery} (name, path, title, author) VALUES (%s, %s, %s, %s)", $galleryname, $galleryfolder, $galleryname , $user_ID) );
 			if (!$result) {
 				flagGallery::show_error(__('Database error. Could not add gallery!','flag'));
 				return;
@@ -183,7 +183,7 @@ class flagAdmin{
 		}
 		
 		// Look for existing image list
-		$old_imageslist = $wpdb->get_col("SELECT filename FROM $wpdb->flagpictures WHERE galleryid = '$gallery_id' ");
+		$old_imageslist = $wpdb->get_col($wpdb->prepare("SELECT filename FROM {$wpdb->flagpictures} WHERE galleryid = %d ", $gallery_id));
 		
 		// if no images are there, create empty array
 		if ($old_imageslist == NULL) 
@@ -228,10 +228,11 @@ class flagAdmin{
 
 		$created_msg = '';
 		// remove trailing slash at the end, if somebody use it
+		$folder = str_replace(array('../','\'','"','<','>','$','%','='),'', $folder);
 		$folder = rtrim($folder, '/');
 		$path = WINABSPATH . $folder;
 		if (!is_dir($path)) {
-			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag').'</p>';
+			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag').' '.__('Or imported folder name contains special characters.', 'flag').'</p>';
 			return ;
 		}
 		// read list of files
@@ -268,10 +269,11 @@ class flagAdmin{
 
 		$created_msg = '';
 		// remove trailing slash at the end, if somebody use it
+		$folder = str_replace(array('../','\'','"','<','>','$','%','='),'', $folder);
 		$folder = rtrim($folder, '/');
 		$path = WINABSPATH . $folder;
 		if (!is_dir($path)) {
-			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag').'</p>';
+			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag').' '.__('Or imported folder name contains special characters.', 'flag').'</p>';
 			return ;
 		}
 		// read list of files
@@ -308,10 +310,11 @@ class flagAdmin{
 
 		$created_msg = '';
 		// remove trailing slash at the end, if somebody use it
+		$folder = str_replace(array('../','\'','"','<','>','$','%','='),'', $folder);
 		$folder = rtrim($folder, '/');
 		$path = WINABSPATH . $folder;
 		if (!is_dir($path)) {
-			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag').'</p>';
+			echo '<p class="message">'.__('Directory', 'flag').' <strong>'.$path.'</strong> '.__('doesn&#96;t exist!', 'flag').' '.__('Or imported folder name contains special characters.', 'flag').'</p>';
 			return false;
 		}
 		// read list of files
@@ -938,7 +941,7 @@ class flagAdmin{
 			return $filename . __('is no valid image file!','flag');
 
 		// get the path to the gallery	
-		$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = '$galleryID' ");
+		$gallerypath = $wpdb->get_var($wpdb->prepare("SELECT path FROM {$wpdb->flaggallery} WHERE gid = %d ", $galleryID));
 		if (!$gallerypath){
 			@unlink($temp_file);		
 			return __('Failure in database, no gallery path set !','flag');
@@ -1291,16 +1294,16 @@ class flagAdmin{
 	 * @return void
 	 */
 	function set_gallery_preview( $galleryID ) {
-		
-		global $wpdb;
-		
+  	global $wpdb;
+
+		$galleryID = intval($galleryID);
 		$gallery = flagdb::find_gallery( $galleryID );
 		
 		// in the case no preview image is setup, we do this now
 		if ($gallery->previewpic == 0) {
-			$firstImage = $wpdb->get_var("SELECT pid FROM $wpdb->flagpictures WHERE exclude != 1 AND galleryid = '$galleryID' ORDER by pid DESC limit 0,1");
+			$firstImage = $wpdb->get_var($wpdb->prepare("SELECT `pid` FROM `{$wpdb->flagpictures}` WHERE `exclude` != 1 AND `galleryid` = '%d' ORDER by `pid` DESC limit 0,1", $galleryID));
 			if ($firstImage) {
-				$wpdb->query("UPDATE $wpdb->flaggallery SET previewpic = '$firstImage' WHERE gid = '$galleryID'");
+				$wpdb->query($wpdb->prepare("UPDATE `{$wpdb->flaggallery}` SET `previewpic` = '%s' WHERE `gid` = '%d'", $firstImage, $galleryID));
 				wp_cache_delete($galleryID, 'flag_gallery');
 			}
 		}

@@ -29,7 +29,7 @@ if(!$upd['pid']){
 if( $upd['pid'] && ($upd['hit'] || $upd['vote']) ) {
 	flag_update_counter($upd);
 }
-$pid = $upd['pid'];
+$pid = intval($upd['pid']);
 /** @var $wpdb wpdb */
 global $wpdb;
 $result = $wpdb->get_results( "SELECT hitcounter, total_votes FROM $wpdb->flagpictures WHERE `pid` = $pid" );

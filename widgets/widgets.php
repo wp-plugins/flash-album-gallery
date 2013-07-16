@@ -1,12 +1,13 @@
 <?php
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
 /*
-* GRAND FlAGallery Widget
+* Grand Flagallery Widget
 */
 
 /**
- * flagSlideshowWidget - The slideshow widget control for GRAND FlAGallery ( require WP2.8 or higher)
+ * flagSlideshowWidget - The slideshow widget control for Grand Flagallery ( require WP2.8 or higher)
  *
- * @package GRAND FlAGallery
+ * @package Grand Flagallery
  * @access public
  */
 class flagSlideshowWidget extends WP_Widget {
@@ -144,7 +145,7 @@ add_action('widgets_init', create_function('', 'return register_widget("flagSlid
 class flagBannerWidget extends WP_Widget {
 
 	function flagBannerWidget() {
-		$widget_ops = array('classname' => 'widget_banner', 'description' => __( 'Show a GRAND FlAGallery Banner', 'flag') );
+		$widget_ops = array('classname' => 'widget_banner', 'description' => __( 'Show a Grand Flagallery Banner', 'flag') );
 		$this->WP_Widget('flag-banner', __('FLAGallery Banner', 'flag'), $widget_ops);
 	}
 
@@ -249,9 +250,9 @@ function flagBannerWidget($xml, $w = '100%', $h = '200', $skin = 'banner_widget_
 
 
 /**
- * flagWidget - The widget control for GRAND FlAGallery
+ * flagWidget - The widget control for Grand Flagallery
  *
- * @package GRAND FlAGallery
+ * @package Grand Flagallery
  * @access public
  */
 class flagWidget extends WP_Widget {
@@ -336,7 +337,7 @@ class flagWidget extends WP_Widget {
 				$albumlist = $flagdb->find_all_albums();
 				if(is_array($albumlist)) {
 					foreach($albumlist as $album) { ?>
-						<option <?php selected( $album->id , $instance['album']); ?> value="<?php echo $album->id; ?>"><?php echo $album->name; ?></option>
+						<option <?php selected( $album->id , $instance['album']); ?> value="<?php echo $album->id; ?>"><?php echo esc_html($album->name); ?></option>
 					<?php }
 				}
 			?>
@@ -381,10 +382,10 @@ class flagWidget extends WP_Widget {
 				continue;
 			}
 			if ( $instance['type'] == 'random' ){
-				$imageList[$id] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.gid = {$id} ORDER by rand() LIMIT 1");
+				$imageList[$galID] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.gid = {$galID} ORDER by rand() LIMIT 1");
 			}
 			else {
-				$imageList[$id] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.gid = {$id} ORDER by tt.sortorder ASC LIMIT 1");
+				$imageList[$galID] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.gid = {$galID} ORDER by tt.sortorder ASC LIMIT 1");
 			}
 		}
 		echo $before_widget . $before_title . $title . $after_title;
@@ -429,9 +430,9 @@ class flagWidget extends WP_Widget {
 add_action('widgets_init', create_function('', 'return register_widget("flagWidget");'));
 
 /**
- * flagVideoWidget - The widget control for GRAND FlAGallery
+ * flagVideoWidget - The widget control for Grand Flagallery
  *
- * @package GRAND FlAGallery
+ * @package Grand Flagallery
  * @access public
  */
 class flagVideoWidget extends WP_Widget {
@@ -577,15 +578,15 @@ add_action('widgets_init', create_function('', 'return register_widget("flagVide
 
 
 /**
- * flagMusicWidget - The widget control for GRAND FlAGallery
+ * flagMusicWidget - The widget control for Grand Flagallery
  *
- * @package GRAND FlAGallery
+ * @package Grand Flagallery
  * @access public
  */
 class flagMusicWidget extends WP_Widget {
 
 	function flagMusicWidget() {
-		$widget_ops = array('classname' => 'widget_music', 'description' => __( 'Show a GRAND FlAGallery Music Player', 'flag') );
+		$widget_ops = array('classname' => 'widget_music', 'description' => __( 'Show a Grand Flagallery Music Player', 'flag') );
 		$this->WP_Widget('flag-music', __('FLAGallery Music', 'flag'), $widget_ops);
 	}
 

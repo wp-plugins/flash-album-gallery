@@ -28,12 +28,14 @@ function flag_music_controler() {
 	}
 	switch($mode) {
 		case 'sort':
+			check_admin_referer('flag_sort');
 			include_once (dirname (__FILE__) . '/playlist-sort.php');
 			flag_playlist_order();
 		break;
 		case 'edit':
-			$file = urlencode($_GET['playlist']);
+			$file = sanitize_flagname($_GET['playlist']);
 			if(isset($_POST['updatePlaylist'])) {
+				check_admin_referer('flag_update');
 				$title = esc_html($_POST['playlist_title']);
 				$descr = esc_html($_POST['playlist_descr']);
 				$data = array();
@@ -46,6 +48,7 @@ function flag_music_controler() {
 				flagSavePlaylist($title,$descr,$data,$file);
 			}
 			if(isset($_POST['updatePlaylistSkin'])) {
+				check_admin_referer('flag_update');
 				flagSavePlaylistSkin($file);
 			}
 			include_once (dirname (__FILE__) . '/manage-playlist.php');
@@ -53,10 +56,11 @@ function flag_music_controler() {
 		break;
 		case 'save':
 			if(isset($_POST['items_array'])){
+				check_admin_referer('flag_update');
 				$title = esc_html($_POST['playlist_title']);
 				$descr = esc_html($_POST['playlist_descr']);
 				$data = $_POST['items_array'];
-				$file = isset($_REQUEST['playlist'])? urlencode($_REQUEST['playlist']) : false;
+				$file = isset($_REQUEST['playlist'])? sanitize_flagname($_REQUEST['playlist']) : false;
 				flagGallery::flagSaveWpMedia();
 				flagSavePlaylist($title,$descr,$data, $file);
 			}
@@ -69,19 +73,22 @@ function flag_music_controler() {
 			}
 		break;
 	  	case 'add':
+				check_admin_referer('flag_add');
 			if(isset($_POST['items']) && isset($_GET['playlist'])){
 				$added = $_POST['items'];
 			} elseif(isset($_GET['playlist'])) {
-				$added = $_COOKIE['musicboxplaylist_'.urlencode($_GET['playlist'])];
+				$added = $_COOKIE['musicboxplaylist_'.sanitize_flagname($_GET['playlist'])];
 			} else {
 				$added = false;
 			}
 			flag_music_wp_media_lib($added);
 		break;
 		case 'delete':
-			flag_playlist_delete(urlencode($_GET['playlist']));
+			check_admin_referer('flag_delete');
+			flag_playlist_delete(sanitize_flagname($_GET['playlist']));
 	  	case 'main':
 			if(isset($_POST['updateMedia'])) {
+				check_admin_referer('flag_update');
 				flagGallery::flagSaveWpMedia();
 				flagGallery::show_message( __('Media updated','flag') );
 			}
@@ -128,15 +135,15 @@ if($all_playlists) {
 ?>
 		<tr id="<?php echo $playlist_name; ?>" <?php echo $class; ?> >
 			<td>
-				<a href="<?php echo $filepath.'&amp;playlist='.$playlist_name.'&amp;mode=edit'; ?>" class='edit' title="<?php _e('Edit'); ?>" >
-					<?php echo esc_html(stripslashes($playlist_data['title'])); ?>
+				<a href="<?php echo esc_url($filepath.'&playlist='.$playlist_name.'&mode=edit'); ?>" class='edit' title="<?php _e('Edit'); ?>" >
+					<?php echo esc_html($playlist_data['title']); ?>
 				</a>
 			</td>
-			<td><?php echo esc_html(stripslashes($playlist_data['description'])); echo '&nbsp;('.__("player", "flag").': <strong>'.$playlist_data['skin'].'</strong>)' ?></td>
+			<td><?php echo esc_html($playlist_data['description']); echo '&nbsp;('.__("player", "flag").': <strong>'.esc_html($playlist_data['skin']).'</strong>)' ?></td>
 			<td><?php echo count($query_m); ?></td>
 			<td style="white-space: nowrap;"><input type="text" class="shortcode1" style="width: 200px; font-size: 9px;" readonly="readonly" onfocus="this.select()" value="[grandmusic playlist=<?php echo $playlist_name; ?>]" /></td>
 			<td>
-				<a href="<?php echo $filepath.'&amp;playlist='.$playlist_name."&amp;mode=delete"; ?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this playlist?",'flag')?>');if(check==false) return false;"><?php _e('Delete','flag'); ?></a>
+				<a href="<?php echo wp_nonce_url($filepath.'&playlist='.$playlist_name."&mode=delete", 'flag_delete'); ?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this playlist?",'flag')?>');if(check==false) return false;"><?php _e('Delete','flag'); ?></a>
 			</td>
 		</tr>
 		<?php
@@ -158,17 +165,20 @@ function flag_music_wp_media_lib($added=false) {
 	// same as $_SERVER['REQUEST_URI'], but should work under IIS 6.0
 	$filepath = admin_url() . 'admin.php?page=' . urlencode($_GET['page']);
 	if($added!==false) {
-		$filepath .= '&playlist='.urlencode($_GET['playlist']).'&mode=save';
+		$added = preg_replace('/[^\d,]+/', '', $added);
+		$filepath .= '&playlist='.sanitize_flagname($_GET['playlist']).'&mode=save';
 		$flag_options = get_option('flag_options');
-		$playlistPath = $flag_options['galleryPath'].'playlists/'.urlencode($_GET['playlist']).'.xml';
+		$playlistPath = $flag_options['galleryPath'].'playlists/'.sanitize_flagname($_GET['playlist']).'.xml';
 		$playlist = get_playlist_data(ABSPATH.$playlistPath);
 		$exclude = explode(',', $added);
+		$exclude = array_filter($exclude, 'intval');
 	} else {
-		$items_array_default = isset($_COOKIE['musicboxplaylist_default'])? $_COOKIE['musicboxplaylist_default'] : '';
+		$items_array_default = isset($_COOKIE['musicboxplaylist_default'])? preg_replace('/[^\d,]+/', '', $_COOKIE['musicboxplaylist_default']) : '';
 		$exclude = explode(',', $items_array_default);
+		$exclude = array_filter($exclude, 'intval');
 	}
 	if(isset($_GET['playlist'])){
-		$playlist_cookie = urlencode($_GET['playlist']);
+		$playlist_cookie = sanitize_flagname($_GET['playlist']);
 	} else {
 		$playlist_cookie = 'default';
 	}
@@ -180,7 +190,7 @@ jQuery(document).ready(function(){
 	var storedData = getStorage('musicboxplaylist_');
 	<?php if(isset($_POST['items'])){
 	?>
-	storedData.set('<?php echo $playlist_cookie; ?>', '<?php echo $_POST['items']; ?>');
+	storedData.set('<?php echo $playlist_cookie; ?>', '<?php echo preg_replace('/[^\d,]+/', '', $_POST['items']); ?>');
 	<?php } ?>
 	jQuery('.cb :checkbox').click(function() {
 		var cur, arr, del;
@@ -347,7 +357,8 @@ $page_links = paginate_links( array(
 	'prev_text' => __('&laquo;'),
 	'next_text' => __('&raquo;'),
 	'total' => ceil( $img_total_count / $objects_per_page),
-	'current' => $_GET['paged']
+	'current' => intval($_GET['paged']),
+	'add_args' => array('_wpnonce' => wp_create_nonce('flag_add'))
 ));
 ?>
 <div class="tablenav" style="overflow: hidden; height: auto;">
@@ -362,7 +373,7 @@ $page_links = paginate_links( array(
 		); echo $page_links_text; ?></div>
 </div>
 <form id="musiclib" class="flagform" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8">
-		<?php wp_nonce_field('flag_bulkmusic'); ?>
+		<?php wp_nonce_field('flag_update'); ?>
 		<input type="hidden" name="page" value="music-box" />
 		
 		<div class="tablenav">
@@ -382,10 +393,10 @@ $page_links = paginate_links( array(
 <?php } else { ?>
 				<input type="hidden" name="mode" value="save" />
 				<input style="width: 80%;" type="text" id="items_array" name="items_array" readonly="readonly" value="<?php echo $added; ?>" />
-				<input type="hidden" name="playlist_title" value="<?php echo esc_html(stripslashes($playlist['title'])); ?>" />
-				<input type="hidden" name="skinname" value="<?php echo $playlist['skin']; ?>" />
-				<input type="hidden" name="skinaction" value="<?php echo $playlist['skin']; ?>" />
-				<textarea style="display: none;" name="playlist_descr" cols="40" rows="1"><?php echo esc_html(stripslashes($playlist['description'])); ?></textarea>
+				<input type="hidden" name="playlist_title" value="<?php echo esc_html($playlist['title']); ?>" />
+				<input type="hidden" name="skinname" value="<?php echo sanitize_flagname($playlist['skin']); ?>" />
+				<input type="hidden" name="skinaction" value="<?php echo sanitize_flagname($playlist['skin']); ?>" />
+				<textarea style="display: none;" name="playlist_descr" cols="40" rows="1"><?php echo esc_html($playlist['description']); ?></textarea>
 				<input name="addToPlaylist" class="button-secondary" type="submit" value="<?php _e('Update Playlist','flag'); ?>" />
 <?php } ?>
 			</div>
@@ -476,7 +487,7 @@ if($musiclist) {
 	<!-- #new_playlist -->
 	<div id="new_playlist" style="display: none;" >
 		<form id="form_new_playlist" method="POST" action="<?php echo $filepath; ?>" accept-charset="utf-8">
-		<?php wp_nonce_field('flag_thickbox_form'); ?>
+		<?php wp_nonce_field('flag_update'); ?>
 		<input type="hidden" id="new_playlist_mp3id" name="items_array" value="" />
 		<input type="hidden" id="new_playlist_bulkaction" name="TB_bulkaction" value="" />
 		<input type="hidden" name="mode" value="save" />

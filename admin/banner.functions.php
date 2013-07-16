@@ -68,24 +68,32 @@ function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
 	$title = htmlspecialchars_decode(stripslashes($title), ENT_QUOTES);
 	$descr = htmlspecialchars_decode(stripslashes($descr), ENT_QUOTES);
 	if (!$file) {
-		$file = sanitize_title($title);
+		$file = sanitize_flagname($title);
 	}
 	if(!is_array($data))
 		$data = explode(',', $data);
 
 	$flag_options = get_option('flag_options');
-    $skin = isset($_POST['skinname'])? sanitize_key($_POST['skinname']) : 'banner_default';
+    $skin = isset($_POST['skinname'])? sanitize_flagname($_POST['skinname']) : 'banner_default';
 	if(!$skinaction) {
     	$skinaction = isset($_POST['skinaction'])? sanitize_key($_POST['skinaction']) : 'update';
 	}
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/banner/'.$file.'.xml';
+	$settings = '';
 	if( file_exists($playlistPath) && ($skin == $skinaction) ) {
 		$settings = file_get_contents($playlistPath);
-	} else {
+	} elseif( file_exists($skinpath . "/settings/settings.xml") ) {
 		$settings = file_get_contents($skinpath . "/settings/settings.xml");
+	} else {
+		flagGallery::show_message(__("Can't find skin settings", 'flag'));
+		return;
 	}
 	$properties = flagGallery::flagGetBetween($settings,'<properties>','</properties>');
+	if(empty($properties)) {
+		flagGallery::show_message(__("Can't find skin settings", 'flag'));
+		return;
+	}
 	$w = flagGallery::flagGetBetween($properties,'<width><![CDATA[',']]></width>');
 	$h = flagGallery::flagGetBetween($properties,'<height><![CDATA[',']]></height>');
 	$suffix = $w.'x'.$h;
@@ -112,7 +120,14 @@ function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
 					$name = urldecode( basename( str_replace( '%2F', '/', urlencode( $path ) ), ".$ext" ) );
 					$img_file = "{$dir}/{$name}-{$suffix}.{$ext}";
 					if(!file_exists($img_file)){
+						if( function_exists('wp_get_image_editor') ) {
+							$editor = wp_get_image_editor( $path );
+							$editor->resize( $w, $h, $cut=true );
+							$dest_file = $editor->generate_filename($suffix);
+							$thumb = $editor->save( $dest_file );
+						} else {
 					    $thumb = image_resize($path,$w,$h,$cut=true,$suffix);
+						}
 						if(is_string($thumb)) {
 					    	$img = substr($thumb, strpos($thumb, 'wp-content'));
 							$track = get_bloginfo('wpurl') . '/' .  $img;
@@ -157,7 +172,7 @@ function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
 }
 
 function flagSave_bPlaylistSkin($file) {
-
+	$file = sanitize_flagname($file);
 	$flag_options = get_option('flag_options');
 	$playlistPath = ABSPATH.$flag_options['galleryPath'].'playlists/banner/'.$file.'.xml';
 	// Save options
@@ -169,6 +184,7 @@ function flagSave_bPlaylistSkin($file) {
 }
 
 function flag_b_playlist_delete($playlist) {
+	$playlist = sanitize_file_name($playlist);
 	$flag_options = get_option('flag_options');
 	$playlistXML = ABSPATH.$flag_options['galleryPath'].'playlists/banner/'.$playlist.'.xml';
 	if(file_exists($playlistXML)){

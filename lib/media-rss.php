@@ -14,7 +14,7 @@ class flagMediaRss {
 	 * Function called by the wp_head action to output the RSS link for medias
 	 */
 	function add_mrss_alternate_link() {
-		echo "<link id='MediaRSS' rel='alternate' type='application/rss+xml' title='GRAND FlAGallery RSS Feed' href='" . flagMediaRss::get_mrss_url() . "' />\n";		
+		echo "<link id='MediaRSS' rel='alternate' type='application/rss+xml' title='Grand Flagallery RSS Feed' href='" . flagMediaRss::get_mrss_url() . "' />\n";
 	}
 	
 	/**

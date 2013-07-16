@@ -23,7 +23,7 @@ $flashPost = file_get_contents("php://input");
 // parse properties_skin
 $arr = array();
 parse_str($flashPost, $arr);
-$settingsXML =  str_replace("\\","/", dirname(dirname(dirname(__FILE__))).'/flagallery-skins/'.$arr['skin_name'].'/settings/settings.xml');
+$settingsXML =  str_replace("\\","/", dirname(dirname(dirname(__FILE__))).'/flagallery-skins/'.sanitize_flagname($arr['skin_name']).'/settings/settings.xml');
 if(isset($arr['properties_skin']) && !empty($arr['properties_skin'])) {
 	$fp = fopen($settingsXML, "r");
 	if(!$fp) {

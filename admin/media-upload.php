@@ -39,7 +39,7 @@ function media_upload_flag() {
 		media_upload_flag_save_image();
 		
 		// Return it to TinyMCE
-		return media_send_to_editor($html);
+		media_send_to_editor($html);
 	}
 	
 	// Save button
@@ -47,7 +47,7 @@ function media_upload_flag() {
 		media_upload_flag_save_image();
 	}
 		
-	return wp_iframe( 'media_upload_flag_form', $errors );
+	wp_iframe( 'media_upload_flag_form' );
 }
 
 add_action('media_upload_flag', 'media_upload_flag');
@@ -60,16 +60,17 @@ function media_upload_flag_save_image() {
 		
 		if ( !empty($_POST['image']) ) foreach ( $_POST['image'] as $image_id => $image ) {
 		
-		// Function save desription
-		$alttext   		= esc_html($image['alttext']);
-		$description    = esc_html($image['description']);
-		
-		$wpdb->query("UPDATE $wpdb->flagpictures SET alttext= '$alttext', description = '$description' WHERE pid = '$image_id'");
+			// Function save desription
+			$alttext = esc_html($image['alttext']);
+			$description = esc_html($image['description']);
+			$image_id = intval($image_id);
+
+			$wpdb->query($wpdb->prepare("UPDATE $wpdb->flagpictures SET alttext= '%s', description = '%s' WHERE pid = '%d'", $alttext, $description, $image_id));
 
 	}
 }
 
-function media_upload_flag_form($errors) {
+function media_upload_flag_form() {
 
 	global $wpdb, $wp_query, $wp_locale, $type, $tab, $post_mime_types, $flag;
 	
@@ -83,13 +84,13 @@ function media_upload_flag_form($errors) {
 	$form_action_url = site_url( "wp-admin/media-upload.php?type={$GLOBALS['type']}&tab=flag&post_id=$post_id", 'admin');
 
 	// Get number of images in gallery	
-	if ($_REQUEST['select_gal']){
+	if (isset($_REQUEST['select_gal']) && $_REQUEST['select_gal']){
 		$galleryID = (int) $_REQUEST['select_gal'];
 		$total = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->flagpictures WHERE galleryid = '$galleryID'");
 	}
 	
 	// Build navigation
-	$_GET['paged'] = intval($_GET['paged']);
+	$_GET['paged'] = isset($_GET['paged'])? intval($_GET['paged']) : 1;
 	if ( $_GET['paged'] < 1 )
 		$_GET['paged'] = 1;
 	$start = ( $_GET['paged'] - 1 ) * 10;

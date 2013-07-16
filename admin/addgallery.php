@@ -24,7 +24,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 	if ($_POST['addgallery']){
 		check_admin_referer('flag_addgallery');
-		$newgallery = $_POST['galleryname'];
+		$newgallery = trim($_POST['galleryname']);
 		if ( !empty($newgallery) )
 			flagAdmin::create_gallery($newgallery, $defaultpath);
 	}

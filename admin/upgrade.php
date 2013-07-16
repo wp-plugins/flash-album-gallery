@@ -127,7 +127,7 @@ function flag_import_date_time() {
 			$picture = new flagImage($image);
 			$meta = new flagMeta($picture->imagePath, true);
 			$date = $meta->get_date_time();
-			$wpdb->query("UPDATE $wpdb->flagpictures SET imagedate = '$date' WHERE pid = '$picture->pid'");
+			$wpdb->query($wpdb->prepare("UPDATE $wpdb->flagpictures SET imagedate = '%s' WHERE pid = '%d'", $date, $picture->pid));
 		}		
 	}	
 }

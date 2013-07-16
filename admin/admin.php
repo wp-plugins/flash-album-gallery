@@ -60,7 +60,7 @@ class flagAdminPanel{
 	    add_submenu_page( 'flag-overview' , __('FlAG Change options', 'flag'), __('Options', 'flag'), 'FlAG Change options', 'flag-options', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Facebook Integration', 'flag'), __('Facebook', 'flag'), 'FlAG Facebook page', 'flag-facebook', array (&$this, 'show_menu'));
 		if ( flag_wpmu_site_admin() )
-			add_submenu_page( 'wpmu-admin.php' , __('GRAND Flash Album Gallery', 'flag'), __('GRAND FlAGallery', 'flag'), 'activate_plugins', 'flag-wpmu', array (&$this, 'show_menu'));
+			add_submenu_page( 'wpmu-admin.php' , __('GRAND Flash Album Gallery', 'flag'), __('Grand Flagallery', 'flag'), 'activate_plugins', 'flag-wpmu', array (&$this, 'show_menu'));
 
 		//register the column fields
 		$this->register_columns();	
@@ -226,17 +226,17 @@ class flagAdminPanel{
 		}
 		
 		if ( !empty($link) ) {
-			$help  = '<h5>' . __('Get help with GRAND FlAGallery', 'flag') . '</h5>';
+			$help  = '<h5>' . __('Get help with Grand Flagallery', 'flag') . '</h5>';
 			$help .= '<div class="metabox-prefs">';
 			$help .= $link;
 			$help .= "</div>\n";
 			$help .= '<h5>' . __('More Help & Info', 'flag') . '</h5>';
 			$help .= '<div class="metabox-prefs">';
-			$help .= '<a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/grand-flash-album-gallery-wordpress-plugin-video-tutorial" target="_blank">' . __('GRAND FlAGallery Video Tutorial', 'flag') . '</a>';
+			$help .= '<a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/grand-flash-album-gallery-wordpress-plugin-video-tutorial" target="_blank">' . __('Grand Flagallery Video Tutorial', 'flag') . '</a>';
 			$help .= ' | <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq" target="_blank">' . __('FAQ', 'flag') . '</a>';
-			$help .= ' | <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review" target="_blank">' . __('GRAND FlAGallery Review', 'flag') . '</a>';
+			$help .= ' | <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review" target="_blank">' . __('Grand Flagallery Review', 'flag') . '</a>';
 			$help .= ' | <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/languages" target="_blank">' . __('Get your language pack', 'flag') . '</a>';
-			$help .= ' | <a href="http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery" target="_blank">' . __('Skins for GRAND FlAGallery', 'flag') . '</a>';
+			$help .= ' | <a href="http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery" target="_blank">' . __('Skins for Grand Flagallery', 'flag') . '</a>';
 			$help .= "</div>\n";
 		} 
 		

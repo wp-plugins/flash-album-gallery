@@ -15,8 +15,8 @@ msgstr ""
 
 #: flag.php:124
 #: flag.php:126
-msgid "GRAND FlAGallery skins upgraded/installed incorrectly. Go to"
-msgstr "GRAND FlAGallery dış görünüm güncelleme / yükleme yanlış. Git"
+msgid "Grand Flagallery skins upgraded/installed incorrectly. Go to"
+msgstr "Grand Flagallery dış görünüm güncelleme / yükleme yanlış. Git"
 
 #: flag.php:124
 #: flag.php:126
@@ -115,8 +115,8 @@ msgid "GRAND Flash Album Gallery"
 msgstr "GRAND Flash Album Gallery"
 
 #: lib/class.swfobject.php:61
-msgid "Skins for GRAND FlAGallery, Photo Galleries, Video Galleries"
-msgstr "GRAND FlAGallery için dış görünümler, REsim ve video galerileri"
+msgid "Skins for Grand Flagallery, Photo Galleries, Video Galleries"
+msgstr "Grand Flagallery için dış görünümler, REsim ve video galerileri"
 
 #: lib/class.swfobject.php:62
 msgid "developed by CodEasily.com - WordPress Flash Templates, WordPress Themes and WordPress plugins"
@@ -491,7 +491,7 @@ msgid "You need activate another skin before delete it"
 msgstr "Bunu silmeden önce başka bir dış görünüm etkinleştirmeniz gerekir"
 
 #: admin/skins.php:160
-msgid "You do not have sufficient permissions to delete skins of GRAND FlAGallery."
+msgid "You do not have sufficient permissions to delete skins of Grand Flagallery."
 msgstr "Bu işlemi yapmak için yterli izine sahip değilsiniz."
 
 #: admin/skins.php:172
@@ -803,8 +803,8 @@ msgid "Select the destination gallery:"
 msgstr "İşlem için hedef galeri seçin:"
 
 #: admin/manage-images.php:484
-msgid "Width x height (in pixel). GRAND FlAGallery will keep ratio size"
-msgstr "Genişlik x Yükseklik piksel (olarak). GRAND FlAGallery boyutu oranını koruyacak"
+msgid "Width x height (in pixel). Grand Flagallery will keep ratio size"
+msgstr "Genişlik x Yükseklik piksel (olarak). Grand Flagallery boyutu oranını koruyacak"
 
 #: admin/manage-images.php:548
 msgid "Only for logged in users"
@@ -1026,8 +1026,8 @@ msgid "Options"
 msgstr "Seçenekler"
 
 #: admin/admin.php:49
-msgid "GRAND FlAGallery"
-msgstr "GRAND FlAGallery"
+msgid "Grand Flagallery"
+msgstr "Grand Flagallery"
 
 #: admin/admin.php:112
 msgid "You do not have the correct permission"
@@ -1042,8 +1042,8 @@ msgid "A failure occurred"
 msgstr "Bir hata oluştu"
 
 #: admin/admin.php:186
-msgid "Get help with GRAND FlAGallery"
-msgstr "GRAND FlAGallery ile ilgili yardım alın"
+msgid "Get help with Grand Flagallery"
+msgstr "Grand Flagallery ile ilgili yardım alın"
 
 #: admin/admin.php:190
 msgid "More Help & Info"
@@ -1051,24 +1051,24 @@ msgstr "Daha fazla Yardım & Bilgi"
 
 #: admin/admin.php:192
 #, fuzzy
-msgid "GRAND FlAGallery Video Tutorial"
-msgstr "GRAND FlAGallery için dış görünümler"
+msgid "Grand Flagallery Video Tutorial"
+msgstr "Grand Flagallery için dış görünümler"
 
 #: admin/admin.php:193
 msgid "FAQ"
 msgstr "SSS"
 
 #: admin/admin.php:194
-msgid "GRAND FlAGallery Review"
-msgstr "GRAND FlAGallery Değerlendirmesi"
+msgid "Grand Flagallery Review"
+msgstr "Grand Flagallery Değerlendirmesi"
 
 #: admin/admin.php:195
 msgid "Get your language pack"
 msgstr "Get your language pack"
 
 #: admin/admin.php:196
-msgid "Skins for GRAND FlAGallery"
-msgstr "GRAND FlAGallery için dış görünümler"
+msgid "Skins for Grand Flagallery"
+msgstr "Grand Flagallery için dış görünümler"
 
 #: admin/functions.php:34
 msgid "No valid gallery name!"
@@ -1486,15 +1486,15 @@ msgstr "İthalat tarih ve zaman bilgileri ..."
 
 #: admin/upgrade.php:134
 #: admin/upgrade.php:153
-msgid "Upgrade GRAND FlAGallery"
-msgstr "GRAND FlAGalleryi Güncelle"
+msgid "Upgrade Grand Flagallery"
+msgstr "Grand Flagalleryi Güncelle"
 
 #: admin/upgrade.php:135
 msgid "The script detect that you upgrade from a older version."
 msgstr "Komut dosyası, yeni bir yükseltme sürümü algıladı."
 
 #: admin/upgrade.php:136
-msgid "Your database tables for GRAND FlAGallery is out-of-date, and must be upgraded before you can continue."
+msgid "Your database tables for Grand Flagallery is out-of-date, and must be upgraded before you can continue."
 msgstr "Devam etmeden önce veritabanınızı güncellemeniz önerilir."
 
 #: admin/upgrade.php:137

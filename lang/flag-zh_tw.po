@@ -1365,8 +1365,8 @@ msgid "You need activate another skin before delete it"
 msgstr "在刪除前，你必須先開啟另一個外殼。"
 
 #: admin/skins.php:234
-msgid "You do not have sufficient permissions to delete skins of GRAND FlAGallery."
-msgstr "您沒有刪除GRAND FlAGallery外殼的權利。"
+msgid "You do not have sufficient permissions to delete skins of Grand Flagallery."
+msgstr "您沒有刪除Grand Flagallery外殼的權利。"
 
 #: admin/skins.php:281
 msgid "activated successfully"
@@ -1452,16 +1452,16 @@ msgstr "匯入日期與時間資料"
 
 #: admin/upgrade.php:130
 #: admin/upgrade.php:149
-msgid "Upgrade GRAND FlAGallery"
-msgstr "GRAND FlAGallery 升級"
+msgid "Upgrade Grand Flagallery"
+msgstr "Grand Flagallery 升級"
 
 #: admin/upgrade.php:131
 msgid "The script detect that you upgrade from a older version."
 msgstr "稱測到您已升級"
 
 #: admin/upgrade.php:132
-msgid "Your database tables for GRAND FlAGallery is out-of-date, and must be upgraded before you can continue."
-msgstr "您的 GRAND FlAGallery 數據庫已過時，繼續前必升級"
+msgid "Your database tables for Grand Flagallery is out-of-date, and must be upgraded before you can continue."
+msgstr "您的 Grand Flagallery 數據庫已過時，繼續前必升級"
 
 #: admin/upgrade.php:133
 msgid "If you would like to downgrade later, please make first a complete backup of your database and the images."

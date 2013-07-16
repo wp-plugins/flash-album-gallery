@@ -214,7 +214,7 @@ class flagGallery {
 	static function fileinfo( $name ) {
 		
 		//Sanitizes a filename replacing whitespace with dashes
-		$name = sanitize_file_name($name);
+		$name = sanitize_flagname($name);
 		
 		//get the parts of the name
 		$filepart = pathinfo ( strtolower($name) );
@@ -320,6 +320,7 @@ class flagGallery {
 	}
 	
 	static function flagSaveWpMedia() {
+		global $wpdb;
 	   	if ( !empty($_POST['item_a']) )
 	    foreach ( $_POST['item_a'] as $item_id => $item ) {
 			$post = $_post = get_post($item_id, ARRAY_A);
@@ -327,9 +328,9 @@ class flagGallery {
 			$postlink = get_post_meta($item_id, 'link', true);
 			$postpreview = get_post_meta($item_id, 'preview', true);
 			if ( isset($item['post_content']) )
-				$post['post_content'] = $item['post_content'];
+				$post['post_content'] = $wpdb->escape($item['post_content']);
 			if ( isset($item['post_title']) )
-				$post['post_title'] = $item['post_title'];
+				$post['post_title'] = $wpdb->escape($item['post_title']);
 
 			$post = apply_filters('attachment_fields_to_save', $post, $item);
 

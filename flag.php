@@ -2,8 +2,8 @@
 /*
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
-Description: The GRAND FlAGallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 3.01
+Description: The Grand Flagallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
+Version: 3.10
 Author: Rattus
 Author URI: http://codeasily.com/
 
@@ -23,7 +23,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 
-	var $version     = '3.01';
+	var $version     = '3.10';
 	var $dbversion   = '2.75';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '3.0';
@@ -104,7 +104,7 @@ class flagLoad {
 			add_action('wp_print_scripts', array(&$this, 'load_scripts') );
 
 			// Add a version number to the header
-			add_action('wp_head', create_function('', 'echo "\n<meta name=\'GRAND FlAGallery\' content=\'' . $this->version . '\' />\n";') );
+			add_action('wp_head', create_function('', 'echo "\n<!-- <meta name=\'Grand Flagallery\' content=\'' . $this->version . '\' /> -->\n";') );
 
 		}	
 	}
@@ -124,7 +124,7 @@ class flagLoad {
 			include_once ( dirname (__FILE__) . '/admin/functions.php' );
 			include_once ( dirname (__FILE__) . '/admin/upgrade.php' );
 			flag_upgrade();
-			add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="updated"><p>\' . __(\'GRAND FlAGallery database upgraded\', "flag" ) . \'</p></div>\';') );
+			add_action( 'admin_notices', create_function('', 'echo \'<div id="message" class="updated"><p>\' . __(\'Grand Flagallery database upgraded\', "flag" ) . \'</p></div>\';') );
 		}
 	}
 
@@ -368,7 +368,7 @@ class flagLoad {
 	  );
 	  $args = array(
 	    'labels' => $labels,
-	    'description' => __('This is the page template for displaing GRAND FlAGallery galleries in full width and height of browser window.', 'flag'),
+	    'description' => __('This is the page template for displaing Grand Flagallery galleries in full width and height of browser window.', 'flag'),
 	    'public' => true,
 	    'publicly_queryable' => true,
 	    'show_ui' => true,
@@ -471,8 +471,8 @@ class flagLoad {
 		if(current_user_can('FlAG Use TinyMCE')){
 			$flag_upload_iframe_src = FLAG_URLPATH."admin/tinymce/window.php?media_button=true&riched=false";
 			$flag_iframe_src = apply_filters('flag_iframe_src', "$flag_upload_iframe_src&amp;tab=flagallery");
-			$title = __('Add GRAND FlAGallery');
-			$button = '<a href="'.$flag_upload_iframe_src.'&amp;TB_iframe=1&amp;width=360&amp;height=210" class="thickbox" id="add_flagallery" title="'.$title.'"><span style="margin:0 5px;">FlAGallery</span></a>';
+			$title = __('Add Grand Flagallery');
+			$button = '<a href="'.$flag_upload_iframe_src.'&amp;TB_iframe=1&amp;width=360&amp;height=210" class="thickbox button" id="add_flagallery" title="'.$title.'"><span style="margin:0 5px;">FlAGallery</span></a>';
 		} else {
 			$button = '';
 		}
@@ -492,6 +492,21 @@ if(!function_exists('sort_query_by_post_in')){
 			$sortby = "find_in_set(ID, '" . implode( ',', $thequery->query['post__in'] ) . "')";
 
 		return $sortby;
+	}
+}
+if(!function_exists('sanitize_flagname')){
+	function sanitize_flagname( $filename ) {
+
+		$filename = wp_strip_all_tags( $filename );
+		$filename = remove_accents( $filename );
+		// Kill octets
+		$filename = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '', $filename );
+		$filename = preg_replace( '/&.+?;/', '', $filename ); // Kill entities
+		$filename = preg_replace( '|[^a-zA-Z0-9 _.\-]|i', '', $filename );
+		$filename = preg_replace('/[\s-]+/', '-', $filename);
+		$filename = trim($filename, '.-_ ');
+
+		return $filename;
 	}
 }
 ?>

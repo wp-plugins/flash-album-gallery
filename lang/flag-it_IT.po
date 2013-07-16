@@ -1366,8 +1366,8 @@ msgid "You need activate another skin before delete it"
 msgstr "Devi attivare un'altra skin prima di eliminare questa."
 
 #: admin/skins.php:234
-msgid "You do not have sufficient permissions to delete skins of GRAND FlAGallery."
-msgstr "Non hai i permessi sufficienti per eliminare le skin di GRAND FlAGallery."
+msgid "You do not have sufficient permissions to delete skins of Grand Flagallery."
+msgstr "Non hai i permessi sufficienti per eliminare le skin di Grand Flagallery."
 
 #: admin/skins.php:281
 msgid "activated successfully"
@@ -1453,16 +1453,16 @@ msgstr "Importa le informazioni di data e ora..."
 
 #: admin/upgrade.php:130
 #: admin/upgrade.php:149
-msgid "Upgrade GRAND FlAGallery"
-msgstr "Aggiorna GRAND FlAGAllery"
+msgid "Upgrade Grand Flagallery"
+msgstr "Aggiorna Grand Flagallery"
 
 #: admin/upgrade.php:131
 msgid "The script detect that you upgrade from a older version."
 msgstr "Lo script rilega che stai aggiornando da una versione precedente."
 
 #: admin/upgrade.php:132
-msgid "Your database tables for GRAND FlAGallery is out-of-date, and must be upgraded before you can continue."
-msgstr "Le tabelle del tuo database per GRAND FlAGallery sono obsolete, devi effetuare un aggiornamento prima di continuare."
+msgid "Your database tables for Grand Flagallery is out-of-date, and must be upgraded before you can continue."
+msgstr "Le tabelle del tuo database per Grand Flagallery sono obsolete, devi effetuare un aggiornamento prima di continuare."
 
 #: admin/upgrade.php:133
 msgid "If you would like to downgrade later, please make first a complete backup of your database and the images."

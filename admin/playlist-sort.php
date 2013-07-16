@@ -6,7 +6,8 @@ function flag_playlist_order($playlist = 'deprecated'){
 	//this is the url without any presort variable
 	$base_url = admin_url() . 'admin.php?page=' . urlencode($_GET['page']);
 	$flag_options = get_option('flag_options');
-	$playlistPath = $flag_options['galleryPath'].'playlists/'.urlencode($_GET['playlist']).'.xml';
+	$filename = sanitize_flagname($_GET['playlist']);
+	$playlistPath = $flag_options['galleryPath'].'playlists/'.$filename.'.xml';
 	$playlist = get_playlist_data(ABSPATH.$playlistPath);
 	$items_a = $playlist['items'];
 	$items = implode(',',$playlist['items']);
@@ -17,18 +18,18 @@ function flag_playlist_order($playlist = 'deprecated'){
 			<h2><?php _e('Sort Gallery', 'flag'); ?></h2>
 
 	<div class="alignright tablenav" style="margin-bottom: -36px;">
-		<a href="<?php echo esc_url($base_url."&playlist=".urlencode($_GET['playlist']).'&mode=edit'); ?>" class="button-secondary action"><?php _e('Back to playlist', 'flag'); ?></a>
+		<a href="<?php echo esc_url($base_url."&playlist=".$filename.'&mode=edit'); ?>" class="button-secondary action"><?php _e('Back to playlist', 'flag'); ?></a>
 	</div>
-	<form id="sortPlaylist" method="POST" action="<?php echo esc_url($base_url."&playlist=".urlencode($_GET['playlist']).'&mode=edit'); ?>" accept-charset="utf-8">
+	<form id="sortPlaylist" method="POST" action="<?php echo esc_url($base_url."&playlist=".$filename.'&mode=edit'); ?>" accept-charset="utf-8">
 		<div class="alignleft tablenav">
-			<?php wp_nonce_field('flag_updatesortorder'); ?>
+			<?php wp_nonce_field('flag_update'); ?>
 			<input class="button-primary action" type="submit" name="updatePlaylist" value="<?php _e('Update Sort Order', 'flag'); ?>" />
 		</div>
 		<br clear="all" />
-		<input type="hidden" name="playlist_title" value="<?php echo esc_html(stripslashes($playlist['title'])); ?>" />
-		<input type="hidden" name="skinname" value="<?php echo $playlist['skin']; ?>" />
-		<input type="hidden" name="skinaction" value="<?php echo $playlist['skin']; ?>" />
-		<textarea style="display: none;" name="playlist_descr" cols="40" rows="1"><?php echo esc_html(stripslashes($playlist['description'])); ?></textarea>
+		<input type="hidden" name="playlist_title" value="<?php echo esc_html($playlist['title']); ?>" />
+		<input type="hidden" name="skinname" value="<?php echo sanitize_flagname($playlist['skin']); ?>" />
+		<input type="hidden" name="skinaction" value="<?php echo sanitize_flagname($playlist['skin']); ?>" />
+		<textarea style="display: none;" name="playlist_descr" cols="40" rows="1"><?php echo esc_html($playlist['description']); ?></textarea>
 <script type="text/javascript">
 /*<![CDATA[*/
 jQuery(document).ready(function($) {

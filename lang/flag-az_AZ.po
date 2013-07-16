@@ -1366,8 +1366,8 @@ msgid "You need activate another skin before delete it"
 msgstr "Bu skini silmakdən qabaq Siz digər skini yaratmalısınız"
 
 #: admin/skins.php:234
-msgid "You do not have sufficient permissions to delete skins of GRAND FlAGallery."
-msgstr " GRAND FlAGallery skinin silmakdan ötəri Sizin lazımi qədər səlahiyyətiniz yoxdur. "
+msgid "You do not have sufficient permissions to delete skins of Grand Flagallery."
+msgstr " Grand Flagallery skinin silmakdan ötəri Sizin lazımi qədər səlahiyyətiniz yoxdur. "
 
 #: admin/skins.php:281
 msgid "activated successfully"
@@ -1453,16 +1453,16 @@ msgstr "Tarix və vaxt haqqında məlumatı import etmək"
 
 #: admin/upgrade.php:130
 #: admin/upgrade.php:149
-msgid "Upgrade GRAND FlAGallery"
-msgstr "GRAND FlAGallery Yeniləşdirilməsi"
+msgid "Upgrade Grand Flagallery"
+msgstr "Grand Flagallery Yeniləşdirilməsi"
 
 #: admin/upgrade.php:131
 msgid "The script detect that you upgrade from a older version."
 msgstr "Skript təyin etdiki köhnə versiyadan yeniləşdirilib."
 
 #: admin/upgrade.php:132
-msgid "Your database tables for GRAND FlAGallery is out-of-date, and must be upgraded before you can continue."
-msgstr "Sizin GRAND FlAGallery üçün məlumat bazası köhnəlib və davam etməkdan qabaq yeniləşdirilməlidir."
+msgid "Your database tables for Grand Flagallery is out-of-date, and must be upgraded before you can continue."
+msgstr "Sizin Grand Flagallery üçün məlumat bazası köhnəlib və davam etməkdan qabaq yeniləşdirilməlidir."
 
 #: admin/upgrade.php:133
 msgid "If you would like to downgrade later, please make first a complete backup of your database and the images."

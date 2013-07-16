@@ -202,7 +202,7 @@ jQuery(document).ready( function() {
 
 <?php else :?>
 
-<h2><?php echo _n( 'Gallery', 'Galleries', 1, 'flag' ); ?> : <?php echo esc_html(stripslashes($gallery->title)); ?></h2>
+<h2><?php echo _n( 'Gallery', 'Galleries', 1, 'flag' ); ?> : <?php echo esc_html($gallery->title); ?></h2>
 <select name="select_gid" style="width:180px; float: right; margin: -20px 3px 0 0;" onchange="window.location.href=this.options[this.selectedIndex].value">
 	<option selected="selected"><?php _e('Choose another gallery', 'flag'); ?></option>
 <?php 
@@ -230,11 +230,11 @@ jQuery(document).ready( function() {
 			<table class="form-table" >
 				<tr>
 					<th align="left" scope="row"><?php _e('Title', 'flag'); ?>:</th>
-					<td align="left"><input type="text" size="50" name="title" value="<?php echo esc_html(stripslashes($gallery->title)); ?>"  /></td>
+					<td align="left"><input type="text" size="50" name="title" value="<?php echo esc_html($gallery->title); ?>"  /></td>
 				</tr>
 				<tr>
 					<th align="left" scope="row"><?php _e('Description', 'flag'); ?>:</th> 
-					<td align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo esc_html(stripslashes($gallery->galdesc)); ?></textarea></td>
+					<td align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo esc_html($gallery->galdesc); ?></textarea></td>
 				</tr>
 				<tr>
 					<th align="left" scope="row"><?php _e('Path', 'flag'); ?>:</th> 
@@ -485,7 +485,7 @@ if ( $counter==0 )
 
 	<!-- #selectgallery -->
 	<div id="selectgallery" style="display: none;" >
-		<form id="form-select-gallery" method="POST" accept-charset="utf-8">
+		<form id="form-select-gallery" method="POST" action="<?php echo admin_url('admin.php?page=flag-manage-gallery&mode=edit&gid='.$act_gid.'&paged=1'); ?>" accept-charset="utf-8">
 		<?php wp_nonce_field('flag_thickbox_form'); ?>
 		<input type="hidden" id="selectgallery_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="selectgallery_bulkaction" name="TB_bulkaction" value="" />
@@ -499,7 +499,7 @@ if ( $counter==0 )
 		    				foreach ($gallerylist as $gallery) { 
 		    					if ($gallery->gid != $act_gid) { 
 		    			?>
-						<option value="<?php echo $gallery->gid; ?>" ><?php echo $gallery->gid; ?> - <?php echo esc_html(stripslashes($gallery->title)); ?></option>
+						<option value="<?php echo $gallery->gid; ?>" ><?php echo $gallery->gid; ?> - <?php echo esc_html($gallery->title); ?></option>
 						<?php 
 		    					} 
 		    				}
@@ -521,7 +521,7 @@ if ( $counter==0 )
 
 	<!-- #resize_images -->
 	<div id="resize_images" style="display: none;" >
-		<form id="form-resize-images" method="POST" accept-charset="utf-8">
+		<form id="form-resize-images" method="POST" action="<?php echo admin_url('admin.php?page=flag-manage-gallery&mode=edit&gid='.$act_gid.'&paged=1'); ?>" accept-charset="utf-8">
 		<?php wp_nonce_field('flag_thickbox_form'); ?>
 		<input type="hidden" id="resize_images_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="resize_images_bulkaction" name="TB_bulkaction" value="" />
@@ -533,7 +533,7 @@ if ( $counter==0 )
 				</td>
 				<td>
 					<input type="text" size="5" name="imgWidth" value="<?php echo $flag->options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $flag->options['imgHeight']; ?>" />
-					<br /><small><?php _e('Width x height (in pixel). GRAND FlAGallery will keep ratio size','flag'); ?></small>
+					<br /><small><?php _e('Width x height (in pixel). Grand Flagallery will keep ratio size','flag'); ?></small>
 				</td>
 			</tr>
 		  	<tr align="right">
@@ -550,7 +550,7 @@ if ( $counter==0 )
 
 	<!-- #new_thumbnail -->
 	<div id="new_thumbnail" style="display: none;" >
-		<form id="form-new-thumbnail" method="POST" accept-charset="utf-8">
+		<form id="form-new-thumbnail" method="POST" action="<?php echo admin_url('admin.php?page=flag-manage-gallery&mode=edit&gid='.$act_gid.'&paged=1'); ?>" accept-charset="utf-8">
 		<?php wp_nonce_field('flag_thickbox_form'); ?>
 		<input type="hidden" id="new_thumbnail_imagelist" name="TB_imagelist" value="" />
 		<input type="hidden" id="new_thumbnail_bulkaction" name="TB_bulkaction" value="" />

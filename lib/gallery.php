@@ -11,7 +11,7 @@ $siteurl = get_option ('siteurl');
 // get the gallery id
 $gID = explode( '_', $_GET['gid'] );
 $gID = array_filter($gID, 'intval');
-$skin = urlencode($_GET['skinName']);
+$skin = sanitize_flagname($_GET['skinName']);
 $flag_options = get_option ('flag_options');
 
 $file =  str_replace("\\","/", dirname(dirname(dirname(__FILE__))).'/flagallery-skins/'.$skin.'/settings/settings.xml');
