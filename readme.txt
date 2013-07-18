@@ -53,6 +53,9 @@ New plugin:
 
 == Changelog ==
 
+= v3.11 - 18.07.2013 =
+* Fix: Widgets page was not accessible
+
 = v3.10 - 17.07.2013 =
 * Fix: Security bugs reported by Nikolai Tschacher for the White Fir Design Bug Bounty
 * Fix: Small bugs and improvements
