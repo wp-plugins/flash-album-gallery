@@ -1,6 +1,5 @@
 <?php
-preg_match('|^(.*?/)(wp-content)/|i', str_replace('\\', '/', __FILE__), $_m);
-require_once( $_m[1] . 'wp-load.php');
+require_once( dirname(dirname(__FILE__)) . '/flag-config.php');
 // check for correct capability
 if ( !is_user_logged_in() )
 	die('-1');

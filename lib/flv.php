@@ -1,6 +1,5 @@
 <?php // Create XML output
-preg_match('|^(.*?/)(wp-content)/|i', str_replace('\\', '/', __FILE__), $_m);
-require_once( $_m[1] . 'wp-load.php');
+require_once( dirname(dirname(__FILE__)) . '/flag-config.php');
 $flag_options = get_option ('flag_options');
 if(isset($_GET['vID'])) {
 	header("content-type:text/xml;charset=utf-8");

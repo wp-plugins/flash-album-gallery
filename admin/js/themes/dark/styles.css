@@ -10,7 +10,7 @@ Supports Thumbs: true
 
 .theme-dark.slider-wrapper {
     background: #222;
-    padding: 10px;
+    border: 10px solid #222;
 }
 .theme-dark .nivoSlider {
 	position:relative;

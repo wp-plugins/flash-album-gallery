@@ -1,6 +1,5 @@
 <?php
-preg_match('|^(.*?/)(wp-content)/|i', str_replace('\\', '/', __FILE__), $_m);
-require_once( $_m[1] . 'wp-load.php');
+require_once( dirname(__FILE__) . '/flag-config.php');
 global $post;
 $flag_custom = get_post_custom($post->ID);
 $scode = $flag_custom["mb_scode"][0];

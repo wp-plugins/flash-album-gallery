@@ -127,27 +127,22 @@ function flag_overview_setup(){
 				<div id="misc-publishing-actions">
 					<div class="misc-pub-section">
 						<span id="plugin-home" class="icon">
-							<strong><a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag" style="text-decoration: none;"><?php _e('Plugin Home','flag'); ?></a></strong>
+							<strong><a href="http://codeasily.com/wordpress-plugins/flag/" style="text-decoration: none;"><?php _e('Plugin Home','flag'); ?></a></strong>
 						</span>
 					</div>
 					<div class="misc-pub-section">
 						<span id="plugin-comments" class="icon">
-							<a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag#comments" style="text-decoration: none;"><?php _e('Plugin Comments','flag'); ?></a>
+							<a href="http://codeasily.com/community/forum/flagallery-wordpress-plugin/" style="text-decoration: none;"><?php _e('Plugin Forum','flag'); ?></a>
 						</span>
 					</div>
 					<div class="misc-pub-section">
 						<span id="rate-plugin" class="icon">
-							<a href="http://wordpress.org/extend/plugins/flash-album-gallery" style="text-decoration: none;"><?php _e('Rate Plugin','flag'); ?></a>
+							<a href="http://wordpress.org/extend/plugins/flash-album-gallery/" style="text-decoration: none;"><?php _e('Rate Plugin','flag'); ?></a>
 						</span>
 					</div>
-					<!-- <div class="misc-pub-section">
-						<span id="my-plugins" class="icon">
-							<a href="http://codeasily.com/category/wordpress-plugins" style="text-decoration: none;"><?php _e('My Plugins','flag'); ?></a>
-						</span>
-					</div> -->
 					<div class="misc-pub-section curtime misc-pub-section-last">
 						<span id="contact-me" class="icon">
-							<a href="http://codeasily.com/about" style="text-decoration: none;"><?php _e('Contact Me','flag'); ?></a>
+							<a href="http://codeasily.com/support/contact/" style="text-decoration: none;"><?php _e('Contact Me','flag'); ?></a>
 						</span>
 					</div>
 				</div>

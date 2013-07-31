@@ -9,8 +9,8 @@ Supports Thumbs: true
 */
 
 .theme-light.slider-wrapper {
-    background: #fff;
-    padding: 10px;
+  background: #fff;
+	border: 10px solid #fff;
 }
 .theme-light .nivoSlider {
 	position:relative;

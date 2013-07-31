@@ -24,7 +24,7 @@ Edit your media content the way you want: upload images, import music and video,
 
 **[How to add gallery to your Wordpress site](http://mypgc.co/how-add-gallery-to-wordpress-website-or-blog)** - full HowTo guide.
 
-For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag "Grand Flagallery Home Page")** and see demos created with "Grand Flagallery" WordPress Plugin.
+For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag/ "Grand Flagallery Home Page")** and see demos created with "Grand Flagallery" WordPress Plugin.
 
 Image Link support now available in skins. [See Slider Skin demo](http://photogallerycreator.com/grand-flagallery/slider-gallery-skin-for-wordpress/).
 
@@ -52,6 +52,11 @@ New plugin:
 
 
 == Changelog ==
+
+= v3.12 - 18.07.2013 =
+* Fix: Not worked for wordpress with custom 'wp-content' folder
+* Fix: Minima skin wrong install url
+* Fix: Photoswipe js
 
 = v3.11 - 18.07.2013 =
 * Fix: Widgets page was not accessible
@@ -626,7 +631,9 @@ That's it ... Have fun!
 == Frequently Asked Questions == 
  
 = Read as startup : =
-http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review/
+Home page: http://codeasily.com/wordpress-plugins/flag/
+
+Forum: http://codeasily.com/community/forum/flagallery-wordpress-plugin/
  
 = The flash didn't work. I only see the message "The Flash Player and a browser with Javascript  needed..", but everything is installed and activated. =
 
@@ -661,7 +668,7 @@ To display ALL galleries as categories: [flagallery gid=all]
 = How can I set it to auto slideshow when open the page? =
 
 Download and activate skin with auto slideshow 
-http://photogallerycreator.com/grand-flagallery/
+http://codeasily.com/portfolio/
 
 = The gallery keeps loading without ever showing the images =
 
@@ -693,8 +700,8 @@ Create it manually with chmod 0755.
  
 = Live Demos: =
 
-http://photogallerycreator.com/grand-flagallery/ 
+http://codeasily.com/portfolio/
  
 = A further FAQ you can found here: = 
 
-http://codeasily.com/wordpress-plugins/flash-album-gallery/faq/
+http://codeasily.com/community/forum/flagallery-wordpress-plugin/

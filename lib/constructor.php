@@ -1,16 +1,5 @@
 <?php
-if ( !defined('WP_LOAD_PATH') ) {
-	/** classic root path if wp-content and plugins is below wp-config.php */
-	preg_match('|^(.*?/)(wp-content)/|i', str_replace('\\', '/', __FILE__), $_m);
-	$classic_root = $_m[1];
-	if (file_exists( $classic_root . 'wp-load.php') )
-		define( 'WP_LOAD_PATH', $classic_root);
-	else
-		exit("Could not find wp-load.php");
-}
-
-// let's load WordPress
-require_once( WP_LOAD_PATH . 'wp-load.php');
+require_once( dirname(dirname(__FILE__)) . '/flag-config.php');
 
 if ( !is_user_logged_in() )
 	die('-1');

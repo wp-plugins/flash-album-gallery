@@ -195,7 +195,8 @@ function flag_default_options() {
 }
 
 function flag_list_options() {
-	$flag_options['galleryPath']			= 'wp-content/flagallery/';  		// set default path to the gallery
+	$wp_content = basename(WP_CONTENT_DIR);
+	$flag_options['galleryPath']			= $wp_content.'/flagallery/';  		// set default path to the gallery
 	$flag_options['swfUpload']				= true;								// activate the batch upload
 	$flag_options['deleteImg']				= true;								// delete Images
 	$flag_options['deepLinks']				= true;
@@ -220,8 +221,8 @@ function flag_list_options() {
 	$flag_options['imgQuality']				= 85;								// Image Quality
 	
 	// Thumbnail Settings
-	$flag_options['thumbWidth']				= 220;  							// Thumb Width
-	$flag_options['thumbHeight']			= 220;  							// Thumb height
+	$flag_options['thumbWidth']				= 100;  							// Thumb Width
+	$flag_options['thumbHeight']			= 100;  							// Thumb height
 	$flag_options['thumbFix']				= true;								// Fix the dimension
 	$flag_options['thumbQuality']			= 100;  							// Thumb Quality
 

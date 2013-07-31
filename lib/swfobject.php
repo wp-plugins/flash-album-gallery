@@ -18,7 +18,6 @@
  */
 function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', $skin='', $playlist='', $wmode='', $linkto='', $fullwindow=false, $align='') {
 	global $post;
-	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
 
 	if($linkto) {
 		$post = get_post($linkto);
@@ -27,10 +26,10 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 	$skinID = 'sid_'.mt_rand();
 	if($skin == '') $skin = $flag_options['flashSkin'];
 	$skin = sanitize_flagname($skin);
-	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
+	$skinpath = str_replace("\\","/", WP_PLUGIN_DIR ).'/flagallery-skins/'.$skin;
 	if(!is_dir($skinpath)) {
 		$skin = 'minima_jn';
-		$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
+		$skinpath = str_replace("\\","/", WP_PLUGIN_DIR ).'/flagallery-skins/'.$skin;
 	}
 	$swfmousewheel = '';
 	$flashBacktransparent = '';
@@ -38,6 +37,12 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 	if (empty($name) ) $name  = 'Gallery';
 	if (empty($width) ) $width  = $flag_options['flashWidth'];
 	if (empty($height)) $height = (int) $flag_options['flashHeight'];
+
+	if(strpos($skin, '_js')){
+		$out = flagShowJSAlbum($galleryID, array($width, $height), $skin, $skinpath, $align);
+		return $out;
+	}
+
 	$data = '';
 	if(file_exists($skinpath . "/settings/settings.xml")) {
 		if ($settings_xml = @simplexml_load_file($skinpath . "/settings/settings.xml", 'SimpleXMLElement', LIBXML_NOCDATA)){
@@ -99,6 +104,7 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 	else
 		$height = 'auto';
 	// init the flash output
+	require_once ( dirname(__FILE__) . '/class.swfobject.php' );
 	$swfobject = new flag_swfobject( plugins_url('flagallery-skins/'.$skin.'/gallery.swf') , $skinID, '100%', '100%', '10.1.52', plugins_url('/skins/expressInstall.swf', dirname(__FILE__)));
 
 	$swfobject->add_params('wmode', $wmode);
@@ -148,11 +154,11 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 	}
 	// add now the script code
 	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT']) && !preg_match("/Android/i", $_SERVER['HTTP_USER_AGENT'])){
-		$out .= '<script type="text/javascript" defer="defer">';
+		$out .= '<script type="text/javascript" defer="defer">/* <![CDATA[ */';
 		$out .= 'function json_xml_'.$skinID.'(e){ return '.$xml['json'].'; }';
 		$out .= 'flag_alt[\''.$skinID.'\'] = jQuery("div#'.$skinID.'_jq").clone().wrap(document.createElement(\'div\')).parent().html();';
 		$out .= $swfobject->javascript();
-		$out .= '</script>';
+		$out .= '/* ]]> */</script>';
 	}
 
 	$out = apply_filters('flag_show_flash_content', $out);
@@ -165,6 +171,76 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 		'',
 		$out
 	);
+
+	return $out;
+}
+
+function flagShowJSAlbum($galleryID, $size, $skin, $skinpath, $align) {
+	global $wpdb;
+	$out = '';
+	$flag_options = get_option('flag_options');
+	if ($settings_xml = @simplexml_load_file($skinpath . "/settings/settings.xml", 'SimpleXMLElement', LIBXML_NOCDATA)){
+		$data = $settings_xml->properties;
+		$data->plug = plugins_url() . '/' . FLAGFOLDER . '/lib/';
+		$data->siteurl = site_url();
+		$data->key = $flag_options['license_key'];
+	} else {
+		return $out;
+	}
+
+	$gID = explode( '_', $galleryID ); // get the gallery id
+
+	$scripts = '';
+	include_once ( $skinpath.'/load.php' );
+
+	if ( is_user_logged_in() ) $exclude_clause = '';
+	else $exclude_clause = ' AND exclude<>1 ';
+
+	foreach ( $gID as $galID ) {
+		$galID = (int) $galID;
+		$status = $wpdb->get_var("SELECT status FROM $wpdb->flaggallery WHERE gid={$galID}");
+		if(intval($status)){
+			continue;
+		}
+
+		if ( $galID == 0) {
+			$thegalleries = array();
+			$thepictures = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, imagedate, sortorder, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE 1=1 {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
+		} else {
+			$thegalleries = $wpdb->get_row("SELECT gid, name, path, title, galdesc FROM $wpdb->flaggallery WHERE gid={$galID}", ARRAY_A);
+			$thepictures = $wpdb->get_results("SELECT pid, filename, description, alttext, link, imagedate, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE galleryid = '{$galID}' {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
+		}
+
+		if (is_array ($thepictures) && count($thegalleries) && count($thepictures)){
+			$thegalleries = array_map('stripslashes', $thegalleries);
+			$galdesc = $thegalleries['galdesc'];
+			$thegalleries['galdesc'] = htmlspecialchars_decode($galdesc);
+
+			include_once ( $skinpath.'/loop.php' );
+
+		}
+	}
+
+	// create the output
+	if(!empty($out)){
+		if($size[0] != '100%' && in_array($align, array('left', 'center', 'right'))){
+			$margin = '';
+			switch($align){
+				case 'left':
+					$margin = 'margin-right: auto;';
+					break;
+				case 'center':
+					$margin = 'margin:0 auto;';
+					break;
+				case 'right':
+					$margin = 'margin-left: auto;';
+					break;
+			}
+			$out = '<div class="flashalbumwraper" style="text-align:'.$align.';"><div class="flashalbum flashalbumjs" style="width:'.$size[0].';'.$margin.'">' . $scripts.$out . '</div></div>';
+		} else {
+			$out = '<div class="flashalbum" style="width:'.$size[0].';">' . $scripts.$out . '</div>';
+		}
+	}
 
 	return $out;
 }
@@ -183,7 +259,7 @@ function flagShowMPlayer($playlist, $width, $height, $wmode='', $skin='', $isWid
 		$skin = $playlist_data['skin'];
 	}
 	$skin = sanitize_flagname($skin);
-	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
+	$skinpath = str_replace("\\","/", WP_PLUGIN_DIR ).'/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
 	$args = array(
@@ -220,7 +296,7 @@ function flagShowVPlayer($playlist, $width, $height, $wmode='') {
 	$playlistPath = $galleryPath.'/playlists/video/'.$playlist.'.xml';
 	$playlist_data = get_v_playlist_data(ABSPATH.$playlistPath);
 	$skin = sanitize_flagname($playlist_data['skin']);
-	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
+	$skinpath = str_replace("\\","/", WP_PLUGIN_DIR ).'/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	if(isset($flag_options['license_key'])){
 		$lkey = $flag_options['license_key'];
@@ -321,7 +397,7 @@ function flagShowBanner($xml, $width, $height, $wmode='') {
 	$playlist_data = get_b_playlist_data(ABSPATH.$playlistPath);
 	$skin = sanitize_flagname($playlist_data['skin']);
 	$items = $playlist_data['items'];
-	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
+	$skinpath = str_replace("\\","/", WP_PLUGIN_DIR ).'/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	if(isset($flag_options['license_key'])){
 		$lkey = $flag_options['license_key'];
@@ -368,7 +444,7 @@ function flagShowWidgetBanner($xml, $width, $height, $skin) {
 	}
 	$skin = sanitize_flagname($skin);
 	$items = $playlist_data['items'];
-	$skinpath = ABSPATH.'wp-content/plugins/flagallery-skins/'.$skin;
+	$skinpath = str_replace("\\","/", WP_PLUGIN_DIR ).'/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
 	if(isset($flag_options['license_key'])){
 		$lkey = $flag_options['license_key'];

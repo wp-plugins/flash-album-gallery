@@ -1,6 +1,8 @@
-<?php
-preg_match('|^(.*?/)(wp-content)/|i', str_replace('\\', '/', __FILE__), $_m);
-require_once( $_m[1] . 'wp-load.php');
+<?php if(file_exists(dirname(__FILE__) . '/flag-config.php')){
+	require_once( dirname(__FILE__) . '/flag-config.php');
+} else if(file_exists(dirname(__FILE__) . '/wp-load.php')){
+	require_once( dirname(__FILE__) . '/wp-load.php');
+}
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
 <head profile="http://gmpg.org/xfn/11">

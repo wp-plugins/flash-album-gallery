@@ -1,5 +1,8 @@
 var fv = swfobject.getFlashPlayerVersion();
-var metaViewport = jQuery('meta[name=viewport]','head').attr('content');
+var metaViewport;
+jQuery(document).ready(function() {
+	metaViewport = jQuery('meta[name=viewport]','head').attr('content');
+});
 
 function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 	jQuery(document).ready(function() {
@@ -48,7 +51,7 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 				jQuery('#fancybox-wrap').off('click', '.grand_controls span');
 			});
 		} else {
-			if(!metaViewport && ExtendVar == 'photoswipe'){
+			if((('undefined' == metaViewport) || !metaViewport) && ExtendVar == 'photoswipe'){
 				jQuery('head').append('<meta content="width=device-width, initial-scale=1.0;" name="viewport" />');
 			}
 			jQuery('.flashalbum').css('height','auto');
@@ -65,6 +68,10 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 					jQuery('.flagcatlinks',this).append('<a class="flagcat'+act+'" href="#'+catId+'" title="'+catDescr+'">'+catName+'</a>');
 				}
 				jQuery('a#backlink').appendTo('.flagcatlinks',this);
+				jQuery('.flagcategory', this).each(function(){
+					var flagcatid = jQuery(this).attr('id');
+					jQuery('a.flag_pic_alt', this).attr('rel',flagcatid);
+				});
 			});
 			jQuery('.flag_alternate .flagcat').click(function(){
 				if(!jQuery(this).hasClass('active')) {
@@ -138,8 +145,9 @@ function alternate_flag_e(t, ExtendVar){
 			});
 			// onHide - clean up
 			instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onHide, function(e){
-				if(!metaViewport){
+				if(('undefined' == metaViewport) || !metaViewport){
 					jQuery('meta[name=viewport]').attr('content','width=device-width, initial-scale=1.0, minimum-scale=0.25, maximum-scale=1.6, user-scalable=1');
+					jQuery('meta[name=viewport]').remove();
 				} else {
 					jQuery('meta[name=viewport]').attr('content',metaViewport);
 				}

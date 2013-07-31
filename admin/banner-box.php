@@ -319,8 +319,8 @@ function showDialog( windowId, height ) {
 </script>
 	<div class="wrap">
 <?php if($added===false) { ?>
-<?php if( current_user_can('FlAG Import folder') ) { 
-	$defaultpath = 'wp-content/';
+<?php if( current_user_can('FlAG Import folder') ) {
+	$defaultpath = basename(WP_CONTENT_DIR).'/';
 ?>
 <link rel="stylesheet" type="text/css" href="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.css" />
 <script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jqueryFileTree/jqueryFileTree.js"></script>

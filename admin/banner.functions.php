@@ -129,7 +129,7 @@ function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
 					    $thumb = image_resize($path,$w,$h,$cut=true,$suffix);
 						}
 						if(is_string($thumb)) {
-					    	$img = substr($thumb, strpos($thumb, 'wp-content'));
+					    	$img = substr($thumb, strpos($thumb, basename(WP_CONTENT_DIR)));
 							$track = get_bloginfo('wpurl') . '/' .  $img;
 						} else {
 							$track = $url;
