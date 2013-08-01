@@ -16,7 +16,7 @@ body.ps-active, body.ps-building, div.ps-active, div.ps-building
 	background: #000;
 	overflow: hidden;
 }
-body.ps-active *, div.ps-active *
+body.ps-active > *, div.ps-active > *
 {
 	-webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
 	display: none;
@@ -75,7 +75,6 @@ div.ps-caption
 	text-align: center;
 	min-height: 44px;
 }
-div.ps-caption *  { display: inline; }
 
 div.ps-caption-bottom
 {
