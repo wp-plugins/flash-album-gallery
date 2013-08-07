@@ -3,7 +3,7 @@ Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
 Tags: admin, flash, fullscreen gallery, gallery, image, images, image gallery, mp3, music, page, photo, slider, plugin, Post, posts, slideshow, video, widget, iOS gallery, iphone gallery, best gallery, portfolio
 Requires at least: 3.0
-Tested up to: 3.5.2
+Tested up to: 3.6
 Stable tag: trunk
 
 Grand Flagallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
