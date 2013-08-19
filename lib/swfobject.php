@@ -148,9 +148,9 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 				$margin = 'margin-left: auto;';
 				break;
 		}
-		$out = '<div class="flashalbumwraper" style="text-align:'.$align.';"><div class="flashalbum" style="width:'.$width.';height:'.$height.';'.$margin.'">' . $swfobject->output($alternate) . '</div></div>';
+		$out = '<div class="flashalbumwraper '.$skin.'" style="text-align:'.$align.';"><div class="flashalbum" style="width:'.$width.';height:'.$height.';'.$margin.'">' . $swfobject->output($alternate) . '</div></div>';
 	} else {
-		$out = '<div class="flashalbum" style="width:'.$width.';height:'.$height.';">' . $swfobject->output($alternate) . '</div>';
+		$out = '<div class="flashalbum '.$skin.'" style="width:'.$width.';height:'.$height.';">' . $swfobject->output($alternate) . '</div>';
 	}
 	// add now the script code
 	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT']) && !preg_match("/Android/i", $_SERVER['HTTP_USER_AGENT'])){

@@ -75,10 +75,10 @@ foreach ( $gID as $galID ) {
 
 	if ( $galID == 0) {
 		$thegalleries = array();
-		$thepictures = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, imagedate, sortorder, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE 1=1 {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
+		$thepictures = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, imagedate, sortorder, hitcounter, total_value, total_votes, meta_data FROM $wpdb->flagpictures WHERE 1=1 {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
 	} else {
 		$thegalleries = $wpdb->get_row("SELECT gid, name, path, title, galdesc FROM $wpdb->flaggallery WHERE gid={$galID}", ARRAY_A);
-		$thepictures = $wpdb->get_results("SELECT pid, filename, description, alttext, link, imagedate, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE galleryid = '{$galID}' {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
+		$thepictures = $wpdb->get_results("SELECT pid, filename, description, alttext, link, imagedate, hitcounter, total_value, total_votes, meta_data FROM $wpdb->flagpictures WHERE galleryid = '{$galID}' {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
 	}
 	$captions = '';
 
@@ -101,6 +101,10 @@ foreach ( $gID as $galID ) {
 			$j=0;
 			$b = array();
 		foreach ($thepictures as $picture) {
+			$meta_data = maybe_unserialize($picture['meta_data']);
+			$picture['width'] = $meta_data['width'];
+			$picture['height'] = $meta_data['height'];
+			unset($picture['meta_data']);
 			$picture = array_map('stripslashes', $picture);
 			$b['data'][] = $picture;
 

@@ -133,7 +133,7 @@ function alternate_flag_e(t, ExtendVar){
 		  	instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onBeforeShow, function(e){
 		  		jQuery(window).scrollLeft(0).scrollTop(0);
 				jQuery('meta[name=viewport]').attr('content','width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0');
-				window.location.hash = '#OpenGallery';
+				//window.location.hash = '#OpenGallery';
 			});
 			// onShow - store a reference to our "say hi" button
 		  	instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onShow, function(e){
@@ -151,7 +151,7 @@ function alternate_flag_e(t, ExtendVar){
 				} else {
 					jQuery('meta[name=viewport]').attr('content',metaViewport);
 				}
-				window.location.hash = '#CloseGallery';
+				//window.location.hash = '#CloseGallery';
 			});
 			// onDisplayImage
 			instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onDisplayImage, function(e){
