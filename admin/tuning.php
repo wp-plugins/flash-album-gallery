@@ -4,7 +4,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 require_once(dirname(dirname(__FILE__)) . '/lib/core.php');
 
-function flag_tune($show_error=true) {
+function flag_tune($show_error=true, $skins_reset=false) {
 	/* Move skins outside the plugin folder */
 	$flag_options = get_option('flag_options');
 	$skins_dir = str_replace("\\","/", WP_PLUGIN_DIR . '/flagallery-skins/' );
@@ -32,8 +32,11 @@ function flag_tune($show_error=true) {
 						continue;
 					if ( is_dir( $old_skins_dir.$file ) ) {
 						if( is_dir( $skins_dir.$file ) ) {
-							//flagGallery::flagFolderDelete( $skins_dir.$file );
-							continue;
+							if($skins_reset){
+								flagGallery::flagFolderDelete( $skins_dir.$file );
+							} else {
+								continue;
+							}
 						}
 						if ( !@rename($old_skins_dir.$file, $skins_dir.$file) ) {
 							$errors .= sprintf(__('Failed to move files from %1$s to %2$s','flag'),

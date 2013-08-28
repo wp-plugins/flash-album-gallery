@@ -53,6 +53,11 @@ New plugin:
 
 == Changelog ==
 
+= v3.14 - 28.08.2013 =
+* Fix: Flash Uploader not worked on some servers
+* Fix: Upload for iOS application
+* Fix: Banner Widget, Music and Video player (click reset options on Overview page to update default skins to latest versions)
+
 = v3.12 - 18.07.2013 =
 * Fix: Not worked for wordpress with custom 'wp-content' folder
 * Fix: Minima skin wrong install url

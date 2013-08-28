@@ -5,7 +5,7 @@ Skin URI:
 Description:
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 1.2
+Version: 1.3
 */
 
 function flagShowSkin_banner_widget_default($args) {
@@ -15,7 +15,7 @@ function flagShowSkin_banner_widget_default($args) {
 	$skinID = 'id_'.mt_rand();
 	// look up for the path
 	$skinpath = trailingslashit( $flag_options['skinsDirABS'] ).$skin;
-	$playlistpath = $flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml';
+	$playlistpath = ABSPATH.$flag_options['galleryPath'].'playlists/banner/'.$xml.'.xml';
 	$js = $flag_options['skinsDirURL'].$skin."/jquery.cycle.lite.js";
 	$data = file_get_contents($skinpath.'/settings/settings.xml');
 	$flashBackcolor = flagGetBetween($data,'<property1>0x','</property1>');

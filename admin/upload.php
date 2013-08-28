@@ -4,6 +4,8 @@
  *
  */
 define('WP_ADMIN', true);
+ini_set( 'display_errors', 0 );
+ini_set( 'error_reporting', 0 );
 
 // look up for the path
 require_once( dirname( dirname(__FILE__) ) . '/flag-config.php');

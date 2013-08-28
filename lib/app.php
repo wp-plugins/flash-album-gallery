@@ -32,12 +32,12 @@ if(isset($_REQUEST['account'])){
 		}
 		if(isset($_GET['account']) && isset($GLOBALS[ 'HTTP_RAW_POST_DATA' ])){
 			$path = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = $gid");
-			$file = ABSPATH . trailingslashit($path) . str_replace(' ', '_', current_time('mysql')) . '.jpg';
+			$file = ABSPATH . trailingslashit($path) . str_replace(array(' ',':'), array('_',''), current_time('mysql')) . '.jpg';
 			$filename = basename($file);
 			// Open temp file
-			$out = fopen( $file, "wb" );
+			$out = @fopen( $file, "wb" );
 			if ( $out ) {
-				if(fwrite( $out, $GLOBALS[ 'HTTP_RAW_POST_DATA' ] )){
+				if(@fwrite( $out, $GLOBALS[ 'HTTP_RAW_POST_DATA' ] )){
 
 					$alttext = isset($_GET['alttext'])? $wpdb->escape(flagallery_utf8_urldecode($_GET['alttext'])) : '';
 					$description = isset($_GET['description'])? $wpdb->escape(flagallery_utf8_urldecode($_GET['description'])) : '';

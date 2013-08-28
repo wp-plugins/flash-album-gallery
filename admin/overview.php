@@ -104,7 +104,7 @@ function flag_overview_setup(){
 		include_once( dirname (__FILE__). '/tuning.php');
 		
 		flag_default_options();
-		flag_tune();
+		flag_tune(true,true);
 		$flag->define_constant();
 		$flag->load_options();
 		
