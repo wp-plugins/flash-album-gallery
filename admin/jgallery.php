@@ -6,7 +6,7 @@ $xml = array();
 $flag_options = get_option ('flag_options');
 $siteurl = site_url();
 $c = array();
-$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']); // check if is a crowler
+$isCrawler = isset($_SERVER['HTTP_USER_AGENT'])? flagGetUserNow($_SERVER['HTTP_USER_AGENT']) : false;
 extract($altColors);
 $bg = ($wmode == 'window')? '#'.$Background : 'transparent';
 $xml['alt'] = '<style type="text/css" scoped="scoped">';

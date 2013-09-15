@@ -76,7 +76,8 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 	}
 	if(empty($wmode)) $wmode = $flashBacktransparent? 'transparent' : 'opaque';
 	if(empty($flashBackcolor)) $flashBackcolor = $flag_options['flashBackcolor'];
-	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
+
+	$isCrawler = isset($_SERVER['HTTP_USER_AGENT'])? flagGetUserNow($_SERVER['HTTP_USER_AGENT']) : false;
 
 	$altColors['wmode'] = $wmode;
 	$altColors['Background'] = $flashBackcolor;
@@ -261,7 +262,7 @@ function flagShowMPlayer($playlist, $width, $height, $wmode='', $skin='', $isWid
 	$skin = sanitize_flagname($skin);
 	$skinpath = str_replace("\\","/", WP_PLUGIN_DIR ).'/flagallery-skins/'.$skin;
 	include_once ( $skinpath.'/'.$skin.'.php' );
-	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
+	$isCrawler = isset($_SERVER['HTTP_USER_AGENT'])? flagGetUserNow($_SERVER['HTTP_USER_AGENT']) : false;
 	$args = array(
 		'playlist' 	=> $playlist,
 		'skin' 		=> $skin,
@@ -303,7 +304,7 @@ function flagShowVPlayer($playlist, $width, $height, $wmode='') {
 	} else {
 		$lkey = '';
 	}
-	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
+	$isCrawler = isset($_SERVER['HTTP_USER_AGENT'])? flagGetUserNow($_SERVER['HTTP_USER_AGENT']) : false;
 	$args = array(
 		'playlist'	=> $playlist,
 		'skin' 		=> $skin,
@@ -404,7 +405,7 @@ function flagShowBanner($xml, $width, $height, $wmode='') {
 	} else {
 		$lkey = '';
 	}
-	$isCrawler = flagGetUserNow($_SERVER['HTTP_USER_AGENT']);
+	$isCrawler = isset($_SERVER['HTTP_USER_AGENT'])? flagGetUserNow($_SERVER['HTTP_USER_AGENT']) : false;
 	$args = array(
 		'xml'			=> $xml,
 		'skin' 		=> $skin,

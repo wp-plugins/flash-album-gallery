@@ -1,24 +1,24 @@
-﻿=== Grand Flagallery ===
+﻿=== Grand Flagallery - Photo Gallery Plugin ===
 Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
 Tags: admin, flash, fullscreen gallery, gallery, image, images, image gallery, mp3, music, page, photo, slider, plugin, slideshow, video, widget, iOS gallery, iphone gallery, best gallery, portfolio
 Requires at least: 3.0
-Tested up to: 3.6
+Tested up to: 3.6.1
 Stable tag: trunk
 
-Grand Flagallery is a Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
+Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
 
 == Description ==
 
-Grand Flagallery - powerfull media content plugin. It provides a comprehensive interface for handling image galleries, audio and video.
+Grand Flagallery - powerfull media gallery content plugin. Easy interface for handling photos, image galleries, audio and video galleries.
 
-> Now You can upload and manage your photos, anywhere.
+> Now You can upload and manage your images and photo galleries, anywhere.
 > Download new **[application for iPhone](http://mypgc.co/ios-app/)**
 
-Edit your media content the way you want: upload images, import music and video, create photo gallery, music playlists, group pictures in slideshow and add descriptions for each image, mp3 or video - Grand Flagallery is the smart choice when showing the best of your product or describing in brief any event. Grand Flagallery can easily beautify your site with **image gallery, mp3 player, video player, banner rotator, nivo slider or nice widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc.
+With this gallery plugin you can easy upload images, create music and video playlists, create photo gallery, group pictures in photo slideshow and add descriptions for each image, mp3 or video - Grand Flagallery is the smart choice when showing the best of your product or describing in brief any event. Grand Flagallery can easily beautify your site with **photo gallery, mp3 player, video player, banner rotator, nivo slider or nice slideshow widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc.
 
 * iPhone, iPad, Android, Blackberry and Desktop friendly photo gallery, SEO optimized.
-* Full-screen mobile friendly slideshow with touch controls (optional, if set PhotoSwipe library script for alternative gallery).
+* Full-screen mobile friendly gallery slideshow with touch controls (optional, if set PhotoSwipe library script for alternative gallery).
 * Widgets for Banner Rotator, Photo Gallery and Video Gallery.
 * Background music in gallery for desktop browsers.
 
@@ -26,7 +26,7 @@ Edit your media content the way you want: upload images, import music and video,
 
 For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag/ "Grand Flagallery Home Page")** and see demos created with "Grand Flagallery" WordPress Plugin.
 
-Image Link support now available in skins. [See Slider Skin demo](http://photogallerycreator.com/grand-flagallery/slider-gallery-skin-for-wordpress/).
+Image Link support now available in gallery skins. [See Slider Skin demo](http://photogallerycreator.com/grand-flagallery/slider-gallery-skin-for-wordpress/).
 
 Responsive Banner Rotator! Full support of iPhone/iPad. Ideal for mobile themes. [See demo](http://skins.mypgc.co) in the site's header.
 
@@ -36,7 +36,7 @@ GRAND Pages - Full Window Gallery Template. You can display your image gallery i
 
 You have the opportunity to create image gallery, as separate pages. It looks very cool when you open image gallery, and gallery images occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
 
-Added music playlist support in gallery skins. Now your visitors can listen music while watching gallery. [View Demo](http://photogallerycreator.com/flagallery/optima-grandpage/)
+Added music playlist support in image gallery skins. Now your visitors can listen music while watching gallery. [View Demo](http://photogallerycreator.com/flagallery/optima-grandpage/)
 
 Now you can see "Views" of each photo in the gallery and visitors can "Like" image and see image "Rating".
 
@@ -44,8 +44,8 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 * Demo [Full Window Gallery Template](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
 * Demo [Video Galleries](http://photogallerycreator.com/flv-video-players/)
 * Demo [mp3 Music Players](http://photogallerycreator.com/mp3-music-players/)
-* Demo [Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
-* Demo [Facebook Integration](http://www.facebook.com/#!/PhotoGalleryCreator?sk=app_206659789371708)
+* Demo [Gallery Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
+* Demo [Facebook Gallery Integration](http://www.facebook.com/#!/PhotoGalleryCreator?sk=app_206659789371708)
 
 New plugin:
 > Try our **new plugin** called [Gmedia Gallery](http://wordpress.org/extend/plugins/grand-media/). Help me make it best gallery plugin: test it and write suggestions how I can improve it in feature versions.
