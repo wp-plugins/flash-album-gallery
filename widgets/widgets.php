@@ -265,6 +265,7 @@ class flagWidget extends WP_Widget {
 		$instance = $old_instance;
 
 		$instance['title']	= strip_tags($new_instance['title']);
+		$instance['qty']	= (int) $new_instance['qty'];
 		$instance['type']	= $new_instance['type'];
 		$instance['width']	= (int) $new_instance['width'];
 		$instance['height']	= (int) $new_instance['height'];
@@ -286,6 +287,7 @@ class flagWidget extends WP_Widget {
 		//Defaults
 		$instance = wp_parse_args( (array) $instance, array(
             'title' => 'Galleries',
+            'qty' => '1',
             'type'  => 'random',
             'width' => '75',
             'height'=> '65',
@@ -294,6 +296,7 @@ class flagWidget extends WP_Widget {
             'album' =>  '',
 			'skin'	=> '' ) );
 		$title  = esc_html( $instance['title'] );
+		$qty  = intval( $instance['qty'] );
 		$width  = esc_attr( $instance['width'] );
         $height = esc_attr( $instance['height'] );
 		$fwidth  = esc_attr( $instance['fwidth'] );
@@ -308,11 +311,17 @@ class flagWidget extends WP_Widget {
 		</p>
 
 		<p>
+			<label for="<?php echo $this->get_field_id('qty'); ?>"><?php _e('Qty of thumbs from each gallery:','flag'); ?>
+			<input id="<?php echo $this->get_field_id('qty'); ?>" name="<?php echo $this->get_field_name('qty');?>" type="text" class="widefat" value="<?php echo $qty; ?>" />
+			</label>
+		</p>
+
+		<p>
 			<label for="<?php echo $this->get_field_id('type'); ?>_random">
 			<input id="<?php echo $this->get_field_id('type'); ?>_random" name="<?php echo $this->get_field_name('type'); ?>" type="radio" value="random" <?php checked("random" , $instance['type']); ?> /> <?php _e('random','flag'); ?>
 			</label>
             <label for="<?php echo $this->get_field_id('type'); ?>_first">
-            <input id="<?php echo $this->get_field_id('type'); ?>_first" name="<?php echo $this->get_field_name('type'); ?>" type="radio" value="recent" <?php checked("recent" , $instance['type']); ?> /> <?php _e('first in album','flag'); ?>
+            <input id="<?php echo $this->get_field_id('type'); ?>_first" name="<?php echo $this->get_field_name('type'); ?>" type="radio" value="recent" <?php checked("recent" , $instance['type']); ?> /> <?php _e('recent in gallery','flag'); ?>
 			</label>
 		</p>
 
@@ -372,6 +381,8 @@ class flagWidget extends WP_Widget {
 
 		$album = $instance['album'];
 
+		$qty = (intval($instance['qty']) < 1)? 1 : intval($instance['qty']);
+
 		$gallerylist = $flagdb->get_album($album);
 		$ids = explode( ',', $gallerylist );
 		foreach ($ids as $id) {
@@ -381,10 +392,18 @@ class flagWidget extends WP_Widget {
 				continue;
 			}
 			if ( $instance['type'] == 'random' ){
-				$imageList[$galID] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.gid = {$galID} ORDER by rand() LIMIT 1");
+				$imageList[$galID] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.gid = {$galID} ORDER by rand() LIMIT 0,{$qty}");
 			}
 			else {
-				$imageList[$galID] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.gid = {$galID} ORDER by tt.sortorder ASC LIMIT 1");
+				$flag_options = get_option('flag_options');
+
+				$order_dir = ( $flag_options['galSortDir'] == 'DESC') ? 'DESC' : 'ASC';
+				if(in_array($flag_options['galSort'], array('sortorder','pid','filename','alttext','imagedate','hitcounter','total_votes','rand()'))){
+					$order_by= 'tt.'.$flag_options['galSort'];
+				} else {
+					$order_by  = 'tt.sortorder';
+				}
+				$imageList[$galID] = $wpdb->get_results("SELECT t.*, tt.* FROM $wpdb->flaggallery AS t INNER JOIN $wpdb->flagpictures AS tt ON t.gid = tt.galleryid WHERE tt.exclude != 1 AND t.gid = {$galID} ORDER by $order_by $order_dir LIMIT 0,{$qty}");
 			}
 		}
 		echo $before_widget . $before_title . $title . $after_title;
@@ -400,9 +419,9 @@ class flagWidget extends WP_Widget {
 			else 
 				$thumbcode = 'class="flag_newbox"';
 
-			foreach($imageList as $key => $image) {
+			foreach($imageList[$galID] as $key => $_image) {
 				// get the URL constructor
-				$image = new flagImage($image[0]);
+				$image = new flagImage($_image);
 
 				// enable i18n support for alttext and description
 				$alttext      =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->alttext, 'pic_' . $image->pid . '_alttext') )) );

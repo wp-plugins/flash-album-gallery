@@ -3,7 +3,7 @@ Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
 Tags: admin, flash, fullscreen gallery, gallery, image, images, image gallery, mp3, music, page, photo, slider, plugin, slideshow, video, widget, iOS gallery, iphone gallery, best gallery, portfolio
 Requires at least: 3.0
-Tested up to: 3.6.1
+Tested up to: 3.6.2
 Stable tag: trunk
 
 Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
@@ -52,6 +52,11 @@ New plugin:
 
 
 == Changelog ==
+
+= v3.15 - 27.09.2013 =
+* Fix: New skins not loaded sometimes
+* Added: Thumb Qty field to Flagallery widget
+* Added: Hungarian translate
 
 = v3.14 - 28.08.2013 =
 * Fix: Flash Uploader not worked on some servers

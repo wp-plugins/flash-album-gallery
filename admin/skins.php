@@ -363,6 +363,7 @@ $total_all_skins = count($all_skins);
 		$ch = curl_init($skins_remote_xml);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		$skins_xml = @simplexml_load_string(curl_exec($ch));
 		curl_close ($ch);
