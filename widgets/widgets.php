@@ -419,19 +419,20 @@ class flagWidget extends WP_Widget {
 			else 
 				$thumbcode = 'class="flag_newbox"';
 
-			foreach($imageList[$galID] as $key => $_image) {
-				// get the URL constructor
-				$image = new flagImage($_image);
-
-				// enable i18n support for alttext and description
-				$alttext      =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->alttext, 'pic_' . $image->pid . '_alttext') )) );
-				$description  =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->description, 'pic_' . $image->pid . '_description') )) );
-
-				//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
-				$out = '<a href="'.plugins_url().'/flash-album-gallery/facebook.php?i='.$image->galleryid.'&amp;f='.$instance['skin'].'&amp;h='.$instance['fheight'].'" title="' . $image->title . '" ' . $thumbcode .'>';
-				$out .= '<img src="'.$image->thumbURL.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$description.'" />';
-				echo $out . '</a>'."\n";
-
+			foreach($imageList as $gallery_) {
+				foreach($gallery_ as $_image) {
+					// get the URL constructor
+					$image = new flagImage($_image);
+	
+					// enable i18n support for alttext and description
+					$alttext      =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->alttext, 'pic_' . $image->pid . '_alttext') )) );
+					$description  =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->description, 'pic_' . $image->pid . '_description') )) );
+	
+					//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
+					$out = '<a href="'.plugins_url().'/flash-album-gallery/facebook.php?i='.$image->galleryid.'&amp;f='.$instance['skin'].'&amp;h='.$instance['fheight'].'" title="' . $image->title . '" ' . $thumbcode .'>';
+					$out .= '<img src="'.$image->thumbURL.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$description.'" />';
+					echo $out . '</a>'."\n";
+				}
 			}
 		}
 

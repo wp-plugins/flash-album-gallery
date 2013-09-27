@@ -53,6 +53,9 @@ New plugin:
 
 == Changelog ==
 
+= v3.16 - 28.09.2013 =
+* Fix: for Flagallery widget
+
 = v3.15 - 27.09.2013 =
 * Fix: New skins not loaded sometimes
 * Added: Thumb Qty field to Flagallery widget
