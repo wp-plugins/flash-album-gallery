@@ -50,12 +50,13 @@ class FlAG_shortcodes {
 		
 		$out = '';
 		// make an array out of the ids
+		$draft_clause = (get_option( 'flag_db_version' ) < 2.75) ? '' : 'AND status=0';
 		if($album) {
 			$gallerylist = $flagdb->get_album($album);
 			$ids = explode( ',', $gallerylist );
 			$galleryIDs = array();
 			foreach ($ids as $id) {
-				$galleryIDs[] = $wpdb->get_var($wpdb->prepare("SELECT gid FROM {$wpdb->flaggallery} WHERE status = 0 AND gid = %d", $id));
+				$galleryIDs[] = $wpdb->get_var($wpdb->prepare("SELECT gid FROM {$wpdb->flaggallery} WHERE gid = %d $draft_clause", $id));
 			}
 			$galleryIDs = array_filter($galleryIDs);
 			if(empty($galleryIDs))
@@ -86,7 +87,7 @@ class FlAG_shortcodes {
 			$galleryIDs = array();
 			foreach ($ids as $id) {
 				$id = intval($id);
-    		$galleryIDs[] = $wpdb->get_var($wpdb->prepare("SELECT gid FROM {$wpdb->flaggallery} WHERE status = 0 AND gid = %d", $id));
+    		$galleryIDs[] = $wpdb->get_var($wpdb->prepare("SELECT gid FROM {$wpdb->flaggallery} WHERE gid = %d  $draft_clause", $id));
    		}
 			$galleryIDs = array_filter($galleryIDs);
 			if(empty($galleryIDs)){

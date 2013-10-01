@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<panel title="Minima 1.2">	
+<panel title="Minima 1.3">	
 	<item type="checkBox" name="autoSlideshow">
 		<title><![CDATA[AutoSlideshow]]></title>
 		<description><![CDATA[]]></description>
@@ -74,7 +74,7 @@
 		<showTextField>true</showTextField>
 		<selectedColor>0xffffff</selectedColor>
 	</item>
-	<item type="colorPicker" name="property1Button">
+	<item type="colorPicker" name="backgroundColorButton">
 		<title><![CDATA[Background Color (Buttons)]]></title>
 		<description><![CDATA[]]></description>
 		<showTextField>true</showTextField>
@@ -160,7 +160,7 @@
   <autoSlideshow>true</autoSlideshow>
   <labelColor>0x75c30f</labelColor>
   <labelColorOver>0xffffff</labelColorOver>
-  <property1Button>0x000000</property1Button>
+  <backgroundColorButton>0x000000</backgroundColorButton>
   <thumbnailBGColor>0xffffff</thumbnailBGColor>
   <property12>0x75c30f</property12>
   <descriptionBGColor>0x000000</descriptionBGColor>

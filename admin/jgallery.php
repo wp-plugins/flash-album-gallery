@@ -66,6 +66,13 @@ $i = 0;
 if(isset($flag_options['disableViews']) && !empty($flag_options['disableViews'])){
 	$disableViews = 1;
 } else { $disableViews = 0; }
+if((get_option( 'flag_db_version' ) < 2.75)){
+	$select_columns = 'pid, galleryid, filename, description, alttext, imagedate, sortorder, hitcounter, total_value, total_votes, meta_data';
+	$exclude_clause = '';
+} else {
+	$select_columns = 'pid, galleryid, filename, description, alttext, link, imagedate, sortorder, hitcounter, total_value, total_votes, meta_data';
+}
+
 foreach ( $gID as $galID ) {
 	$galID = (int) $galID;
 	$status = $wpdb->get_var("SELECT status FROM $wpdb->flaggallery WHERE gid={$galID}");
@@ -75,10 +82,10 @@ foreach ( $gID as $galID ) {
 
 	if ( $galID == 0) {
 		$thegalleries = array();
-		$thepictures = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, imagedate, sortorder, hitcounter, total_value, total_votes, meta_data FROM $wpdb->flagpictures WHERE 1=1 {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
+		$thepictures = $wpdb->get_results("SELECT $select_columns FROM $wpdb->flagpictures WHERE 1=1 {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
 	} else {
 		$thegalleries = $wpdb->get_row("SELECT gid, name, path, title, galdesc FROM $wpdb->flaggallery WHERE gid={$galID}", ARRAY_A);
-		$thepictures = $wpdb->get_results("SELECT pid, filename, description, alttext, link, imagedate, hitcounter, total_value, total_votes, meta_data FROM $wpdb->flagpictures WHERE galleryid = '{$galID}' {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
+		$thepictures = $wpdb->get_results("SELECT $select_columns FROM $wpdb->flagpictures WHERE galleryid = '{$galID}' {$exclude_clause} ORDER BY {$flag_options['galSort']} {$flag_options['galSortDir']} ", ARRAY_A);
 	}
 	$captions = '';
 

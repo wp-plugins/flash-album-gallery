@@ -81,7 +81,7 @@ class flagdb {
 		global $wpdb;
 		
     $exclude_clause = ($exclude) ? ' AND exclude<>1 ' : '';
-    $draft_clause = ($draft) ? '' : 'WHERE status=0';
+    $draft_clause = ($draft || (get_option( 'flag_db_version' ) < 2.75)) ? '' : 'WHERE status=0';
 		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
 		if( !in_array($order_by, array('title','rand')) ) {
 			$order_by = 'gid';
@@ -561,7 +561,7 @@ class flagdb {
 		
         // Check for the exclude setting
         $exclude_clause = ($exclude) ? ' AND tt.exclude != 1 ' : '';
-        $draft_clause = ' AND t.status == 0 ';
+				$draft_clause = (get_option( 'flag_db_version' ) < 2.75) ? '' : 'AND t.status == 0';
 
 		$number = (int) $number;
 		$galleryID = (int) $galleryID;
