@@ -92,88 +92,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		  });
 	/* ]]> */
 	</script>
-<?php }
-if($flag->options['swfUpload']) { ?>
-	<!-- SWFUpload script -->
-	<script type="text/javascript">
-	/* <![CDATA[ */
-		var flag_swf_upload;
-			
-		window.onload = function () {
-			flag_swf_upload = new SWFUpload({
-				// Backend settings
-				upload_url : "<?php echo $swf_upload_link; ?>",
-				flash_url : "<?php echo FLAG_URLPATH; ?>admin/js/swfupload.swf",
-				
-				// Button Settings
-				button_placeholder_id : "spanButtonPlaceholder",
-				button_width: 300,
-				button_height: 27,
-				button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
-				button_cursor: SWFUpload.CURSOR.HAND,
-								
-				// File Upload Settings
-				file_size_limit : "<?php echo wp_max_upload_size(); ?>b",
-				file_types : "*.jpg;*.gif;*.png",
-				file_types_description : "<?php _e('Image Files', 'flag'); ?>",
-				
-				// Queue handler
-				file_queued_handler : fileQueued,
-				
-				// Upload handler
-				upload_start_handler : uploadStart,
-				upload_progress_handler : uploadProgress,
-				upload_error_handler : uploadError,
-				upload_success_handler : uploadSuccess,
-				upload_complete_handler : uploadComplete,
-				
-				post_params : {
-					"auth_cookie" : "<?php echo (is_ssl() ? $_COOKIE[SECURE_AUTH_COOKIE] : $_COOKIE[AUTH_COOKIE]); ?>",
-                    "logged_in_cookie": "<?php echo $_COOKIE[LOGGED_IN_COOKIE]; ?>",
-                    "_wpnonce" : "<?php echo wp_create_nonce('flag_swfupload'); ?>",
-					"galleryselect" : "0"
-				},
-				
-				// i18names
-				custom_settings : {
-					"remove" : "<?php _e('remove', 'flag'); ?>",
-					"browse" : "<?php _e('Browse...', 'flag'); ?>",
-					"upload" : "<?php _e('Upload images', 'flag'); ?>"
-				},
-
-				// Debug settings
-				debug: false
-				
-			});
-			
-			// on load change the upload to swfupload
-			initSWFUpload();
-			
-		};
-	/* ]]> */
-	</script>
-	<div class="wrap" id="progressbar-wrap" style="display:none;">
-		<div class="progressborder">
-			<div class="progressbar" id="progressbar">
-				<span>0%</span>
-			</div>
-		</div>
-	</div>
-<?php } else { ?>
-	<!-- MultiFile script -->
-	<script type="text/javascript">	
-	/* <![CDATA[ */
-		jQuery(document).ready(function(){
-			jQuery('#imagefiles').MultiFile({
-				STRING: {
-			    	remove:'<?php _e('remove', 'flag'); ?>'
-  				}
-		 	});
-		});
-	/* ]]> */
-	</script>
-	<?php } ?>
-		
+<?php } ?>
 	<div id="slider" class="wrap">
 	
 		<ul id="tabs" class="tabs">
@@ -209,38 +128,12 @@ if($flag->options['swfUpload']) { ?>
 		<!-- upload images -->
 		<div id="uploadimage" class="cptab">
 			<h2><?php _e('Upload images', 'flag'); ?></h2>
-	<script type="text/javascript">	
-	/* <![CDATA[ */
-		jQuery(document).ready(function(){
-			if(jQuery("#galleryselect").val() == 0) {
-				jQuery("#choosegalfirst").animate({opacity: "0.5"}, 600);
-				jQuery("#choosegalfirst .disabledbut").show();
-			}
-			jQuery("#choosegalfirst .disabledbut").click(function () {
-				alert("Choose gallery, please.")
-			});
-			jQuery("#galleryselect").change(function () {
-				if(jQuery(this).val() == 0) {
-					jQuery("#choosegalfirst .disabledbut").show();
-					jQuery("#choosegalfirst").animate({opacity: "0.5"}, 600);
-				} else { 
-					jQuery("#choosegalfirst .disabledbut").hide();
-					jQuery("#choosegalfirst").animate({opacity: "1"}, 600);
-				}
-			});
-		});
-	/* ]]> */
-	</script>
-			<form name="uploadimage" id="uploadimage_form" method="POST" enctype="multipart/form-data" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
-			<?php wp_nonce_field('flag_addgallery'); ?>
-				<table class="form-table"> 
-				<tr valign="top"> 
-					<th scope="row"><strong><?php _e('Upload image(s):', 'flag'); ?></strong></th>
-					<td><span id='spanButtonPlaceholder'></span><input type="file" name="imagefiles[]" id="imagefiles" size="35" class="imagefiles"/></td>
-				</tr>
-				<tr valign="top"> 
-					<td colspan="2"><label for="galleryselect"><?php _e('in to', 'flag'); ?></label> 
-						<select name="galleryselect" id="galleryselect">
+			<form name="uploadimage" id="gmUpload" method="POST" enctype="multipart/form-data" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
+			<?php wp_nonce_field('flag_swfupload'); ?>
+				<table class="form-table">
+				<tr valign="top">
+					<td style="width: 216px;"><label for="galleryselect"><?php _e('in to', 'flag'); ?></label>
+						<select name="galleryselect" id="galleryselect" style="width: 200px">
 							<option value="0" ><?php _e('Choose gallery', 'flag'); ?></option>
 							<?php $ingallery = isset($_GET['gid']) ? (int) $_GET['gid'] : '';
 							foreach($gallerylist as $gallery) {
@@ -253,21 +146,152 @@ if($flag->options['swfUpload']) { ?>
 						</select>
 						<?php echo $maxsize; ?>
 						<br /><?php if ((IS_WPMU) && flagGallery::flag_wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?>
-					</td>
-				</tr> 
-				</table>
-				<div class="submit">
+
+						<div class="submit">
 					<span class="useflashupload">
 					<?php if ($flag->options['swfUpload']) { ?>
-					<input type="submit" name="disable_flash" id="disable_flash" title="<?php _e('The batch upload requires Adobe Flash 10, disable it if you have problems','flag'); ?>" value="<?php _e('Disable flash upload', 'flag'); ?>" />
+						<input type="submit" name="disable_flash" id="disable_flash" title="<?php _e('The batch upload via Plupload, disable it if you have problems','flag'); ?>" value="<?php _e('Switch to Browser Upload', 'flag'); ?>" />
 					<?php } else { ?>
-					<input type="submit" name="enable_flash" id="enable_flash" title="<?php _e('Upload multiple files at once by ctrl/shift-selecting in dialog','flag'); ?>" value="<?php _e('Enable flash based upload', 'flag'); ?>" />
+						<input type="submit" name="enable_flash" id="enable_flash" title="<?php _e('Upload multiple files at once by ctrl/shift-selecting in dialog','flag'); ?>" value="<?php _e('Switch to Plupload based Upload', 'flag'); ?>" />
 					<?php } ?>
 					</span>
-					<span id="choosegalfirst"><input class="button-primary" type="submit" name="uploadimage" id="uploadimage_btn" value="<?php _e('Upload images', 'flag'); ?>" /><span class="disabledbut" style="display: none;"></span></span>
-					<div class="clear"></div>
-				</div>
+							<div class="clear"></div>
+						</div>
+
+					</td>
+
+					<td><div id="pluploadUploader"><strong><?php _e('Upload image(s):', 'flag'); ?></strong><br><input type="file" name="imagefiles[]" id="imagefiles" size="35" class="imagefiles"/></div></td>
+				</tr>
+				</table>
+				<div id="pl-message"></div>
 			</form>
+<?php if($flag->options['swfUpload']) { ?>
+	<script type="text/javascript">
+		// Convert divs to queue widgets when the DOM is ready
+		jQuery(function () {
+			var files_remaining = 0;
+			jQuery("#pluploadUploader").pluploadQueue({
+				// General settings
+				runtimes        		: 'flash,html5,html4',
+				url             		: '<?php echo str_replace( '&#038;', '&', wp_nonce_url( plugins_url( FLAGFOLDER. '/admin/upload.php' ), 'flag_swfupload' ) ); ?>',
+				multipart       		: true,
+				multipart_params		: { postData: ''},
+				max_file_size					: '<?php echo min((floor( wp_max_upload_size() * 0.99 / 1024 / 1024 ) - 1), 8); ?>Mb',
+				unique_names    		: false,
+				rename          		: true,
+				urlstream_upload	: true,
+
+				// Resize images on clientside if we can
+				//resize 						: {width : 150, height : 150, quality : 90},
+
+				// Specify what files to browse for
+				filters         		: [{title: "Images", extensions: "jpg,gif,png"}],
+
+				// Flash settings
+				flash_swf_url   		: '<?php echo plugins_url( FLAGFOLDER. '/admin/js/plupload/plupload.flash.swf'); ?>',
+
+				// PreInit events, bound before any internal events
+				preinit : {
+					Init: function(up, info) {
+						console.log('[Init]', 'Info:', info, 'Features:', up.features);
+					},
+
+					UploadFile: function(up, file) {
+						console.log('[UploadFile]', file);
+						up.settings.multipart_params = { galleryselect: jQuery('#galleryselect').val(), last: files_remaining };
+						files_remaining--;
+						// You can override settings before the file is uploaded
+						// up.settings.url = 'upload.php?id=' + file.id;
+						// up.settings.multipart_params = {param1 : 'value1', param2 : 'value2'};
+					}
+				},
+
+				// Post init events, bound after the internal events
+				init : {
+					Refresh: function(up) {
+						// Called when upload shim is moved
+						console.log('[Refresh]');
+						files_remaining = up.files.length;
+						if(jQuery("#galleryselect").val() == 0) {
+							jQuery(".plupload_start").addClass("plupload_disabled");
+						}
+					},
+
+					StateChanged: function(up) {
+						// Called when the state of the queue is changed
+						console.log('[StateChanged]', up.state == plupload.STARTED ? "STARTED" : "STOPPED");
+					},
+
+					QueueChanged: function(up) {
+						// Called when the files in queue are changed by adding/removing files
+						console.log('[QueueChanged]');
+					},
+
+					UploadProgress: function(up, file) {
+						// Called while a file is being uploaded
+						console.log('[UploadProgress]', 'File:', file, "Total:", up.total);
+					},
+
+					FileUploaded: function(up, file, info) {
+						// Called when a file has finished uploading
+						console.log('[FileUploaded] File:', file, "Info:", info);
+						if (info.response){
+							file.status = plupload.FAILED;
+							jQuery('<div/>').addClass('error').html('<span><u><em>'+file.name+':</em></u> '+info.response+'</span>').appendTo('#pl-message');
+						}
+					},
+
+					Error: function(up, args) {
+						// Called when a error has occured
+						jQuery('<div/>').addClass('error').html('<span><u><em>'+args.file.name+':</em></u> '+args.message+' '+args.status+'</span>').appendTo('#pl-message');
+						console.log('[error] ', args);
+					},
+
+					UploadComplete: function(up, file) {
+						console.log('[UploadComplete]');
+						jQuery(".plupload_buttons").css("display", "inline");
+						jQuery(".plupload_upload_status").css("display", "inline");
+						jQuery(".plupload_start").addClass("plupload_disabled");
+						jQuery("#gmUpload").one("mousedown", ".plupload_add", function () {
+							up.splice();
+							up.trigger('Refresh');
+							//up.refresh();
+						});
+						jQuery('<div/>').addClass('success').html('<?php _e('Done!', 'flag'); ?> <a href="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&mode=edit", 'flag_editgallery'); ?>&gid=' + jQuery("#galleryselect").val() + '">Open Gallery</a>').appendTo('#pl-message');
+					}
+				}
+			});
+			jQuery("#gmUpload").on('click','.plupload_disabled',function(){
+				if(files_remaining){
+					alert("Choose gallery, please.")
+				}
+			});
+			jQuery("#galleryselect").change(function () {
+				if(jQuery(this).val() == 0) {
+					jQuery(".plupload_start").addClass('plupload_disabled');
+				} else {
+					if(files_remaining){
+						jQuery(".plupload_start").removeClass('plupload_disabled');
+					}
+				}
+			});
+
+		});
+	</script>
+<?php } else { ?>
+	<!-- MultiFile script -->
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		jQuery(document).ready(function(){
+			jQuery('#imagefiles').MultiFile({
+				STRING: {
+					remove:'<?php _e('remove', 'flag'); ?>'
+				}
+			});
+		});
+		/* ]]> */
+	</script>
+<?php } ?>
 		</div>
 <?php if( !IS_WPMU || current_user_can('FlAG Import folder') ) { ?>
 		<!-- import folder -->

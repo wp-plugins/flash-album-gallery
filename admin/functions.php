@@ -915,7 +915,7 @@ class flagAdmin{
 	static function swfupload_image($galleryID = 0) {
 
 		global $wpdb;
-		
+
 		if ($galleryID == 0) {
 			//@unlink($temp_file);
 			return __('No gallery selected!','flag');
@@ -926,24 +926,24 @@ class flagAdmin{
 			return '0';
 
 		// Check the upload
-		if (!isset($_FILES['Filedata']) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] === UPLOAD_ERR_OK) 
-			flagAdmin::file_upload_error_message($_FILES['Filedata']['error']); 
+		if (!isset($_FILES['file']) || !is_uploaded_file($_FILES["file"]["tmp_name"]) || $_FILES["file"]["error"] === UPLOAD_ERR_OK)
+			flagAdmin::file_upload_error_message($_FILES['file']['error']);
 
 		// get the filename and extension
-		$temp_file = $_FILES["Filedata"]['tmp_name'];
+		$temp_file = $_FILES["file"]['tmp_name'];
 
-		$filepart = flagGallery::fileinfo( $_FILES['Filedata']['name'] );
+		$filepart = flagGallery::fileinfo( $_FILES['file']['name'] );
 		$filename = $filepart['basename'];
 
 		// check for allowed extension
 		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
 		if (!in_array($filepart['extension'], $ext))
-			return $filename . __('is no valid image file!','flag');
+			return $filename . ' '. __('is no valid image file!','flag');
 
-		// get the path to the gallery	
+		// get the path to the gallery
 		$gallerypath = $wpdb->get_var($wpdb->prepare("SELECT path FROM {$wpdb->flaggallery} WHERE gid = %d ", $galleryID));
 		if (!$gallerypath){
-			@unlink($temp_file);		
+			@unlink($temp_file);
 			return __('Failure in database, no gallery path set !','flag');
 		} 
 
@@ -959,15 +959,27 @@ class flagAdmin{
 		$dest_file = WINABSPATH . $gallerypath . '/' . $filename;
 				
 		// save temp file to gallery
-		if ( !@move_uploaded_file($_FILES["Filedata"]['tmp_name'], $dest_file) ){
+		if ( !@move_uploaded_file($temp_file, $dest_file) ){
 			flagAdmin::check_safemode(WINABSPATH.$gallerypath);	
 			return __('Error, the file could not moved to : ','flag').$dest_file;
 		} 
 		
 		if ( !flagAdmin::chmod($dest_file) )
 			return __('Error, the file permissions could not set','flag');
-		
-		return '0';
+
+		// add images to database
+		$image_ids = flagAdmin::add_Images($galleryID, array($filename));
+		$return = '';
+		//create thumbnails
+		foreach($image_ids as $picture){
+			$return = flagAdmin::create_thumbnail($picture);
+		}
+		//add the preview image if needed
+		if(intval($_POST['last']) == 1)
+			flagAdmin::set_gallery_preview ( $galleryID );
+
+		return (intval($return) == 1)? '' : $return;
+
 	}
 
 	/**

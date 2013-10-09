@@ -53,9 +53,10 @@ New plugin:
 
 == Changelog ==
 
-= v3.17 - 01.10.2013 =
-* Fix: swfupload.swf content spoofing (Security Exploit)
+= v3.18 - 10.10.2013 =
+* Replace swfupload with plupload uploader.
 * Added: compatibility with old flagallery database (if it was not upgraded)
+* Update: Minima skin
 
 = v3.16 - 28.09.2013 =
 * Fix: for Flagallery widget

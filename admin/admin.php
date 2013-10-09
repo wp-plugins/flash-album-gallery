@@ -135,8 +135,7 @@ class flagAdminPanel{
 					'failure' => __('A failure occurred', 'flag')				
 		) );
 		wp_register_script('flag-progressbar', FLAG_URLPATH .'admin/js/flag.progressbar.js', array('jquery'), '1.0.0');
-		wp_register_script('swfupload_f10', FLAG_URLPATH .'admin/js/swfupload.js', array('jquery'), '2.2.0');
-				
+
 		if (isset($_GET['page'])) { 
 			switch ($_GET['page']) {
 				case 'flag-overview' : 
@@ -147,7 +146,13 @@ class flagAdminPanel{
 					wp_enqueue_script( 'jquery-ui-draggable' );
 					wp_enqueue_script( 'jquery-ui-droppable' );
 					wp_enqueue_script( 'multifile', FLAG_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.4.6' );
-					wp_enqueue_script( 'flag-swfupload-handler', FLAG_URLPATH .'admin/js/swfupload.handler.js', array('swfupload_f10'), '2.2.0' );
+
+					wp_enqueue_script( 'plupload', FLAG_URLPATH . '/admin/js/plupload/plupload.js', array( 'jquery' ), '1.5.7' );
+					wp_enqueue_script( 'plupload-flash', FLAG_URLPATH . '/admin/js/plupload/plupload.flash.js', array( 'jquery' ), '1.5.7' );
+					wp_enqueue_script( 'plupload-html4', FLAG_URLPATH . '/admin/js/plupload/plupload.html4.js', array( 'jquery' ), '1.5.7' );
+					wp_enqueue_script( 'plupload-html5', FLAG_URLPATH . '/admin/js/plupload/plupload.html5.js', array( 'jquery' ), '1.5.7' );
+					wp_enqueue_script( 'jquery.plupload.queue', FLAG_URLPATH . '/admin/js/plupload/jquery.plupload.queue/jquery.plupload.queue.js', array( 'jquery' ), '1.5.7' );
+
 					wp_enqueue_script('dataset', FLAG_URLPATH .'admin/js/jquery.dataset.js', array('jquery'), '0.1.0');
 					wp_enqueue_script( 'postbox' );
 					wp_enqueue_script( 'flag-ajax' );
@@ -190,6 +195,7 @@ class flagAdminPanel{
 				case "flag-options" :
 					wp_enqueue_style( 'farbtastic' );
 				case "flag-manage-gallery" :
+					wp_enqueue_style( 'jquery.plupload.queue', FLAG_URLPATH . '/admin/js/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css', array(), '1.5.7', 'screen' );
 					wp_enqueue_style( 'flagtabs', FLAG_URLPATH .'admin/css/tabs.css', false, '1.0.0', 'screen' );
 				case "flag-music-box" :
 				case "flag-video-box" :	
