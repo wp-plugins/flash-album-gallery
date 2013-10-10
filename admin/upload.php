@@ -34,7 +34,7 @@ if ( !current_user_can('FlAG Upload images') )
 	die('You do not have permission to upload files. -2');
 
 //check for correct nonce 
-check_admin_referer('flag_swfupload');
+check_admin_referer('flag_upload');
 
 //check for flag
 if ( !defined('FLAG_ABSPATH') )

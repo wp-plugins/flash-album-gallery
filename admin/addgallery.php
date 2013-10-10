@@ -14,12 +14,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	// check for the max image size
 	$maxsize    = flagGallery::check_memory_limit();
 	
-	// link for the flash file
-	$swf_upload_link = FLAG_URLPATH . 'admin/upload.php';
-	$swf_upload_link = wp_nonce_url($swf_upload_link, 'flag_swfupload');
-	//flash doesn't seem to like encoded ampersands, so convert them back here
-	$swf_upload_link = str_replace('&#038;', '&', $swf_upload_link);
-
 	$defaultpath = $flag->options['galleryPath'];
 
 	if ($_POST['addgallery']){
@@ -29,7 +23,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			flagAdmin::create_gallery($newgallery, $defaultpath);
 	}
 	if ($_POST['uploadimage']){
-		check_admin_referer('flag_addgallery');
+		check_admin_referer('flag_upload');
 		if ($_FILES['MF__F_0_0']['error'] == 0) {
 			flagAdmin::upload_images();
 		}
@@ -44,25 +38,14 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	}
 
 
-	if (isset($_POST['swf_callback'])){
-		if ($_POST['galleryselect'] == "0" )
-			flagGallery::show_error(__('No gallery selected !','flag'));
-		else {
-			// get the path to the gallery
-			$galleryID = (int) $_POST['galleryselect'];
-			$gallerypath = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = '$galleryID' ");
-			flagAdmin::import_gallery($gallerypath);
-		}	
-	}
-
 	if ( isset($_POST['disable_flash']) ){
-		check_admin_referer('flag_addgallery');
+		check_admin_referer('flag_upload');
 		$flag->options['swfUpload'] = false;	
 		update_option('flag_options', $flag->options);
 	}
 
 	if ( isset($_POST['enable_flash']) ){
-		check_admin_referer('flag_addgallery');
+		check_admin_referer('flag_upload');
 		$flag->options['swfUpload'] = true;	
 		update_option('flag_options', $flag->options);
 	}
@@ -129,7 +112,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 		<div id="uploadimage" class="cptab">
 			<h2><?php _e('Upload images', 'flag'); ?></h2>
 			<form name="uploadimage" id="gmUpload" method="POST" enctype="multipart/form-data" action="<?php echo $filepath; ?>" accept-charset="utf-8" >
-			<?php wp_nonce_field('flag_swfupload'); ?>
+				<?php wp_nonce_field('flag_upload'); ?>
 				<table class="form-table">
 				<tr valign="top">
 					<td style="width: 216px;"><label for="galleryselect"><?php _e('in to', 'flag'); ?></label>
@@ -160,7 +143,16 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 					</td>
 
-					<td><div id="pluploadUploader"><strong><?php _e('Upload image(s):', 'flag'); ?></strong><br><input type="file" name="imagefiles[]" id="imagefiles" size="35" class="imagefiles"/></div></td>
+					<td><div id="pluploadUploader">
+					<?php if (!$flag->options['swfUpload']) { ?>
+						<strong><?php _e('Upload image(s):', 'flag'); ?></strong><br>
+						<input type="file" name="imagefiles[]" id="imagefiles" size="35" class="imagefiles"/></div>
+						<span id="choosegalfirst">
+							<input class="button-primary" type="submit" name="uploadimage" id="uploadimage_btn" value="<?php _e('Upload images', 'flag'); ?>" />
+							<span class="disabledbut" style="display: none;"></span>
+						</span>
+					<?php } ?>
+					</td>
 				</tr>
 				</table>
 				<div id="pl-message"></div>
@@ -173,7 +165,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 			jQuery("#pluploadUploader").pluploadQueue({
 				// General settings
 				runtimes        		: 'flash,html5,html4',
-				url             		: '<?php echo str_replace( '&#038;', '&', wp_nonce_url( plugins_url( FLAGFOLDER. '/admin/upload.php' ), 'flag_swfupload' ) ); ?>',
+				url             		: '<?php echo str_replace( '&#038;', '&', wp_nonce_url( plugins_url( FLAGFOLDER. '/admin/upload.php' ), 'flag_upload' ) ); ?>',
 				multipart       		: true,
 				multipart_params		: { postData: ''},
 				max_file_size					: '<?php echo min((floor( wp_max_upload_size() * 0.99 / 1024 / 1024 ) - 1), 8); ?>Mb',
@@ -288,9 +280,27 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 					remove:'<?php _e('remove', 'flag'); ?>'
 				}
 			});
+
+			if(jQuery("#galleryselect").val() == 0) {
+				jQuery("#choosegalfirst").animate({opacity: "0.5"}, 600);
+				jQuery("#choosegalfirst .disabledbut").show();
+			}
+			jQuery("#choosegalfirst .disabledbut").click(function () {
+				alert("Choose gallery, please.")
+			});
+			jQuery("#galleryselect").change(function () {
+				if(jQuery(this).val() == 0) {
+					jQuery("#choosegalfirst .disabledbut").show();
+					jQuery("#choosegalfirst").animate({opacity: "0.5"}, 600);
+				} else {
+					jQuery("#choosegalfirst .disabledbut").hide();
+					jQuery("#choosegalfirst").animate({opacity: "1"}, 600);
+				}
+			});
 		});
 		/* ]]> */
 	</script>
+
 <?php } ?>
 		</div>
 <?php if( !IS_WPMU || current_user_can('FlAG Import folder') ) { ?>

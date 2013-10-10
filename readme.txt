@@ -53,6 +53,10 @@ New plugin:
 
 == Changelog ==
 
+= v3.19 - 10.10.2013 =
+* Fix browser upload (submit button was absent)
+* fix for switch between uploaders
+
 = v3.18 - 10.10.2013 =
 * Replace swfupload with plupload uploader.
 * Added: compatibility with old flagallery database (if it was not upgraded)
