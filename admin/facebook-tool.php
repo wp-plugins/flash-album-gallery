@@ -15,7 +15,7 @@ if(isset($_POST['copy_file'])) {
 		flagGallery::show_error(__('Failure','flag'));
 	}
 }
-global $flagdb;
+global $flag, $flagdb;
 require_once (dirname(__FILE__) . '/get_skin.php');
 require_once (dirname(__FILE__) . '/playlist.functions.php');
 require_once (dirname(__FILE__) . '/video.functions.php');
@@ -159,14 +159,14 @@ function fb_url(galleries,skin,h,l) {
 	<table border="0" cellpadding="4" cellspacing="0">
         <tr>
            <td nowrap="nowrap" valign="top"><div><?php _e("Select galleries", 'flag'); ?>:<span style="color:red;"> *</span><br /><small><?php _e("(album categories)", 'flag'); ?></small></div></td>
-           <td valign="top"><div id="galleries" style="width: 214px; height: 160px; overflow: auto;">
-                   <div class="row"><input type="checkbox" value="all" checked="checked" /> <strong>* - <?php _e("all galleries", 'flag'); ?></strong></div>
+           <td valign="top"><div id="galleries" style="width: 214px; height: 160px; overflow: auto; white-space: nowrap;">
+                   <div class="row"><input type="checkbox" value="all" checked="checked" /> <strong><span style="display:inline-block; width:3em;">*</span> - <?php _e("all galleries", 'flag'); ?></strong></div>
 			<?php
-				$gallerylist = $flagdb->find_all_galleries('gid', 'ASC');
+				$gallerylist = $flagdb->find_all_galleries($flag->options['albSort'], $flag->options['albSortDir']);
 				if(is_array($gallerylist)) {
 					foreach($gallerylist as $gallery) {
 						$name = ( empty($gallery->title) ) ? $gallery->name : esc_html(stripslashes($gallery->title));
-						echo '<div class="row"><input type="checkbox" value="' . $gallery->gid . '" /> <span>' . $gallery->gid . ' - ' . $name . '</span></div>' . "\n";
+						echo '<div class="row"><input type="checkbox" value="' . $gallery->gid . '" /> <span><span style="display:inline-block; width:3em;">' . $gallery->gid . '</span> - ' . $name . '</span></div>' . "\n";
 					}
 				}
 			?>

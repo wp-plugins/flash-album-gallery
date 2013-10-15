@@ -205,8 +205,11 @@ function flag_list_options() {
 	$flag_options['useMediaRSS']			= false;							// activate the global Media RSS file
 
 	// Sort Settings
-	$flag_options['galSort']				= 'sortorder';						// Sort order
-	$flag_options['galSortDir']				= 'ASC';							// Sort direction
+	$flag_options['albSort']			= 'title';						// Galleries Sort order
+	$flag_options['albSortDir']		= 'ASC';						  // Galleries Sort dir
+	$flag_options['albPerPage']		= '50';						    // Galleries per page
+	$flag_options['galSort']					= 'sortorder';				// Images Sort order
+	$flag_options['galSortDir']				= 'ASC';							// Images Sort direction
 
 	// Flash settings
 	$flag_options['skinsDirABS']			= str_replace("\\","/", WP_PLUGIN_DIR . '/flagallery-skins/' );

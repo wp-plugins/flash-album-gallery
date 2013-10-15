@@ -76,11 +76,14 @@ class flagdb {
 	 * @param bool|int $draft
 	 * @return array $galleries
 	 */
-  function find_all_galleries($order_by = 'gid', $order_dir = 'ASC', $counter = false, $limit = 0, $start = 0, $exclude = 0, $draft = false) {
+  function find_all_galleries($order_by = '', $order_dir = '', $counter = false, $limit = 0, $start = 0, $exclude = 0, $draft = false) {
 		/** @var $wpdb wpdb */
 		global $wpdb;
-		
-    $exclude_clause = ($exclude) ? ' AND exclude<>1 ' : '';
+
+		$flag_options = get_option('flag_options');
+		if(empty($order_by)){ $order_by = $flag_options['albSort']; }
+		if(empty($order_dir)){ $order_dir = $flag_options['albSortDir']; }
+		$exclude_clause = ($exclude) ? ' AND exclude<>1 ' : '';
     $draft_clause = ($draft || (get_option( 'flag_db_version' ) < 2.75)) ? '' : 'WHERE status=0';
 		$order_dir = ( $order_dir == 'DESC') ? 'DESC' : 'ASC';
 		if( !in_array($order_by, array('title','rand')) ) {

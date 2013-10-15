@@ -77,11 +77,13 @@ if($_REQUEST['riched'] == "false") {
             <td><select id="galleries" name="galleries" style="width: 200px" size="6" multiple="multiple">
                     <option value="all" selected="selected" onclick="javascript:document.getElementById('sort_tab').style.display='block'" style="font-weight:bold">* - <?php _e("all galleries", 'flag'); ?></option>
 				<?php
-					$gallerylist = $flagdb->find_all_galleries('gid', 'ASC');
+					$gallerylist = $flagdb->find_all_galleries($flag->options['albSort'], $flag->options['albSortDir']);
 					if(is_array($gallerylist)) {
 						foreach($gallerylist as $gallery) {
 							$name = ( empty($gallery->title) ) ? $gallery->name : esc_html(stripslashes($gallery->title));
-							echo '<option value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
+							if($flag->options['albSort'] == 'gid'){ $name = $gallery->gid.' - '.$name; }
+							if($flag->options['albSort'] == 'title'){ $name = $name.' ('.$gallery->gid.')'; }
+							echo '<option value="' . $gallery->gid . '" >' . $name . '</option>' . "\n";
 						}
 					}
 				?>

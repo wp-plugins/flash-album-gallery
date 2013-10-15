@@ -1,6 +1,6 @@
 <?php if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { 	die('You are not allowed to call this page directly.'); }
 
-global $flagdb, $post;
+global $flag, $flagdb, $post;
 require_once (dirname(__FILE__) . '/get_skin.php');
 require_once (dirname(__FILE__) . '/playlist.functions.php');
 $i_skins = get_skins();
@@ -108,11 +108,13 @@ function short_code(galleries,skin,wmode,playlist) {
            <td valign="top"><div id="galleries" style="width: 214px; height: 160px; overflow: auto;">
                    <div class="row"><input type="checkbox" value="all" /> <strong>* - <?php _e("all galleries", 'flag'); ?></strong></div>
 			<?php
-				$gallerylist = $flagdb->find_all_galleries('gid', 'ASC');
+				$gallerylist = $flagdb->find_all_galleries($flag->options['albSort'], $flag->options['albSortDir']);
 				if(is_array($gallerylist)) {
 					foreach($gallerylist as $gallery) {
 						$name = ( empty($gallery->title) ) ? $gallery->name : $gallery->title;
-						echo '<div class="row"><input type="checkbox" value="' . $gallery->gid . '" /> <span>' . $gallery->gid . ' - ' . $name . '</span></div>' . "\n";
+						if($flag->options['albSort'] == 'gid'){ $name = $gallery->gid.' - '.$name; }
+						if($flag->options['albSort'] == 'title'){ $name = $name.' ('.$gallery->gid.')'; }
+						echo '<div class="row"><input type="checkbox" value="' . $gallery->gid . '" /> <span>' . $name . '</span></div>' . "\n";
 					}
 				}
 			?>

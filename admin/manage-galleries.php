@@ -10,11 +10,15 @@ function flag_manage_gallery_main() {
 	//Build the pagination for more than 25 galleries
 	if ( ! isset( $_GET['paged'] ) || $_GET['paged'] < 1 )
 		$_GET['paged'] = 1;
-	
+
+	$sort_gall_by = (isset($_GET['galsort']))? $_GET['galsort'] : $flag->options['albSort'];
+	$sort_gall_dir = (isset($_GET['sortdir']))? $_GET['sortdir'] : $flag->options['albSortDir'];
+	$ascdesc = ($sort_gall_dir == 'DESC')? 'ASC' : 'DESC';
+
 	$_GET['paged'] = intval($_GET['paged']);
-	$perpage = 50;
+	$perpage = intval($flag->options['albPerPage'])? intval($flag->options['albPerPage']) : 50;
 	$start = ( $_GET['paged'] - 1 ) * $perpage;
-	$gallerylist = $flagdb->find_all_galleries('gid', 'asc', $counter = true, $perpage, $start, $exclude = false, $draft = true);
+	$gallerylist = $flagdb->find_all_galleries($sort_gall_by, $sort_gall_dir, $counter = true, $perpage, $start, $exclude = false, $draft = true);
 
 	$page_links = paginate_links( array(
 		'base' => add_query_arg( 'paged', '%#%' ),
@@ -112,7 +116,7 @@ function flag_manage_gallery_main() {
 			<input type="submit" value="<?php _e( 'Search Images', 'flag' ); ?>" class="button" />
 		</p>
 		</form>
-		<form id="editgalleries" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;paged=' . intval($_GET['paged']); ?>" accept-charset="utf-8">
+		<form id="editgalleries" class="flagform" method="POST" action="<?php echo $flag->manage_page->base_page . '&amp;paged=' . $_GET['paged']; ?>" accept-charset="utf-8">
 		<?php wp_nonce_field('flag_bulkgallery'); ?>
 		<input type="hidden" name="page" value="manage-galleries" />
 		
@@ -149,8 +153,8 @@ function flag_manage_gallery_main() {
 				<th scope="col" class="cb column-cb" >
 					<input type="checkbox" onclick="checkAll(document.getElementById('editgalleries'));" name="checkall"/>
 				</th>
-				<th scope="col" ><?php _e('ID'); ?></th>
-				<th scope="col" width="25%"><?php _e('Title', 'flag'); ?></th>
+				<th scope="col" ><a href="<?php echo $flag->manage_page->base_page . "&galsort=gid&sortdir={$ascdesc}&paged=" . $_GET['paged']; ?>"><?php _e('ID'); ?></a></th>
+				<th scope="col" width="25%"><a href="<?php echo $flag->manage_page->base_page . "&galsort=title&sortdir={$ascdesc}&paged=" . $_GET['paged']; ?>"><?php _e('Title', 'flag'); ?></a></th>
 				<th scope="col" width="55%"><?php _e('Description', 'flag'); ?></th>
 				<th scope="col" ><?php _e('Author', 'flag'); ?></th>
 				<th scope="col" ><?php _e('Quantity', 'flag'); ?></th>

@@ -100,7 +100,7 @@ foreach ( $gID as $galID ) {
 		$xml['alt'] .= '<h4>'.htmlspecialchars_decode($thegalleries['title'], ENT_QUOTES).'</h4>';
 		$xml['alt'] .= '<p>'.str_replace('"','', strip_tags(htmlspecialchars_decode($galdesc, ENT_QUOTES))).'</p>';
 		$xml['alt'] .= '</div>';
-		$xml['alt'] .= '<div class="flagcategory" id="gid_'.$galID.'_'.$skinID.'">."\n"';
+		$xml['alt'] .= '<div class="flagcategory" id="gid_'.$galID.'_'.$skinID.'">';
 			$n = count($thepictures);
 			$var = floor($n/5);
 			if($var==0 || $var > 4) $var=4;

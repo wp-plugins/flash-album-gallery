@@ -53,6 +53,11 @@ New plugin:
 
 == Changelog ==
 
+= v3.20 - 15.10.2013 =
+* Fix alternative gallery
+* Added Gallery sorting on Manage Galleries page
+* Added fields on Options page for gallery sorting
+
 = v3.19 - 10.10.2013 =
 * Fix browser upload (submit button was absent)
 * fix for switch between uploaders

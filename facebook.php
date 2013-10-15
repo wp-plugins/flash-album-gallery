@@ -33,10 +33,10 @@ if(isset($_GET['i'])) {
 		/** @var $flagdb flagdb */
 		global $flagdb;
 		$gids='';
-		if(empty($orderby)) $orderby='gid';
-		if(empty($order)) $order='DESC';
-	          $gallerylist = $flagdb->find_all_galleries($orderby, $order);
-	    if(is_array($gallerylist)) {
+		$orderby=$flag_options['albSort'];
+		$order=$flag_options['albSortDir'];
+	  $gallerylist = $flagdb->find_all_galleries($orderby, $order);
+	  if(is_array($gallerylist)) {
 			foreach($gallerylist as $gallery) {
 				$gids.='_'.$gallery->gid;
 			}

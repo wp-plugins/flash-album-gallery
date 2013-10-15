@@ -63,7 +63,7 @@ if( isset($_POST['skinzipurl']) ) {
 		}
 
 	}
-	if(unlink($mzip)){
+	if(@unlink($mzip)){
 		flagGallery::show_message( __('The skin installed successfully.', 'flag') );
 	}
 }

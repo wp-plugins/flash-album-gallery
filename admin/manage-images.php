@@ -209,7 +209,7 @@ jQuery(document).ready( function() {
 	foreach ($gallerylist as $gal) { 
 		if ($gal->gid != $act_gid) { 
 ?>
-	<option value="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gal->gid, 'flag_editgallery')?>" ><?php echo $gal->gid; ?> - <?php echo esc_html(stripslashes($gal->title)); ?></option>
+	<option value="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gal->gid, 'flag_editgallery')?>" ><?php if($flag->options['albSort'] == 'gid'){ echo $gal->gid.' - '; } echo esc_html(stripslashes($gal->title)); if($flag->options['albSort'] == 'title'){ echo ' ('.$gal->gid.')'; } ?></option>
 <?php 
 		} 
 	}

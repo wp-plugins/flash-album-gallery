@@ -160,10 +160,10 @@ jQuery(document).ready(function() {
 	<div id="imageoptions" class="cptab">
 		<form name="generaloptions" method="post">
 		<?php wp_nonce_field('flag_settings'); ?>
-			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,deepLinks,useMediaRSS,jAlterGal,jAlterGalScript,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgWidth,imgHeight,imgQuality,galSort,galSortDir,disableViews" />
+			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,deepLinks,useMediaRSS,jAlterGal,jAlterGalScript,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgWidth,imgHeight,imgQuality,albSort,albSortDir,albPerPage,galSort,galSortDir,disableViews" />
 			<h2><?php _e('Image Gallery Options','flag'); ?></h2>
 			<h3><?php _e('General Options','flag'); ?></h3>
-			<table class="form-table flag-options">
+			<table class="form-table flag-options" style="width: auto; white-space: nowrap;">
 				<tr valign="top">
 					<th align="left" width="200"><?php _e('Gallery path','flag'); ?></th>
 					<td><input readonly="readonly" type="text" size="35" name="galleryPath" value="<?php echo $flag_options['galleryPath']; ?>" />
@@ -192,7 +192,7 @@ jQuery(document).ready(function() {
 			</table>
 
 			<h3><?php _e('Image settings','flag'); ?></h3>
-			<table class="form-table flag-options">
+			<table class="form-table flag-options" style="width: auto; white-space: nowrap;">
 				<tr valign="top">
 					<th scope="row" width="200"><label><?php _e('Resize Images','flag'); ?></label><br /><small>(Manage Gallery -> 'Resize Images' action)</small></th>
 					<td><input type="text" size="5" name="imgWidth" value="<?php echo $flag_options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $flag_options['imgHeight']; ?>" />
@@ -205,10 +205,27 @@ jQuery(document).ready(function() {
 			</table>
 
 			<h3><?php _e('Sort options','flag'); ?></h3>
-			<table class="form-table flag-options">
+			<table class="form-table flag-options" style="width: auto; white-space: nowrap;">
 				<tr>
-					<th valign="top" width="200"><?php _e('Sort thumbnails','flag'); ?>:</th>
-					<td>
+					<th valign="top" width="200"><?php _e('Sort galleries','flag'); ?>:</th>
+					<td valign="top">
+						<label><input name="albSort" type="radio" value="gid" <?php checked('gid', $flag_options['albSort']); ?> /> <?php _e('Gallery ID', 'flag'); ?></label><br />
+						<label><input name="albSort" type="radio" value="title" <?php checked('title', $flag_options['albSort']); ?> /> <?php _e('Title', 'flag'); ?></label><br />
+					</td>
+					<td valign="top"><label><input name="albSortDir" type="radio" value="ASC" <?php checked('ASC', $flag_options['albSortDir']); ?> /> <?php _e('Ascending', 'flag'); ?></label><br />
+						<label><input name="albSortDir" type="radio" value="DESC" <?php checked('DESC', $flag_options['albSortDir']); ?> /> <?php _e('Descending', 'flag'); ?></label>
+					</td>
+				</tr>
+				<tr style="border-bottom: 1px solid #000000;">
+					<th valign="top" width="200"><?php _e('Galleries per page: <br><small>on Manage Galleries page</small>','flag'); ?></th>
+					<td valign="top">
+						<input name="albPerPage" type="text" value="<?php echo $flag_options['albPerPage']; ?>" />
+					</td>
+					<td valign="top"></td>
+				</tr>
+				<tr>
+					<th valign="top" width="200"><?php _e('Sort images','flag'); ?>:</th>
+					<td valign="top">
 						<label><input name="galSort" type="radio" value="sortorder" <?php checked('sortorder', $flag_options['galSort']); ?> /> <?php _e('Custom order', 'flag'); ?></label><br />
 						<label><input name="galSort" type="radio" value="pid" <?php checked('pid', $flag_options['galSort']); ?> /> <?php _e('Image ID', 'flag'); ?></label><br />
 						<label><input name="galSort" type="radio" value="filename" <?php checked('filename', $flag_options['galSort']); ?> /> <?php _e('File name', 'flag'); ?></label><br />
@@ -218,17 +235,14 @@ jQuery(document).ready(function() {
 						<label><input name="galSort" type="radio" value="total_votes" <?php checked('total_votes', $flag_options['galSort']); ?> /> <?php _e('Image likes', 'flag'); ?></label><br />
 						<label><input name="galSort" type="radio" value="rand()" <?php checked('rand()', $flag_options['galSort']); ?> /> <?php _e('Randomly', 'flag'); ?></label>
 					</td>
-				</tr>
-				<tr>
-					<th valign="top"><?php _e('Sort direction','flag'); ?>:</th>
-					<td><label><input name="galSortDir" type="radio" value="ASC" <?php checked('ASC', $flag_options['galSortDir']); ?> /> <?php _e('Ascending', 'flag'); ?></label><br />
+					<td valign="top"><label><input name="galSortDir" type="radio" value="ASC" <?php checked('ASC', $flag_options['galSortDir']); ?> /> <?php _e('Ascending', 'flag'); ?></label><br />
 						<label><input name="galSortDir" type="radio" value="DESC" <?php checked('DESC', $flag_options['galSortDir']); ?> /> <?php _e('Descending', 'flag'); ?></label>
 					</td>
 				</tr>
 			</table>
 
 			<h3><?php _e('Alternative Gallery Options','flag'); ?> <br><small style="color: darkgreen;"><?php _e('(Note: this is not flash skin option. Options below only for alternative gallery in mobile browsers)','flag'); ?></small></h3>
-			<table class="flag_colors form-table flag-options">
+			<table class="flag_colors form-table flag-options" style="width: auto; white-space: nowrap;">
 				<tr>
 					<th align="left"><?php _e('Show jQuery gallery for browsers without flashplayer','flag'); ?></th>
 					<td><input type="checkbox" name="jAlterGal" value="1" <?php checked('1', $flag_options['jAlterGal']); ?> /></td>
@@ -339,7 +353,7 @@ jQuery(document).ready(function() {
 			<?php wp_nonce_field('flag_settings'); ?>
 			<input type="hidden" name="page_options" value="videoBG,vmColor1,vmColor2,vmAutoplay,vmWidth,vmHeight" />
 			<h2><?php _e('Flash Video Player Colors','flag'); ?></h2>
-			<table class="flag_colors form-table flag-options">
+			<table class="flag_colors form-table flag-options" style="width: auto; white-space: nowrap;">
 				<tr>
 					<th width="200"><?php _e('Video BG','flag'); ?>:</th>
 					<td><input class="colorPick" type="text" size="7" maxlength="6" id="videoBG" name="videoBG" value="<?php echo $flag_options['videoBG']?>" /><div id="cp_videoBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>
@@ -376,7 +390,7 @@ jQuery(document).ready(function() {
 			<?php wp_nonce_field('flag_settings'); ?>
 			<input type="hidden" name="page_options" value="mpBG,mpColor1,mpColor2,mpAutoplay" />
 			<h2><?php _e('MP3 Player Colors','flag'); ?></h2>
-			<table class="flag_colors form-table flag-options">
+			<table class="flag_colors form-table flag-options" style="width: auto; white-space: nowrap;">
 				<tr>
 					<th width="200"><?php _e('Player BG','flag'); ?>:</th>
 					<td><input class="colorPick" type="text" size="7" maxlength="6" id="mpBG" name="mpBG" value="<?php echo $flag_options['mpBG']?>" /><div id="cp_mpBG" style="background:#F9F9F9;position:absolute;display:none;"></div></td>

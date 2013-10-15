@@ -51,7 +51,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	}
 
 	//get all galleries (after we added new ones)
-	$gallerylist = $flagdb->find_all_galleries('gid', 'DESC');
+	$gallerylist = $flagdb->find_all_galleries($flag->options['albSort'], $flag->options['albSortDir']);
 
 ?>
 	
@@ -123,8 +123,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 									if ( !flagAdmin::can_manage_this_gallery($gallery->author) )
 										continue;
 									$name = ( empty($gallery->title) ) ? $gallery->name : esc_html(stripslashes($gallery->title));
+									if($flag->options['albSort'] == 'gid'){ $name = $gallery->gid.' - '.$name; }
+									if($flag->options['albSort'] == 'title'){ $name = $name.' ('.$gallery->gid.')'; }
 									$sel = ($ingallery == $gallery->gid) ? 'selected="selected" ' : '';
-									echo '<option ' . $sel . 'value="' . $gallery->gid . '" >' . $gallery->gid . ' - ' . $name . '</option>' . "\n";
+									echo '<option ' . $sel . 'value="' . $gallery->gid . '" >' . $name . '</option>' . "\n";
 							} ?>
 						</select>
 						<?php echo $maxsize; ?>
