@@ -326,10 +326,14 @@ jQuery(document).ready(function() {
 			<p><a href="https://itunes.apple.com/us/app/mypgc/id663405181?ls=1&mt=8"><img src="<?php echo plugins_url() . '/' . FLAGFOLDER; ?>/admin/images/appstore_button.png" alt="Download from AppStore" /></a></p>
 			<div class="submit"><input class="button-primary" type="submit" name="membership" value="<?php _e('Update Settings for Remote Access', 'flag'); ?>"/></div>
 		</form>
-		<?php if($regform){ ?>
+		<?php if($regform || empty($flag_options['access_key'])){ ?>
 			<form name="reg_on_mypgc" method="post" style="float: left; border: 1px solid #666666; background-color: #ffffee; margin-top: 95px; width: 49%;">
 				<?php wp_nonce_field('flag_settings'); ?>
 				<h3 style="padding-left: 10px;"><?php _e('Register with form below or <a href="http://mypgc.co/membership/" target="_blank">purchase license key</a>','flag'); ?></h3>
+				<div style="padding:0 10px;">
+					<p><?php _e("this email and password that you'll receive will be used to login in iOS application",'flag'); ?></p>
+					<p><?php _e("Note: if you already purchased license key you don't need register again.",'flag'); ?></p>
+				</div>
 				<input type="hidden" name="access_key" value="<?php echo $flag_options['access_key']?>" />
 				<input type="hidden" name="access_url" value="<?php echo plugins_url() . '/' . FLAGFOLDER . '/lib/app.php'; ?>" />
 				<table class="form-table" style="100%;">
