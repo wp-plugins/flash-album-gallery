@@ -1,1 +1,0 @@
-<?php $scripts='<style type="text/css" scoped="scoped">@import url('.plugins_url('/'.FLAGFOLDER.'/').'admin/js/themes/'.$data->theme.'/styles.css) all; @import url('.plugins_url('/'.FLAGFOLDER.'/').'admin/js/nivo-slider.css) all;</style><script src="'.plugins_url('/'.FLAGFOLDER.'/').'admin/js/jquery.nivo.slider.pack.js" type="text/javascript"></script>';
