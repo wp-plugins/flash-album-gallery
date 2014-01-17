@@ -34,7 +34,7 @@ $xmpdata = $meta->get_XMP();
 					<th scope="col"><?php _e('Value','flag'); ?></th>
 				</tr>
 			</thead>
-	<?php 
+	<?php $class = '';
 			foreach ($dbdata as $key => $value){
 				if ( is_array($value) ) continue;
 				$class = ( $class == 'class="alternate"' ) ? '' : 'class="alternate"';

@@ -158,7 +158,7 @@ class flagdb {
 	function get_album($id) {
 		/** @var $wpdb wpdb */
 		global $wpdb;
-		$id = $wpdb->escape($id);
+		$id = esc_sql($id);
 		$albums = $wpdb->get_var( "SELECT categories FROM $wpdb->flagalbum WHERE id = '{$id}'" );
 		return $albums;
 	}
@@ -363,7 +363,7 @@ class flagdb {
 		// create the sql parameter "name = value"
 		foreach ($update as $key => $value)
 			if ($value)
-				$sql[] = $key . " = '" . $wpdb->escape($value) . "'";
+				$sql[] = $key . " = '" . esc_sql($value) . "'";
 		
 		// create the final string
 		$sql = implode(', ', $sql);
@@ -617,7 +617,7 @@ class flagdb {
                 $searchand = ' AND ';
             }
             
-            $term = $wpdb->escape($request);
+            $term = esc_sql($request);
             if (count($search_terms) > 1 && $search_terms[0] != $request )
                 $search .= " OR (tt.description LIKE '{$n}{$term}{$n}') OR (tt.alttext LIKE '{$n}{$term}{$n}') OR (tt.filename LIKE '{$n}{$term}{$n}')";
 
@@ -657,7 +657,7 @@ class flagdb {
 		// If a search pattern is specified, load the posts that match
         if ( !empty($filename) ) {
             // added slashes screw with quote grouping when done early, so done later
-            $term = $wpdb->escape($filename);
+            $term = esc_sql($filename);
             
             if ( is_numeric($galleryID) ) {
             	$id = (int) $galleryID;
@@ -708,9 +708,9 @@ class flagdb {
 			global $wpdb;
 
 			$pid =intval($args['pid']);
-			$alttext = $wpdb->escape($args['alttext']);
-			$desc = $wpdb->escape($args['description']);
-			$link = $wpdb->escape($args['link']);
+			$alttext = esc_sql($args['alttext']);
+			$desc = esc_sql($args['description']);
+			$link = esc_sql($args['link']);
 			$sortorder = intval($args['sortorder']);
 			$exclude = intval($args['exclude']);
 

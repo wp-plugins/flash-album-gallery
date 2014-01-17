@@ -111,6 +111,12 @@ foreach ( $gID as $galID ) {
 			$meta_data = maybe_unserialize($picture['meta_data']);
 			$picture['width'] = $meta_data['width'];
 			$picture['height'] = $meta_data['height'];
+			$picture['thumbnail'] = $meta_data['thumbnail']['width'].'x'.$meta_data['thumbnail']['height'];
+			$webview = '';
+			if(isset($meta_data['webview'])){
+				$picture['webview'] = $meta_data['webview'][0].'x'.$meta_data['webview'][1];
+				$webview = $flag_options['optimized_imgs']? '/webview' : '';
+			}
 			unset($picture['meta_data']);
 			$picture = array_map('stripslashes', $picture);
 			$b['data'][] = $picture;
@@ -118,7 +124,7 @@ foreach ( $gID as $galID ) {
 			$pid = intval($picture['pid']);
 
 			if ($isCrawler){
-				$xml['alt'] .= '<a style="display:block; overflow: hidden; height: 100px; width: 115px; margin-bottom: 10px; background-color: #eeeeee; background-position: 22px 44px; text-align: left;" class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'"><img style="float:left; margin-right: 10px; width: auto; height: auto; min-height:100px; min-width:115px;" title="'.esc_attr(strip_tags(htmlspecialchars_decode($picture['alttext']))).'" alt="'.esc_attr(strip_tags(htmlspecialchars_decode($picture['alttext']))).'" src="'.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].'" /><span style="display: block; overflow: hidden; text-decoration: none; color: #000; font-weight: normal;" class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.strip_tags(htmlspecialchars_decode($picture['alttext'])).'</strong><br />'.strip_tags(htmlspecialchars_decode($picture['description'])).'</span></a>';
+				$xml['alt'] .= '<a style="display:block; overflow: hidden; height: 100px; width: 115px; margin-bottom: 10px; background-color: #eeeeee; background-position: 22px 44px; text-align: left;" class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].$webview.'/'.$picture['filename'].'" id="flag_pic_'.$pid.'"><img style="float:left; margin-right: 10px; width: auto; height: auto; min-height:100px; min-width:115px;" title="'.esc_attr(strip_tags(htmlspecialchars_decode($picture['alttext']))).'" alt="'.esc_attr(strip_tags(htmlspecialchars_decode($picture['alttext']))).'" src="'.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].'" /><span style="display: block; overflow: hidden; text-decoration: none; color: #000; font-weight: normal;" class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.strip_tags(htmlspecialchars_decode($picture['alttext'])).'</strong><br />'.strip_tags(htmlspecialchars_decode($picture['description'])).'</span></a>';
 			} else {
 				if(!$disableViews){
 					$views = (intval($picture['hitcounter']) < 10000) ? $picture['hitcounter'] : round($picture['hitcounter']/1000, 1).'k';
@@ -127,7 +133,7 @@ foreach ( $gID as $galID ) {
 				} else {
 					$views_panel = '';
 				}
-				$xml['alt'] .= '<a class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" title="'.esc_attr(strip_tags(htmlspecialchars_decode($picture['alttext']))).'">[img src='.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].']'.$views_panel.'<span class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.$picture['alttext'].'</strong><br /><span>'.$picture['description'].'</span></span></a>';
+				$xml['alt'] .= '<a class="i'. $j++ .' flag_pic_alt" href="'.$siteurl.'/'.$thegalleries['path'].$webview.'/'.$picture['filename'].'" id="flag_pic_'.$pid.'" title="'.esc_attr(strip_tags(htmlspecialchars_decode($picture['alttext']))).'">[img src='.$siteurl.'/'.$thegalleries['path'].'/thumbs/thumbs_'.$picture['filename'].']'.$views_panel.'<span class="flag_pic_desc" id="flag_desc_'.$pid.'"><strong>'.$picture['alttext'].'</strong><br /><span>'.$picture['description'].'</span></span></a>';
 			}
 		}
 		$xml['alt'] .= '</div>';

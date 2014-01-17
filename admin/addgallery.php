@@ -24,6 +24,12 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	}
 	if ($_POST['uploadimage']){
 		check_admin_referer('flag_upload');
+
+		$flag->options['thumbWidth']  = intval($_POST['thumbWidth'])? intval($_POST['thumbWidth']) : 100;
+		$flag->options['thumbHeight'] = intval($_POST['thumbHeight'])? intval($_POST['thumbHeight']) : 100;
+		$flag->options['thumbFix']    = isset($_POST['thumbFix'])? 1 : 0;
+		update_option('flag_options', $flag->options);
+
 		if ($_FILES['MF__F_0_0']['error'] == 0) {
 			flagAdmin::upload_images();
 		}
@@ -51,7 +57,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 	}
 
 	//get all galleries (after we added new ones)
-	$gallerylist = $flagdb->find_all_galleries($flag->options['albSort'], $flag->options['albSortDir']);
+	$gallerylist = $flagdb->find_all_galleries($flag->options['albSort'], $flag->options['albSortDir'], false, 0, 0, 0, true);
 
 ?>
 	
@@ -115,7 +121,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 				<?php wp_nonce_field('flag_upload'); ?>
 				<table class="form-table">
 				<tr valign="top">
-					<td style="width: 216px;"><label for="galleryselect"><?php _e('in to', 'flag'); ?></label>
+					<td style="width: 216px;"><label for="galleryselect"><?php _e('Upload images in', 'flag'); ?> *</label>
 						<select name="galleryselect" id="galleryselect" style="width: 200px">
 							<option value="0" ><?php _e('Choose gallery', 'flag'); ?></option>
 							<?php $ingallery = isset($_GET['gid']) ? (int) $_GET['gid'] : '';
@@ -131,6 +137,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 						</select>
 						<?php echo $maxsize; ?>
 						<br /><?php if ((IS_WPMU) && flagGallery::flag_wpmu_enable_function('wpmuQuotaCheck')) display_space_usage(); ?>
+						<br />
+						<p><?php _e('Thumbnail WIDTH x HEIGHT (in pixel)','flag'); ?> *
+						<br /><input type="text" size="5" maxlength="5" name="thumbWidth" id="thumbWidth" value="<?php echo $flag->options['thumbWidth']; ?>" /> x <input type="text" size="5" maxlength="5" name="thumbHeight" id="thumbHeight" value="<?php echo $flag->options['thumbHeight']; ?>" />
+							<br /><small><?php _e('These values are maximum values ','flag'); ?></small></p>
+						<p><label><input type="checkbox" name="thumbFix" id="thumbFix" value="1" <?php checked('1', $flag->options['thumbFix']); ?> /> <?php _e('Ignore the aspect ratio, no portrait thumbnails','flag'); ?></label></p>
 
 						<div class="submit">
 					<span class="useflashupload">
@@ -192,7 +203,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 					UploadFile: function(up, file) {
 						console.log('[UploadFile]', file);
-						up.settings.multipart_params = { galleryselect: jQuery('#galleryselect').val(), last: files_remaining };
+						up.settings.multipart_params = { galleryselect: jQuery('#galleryselect').val(), thumbw:  jQuery('#thumbWidth').val(), thumbh:  jQuery('#thumbHeight').val(), thumbf: jQuery('#thumbFix').prop("checked"), last: files_remaining };
 						files_remaining--;
 						// You can override settings before the file is uploaded
 						// up.settings.url = 'upload.php?id=' + file.id;

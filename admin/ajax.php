@@ -23,11 +23,12 @@ function flag_ajax_operation() {
 		switch ( $_POST['operation'] ) {
 			case 'create_thumbnail' :
 				$result = flagAdmin::create_thumbnail($picture);
-				do_action('flag_thumbnail_created', $picture);
 			break;
 			case 'resize_image' :
 				$result = flagAdmin::resize_image($picture);
-				do_action('flag_image_resized', $picture);
+			break;
+			case 'webview_image' :
+				$result = flagAdmin::webview_image($picture);
 			break;
 			case 'import_metadata' :
 				$result = flagAdmin::import_MetaData( $id );

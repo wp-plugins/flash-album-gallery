@@ -126,6 +126,7 @@ function flag_manage_gallery_main() {
 				<?php if ( function_exists('json_encode') ) : ?>
 				<select name="bulkaction" id="bulkaction">
 					<option value="no_action" ><?php _e("No action",'flag'); ?></option>
+					<option value="webview_images" ><?php _e("Create images optimized for web",'flag'); ?></option>
 					<option value="new_thumbnail" ><?php _e("Create new thumbnails",'flag'); ?></option>
 					<option value="resize_images" ><?php _e("Resize images",'flag'); ?></option>
 					<option value="import_meta" ><?php _e("Import metadata",'flag'); ?></option>

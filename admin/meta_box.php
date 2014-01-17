@@ -6,18 +6,15 @@ require_once (dirname(__FILE__) . '/playlist.functions.php');
 $i_skins = get_skins();
 $all_playlists = get_playlists();
 $flag_custom = get_post_custom($post->ID);
-$items_array = $flag_custom["mb_items_array"][0];
-$skinname = $flag_custom["mb_skinname"][0];
-$scode = $flag_custom["mb_scode"][0];
-$music = $flag_custom["mb_playlist"][0];
-$button_text = $flag_custom["mb_button"][0];
-$button_link = $flag_custom["mb_button_link"][0];
-if(!$music) $music = '';
-if(!$button_text) $button_text = '';
-if(!$button_link) $button_link = '';
-$bg_link = $flag_custom["mb_bg_link"][0];
-$bg_pos = $flag_custom["mb_bg_pos"][0];
-$bg_repeat = $flag_custom["mb_bg_repeat"][0];
+$items_array = isset($flag_custom["mb_items_array"][0])? $flag_custom["mb_items_array"][0] : '';
+$skinname = isset($flag_custom["mb_skinname"][0])? $flag_custom["mb_skinname"][0] : '';
+$scode = isset($flag_custom["mb_scode"][0])? $flag_custom["mb_scode"][0] : '';
+$music = isset($flag_custom["mb_playlist"][0])? $flag_custom["mb_playlist"][0] : '';
+$button_text = isset($flag_custom["mb_button"][0])? $flag_custom["mb_button"][0] : '';
+$button_link = isset($flag_custom["mb_button_link"][0])? $flag_custom["mb_button_link"][0] : '';
+$bg_link = isset($flag_custom["mb_bg_link"][0])? $flag_custom["mb_bg_link"][0] : '';
+$bg_pos = isset($flag_custom["mb_bg_pos"][0])? $flag_custom["mb_bg_pos"][0] : '';
+$bg_repeat = isset($flag_custom["mb_bg_repeat"][0])? $flag_custom["mb_bg_repeat"][0] : '';
 ?>
 <script type="text/javascript">/*<![CDATA[*/
 var i_arr = '<?php echo $items_array; ?>';

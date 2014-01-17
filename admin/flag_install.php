@@ -32,7 +32,7 @@ function flag_install () {
 			$charset_collate .= " COLLATE $wpdb->collate";
 	}
 		
-    $flagpictures					= $wpdb->prefix . 'flag_pictures';
+  $flagpictures					= $wpdb->prefix . 'flag_pictures';
 	$flaggallery					= $wpdb->prefix . 'flag_gallery';
 	$flagcomments					= $wpdb->prefix . 'flag_comments';
 	$flagalbum						= $wpdb->prefix . 'flag_album';
@@ -219,45 +219,46 @@ function flag_list_options() {
 	$flag_options['flashHeight']			= '500';
 
 	// Image Settings
-	$flag_options['imgWidth']				= 800;  							// Image Width
+	$flag_options['imgWidth']					= 800;  							// Image Width
 	$flag_options['imgHeight']				= 600;  							// Image height
 	$flag_options['imgQuality']				= 85;								// Image Quality
-	
+	$flag_options['optimized_imgs']		= false;								// Image Quality
+
 	// Thumbnail Settings
 	$flag_options['thumbWidth']				= 100;  							// Thumb Width
 	$flag_options['thumbHeight']			= 100;  							// Thumb height
-	$flag_options['thumbFix']				= true;								// Fix the dimension
+	$flag_options['thumbFix']					= true;								// Fix the dimension
 	$flag_options['thumbQuality']			= 100;  							// Thumb Quality
 
 	// Flash default skin colors settings TODO remove old settings
 	$flag_options['flashBacktransparent'] 	= false;
-	$flag_options['flashBackcolor']			= '262626';
-	$flag_options['buttonsBG']				= '000000';
-	$flag_options['buttonsMouseOver']		= '7485c2';
-	$flag_options['buttonsMouseOut']		= '717171';
-	$flag_options['catButtonsMouseOver']	= '000000';
-	$flag_options['catButtonsMouseOut']		= '000000';
+	$flag_options['flashBackcolor']					= '262626';
+	$flag_options['buttonsBG']							= '000000';
+	$flag_options['buttonsMouseOver']				= '7485c2';
+	$flag_options['buttonsMouseOut']				= '717171';
+	$flag_options['catButtonsMouseOver']		= '000000';
+	$flag_options['catButtonsMouseOut']			= '000000';
 	$flag_options['catButtonsTextMouseOver']= '7485c2';
 	$flag_options['catButtonsTextMouseOut']	= 'bcbcbc';
-	$flag_options['thumbMouseOver']			= '7485c2';
-	$flag_options['thumbMouseOut']			= '000000';
-	$flag_options['mainTitle']				= 'ffffff';
-	$flag_options['categoryTitle']			= '7485c2';
-	$flag_options['itemBG']					= 'eae6ef';		
-	$flag_options['itemTitle']				= '7485c2';		
-	$flag_options['itemDescription']		= 'e0e0e0';		
+	$flag_options['thumbMouseOver']					= '7485c2';
+	$flag_options['thumbMouseOut']					= '000000';
+	$flag_options['mainTitle']							= 'ffffff';
+	$flag_options['categoryTitle']					= '7485c2';
+	$flag_options['itemBG']									= 'eae6ef';
+	$flag_options['itemTitle']							= '7485c2';
+	$flag_options['itemDescription']				= 'e0e0e0';
 
 	// Alternative gallery colors
 	$flag_options['jAlterGal']				= true;
-	$flag_options['jAlterGalScript']		= 1;							// If '0' - use FancyBox script
-	$flag_options['disableViews']		= 0;
-	$flag_options['BarsBG']					= '292929';
+	$flag_options['jAlterGalScript']	= 1;							// If '0' - use FancyBox script
+	$flag_options['disableViews']			= 0;
+	$flag_options['BarsBG']						= '292929';
 	$flag_options['CatBGColor']				= '292929';
-	$flag_options['CatBGColorOver']			= '737373';
-	$flag_options['CatColor']				= 'ffffff';
+	$flag_options['CatBGColorOver']		= '737373';
+	$flag_options['CatColor']					= 'ffffff';
 	$flag_options['CatColorOver']			= 'ffffff';
-	$flag_options['ThumbBG']				= 'ffffff';
-	$flag_options['ThumbLoaderColor']		= '4a4a4a';
+	$flag_options['ThumbBG']					= 'ffffff';
+	$flag_options['ThumbLoaderColor']	= '4a4a4a';
 	$flag_options['TitleColor']				= 'ff9900';
 	$flag_options['DescrColor']				= 'cfcfcf';
 
@@ -265,14 +266,14 @@ function flag_list_options() {
 	$flag_options['videoBG']				= '000000';
 	$flag_options['vmColor1']				= 'ffffff';
 	$flag_options['vmColor2']				= '3283A7';
-	$flag_options['vmAutoplay']				= 'true';
+	$flag_options['vmAutoplay']			= 'true';
 	$flag_options['vmWidth']				= '520';
 	$flag_options['vmHeight']				= '304';
 
-	$flag_options['mpBG']					= '4f4f4f';
+	$flag_options['mpBG']						= '4f4f4f';
 	$flag_options['mpColor1']				= 'ffffff';
 	$flag_options['mpColor2']				= '3283A7';
-	$flag_options['mpAutoplay']				= 'false';
+	$flag_options['mpAutoplay']			= 'false';
 
 	$flag_options['advanced']				= false;  							// Advanced options
 	

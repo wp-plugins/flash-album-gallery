@@ -5,6 +5,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 /**
  * flagAdmin - Class for admin operation
  */
+if ( ! class_exists( 'flagAdmin' ) ) {
 class flagAdmin{
 
 	/**
@@ -16,7 +17,7 @@ class flagAdmin{
 	 * @param bool $output if the function should show an error messsage or not
 	 * @return bool|int
 	 */
-	static function create_gallery($gallery, $defaultpath, $output = true) {
+	public static function create_gallery($gallery, $defaultpath, $output = true) {
 		global $wpdb, $user_ID;
  
 		// get the current user ID
@@ -81,6 +82,12 @@ class flagAdmin{
 				$txt .= __('Unable to create directory ', 'flag').' <strong>' . $flagpath . '/thumbs !</strong>';
 		}
 		
+		// 4. Now create "webview" folder inside
+		if ( !is_dir(WINABSPATH . $flagpath . '/webview') ) {
+			if ( !wp_mkdir_p ( WINABSPATH . $flagpath . '/webview') )
+				$txt .= __('Unable to create directory ', 'flag').' <strong>' . $flagpath . '/webview !</strong>';
+		}
+
 		if (SAFE_MODE) {
 			$help  = __('The server setting Safe-Mode is on !', 'flag');	
 			$help .= '<br />'.__('If you have problems, please create directory', 'flag').' <strong>' . $flagpath . '</strong> ';	
@@ -136,7 +143,7 @@ class flagAdmin{
 	 * @param string $galleryfolder contains relative path
 	 * @return void
 	 */
-	static function import_gallery($galleryfolder) {
+	public static function import_gallery($galleryfolder) {
 		
 		global $wpdb, $user_ID;
 
@@ -223,7 +230,7 @@ class flagAdmin{
 	 * @param string $folder contains relative path
 	 * @return void
 	 */
-	static function import_video($folder) {
+	public static function import_video($folder) {
 
 
 		$created_msg = '';
@@ -265,7 +272,7 @@ class flagAdmin{
 	 * @param string $folder contains relative path
 	 * @return void
 	 */
-	static function import_mp3($folder) {
+	public static function import_mp3($folder) {
 
 		$created_msg = '';
 		// remove trailing slash at the end, if somebody use it
@@ -306,7 +313,7 @@ class flagAdmin{
 	 * @param string $folder contains relative path
 	 * @return array
 	 */
-	static function import_banner($folder) {
+	public static function import_banner($folder) {
 
 		$created_msg = '';
 		// remove trailing slash at the end, if somebody use it
@@ -329,7 +336,7 @@ class flagAdmin{
 	}
 
 	//Handle an individual file import.
-	function handle_import_file($file, $post_id = 0) {
+	public static function handle_import_file($file, $post_id = 0) {
 		set_time_limit(120);
 		$time = current_time('mysql');
 		if ( $post = get_post($post_id) ) {
@@ -445,7 +452,7 @@ class flagAdmin{
 	 * @param array $ext
 	 * @return array
 	 */
-	function scandir($dirname = '.', $ext = array()) { 
+	public static function scandir($dirname = '.', $ext = array()) {
 		// thx to php.net :-)
 		if(empty($ext))
 			$ext = array('jpeg', 'jpg', 'png', 'gif'); 
@@ -467,18 +474,24 @@ class flagAdmin{
 	 * @param object | int $image contain all information about the image or the id
 	 * @return string result code
 	 */
-	static function create_thumbnail($image) {
+	public static function create_thumbnail($image) {
 		
 		global $flag;
-		
-		if(! class_exists('flag_Thumbnail'))
-			require_once( flagGallery::graphic_library() );
-		
+
 		if ( is_numeric($image) )
 			$image = flagdb::find_image( $image );
 
-		if ( !is_object($image) ) 
+		if ( !is_object($image) )
 			return __('Object didn\'t contain correct data','flag');
+
+		$dest_path = dirname($image->webimagePath);
+		if(!is_dir($dest_path)){
+			flagGallery::create_webview_folder(dirname($image->imagePath));
+			@chmod( $dest_path, 0755 );
+		}
+
+		if(! class_exists('flag_Thumbnail'))
+			require_once( flagGallery::graphic_library() );
 		
 		// check for existing thumbnail
 		if (file_exists($image->thumbPath))
@@ -512,7 +525,7 @@ class flagAdmin{
 			
 			// save the new thumbnail
 			$thumb->save($image->thumbPath, $flag->options['thumbQuality']);
-			flagAdmin::chmod ($image->thumbPath); 
+			flagAdmin::chmod ($image->thumbPath);
 
 			//read the new sizes
 			$new_size = @getimagesize ( $image->thumbPath );
@@ -527,7 +540,11 @@ class flagAdmin{
 		
 		if ( !empty($thumb->errmsg) )
 			return $image->filename . ' (Error : '.$thumb->errmsg .')';
-		
+
+		do_action('flag_thumbnail_created', $image);
+
+		flagAdmin::webview_image($image);
+
 		// success
 		return '1'; 
 	}
@@ -541,7 +558,7 @@ class flagAdmin{
 	 * @param integer $height optional
 	 * @return string result code
 	 */
-	static function resize_image($image, $width = 0, $height = 0) {
+	public static function resize_image($image, $width = 0, $height = 0) {
 		
 		global $flag;
 		
@@ -552,7 +569,7 @@ class flagAdmin{
 			$image = flagdb::find_image( $image );
 		
 		if ( !is_object($image) ) 
-			return __('Object didn\'t contain correct data','flag');	
+			return __('Object didn\'t contain correct data','flag');
 
 		// before we start we import the meta data to database (required for uploads before V0.40)
 		flagAdmin::maybe_import_meta( $image->pid );
@@ -580,6 +597,58 @@ class flagAdmin{
 			return ' <strong>' . $image->filename . ' (Error : ' . $file->errmsg . ')</strong>';
 		}
 
+		do_action('flag_image_resized', $image);
+
+		return '1';
+	}
+
+	/**
+	 * flagAdmin::webview_image() - create a new image, based on the height /width
+	 *
+	 * @class flagAdmin
+	 * @param object | int $image contain all information about the image or the id
+	 * @return string result code
+	 */
+	public static function webview_image($image) {
+
+		global $flag;
+
+		if ( is_numeric($image) )
+			$image = flagdb::find_image( $image );
+
+		if ( !is_object($image) )
+			return __('Object didn\'t contain correct data','flag');
+
+		$img_size = @getimagesize ( $image->imagePath );
+		$dest_path = dirname($image->webimagePath);
+		if(flagGallery::create_webview_folder(dirname($image->imagePath))){
+			if (! is_writable( $dest_path ) ) {
+				@chmod( $dest_path, 0755 );
+			}
+
+			if (file_exists($image->webimagePath)){
+				return '1';
+			}
+
+			$imgquality = $flag->options['imgQuality'];
+			$max_width = ($img_size[0] < 1200)? $img_size[0] : 1200;
+			$max_height = ($img_size[1] < 1200)? $img_size[1] : 1200;
+			if( function_exists('wp_get_image_editor') ) {
+				$editor = wp_get_image_editor( $image->imagePath );
+				$editor->set_quality( $imgquality );
+				$editor->resize( $max_width, $max_height, 0 );
+				$editor->save( $image->webimagePath );
+				if(@filesize($image->webimagePath) > @filesize($image->imagePath)) {
+					@copy($image->imagePath, $image->webimagePath);
+				}
+				$webviewsize = @getimagesize ( $image->webimagePath );
+				flagdb::update_image_meta($image->pid, array( 'webview' => $webviewsize) );
+
+				do_action('flag_image_optimized', $image);
+
+			}
+		}
+
 		return '1';
 	}
 
@@ -592,7 +661,7 @@ class flagAdmin{
 	 * @param bool $name2alt
 	 * @return array $image_ids Id's which are sucessful added
 	 */
-	function add_Images($galleryID, $imageslist, $name2alt = false) {
+	public static function add_Images($galleryID, $imageslist, $name2alt = false) {
 		global $wpdb;
 		
 		$alttext = '';
@@ -633,7 +702,7 @@ class flagAdmin{
 	 * @param array|int $imagesIds
 	 * @return bool
 	 */
-	static function import_MetaData($imagesIds) {
+	public static function import_MetaData($imagesIds) {
 			
 		global $wpdb;
 		
@@ -680,7 +749,7 @@ class flagAdmin{
 	 * @param array|int $imagesIds
 	 * @return bool
 	 */
-	static function copy_MetaData($imagesIds) {
+	public static function copy_MetaData($imagesIds) {
 			
 		global $wpdb;
 
@@ -728,7 +797,7 @@ class flagAdmin{
 	 * @param $id
 	 * @return array metadata
 	 */
-	function get_MetaData($id) {
+	public static function get_MetaData($id) {
 		
 		require_once(FLAG_ABSPATH . 'lib/meta.php');
 		
@@ -754,7 +823,7 @@ class flagAdmin{
 	 * @param int $id
 	 * @return mixed  result
 	 */
-	function maybe_import_meta( $id ) {
+	public static function maybe_import_meta( $id ) {
 				
 		require_once(FLAG_ABSPATH . 'lib/meta.php');
 
@@ -780,7 +849,7 @@ class flagAdmin{
 	 * @param mixed $p_header
 	 * @return bool
 	 */
-	function getOnlyImages($p_event, $p_header)	{
+	public static function getOnlyImages($p_event, $p_header)	{
 		
 		$info = pathinfo($p_header['filename']);
 		// check for extension
@@ -804,7 +873,7 @@ class flagAdmin{
 	 * @class flagAdmin
 	 * @return void
 	 */
-	static function upload_images() {
+	public static function upload_images() {
 		
 		global $wpdb;
 		
@@ -914,7 +983,7 @@ class flagAdmin{
 	 */
 	static function swfupload_image($galleryID = 0) {
 
-		global $wpdb;
+		global $wpdb, $flag;
 
 		if ($galleryID == 0) {
 			//@unlink($temp_file);
@@ -971,6 +1040,13 @@ class flagAdmin{
 		$image_ids = flagAdmin::add_Images($galleryID, array($filename));
 		$return = '';
 		//create thumbnails
+
+		//save the thumb size values
+		$flag->options['thumbWidth']  = intval($_POST['thumbw'])? intval($_POST['thumbw']) : 100;
+		$flag->options['thumbHeight'] = intval($_POST['thumbh'])? intval($_POST['thumbh']) : 100;
+		$flag->options['thumbFix']    = ('true' == $_POST['thumbf'])? 1 : 0;
+		update_option('flag_options', $flag->options);
+
 		foreach($image_ids as $picture){
 			$return = flagAdmin::create_thumbnail($picture);
 		}
@@ -1016,7 +1092,7 @@ class flagAdmin{
 	 * @class flagAdmin
 	 * @return bool $result
 	 */
-	function check_quota() {
+ public static function check_quota() {
 
 			if ( (IS_WPMU) && flagGallery::flag_wpmu_enable_function('wpmuQuotaCheck'))
 				if( $error = upload_is_user_over_quota( false ) ) {
@@ -1033,7 +1109,7 @@ class flagAdmin{
 	 * @param string $filename
 	 * @return bool $result
 	 */
-	function chmod($filename = '') {
+	public static function chmod($filename = '') {
 
 		$stat = @ stat(dirname($filename));
 		$perms = $stat['mode'] & 0007777;
@@ -1052,7 +1128,7 @@ class flagAdmin{
 	 * @param string $foldername
 	 * @return bool $result
 	 */
-	static function check_safemode($foldername) {
+	public static function check_safemode($foldername) {
 
 		if ( SAFE_MODE ) {
 			
@@ -1077,7 +1153,7 @@ class flagAdmin{
 	 * @param int $check_ID is the user_id
 	 * @return bool $result
 	 */
-	static function can_manage_this_gallery($check_ID) {
+	public static function can_manage_this_gallery($check_ID) {
 
 		global $user_ID, $wp_roles;
 		
@@ -1098,7 +1174,7 @@ class flagAdmin{
 	 * @param int $dest_gid destination gallery
 	 * @return void
 	 */
-	static function move_images($pic_ids, $dest_gid) {
+	public static function move_images($pic_ids, $dest_gid) {
 
 		$errors = '';
 		$count = 0;
@@ -1174,7 +1250,7 @@ class flagAdmin{
 	 * @param int $dest_gid destination gallery
 	 * @return void
 	 */
-	static function copy_images($pic_ids, $dest_gid) {
+	public static function copy_images($pic_ids, $dest_gid) {
 		
 		$errors = $messages = '';
 		
@@ -1267,7 +1343,7 @@ class flagAdmin{
 	 * @param string $title name of the operation
 	 * @return string the javascript output
 	 */
-	static function do_ajax_operation( $operation, $image_array, $title = '' ) {
+	public static function do_ajax_operation( $operation, $image_array, $title = '' ) {
 		
 		if ( !is_array($image_array) || empty($image_array) )
 			return;
@@ -1305,7 +1381,7 @@ class flagAdmin{
 	 * @param int $galleryID
 	 * @return void
 	 */
-	function set_gallery_preview( $galleryID ) {
+	public static function set_gallery_preview( $galleryID ) {
   	global $wpdb;
 
 		$galleryID = intval($galleryID);
@@ -1329,7 +1405,7 @@ class flagAdmin{
 	 * @param int $galleryID
 	 * @return array (JSON)
 	 */
-	static function get_image_ids( $galleryID ) {
+	public static function get_image_ids( $galleryID ) {
 		
 		if ( !function_exists('json_encode') )
 			return(-2);
@@ -1343,5 +1419,5 @@ class flagAdmin{
 	}
 	
 } // END class flagAdmin
-
+}
 ?>

@@ -75,11 +75,13 @@ class flagManageGallery {
 					if (is_array($imagelist)) {
 						foreach ($imagelist as $filename) {
 							@unlink(WINABSPATH . $gallerypath . '/thumbs/thumbs_' . $filename);
+							@unlink(WINABSPATH . $gallerypath . '/webview/' . $filename);
 							@unlink(WINABSPATH . $gallerypath .'/'. $filename);
 						}
 					}
 					// delete folder
 						@rmdir( WINABSPATH . $gallerypath . '/thumbs' );
+						@rmdir( WINABSPATH . $gallerypath . '/webview' );
 						@rmdir( WINABSPATH . $gallerypath );
 				}
 			}
@@ -148,8 +150,9 @@ class flagManageGallery {
 			if ($image) {
 				//if ($flag->options['deleteImg']) {
 					@unlink($image->imagePath);
-					@unlink($image->thumbPath);	
-				//} 
+					@unlink($image->webimagePath);
+					@unlink($image->thumbPath);
+				//}
 				$delete_pic = $wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = '{$image->pid}'");
 			}
 			if($delete_pic)
@@ -201,6 +204,10 @@ class flagManageGallery {
 					// A prefix 'gallery_' will first fetch all ids from the selected galleries
 					flagAdmin::do_ajax_operation( 'gallery_copy_metadata' , $_POST['doaction'], __('Copy metadata to image Description','flag') );
 					break;
+				case 'webview_images':
+					// A prefix 'gallery_' will first fetch all ids from the selected galleries
+					flagAdmin::do_ajax_operation( 'gallery_webview_image' , $_POST['doaction'], __('Creating images optimized for web','flag') );
+					break;
 			}
 		}
 
@@ -227,7 +234,6 @@ class flagManageGallery {
 			$flag->options['thumbWidth']  = (int)  $_POST['thumbWidth'];
 			$flag->options['thumbHeight'] = (int)  $_POST['thumbHeight'];
 			$flag->options['thumbFix']    = (bool) $_POST['thumbFix']; 
-			// What is in the case the user has no if cap 'FlAG Change options' ? Check feedback
 			update_option('flag_options', $flag->options);
 			
 			$gallery_ids  = explode(',', $_POST['TB_imagelist']);
@@ -258,8 +264,9 @@ class flagManageGallery {
 							if ($image) {
 								if ($flag->options['deleteImg']) {
 									@unlink($image->imagePath);
-									@unlink($image->thumbPath);	
-								} 
+									@unlink($image->webimagePath);
+									@unlink($image->thumbPath);
+								}
 								$delete_pic = flagdb::delete_image( $image->pid );
 							}
 						}
@@ -272,6 +279,9 @@ class flagManageGallery {
 					break;
 				case 'copy_meta':
 					flagAdmin::do_ajax_operation( 'copy_metadata' , $_POST['doaction'], __('Copy metadata to image Description','flag') );
+					break;
+				case 'webview_images':
+					flagAdmin::do_ajax_operation( 'webview_image' , $_POST['doaction'], __('Creating images optimized for web','flag') );
 					break;
 			}
 		}

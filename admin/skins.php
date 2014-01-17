@@ -38,7 +38,8 @@ if( isset($_POST['skinzipurl']) ) {
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_AUTOREFERER, true);
 		curl_setopt($ch, CURLOPT_BINARYTRANSFER,true);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($ch, CURLOPT_FILE, $fp);
@@ -170,6 +171,8 @@ if(!empty($flag_options['license_key'])){
 		curl_setopt ($ch, CURLOPT_POST, 1);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt ($ch, CURLOPT_POSTFIELDS, array('check_status'=>$flag_options['license_key']));
+		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 3);
+		curl_setopt ($ch, CURLOPT_TIMEOUT, 10);
 		$status = curl_exec ($ch);
 		curl_close ($ch);
 		if($status === '0'){
@@ -365,6 +368,8 @@ $total_all_skins = count($all_skins);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 		$skins_xml = @simplexml_load_string(curl_exec($ch));
 		curl_close ($ch);
 	}

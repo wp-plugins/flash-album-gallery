@@ -105,57 +105,65 @@ class flagMeta {
 			$meta= array();
 			
 			// taken from WP core
-			$exif = $this->exif_data['EXIF'];
-			if (!empty($exif['FNumber']))
-				$meta['aperture'] = 'F ' . round( $this->exif_frac2dec( $exif['FNumber'] ), 2 );
-			if (!empty($exif['Model']))
-				$meta['camera'] = trim( $exif['Model'] );
-			if (!empty($exif['DateTimeDigitized']))
-				$meta['created_timestamp'] = date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $this->exif_date2ts($exif['DateTimeDigitized']));
-			if (!empty($exif['FocalLength']))
-				$meta['focal_length'] = $this->exif_frac2dec( $exif['FocalLength'] ) . __(' mm','flag');
-			if (!empty($exif['ISOSpeedRatings']))
-				$meta['iso'] = $exif['ISOSpeedRatings'];
-			if (!empty($exif['ExposureTime'])) {
-				 $meta['shutter_speed']  = $this->exif_frac2dec ($exif['ExposureTime']);
-				 $meta['shutter_speed']  =($meta['shutter_speed'] > 0.0 and $meta['shutter_speed'] < 1.0) ? ( '1/' . round( 1 / $meta['shutter_speed'], -1) ) : ($meta['shutter_speed']); 
-				 $meta['shutter_speed'] .=  __(' sec','flag');
-				}
-			//Bit 0 indicates the flash firing status
-			if (!empty($exif['Flash']))
-				$meta['flash'] =  ( $exif['Flash'] & 1 ) ? __('Fired', 'flag') : __('Not fired',' flag');
-	
-			// additional information
-			$exif = $this->exif_data['IFD0'];
-			if (!empty($exif['Model']))
-				$meta['camera'] = $exif['Model'];
-			if (!empty($exif['Make']))
-				$meta['make'] = $exif['Make'];
-			if (!empty($exif['ImageDescription']))
-				$meta['title'] = utf8_encode($exif['ImageDescription']);
-			if (!empty($exif['Orientation']))
-				$meta['Orientation'] = $exif['Orientation'];
-	
-			// this is done by Windows
-			$exif = $this->exif_data['WINXP'];
+			if(isset($this->exif_data['EXIF'])){
+				$exif = $this->exif_data['EXIF'];
+				if (!empty($exif['FNumber']))
+					$meta['aperture'] = 'F ' . round( $this->exif_frac2dec( $exif['FNumber'] ), 2 );
+				if (!empty($exif['Model']))
+					$meta['camera'] = trim( $exif['Model'] );
+				if (!empty($exif['DateTimeDigitized']))
+					$meta['created_timestamp'] = date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $this->exif_date2ts($exif['DateTimeDigitized']));
+				if (!empty($exif['FocalLength']))
+					$meta['focal_length'] = $this->exif_frac2dec( $exif['FocalLength'] ) . __(' mm','flag');
+				if (!empty($exif['ISOSpeedRatings']))
+					$meta['iso'] = $exif['ISOSpeedRatings'];
+				if (!empty($exif['ExposureTime'])) {
+					 $meta['shutter_speed']  = $this->exif_frac2dec ($exif['ExposureTime']);
+					 $meta['shutter_speed']  =($meta['shutter_speed'] > 0.0 and $meta['shutter_speed'] < 1.0) ? ( '1/' . round( 1 / $meta['shutter_speed'], -1) ) : ($meta['shutter_speed']);
+					 $meta['shutter_speed'] .=  __(' sec','flag');
+					}
+				//Bit 0 indicates the flash firing status
+				if (!empty($exif['Flash']))
+					$meta['flash'] =  ( $exif['Flash'] & 1 ) ? __('Fired', 'flag') : __('Not fired',' flag');
+			}
 
-			if (!empty($exif['Title']) && empty($meta['title']))
-				$meta['title'] = utf8_encode($exif['Title']);
-			if (!empty($exif['Author']))
-				$meta['author'] = utf8_encode($exif['Author']);
-			if (!empty($exif['Keywords']))
-				$meta['tags'] = utf8_encode($exif['Keywords']);
-			if (!empty($exif['Subject']))
-				$meta['subject'] = utf8_encode($exif['Subject']);
-			if (!empty($exif['Comments']))
-				$meta['caption'] = utf8_encode($exif['Comments']);
+			// additional information
+			if(isset($this->exif_data['IFD0'])){
+				$exif = $this->exif_data['IFD0'];
+				if (!empty($exif['Model']))
+					$meta['camera'] = $exif['Model'];
+				if (!empty($exif['Make']))
+					$meta['make'] = $exif['Make'];
+				if (!empty($exif['ImageDescription']))
+					$meta['title'] = utf8_encode($exif['ImageDescription']);
+				if (!empty($exif['Orientation']))
+					$meta['Orientation'] = $exif['Orientation'];
+			}
+
+			// this is done by Windows
+			if(isset($this->exif_data['WINXP'])){
+				$exif = $this->exif_data['WINXP'];
+				if (!empty($exif['Title']) && empty($meta['title']))
+					$meta['title'] = utf8_encode($exif['Title']);
+				if (!empty($exif['Author']))
+					$meta['author'] = utf8_encode($exif['Author']);
+				if (!empty($exif['Keywords']))
+					$meta['tags'] = utf8_encode($exif['Keywords']);
+				if (!empty($exif['Subject']))
+					$meta['subject'] = utf8_encode($exif['Subject']);
+				if (!empty($exif['Comments']))
+					$meta['caption'] = utf8_encode($exif['Comments']);
+			}
 							
 			$this->exif_array = $meta;
 		}
 		
 		// return one element if requested	
-		if ($object)
+		if ($object){
+			if(!isset($this->exif_array[$object]))
+				$this->exif_array[$object] = '';
 			return $this->exif_array[$object];
+		}
 				
 		return $this->exif_array;
 	
@@ -214,14 +222,17 @@ class flagMeta {
 			// var_dump($this->iptc_data);
 			$meta = array();
 			foreach ($iptcTags as $key => $value) {
-				if ($this->iptc_data[$key])
+				if (isset($this->iptc_data[$key]))
 					$meta[$value] = trim(utf8_encode(implode(", ", $this->iptc_data[$key])));
 			}
 			$this->iptc_array = $meta;
 		}
 		// return one element if requested
-		if ($object)
+		if ($object){
+			if(!isset($this->iptc_array[$object]))
+				$this->iptc_array[$object] = '';
 			return $this->iptc_array[$object];
+		}
 		return $this->iptc_array;
 	}
 
@@ -311,7 +322,8 @@ class flagMeta {
 			} // foreach
 			
 			// cut off the useless tags
-			$xmlarray = $xmlarray['x:xmpmeta']['rdf:RDF']['rdf:Description'];
+			if(isset($xmlarray['x:xmpmeta']))
+				$xmlarray = $xmlarray['x:xmpmeta']['rdf:RDF']['rdf:Description'];
 			
 			// --------- Some values from the XMP format--------- //
 			$xmpTags = array (
@@ -330,7 +342,7 @@ class flagMeta {
 
 			foreach ($xmpTags as $key => $value) {
 				// if the kex exist
-				if ($xmlarray[$key]) {
+				if (isset($xmlarray[$key]) && $xmlarray[$key]) {
 					switch ($key) {
 						case 'xap:CreateDate' :
 						case 'xap:ModifyDate' :
@@ -343,8 +355,11 @@ class flagMeta {
 			}
 		}
 		// return one element if requested
-		if ($object)
+		if ($object){
+			if(!isset($this->xmp_array[$object]))
+				$this->xmp_array[$object] = '';
 			return $this->xmp_array[$object];
+		}
 		return $this->xmp_array;
 	}
 
@@ -422,7 +437,7 @@ class flagMeta {
 		'flash'				=> __('Flash','flag')
 		);
 		
-		if ($tagnames[$key]) $key = $tagnames[$key];
+		if (isset($tagnames[$key])) $key = $tagnames[$key];
 		
 		return($key);
 	}
@@ -430,7 +445,7 @@ class flagMeta {
 	function get_date_time() {
 		// get exif - data
 		if ($this->exif_data) {
-			$date_time = $this->exif_data['EXIF']['DateTimeDigitized'];
+			$date_time = isset($this->exif_data['EXIF']['DateTimeDigitized'])? $this->exif_data['EXIF']['DateTimeDigitized'] : null;
 			// if we didn't get the correct exif value we take filetime
 			if ($date_time == null)
 				$date_time = $this->exif_data['FILE']['FileDateTime'];

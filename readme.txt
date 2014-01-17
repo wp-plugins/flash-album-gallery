@@ -3,7 +3,7 @@ Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
 Tags: admin, flash, fullscreen gallery, gallery, image, images, image gallery, mp3, music, page, photo, slider, plugin, slideshow, video, widget, iphone gallery, best gallery, portfolio, banner rotator
 Requires at least: 3.0
-Tested up to: 3.6.2
+Tested up to: 3.8.*
 Stable tag: trunk
 
 Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
@@ -52,6 +52,17 @@ New plugin:
 
 
 == Changelog ==
+
+= v4.00 - 17.01.2014 =
+* added ability to set thumb size while upload
+* added optimized image size for mobile devices
+* added ability to turn off optimized images for mobile devices
+* fixed strict warnings
+* added hooks when creating thumbs or resizing images
+* fixed alternative gallery for firefox based browsers
+* added action for creating optimized images on Manage Galleries page and on Edit Gallery page
+* show sizes for thumbnails and optimized images
+* small fixes and improvements
 
 = v3.20 - 15.10.2013 =
 * Fix alternative gallery

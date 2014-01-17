@@ -12,6 +12,7 @@ class flagImage{
 	var $imageURL		=	'';			// URL Path to the image
 	var $thumbURL		=	'';			// URL Path to the thumbnail
 	var $imagePath		=	'';			// Server Path to the image
+	var $webimagePath		=	'';			// Server Path to the image
 	var $thumbPath		=	'';			// Server Path to the thumbnail
 	var $href			=	'';			// A href link code
 	
@@ -61,6 +62,7 @@ class flagImage{
 		$this->imageURL		= get_option ('siteurl') . '/' . $this->path . '/' . $this->filename;
 		$this->thumbURL 	= get_option ('siteurl') . '/' . $this->path . '/thumbs/thumbs_' . $this->filename;
 		$this->imagePath	= WINABSPATH.$this->path . '/' . $this->filename;
+		$this->webimagePath	= WINABSPATH.$this->path . '/webview/' . $this->filename;
 		$this->thumbPath	= WINABSPATH.$this->path . '/thumbs/thumbs_' . $this->filename;
 		$this->meta_data	= unserialize($this->meta_data);
 		

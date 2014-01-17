@@ -133,11 +133,13 @@ class FlAG_shortcodes {
 			wp_print_scripts('flagscroll');
 		}
 		if ( $this->flag_fancybox ) {
+			wp_register_style('fancybox', plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css') );
+			wp_register_script('fancybox', plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js'), array(), '1.3.4', true );
 			wp_print_styles('fancybox');
 			wp_print_scripts('fancybox');
 		}
 		if ( $this->flag_add_script ) {
-			wp_register_script('flagscript', plugins_url('/admin/js/script.js', dirname(__FILE__)), array('jquery'), '1.0', true );
+			wp_register_script('flagscript', plugins_url('/admin/js/script.js', dirname(__FILE__)), array('jquery'), '1.1', true );
 			wp_print_scripts('flagscript');
 			wp_register_style('flagallery', plugins_url('/admin/css/flagallery.css', dirname(__FILE__)) );
 			wp_print_styles('flagallery');

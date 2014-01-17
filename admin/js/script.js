@@ -57,7 +57,7 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 			jQuery('.flashalbum').css('height','auto');
 			jQuery('body#fullwindow').css('overflow','auto');
 			jQuery('.flag_alternate').each(function(i){
-				jQuery(this).show();
+				jQuery(this).css({display: 'block'});
 				var catMeta = jQuery('.flagCatMeta',this).hide().get();
 				for(j=0; j<catMeta.length; j++) {
 					var catName = jQuery(catMeta[j]).find('h4').text();
@@ -77,7 +77,7 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 				if(!jQuery(this).hasClass('active')) {
 					var catId = jQuery(this).attr('href');
 					jQuery(this).addClass('active').siblings().removeClass('active');
-					jQuery('.flag_alternate '+catId).show().siblings('.flagcategory').hide();
+					jQuery('.flag_alternate '+catId).css({display: 'block'}).siblings('.flagcategory').hide();
 					alternate_flag_e(catId, ExtendVar);
 				}
 				return false;
@@ -96,7 +96,7 @@ function alternate_flag_e(t, ExtendVar){
 			d = d.replace(/\]</g, '" /><');
 			jQuery(this).addClass('loaded').html(d);
 		}
-		jQuery(this).show();
+		jQuery(this).css({display: 'block'});
 		if(ExtendVar == 'photoswipe') {
 			var
 				showDescr, longDescription, imgdescr, psImgCaption, curel,

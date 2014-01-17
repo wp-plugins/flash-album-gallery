@@ -278,6 +278,7 @@ jQuery(document).ready( function() {
 	<div class="alignleft actions">
 	<select id="bulkaction" name="bulkaction" class="alignleft">
 		<option value="no_action" ><?php _e("No action",'flag')?></option>
+		<option value="webview_images" ><?php _e("Create images optimized for web",'flag'); ?></option>
 		<option value="new_thumbnail" ><?php _e("Create new thumbnails",'flag')?></option>
 		<option value="resize_images" ><?php _e("Resize images",'flag')?></option>
 		<option value="delete_images" ><?php _e("Delete images",'flag')?></option>
@@ -386,11 +387,19 @@ if($picturelist) {
 							</a></strong>
 							<br /><?php echo $date; ?>
 							<?php if ( !empty($picture->meta_data['width']) ) {
-								echo '<br />'.__('Size: ', 'flag').$picture->meta_data['width'].'x'.$picture->meta_data['height'].' '.__('pixel', 'flag');
+								echo '<br />'.__('Image size: ', 'flag').$picture->meta_data['width'].'x'.$picture->meta_data['height'];
 							} else {
 								$imgpath = WINABSPATH.$picture->path."/".$picture->filename;
 								$img = @getimagesize($imgpath); 
-								if($img) echo '<br />'.__('Size: ', 'flag').$img[0].'x'.$img[1].' '.__('pixel', 'flag');
+								if($img) echo '<br />'.__('Image size: ', 'flag').$img[0].'x'.$img[1];
+							} ?>
+							<?php if ( !empty($picture->meta_data['thumbnail']) ) {
+								echo '<br />'.__('Thumbnail size: ', 'flag').$picture->meta_data['thumbnail']['width'].'x'.$picture->meta_data['thumbnail']['height'];
+							} ?>
+							<?php if ( !empty($picture->meta_data['webview']) ) {
+								echo '<br />'.__('Optimized size: ', 'flag').$picture->meta_data['webview'][0].'x'.$picture->meta_data['webview'][1];
+							} else {
+								echo '<br />'.__('Optimized size: ', 'flag').__('not optimized ', 'flag');
 							} ?>
 							<p>
 							<?php

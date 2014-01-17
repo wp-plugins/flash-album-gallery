@@ -26,6 +26,7 @@ if(isset($_REQUEST['account'])){
 			$image = $flagdb->find_image( $pid );
 			if ($image) {
 				@unlink($image->imagePath);
+				@unlink($image->webimagePath);
 				@unlink($image->thumbPath);
 				$wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = '{$image->pid}'");
 			}
@@ -39,10 +40,10 @@ if(isset($_REQUEST['account'])){
 			if ( $out ) {
 				if(@fwrite( $out, $GLOBALS[ 'HTTP_RAW_POST_DATA' ] )){
 
-					$alttext = isset($_GET['alttext'])? $wpdb->escape(flagallery_utf8_urldecode($_GET['alttext'])) : '';
-					$description = isset($_GET['description'])? $wpdb->escape(flagallery_utf8_urldecode($_GET['description'])) : '';
+					$alttext = isset($_GET['alttext'])? esc_sql(flagallery_utf8_urldecode($_GET['alttext'])) : '';
+					$description = isset($_GET['description'])? esc_sql(flagallery_utf8_urldecode($_GET['description'])) : '';
 					$exclude = intval($account->exclude);
-					$location = $wpdb->escape($account->location);
+					$location = esc_sql($account->location);
 
 					$wpdb->query( "INSERT INTO `{$wpdb->flagpictures}` (`galleryid`, `filename`, `alttext`, `description`, `exclude`, `location`) VALUES ('$gid', '$filename', '$alttext', '$description', '$exclude', '$location')" );
 
@@ -58,9 +59,7 @@ if(isset($_REQUEST['account'])){
 					do_action('flag_added_new_image', $image);
 
 					$thumb = flagAdmin::create_thumbnail($pic_id);
-					if($thumb == '1') {
-						do_action('flag_thumbnail_created', $picture);
-					} else {
+					if($thumb != '1') {
 						fclose( $out );
 						die('{"status":"thumb_error: '.$thumb.'"}');
 					}
@@ -75,8 +74,21 @@ if(isset($_REQUEST['account'])){
 				die('{"status":"fopen_error"}');
 			}
 		}
-		$r['data'] = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, UNIX_TIMESTAMP(imagedate) AS imagedate, UNIX_TIMESTAMP(modified) AS modified, sortorder, exclude, location, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE galleryid = '{$gid}' ORDER BY pid DESC");
+		$r['data'] = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, UNIX_TIMESTAMP(imagedate) AS imagedate, UNIX_TIMESTAMP(modified) AS modified, sortorder, exclude, location, hitcounter, total_value, total_votes, meta_data FROM $wpdb->flagpictures WHERE galleryid = '{$gid}' ORDER BY pid DESC");
 		$r['data'] = stripslashes_deep($r['data']);
+
+		$i = 0;
+		foreach($r['data'] as $image_data){
+			$meta = maybe_unserialize($image_data->meta_data);
+			if(isset($meta['webview']) && !empty($meta['webview'])){
+				$r['data'][$i]->webviewfilename = '/webview/'. $image_data->filename;
+			} else {
+				$r['data'][$i]->webviewfilename = '';
+			}
+			$r['data'][$i]->thumbfilename = '/thumbs/thumbs_'. $image_data->filename;
+			unset($r['data'][$i]->meta_data);
+			$i++;
+		}
 
 		echo json_encode($r);
 		die();
@@ -87,8 +99,21 @@ if(isset($_REQUEST['account'])){
 		if ($image) {
 			$flagdb->update_picture($args);
 			$gid = intval($args['galleryid']);
-			$r['data'] = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, UNIX_TIMESTAMP(imagedate) AS imagedate, UNIX_TIMESTAMP(modified) AS modified, sortorder, exclude, location, hitcounter, total_value, total_votes FROM $wpdb->flagpictures WHERE galleryid = '{$gid}' ORDER BY pid DESC");
+			$r['data'] = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, UNIX_TIMESTAMP(imagedate) AS imagedate, UNIX_TIMESTAMP(modified) AS modified, sortorder, exclude, location, hitcounter, total_value, total_votes, meta_data FROM $wpdb->flagpictures WHERE galleryid = '{$gid}' ORDER BY pid DESC");
 			$r['data'] = stripslashes_deep($r['data']);
+
+			$i = 0;
+			foreach($r['data'] as $image_data){
+				$meta = maybe_unserialize($image_data->meta_data);
+				if(isset($meta['webview']) && !empty($meta['webview'])){
+					$r['data'][$i]->webviewfilename = '/webview/'. $image_data->filename;
+				} else {
+					$r['data'][$i]->webviewfilename = '';
+				}
+				$r['data'][$i]->thumbfilename = '/thumbs/thumbs_'. $image_data->filename;
+				unset($r['data'][$i]->meta_data);
+				$i++;
+			}
 
 			echo json_encode($r);
 			die();
@@ -128,8 +153,15 @@ if(isset($_REQUEST['account'])){
 			$gid = (int) $gallery['gid'];
 			$gallery['title'] = htmlspecialchars_decode($gallery['title'], ENT_QUOTES);
 			$gallery['galdesc'] = htmlspecialchars_decode($gallery['galdesc'], ENT_QUOTES);
-			$thepictures = $wpdb->get_var("SELECT filename FROM $wpdb->flagpictures WHERE galleryid = '{$gid}' ORDER BY pid DESC");
-			$r['data'][] = $gallery + array( 'thumbnail' => $thepictures );
+			$wp_site_url = explode('//', site_url(), 2);
+			$wp_site_url = explode('/', $wp_site_url[1], 2);
+			$wp_folder = (isset($wp_site_url[1]) && !empty($wp_site_url[1]))? trailingslashit($wp_site_url[1]) : '';
+
+			$gallery['path'] = $wp_folder . $gallery['path'];
+			$preview = $wpdb->get_var("SELECT filename FROM {$wpdb->flagpictures} WHERE galleryid = '{$gid}' ORDER BY pid DESC");
+			$picturesCounter = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->flagpictures} WHERE galleryid = '{$gid}'");
+			$picturesCounter = intval($picturesCounter);
+			$r['data'][] = $gallery + array( 'thumbnail' => $preview, 'thumbfilename' => '/thumbs/thumbs_'.$preview, 'counter' => $picturesCounter );
 		}
 	}
 	$r['data'] = stripslashes_deep($r['data']);

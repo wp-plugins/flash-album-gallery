@@ -17,7 +17,10 @@ function flag_admin_options()  {
 		if (!empty($options)) {
 			foreach ($options as $option) {
 				$option = trim($option);
-				$value = trim($_POST[$option]);
+				if(isset($_POST[$option]))
+					$value = trim($_POST[$option]);
+				else
+					$value = false;
 				$flag->options[$option] = $value;
 			}
 			if(isset($_POST['galleryPath'])) {
@@ -41,6 +44,8 @@ function flag_admin_options()  {
 			curl_setopt ($ch, CURLOPT_POST, 1);
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt ($ch, CURLOPT_POSTFIELDS, array('access_key'=>$_POST['access_key'], 'access_url'=>$_POST['access_url'], 'license_key'=>$_POST['license_key']));
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 			$access_key_return = curl_exec ($ch);
 			curl_close ($ch);
 		} else {
@@ -160,7 +165,7 @@ jQuery(document).ready(function() {
 	<div id="imageoptions" class="cptab">
 		<form name="generaloptions" method="post">
 		<?php wp_nonce_field('flag_settings'); ?>
-			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,deepLinks,useMediaRSS,jAlterGal,jAlterGalScript,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgWidth,imgHeight,imgQuality,albSort,albSortDir,albPerPage,galSort,galSortDir,disableViews" />
+			<input type="hidden" name="page_options" value="galleryPath,flashWidth,flashHeight,deleteImg,deepLinks,useMediaRSS,optimized_imgs,jAlterGal,jAlterGalScript,BarsBG,CatBGColor,CatBGColorOver,CatColor,CatColorOver,ThumbBG,ThumbLoaderColor,TitleColor,DescrColor,imgQuality,albSort,albSortDir,albPerPage,galSort,galSortDir,disableViews" />
 			<h2><?php _e('Image Gallery Options','flag'); ?></h2>
 			<h3><?php _e('General Options','flag'); ?></h3>
 			<table class="form-table flag-options" style="width: auto; white-space: nowrap;">
@@ -194,13 +199,13 @@ jQuery(document).ready(function() {
 			<h3><?php _e('Image settings','flag'); ?></h3>
 			<table class="form-table flag-options" style="width: auto; white-space: nowrap;">
 				<tr valign="top">
-					<th scope="row" width="200"><label><?php _e('Resize Images','flag'); ?></label><br /><small>(Manage Gallery -> 'Resize Images' action)</small></th>
-					<td><input type="text" size="5" name="imgWidth" value="<?php echo $flag_options['imgWidth']; ?>" /> x <input type="text" size="5" name="imgHeight" value="<?php echo $flag_options['imgHeight']; ?>" />
-						<span class="setting-description"><?php _e('Width x Height (in pixel). Flash Album Gallery will keep ratio size','flag'); ?></span></td>
+					<th scope="row" width="200"><label><?php _e('Use optimized images for mobile browsers','flag'); ?></label><br /><small>(Manage Gallery -> 'Optimize images for web' action)</small></th>
+					<td><input type="checkbox" name="optimized_imgs" value="1" <?php checked('1', $flag_options['optimized_imgs']); ?> />
+						<span class="setting-description"><?php _e('Optimized images loads faster, save traffic and make page more lightweight for browser','flag'); ?></span></td>
 				</tr>
 				<tr valign="top">
 					<th align="left"><?php _e('Image quality','flag'); ?></th>
-					<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $flag_options['imgQuality']; ?>" /> %</td>
+					<td><input type="text" size="3" maxlength="3" name="imgQuality" value="<?php echo $flag_options['imgQuality']; ?>" /> % &nbsp;&nbsp;<span class="setting-description"><?php _e('Default: 85%','flag'); ?></span></td>
 				</tr>
 			</table>
 

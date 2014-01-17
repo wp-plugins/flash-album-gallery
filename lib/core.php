@@ -72,13 +72,13 @@ class flagGallery {
 	}
 
 	/**
-	* flagGallery::get_thumbnail_folder()
+	* flagGallery::create_webview_folder()
 	* 
 	* @param mixed $gallerypath
 	* @param bool $include_Abspath
 	* @return string $foldername
 	*/
-	static function create_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
+	static function create_webview_folder($gallerypath, $include_Abspath = TRUE) {
 		if (!$include_Abspath) {
 			$gallerypath = WINABSPATH . $gallerypath;
 		}
@@ -87,15 +87,54 @@ class flagGallery {
 			return FALSE;
 		}
 		
+		if (is_dir($gallerypath . '/webview/')) {
+			return '/webview/';
+		}
+		
+		if (is_admin()) {
+			if (!is_dir($gallerypath . '/webview/')) {
+				if ( !wp_mkdir_p($gallerypath . '/webview/') ) {
+					if (SAFE_MODE) {
+						flagAdmin::check_safemode($gallerypath . '/webview/');
+					} else {
+						flagGallery::show_error(__('Unable to create directory ', 'flag') . $gallerypath . '/webview !');
+					}
+					return FALSE;
+				}
+
+				return '/webview/';
+			}
+		}
+		
+		return FALSE;
+		
+	}
+
+	/**
+	* flagGallery::get_thumbnail_folder()
+	*
+	* @param mixed $gallerypath
+	* @param bool $include_Abspath
+	* @return string $foldername
+	*/
+	static function create_thumbnail_folder($gallerypath, $include_Abspath = TRUE) {
+		if (!$include_Abspath) {
+			$gallerypath = WINABSPATH . $gallerypath;
+		}
+
+		if (!file_exists($gallerypath)) {
+			return FALSE;
+		}
+
 		if (is_dir($gallerypath . '/thumbs/')) {
 			return '/thumbs/';
 		}
-		
+
 		if (is_admin()) {
 			if (!is_dir($gallerypath . '/thumbs/')) {
 				if ( !wp_mkdir_p($gallerypath . '/thumbs/') ) {
 					if (SAFE_MODE) {
-						flagAdmin::check_safemode($gallerypath . '/thumbs/');	
+						flagAdmin::check_safemode($gallerypath . '/thumbs/');
 					} else {
 						flagGallery::show_error(__('Unable to create directory ', 'flag') . $gallerypath . '/thumbs !');
 					}
@@ -104,9 +143,9 @@ class flagGallery {
 				return '/thumbs/';
 			}
 		}
-		
+
 		return FALSE;
-		
+
 	}
 
 	/**
@@ -227,9 +266,12 @@ class flagGallery {
 			$filepart['filename'] = substr($filepart['basename'],0 ,strlen($filepart['basename']) - (strlen($filepart['extension']) + 1) );
 		
 		$filepart['filename'] = sanitize_title_with_dashes( $filepart['filename'] );
-		
+
+		if ( empty($filepart['filename']) )
+			$filepart['filename'] = str_replace(array(' ',':'), array('_',''), current_time('mysql'));
+
 		//extension jpeg will not be recognized by the slideshow, so we rename it
-		$filepart['extension'] = ($filepart['extension'] == 'jpeg') ? 'jpg' : $filepart['extension'];
+		$filepart['extension'] = (empty($filepart['extension']) || $filepart['extension'] == 'jpeg') ? 'jpg' : $filepart['extension'];
 		
 		//combine the new file name
 		$filepart['basename'] = $filepart['filename'] . '.' . $filepart['extension'];
