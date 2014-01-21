@@ -271,7 +271,7 @@ class flagGallery {
 			$filepart['filename'] = str_replace(array(' ',':'), array('_',''), current_time('mysql'));
 
 		//extension jpeg will not be recognized by the slideshow, so we rename it
-		$filepart['extension'] = (empty($filepart['extension']) || $filepart['extension'] == 'jpeg') ? 'jpg' : $filepart['extension'];
+		$filepart['extension'] = (empty($filepart['extension']) || $filepart['extension'] == 'jpeg') ? 'jpg' : strtolower($filepart['extension']);
 		
 		//combine the new file name
 		$filepart['basename'] = $filepart['filename'] . '.' . $filepart['extension'];

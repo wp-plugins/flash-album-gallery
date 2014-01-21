@@ -918,8 +918,8 @@ class flagAdmin{
 					$filename = $filepart['basename'];
 						
 					// check for allowed extension and if it's an image file
-					$ext = array('jpg', 'png', 'gif'); 
-					if ( !in_array($filepart['extension'], $ext) || !@getimagesize($temp_file) ){ 
+					$ext = array('jpg', 'jpeg', 'png', 'gif');
+					if ( !in_array(strtolower($filepart['extension']), $ext) || !@getimagesize($temp_file) ){
 						flagGallery::show_error('<strong>' . $imagefiles['name'][$key] . ' </strong>' . __('is no valid image file!','flag'));
 						continue;
 					}
@@ -941,9 +941,11 @@ class flagAdmin{
 					
 					// save temp file to gallery
 					if ( !@move_uploaded_file($temp_file, $dest_file) ){
-						flagGallery::show_error(__('Error, the file could not moved to : ','flag') . $dest_file);
-						flagAdmin::check_safemode( $gallery->abspath );		
-						continue;
+						if( !file_exists($dest_file)){
+							flagGallery::show_error(__('Error, the file could not moved to : ','flag') . $dest_file);
+							flagAdmin::check_safemode( $gallery->abspath );
+							continue;
+						}
 					} 
 					if ( !flagAdmin::chmod($dest_file) ) {
 						flagGallery::show_error(__('Error, the file permissions could not set','flag'));
@@ -1006,8 +1008,10 @@ class flagAdmin{
 
 		// check for allowed extension
 		$ext = array('jpeg', 'jpg', 'png', 'gif'); 
-		if (!in_array($filepart['extension'], $ext))
-			return $filename . ' '. __('is no valid image file!','flag');
+		if (!in_array(strtolower($filepart['extension']), $ext)){
+			if(!@getimagesize($temp_file))
+				return $filename . ' '. __('is no valid image file!','flag');
+		}
 
 		// get the path to the gallery
 		$gallerypath = $wpdb->get_var($wpdb->prepare("SELECT path FROM {$wpdb->flaggallery} WHERE gid = %d ", $galleryID));
@@ -1029,9 +1033,11 @@ class flagAdmin{
 				
 		// save temp file to gallery
 		if ( !@move_uploaded_file($temp_file, $dest_file) ){
-			flagAdmin::check_safemode(WINABSPATH.$gallerypath);	
-			return __('Error, the file could not moved to : ','flag').$dest_file;
-		} 
+			if( !file_exists($dest_file)){
+				flagAdmin::check_safemode(WINABSPATH.$gallerypath);
+				return __('Error, the file could not moved to : ','flag').$dest_file;
+			}
+		}
 		
 		if ( !flagAdmin::chmod($dest_file) )
 			return __('Error, the file permissions could not set','flag');
