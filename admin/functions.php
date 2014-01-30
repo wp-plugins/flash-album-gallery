@@ -120,7 +120,7 @@ class flagAdmin{
 
 			if ($result) {
 				$message  = __('Gallery \'%1$s\' successfully created.<br/>You can show this gallery with the tag %2$s.<br/>','flag');
-				$message  = sprintf($message, esc_html(stripcslashes($gallery)), '[flagallery gid=' . $gallery_id . ']');
+				$message  = sprintf($message, esc_html(stripcslashes($gallerytitle)), '[flagallery gid=' . $gallery_id . ']');
 				$message .= '<a href="' . admin_url() . 'admin.php?page=flag-manage-gallery&mode=edit&gid=' . $gallery_id . '" >';
 				$message .= __('Edit gallery','flag');
 				$message .= '</a>';
