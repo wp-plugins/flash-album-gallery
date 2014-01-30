@@ -31,6 +31,7 @@ if(isset($_REQUEST['account'])){
 				$wpdb->query("DELETE FROM $wpdb->flagpictures WHERE pid = '{$image->pid}'");
 			}
 		}
+		// old app
 		if(isset($_GET['account']) && isset($GLOBALS[ 'HTTP_RAW_POST_DATA' ])){
 			$path = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = $gid");
 			$file = ABSPATH . trailingslashit($path) . str_replace(array(' ',':'), array('_',''), current_time('mysql')) . '.jpg';
@@ -72,6 +73,43 @@ if(isset($_REQUEST['account'])){
 				fclose( $out );
 			} else {
 				die('{"status":"fopen_error"}');
+			}
+		}
+		// new app
+		if(isset($_POST['account']) && isset($_FILES['userfile']['name'])){
+			$path = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = $gid");
+			$file = ABSPATH . trailingslashit($path) . basename( $_FILES['userfile']['name']);
+			$filename = basename( $_FILES['userfile']['name']);
+			// Open temp file
+			if ( @move_uploaded_file($_FILES['userfile']['tmp_name'], $file ) ) {
+
+				$alttext = esc_sql($account->alttext);
+				$description = esc_sql($account->description);
+				$exclude = intval($account->exclude);
+				$location = esc_sql($account->location);
+
+				$wpdb->query( "INSERT INTO `{$wpdb->flagpictures}` (`galleryid`, `filename`, `alttext`, `description`, `exclude`, `location`) VALUES ('$gid', '$filename', '$alttext', '$description', '$exclude', '$location')" );
+
+				// and give me the new id
+				$pic_id = (int) $wpdb->insert_id;
+
+				@ require_once (dirname(dirname(__FILE__)). '/admin/functions.php');
+				// add the metadata
+				flagAdmin::import_MetaData($pic_id);
+
+				// action hook for post process after the image is added to the database
+				$image = array( 'id' => $pic_id, 'filename' => $filename, 'galleryID' => $gid);
+				do_action('flag_added_new_image', $image);
+
+				$thumb = flagAdmin::create_thumbnail($pic_id);
+				if($thumb != '1') {
+					fclose( $out );
+					die('{"status":"thumb_error: '.$thumb.'"}');
+				}
+
+			} else {
+				@unlink($_FILES['userfile']['tmp_name']);
+				die('{"status":"fwrite_error"}');
 			}
 		}
 		$r['data'] = $wpdb->get_results("SELECT pid, galleryid, filename, description, alttext, link, UNIX_TIMESTAMP(imagedate) AS imagedate, UNIX_TIMESTAMP(modified) AS modified, sortorder, exclude, location, hitcounter, total_value, total_votes, meta_data FROM $wpdb->flagpictures WHERE galleryid = '{$gid}' ORDER BY pid DESC");
@@ -165,6 +203,7 @@ if(isset($_REQUEST['account'])){
 		}
 	}
 	$r['data'] = stripslashes_deep($r['data']);
+	$r['flag_version'] = get_option('flagVersion');
 
 	echo json_encode($r);
 	die();
