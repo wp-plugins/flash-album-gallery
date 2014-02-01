@@ -613,5 +613,3 @@ function flag_manage_gallery_columns() {
 
 	return $gallery_columns;
 }
-
-?>

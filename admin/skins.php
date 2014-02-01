@@ -518,4 +518,3 @@ $total_all_skins = count($all_skins);
 
 
 </div>
-<?php ?>

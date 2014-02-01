@@ -120,4 +120,4 @@ $xmpdata = $meta->get_XMP();
 	?>
 		</table>
 	</fieldset>
-	<?php  } ?>
+	<?php  }

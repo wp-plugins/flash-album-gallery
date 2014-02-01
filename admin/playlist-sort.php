@@ -111,4 +111,3 @@ if(count($items_a)) {
 
 <?php
 }
-?>

@@ -193,5 +193,3 @@ function flag_b_playlist_delete($playlist) {
 		}
 	}
 }
-
-?>

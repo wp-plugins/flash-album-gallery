@@ -461,4 +461,3 @@ function get_phpinfo() {
 	    
 	return $phpinfo;
 }
-?>

@@ -190,6 +190,3 @@ function short_code(galleries,skin,wmode,playlist) {
     </table>
 </form>
 </div>
-<?php
-
-?>

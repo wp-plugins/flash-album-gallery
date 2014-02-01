@@ -119,4 +119,4 @@ jQuery(document).ready(function() {
 		<div class="clear"> &nbsp; </div>
 		<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
 	</div></form>
-<?php } ?>
+<?php }

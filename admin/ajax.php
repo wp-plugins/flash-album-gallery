@@ -269,5 +269,3 @@ function flag_ajax_file_browser() {
 
     die();
 }
-
-?>

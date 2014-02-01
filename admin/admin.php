@@ -295,5 +295,3 @@ function flag_wpmu_site_admin() {
 			
 	return false;
 }
-
-?>

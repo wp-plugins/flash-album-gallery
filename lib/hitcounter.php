@@ -76,4 +76,3 @@ function flag_update_counter($upd) {
 	}
 
 }
-?>

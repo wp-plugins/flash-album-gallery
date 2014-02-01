@@ -34,4 +34,3 @@ $thumb->show();
 $thumb->destruct();
 
 exit;
-?>

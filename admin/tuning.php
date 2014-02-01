@@ -56,4 +56,3 @@ function flag_tune($show_error=true, $skins_reset=false) {
 	}
 	return true;
 }
-?>

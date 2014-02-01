@@ -133,4 +133,3 @@ class flag_swfobject {
 	
 }
 endif;
-?>

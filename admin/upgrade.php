@@ -162,5 +162,3 @@ function flag_add_sql_column($table_name, $column_name, $create_ddl) {
 	return false;
 }
 
-
-?>

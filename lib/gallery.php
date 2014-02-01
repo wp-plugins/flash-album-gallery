@@ -85,5 +85,3 @@ foreach ( $gID as $galleryID ) {
   }
 }
 	echo "</gallery>\n";
-
-?>

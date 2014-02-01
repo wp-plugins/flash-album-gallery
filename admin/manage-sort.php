@@ -150,4 +150,3 @@ if($picturelist) {
 
 <?php
 }
-?>

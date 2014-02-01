@@ -508,4 +508,3 @@ if(!function_exists('sanitize_flagname')){
 		return $filename;
 	}
 }
-?>

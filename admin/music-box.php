@@ -527,4 +527,4 @@ if($musiclist) {
 		</form>
 	</div>
 	<!-- /#new_playlist -->	
-<?php } ?>
+<?php }

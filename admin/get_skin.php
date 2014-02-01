@@ -138,5 +138,3 @@ function get_skins($skin_folder='', $type='') {
 
 	return $flag_skins;
 }
-
-?>

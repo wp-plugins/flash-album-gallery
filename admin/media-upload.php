@@ -231,4 +231,3 @@ function media_upload_flag_form() {
 
 <?php
 }
-?>

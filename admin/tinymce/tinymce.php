@@ -129,6 +129,3 @@ class add_flag_button {
 
 // Call it now
 $tinymce_button = new add_flag_button ();
-
-
-?>

@@ -139,5 +139,3 @@ function wp_install_skin_local_package($package, $feedback = '') {
 	//Return the skin files name.
 	return  $skins_dir.$folder . '/';
 }
-
-?>

@@ -565,5 +565,3 @@ function flag_set_capability($lowest_role, $capability){
 	}
 	
 }
-
-?>

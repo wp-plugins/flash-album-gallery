@@ -35,5 +35,3 @@ if(isset($arr['properties_skin']) && !empty($arr['properties_skin'])) {
 } else {
 	echo '0';
 }
-
-?>

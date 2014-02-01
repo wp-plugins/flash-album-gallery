@@ -37,4 +37,3 @@ if ($xmpdata) {
 				$makedescription .= '<b>'.$meta->i8n_name($key)."</b> ".$value."<br>";
 			}
 }
-?>

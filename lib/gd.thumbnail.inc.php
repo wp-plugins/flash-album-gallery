@@ -759,4 +759,3 @@ class flag_Thumbnail {
         return true;
     }
 }
-?>

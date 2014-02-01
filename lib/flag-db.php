@@ -730,4 +730,3 @@ if ( ! isset($GLOBALS['flagdb']) ) {
     unset($GLOBALS['flagdb']);
     $GLOBALS['flagdb'] = new flagdb();
 }
-?>

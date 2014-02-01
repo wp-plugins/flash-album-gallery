@@ -337,7 +337,3 @@ function flag_uninstall() {
 	flag_remove_capability("FlAG Manage banners");
 	flag_remove_capability("FlAG Facebook page");
 }
-
-
-
-?>

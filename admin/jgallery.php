@@ -143,4 +143,3 @@ foreach ( $gID as $galID ) {
 $xml['alt'] .= '</div>';
 $d = array('properties'=>$data) + $c + $musicData;
 $xml['json'] = json_encode($d);
-?>

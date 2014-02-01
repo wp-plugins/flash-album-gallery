@@ -268,6 +268,3 @@ function fb_url(galleries,skin,h,l) {
     </table>
 </fieldset></form>
 </div>
-<?php
-
-?>

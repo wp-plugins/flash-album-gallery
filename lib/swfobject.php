@@ -502,5 +502,3 @@ function get_include_contents($filename, $galleryID, $skin, $skinID, $width, $he
 	}
 	return false;
 }
-
-?>

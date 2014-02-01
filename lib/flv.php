@@ -27,4 +27,3 @@ if(isset($_GET['vID'])) {
 } else {
 	echo 'no such file ID';
 }
-?>

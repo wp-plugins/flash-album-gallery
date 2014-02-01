@@ -706,6 +706,3 @@ function flagMusicWidget($xml, $w = '100%', $h = '200', $skin = 'music_default')
 	echo flagMusicWidget::render_music($xml, $w, $h, $skin);
 
 }
-
-
-?>

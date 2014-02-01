@@ -549,4 +549,4 @@ if($bannerlist) {
 		</form>
 	</div>
 	<!-- /#new_playlist -->	
-<?php } ?>
+<?php }

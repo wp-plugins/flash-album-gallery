@@ -377,4 +377,3 @@ if($gallerylist) {
 
 <?php
 } 
-?>

@@ -115,5 +115,3 @@ function flag_skin_options() {
 	}
 	fclose($fp);
 }
-
-?>

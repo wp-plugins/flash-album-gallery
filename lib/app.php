@@ -1,4 +1,7 @@
 <?php
+//ini_set( 'display_errors', '1' );
+//ini_set( 'error_reporting', E_ALL );
+
 // include the flag function
 @ require_once (dirname(dirname(__FILE__)). '/flag-config.php');
 
@@ -7,7 +10,7 @@ if(isset($_REQUEST['account'])){
 	global $wpdb, $flagdb;
 	$account = json_decode(stripslashes($_REQUEST['account']));
 	$flag_options = get_option ('flag_options');
-	if($account->access_key != $flag_options['access_key']){ die('{"status":"key_error"}'); }
+	if(empty($flag_options['access_key']) || $account->access_key != $flag_options['access_key']){ die('{"status":"key_error"}'); }
 
 	$current_plugins = get_option('active_plugins', array());
 	if (!in_array('flash-album-gallery/flag.php', (array) $current_plugins)) {

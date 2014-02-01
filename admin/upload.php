@@ -46,5 +46,3 @@ include_once (FLAG_ABSPATH. 'admin/functions.php');
 $galleryID = (int) $_POST['galleryselect'];
 
 echo flagAdmin::swfupload_image($galleryID);
-
-?>

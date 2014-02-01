@@ -449,4 +449,4 @@ if($videolist) {
 		</form>
 	</div>
 	<!-- /#new_playlist -->	
-<?php } ?>
+<?php }

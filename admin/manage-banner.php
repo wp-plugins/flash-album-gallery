@@ -251,5 +251,3 @@ if ( $counter==0 )
 	</div><!-- /#wrap -->
 	<?php
 }
-
-?>

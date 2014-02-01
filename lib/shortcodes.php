@@ -283,5 +283,3 @@ class FlAG_shortcodes {
 
 // let's use it
 $flagShortcodes = new FlAG_Shortcodes;	
-
-?>
