@@ -47,9 +47,6 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 * Demo [Gallery Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
 * Demo [Facebook Gallery Integration](http://www.facebook.com/#!/PhotoGalleryCreator?sk=app_206659789371708)
 
-New plugin:
-> Try our **new plugin** called [Gmedia Gallery](http://wordpress.org/extend/plugins/grand-media/). Help me make it best gallery plugin: test it and write suggestions how I can improve it in feature versions.
-
 
 == Changelog ==
 
