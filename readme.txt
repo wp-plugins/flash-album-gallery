@@ -12,7 +12,7 @@ Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull
 
 Grand Flagallery - powerfull media gallery content plugin. Easy interface for handling photos, image galleries, audio and video galleries.
 
-> Now You can upload and manage your images and photo galleries, anywhere.
+> Now You can upload and manage your images and photo galleries, anywhere
 > Download new **[application for iPhone](http://mypgc.co/ios-app/)**
 
 With this gallery plugin you can easy upload images, create music and video playlists, create photo gallery, group pictures in photo slideshow and add descriptions for each image, mp3 or video - Grand Flagallery is the smart choice when showing the best of your product or describing in brief any event. Grand Flagallery can easily beautify your site with **photo gallery, mp3 player, video player, banner rotator, nivo slider or nice slideshow widgets**. SEO optimized, compatibility with Google Reader, FeedBerner, etc.
