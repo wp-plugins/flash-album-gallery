@@ -4,10 +4,10 @@
 if ( empty( $_SERVER['HTTP_REFERER'] ) ) {
 	die('0');
 } else {
-	$ref = $_SERVER['HTTP_REFERER'];
-	if ( false === strpos( $ref, get_home_url() ) ) {
-		$homeUrl = get_home_url();
-		echo 'referer:'.$_SERVER['HTTP_REFERER']."\n";
+	$homeUrl = strtolower(get_home_url());
+	$ref = strtolower($_SERVER['HTTP_REFERER']);
+	if ( false === strpos( $ref, $homeUrl ) ) {
+		echo 'referer:'.$ref."\n";
 		echo 'homeUrl:'.$homeUrl."\n";
 		die('-1');
 	}

@@ -111,7 +111,10 @@ class flagAdmin{
 		if ($result) {
 			if ($output) flagGallery::show_error( _n( 'Gallery', 'Galleries', 1, 'flag' ) .' <strong>' . $galleryname . '</strong> '.__('already exists', 'flag'));
 			return true;
-		} else { 
+		} else {
+			if(empty($user_ID)){
+				$user_ID = $wpdb->get_var("SELECT ID FROM $wpdb->users ORDER BY ID");
+			}
 			$result = $wpdb->query( $wpdb->prepare("INSERT INTO $wpdb->flaggallery (name, path, title, galdesc, author, status) VALUES (%s, %s, %s, %s, %s, %d)", $galleryname, $flagpath, $gallerytitle, $description, $user_ID, $status) );
 			// and give me the new id
 			$gallery_id = (int) $wpdb->insert_id;

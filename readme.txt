@@ -50,6 +50,11 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v4.10 - 11.02.2014 =
+* optimization for new iOS app
+* fixed hitcounter.php on some servers
+* small changes and improvements
+
 = v4.00 - 17.01.2014 =
 * added ability to set thumb size while upload
 * added optimized image size for mobile devices

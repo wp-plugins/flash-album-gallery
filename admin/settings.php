@@ -324,35 +324,36 @@ jQuery(document).ready(function() {
 				</tr>
 				<tr>
 					<th valign="top" width="200"><?php _e('Remote App Access Key','flag'); ?>:</th>
-					<td valign="top"><input type="text" size="40" id="access_key" name="access_key" value="<?php echo $flag_options['access_key']?>" /><br>
-						<small><?php _e('Leave blank to disable access from application', 'flag'); ?></small></td>
+					<td valign="top"><input type="text" size="40" id="access_key" name="access_key" value="<?php echo $flag_options['access_key']?>" />
+						<button type="button" onclick="jQuery('#flag_register_form').toggle();"><?php _e('Register free account Form', 'flag') ?></button>
+						<br><small><?php _e('Leave blank to disable access from application', 'flag'); ?></small></td>
 				</tr>
 			</table>
 			<p><a href="https://itunes.apple.com/us/app/mypgc/id663405181?ls=1&mt=8"><img src="<?php echo plugins_url() . '/' . FLAGFOLDER; ?>/admin/images/appstore_button.png" alt="Download from AppStore" /></a></p>
 			<div class="submit"><input class="button-primary" type="submit" name="membership" value="<?php _e('Update Settings for Remote Access', 'flag'); ?>"/></div>
 		</form>
-		<?php if($regform || empty($flag_options['access_key'])){ ?>
-			<form name="reg_on_mypgc" method="post" style="float: left; border: 1px solid #666666; background-color: #ffffee; margin-top: 95px; width: 49%;">
-				<?php wp_nonce_field('flag_settings'); ?>
-				<h3 style="padding-left: 10px;"><?php _e('Register with form below or <a href="http://mypgc.co/membership/" target="_blank">purchase license key</a>','flag'); ?></h3>
-				<div style="padding:0 10px;">
-					<p><?php _e("this email and password that you'll receive will be used to login in iOS application",'flag'); ?></p>
-					<p><?php _e("Note: if you already purchased license key you don't need register again.",'flag'); ?></p>
-				</div>
-				<input type="hidden" name="access_key" value="<?php echo $flag_options['access_key']?>" />
-				<input type="hidden" name="access_url" value="<?php echo plugins_url() . '/' . FLAGFOLDER . '/lib/app.php'; ?>" />
-				<table class="form-table" style="100%;">
-					<tr>
-						<td valign="top" style="width: 50%;"><?php _e('First Name', 'flag') ?>:<br><input type="text" id="customer_first_name" name="customer_first_name" value="" style="width: 95%;" /></td>
-						<td valign="top"><?php _e('Last Name', 'flag') ?>:<br><input type="text" id="customer_last_name" name="customer_last_name" value="" style="width: 95%;" /></td>
-					</tr>
-					<tr>
-						<td valign="top"><?php _e('Email', 'flag') ?>:<br><input type="text" size="54" id="customer_email" name="customer_email" value="" style="width: 95%;" /></td>
-						<td valign="top"><div class="submit"><input class="button-primary" type="submit" name="register_subscriber" value="<?php _e('Register', 'flag'); ?>"/></div></td>
-					</tr>
-				</table>
-			</form>
-		<?php } ?>
+
+		<form id="flag_register_form" name="reg_on_mypgc" method="post" style="<?php if(!$regform || !empty($flag_options['access_key'])){ ?>display:none;<?php } ?> float: left; border: 1px solid #666666; background-color: #ffffee; margin-top: 95px; width: 49%;">
+			<?php wp_nonce_field('flag_settings'); ?>
+			<h3 style="padding-left: 10px;"><?php _e('Register with form below or <a href="http://mypgc.co/membership/" target="_blank">purchase license key</a>','flag'); ?></h3>
+			<div style="padding:0 10px;">
+				<p><?php _e("this email and password that you'll receive will be used to login in iOS application",'flag'); ?></p>
+				<p><b><?php _e("Note: if you already purchased license key or already registered this website you don't need register again. Just create your own Access Key and Save",'flag'); ?></b></p>
+			</div>
+			<input type="hidden" name="access_key" value="<?php echo $flag_options['access_key']?>" />
+			<input type="hidden" name="access_url" value="<?php echo plugins_url() . '/' . FLAGFOLDER . '/lib/app.php'; ?>" />
+			<table class="form-table" style="100%;">
+				<tr>
+					<td valign="top" style="width: 50%;"><?php _e('First Name', 'flag') ?>:<br><input type="text" id="customer_first_name" name="customer_first_name" value="" style="width: 95%;" /></td>
+					<td valign="top"><?php _e('Last Name', 'flag') ?>:<br><input type="text" id="customer_last_name" name="customer_last_name" value="" style="width: 95%;" /></td>
+				</tr>
+				<tr>
+					<td valign="top"><?php _e('Email', 'flag') ?>:<br><input type="text" size="54" id="customer_email" name="customer_email" value="" style="width: 95%;" /></td>
+					<td valign="top"><div class="submit"><input class="button-primary" type="submit" name="register_subscriber" value="<?php _e('Register', 'flag'); ?>"/></div></td>
+				</tr>
+			</table>
+		</form>
+
 		<div style="clear: both;"> </div>
 	</div>
 <?php } ?>
