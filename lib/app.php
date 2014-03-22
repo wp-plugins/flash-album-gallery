@@ -49,7 +49,7 @@ if(isset($_REQUEST['account'])){
 					$exclude = intval($account->exclude);
 					$location = esc_sql($account->location);
 
-					$wpdb->query( "INSERT INTO `{$wpdb->flagpictures}` (`galleryid`, `filename`, `alttext`, `description`, `exclude`, `location`) VALUES ('$gid', '$filename', '$alttext', '$description', '$exclude', '$location')" );
+					$wpdb->query("INSERT INTO {$wpdb->flagpictures} (galleryid, filename, alttext, description, exclude, location) VALUES ('$gid', '$filename', '$alttext', '$description', '$exclude', '$location')");
 
 					// and give me the new id
 					$pic_id = (int) $wpdb->insert_id;
@@ -91,7 +91,7 @@ if(isset($_REQUEST['account'])){
 				$exclude = intval($account->exclude);
 				$location = esc_sql($account->location);
 
-				$wpdb->query( "INSERT INTO `{$wpdb->flagpictures}` (`galleryid`, `filename`, `alttext`, `description`, `exclude`, `location`) VALUES ('$gid', '$filename', '$alttext', '$description', '$exclude', '$location')" );
+				$wpdb->query("INSERT INTO {$wpdb->flagpictures} (galleryid, filename, alttext, description, exclude, location) VALUES ('$gid', '$filename', '$alttext', '$description', '$exclude', '$location')");
 
 				// and give me the new id
 				$pic_id = (int) $wpdb->insert_id;
@@ -106,7 +106,6 @@ if(isset($_REQUEST['account'])){
 
 				$thumb = flagAdmin::create_thumbnail($pic_id);
 				if($thumb != '1') {
-					fclose( $out );
 					die('{"status":"thumb_error: '.$thumb.'"}');
 				}
 

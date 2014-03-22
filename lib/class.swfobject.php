@@ -48,7 +48,7 @@ class flag_swfobject {
 
 		$this->embedSWF = 'if(jQuery.isFunction(swfobject.switchOffAutoHideShow)){ swfobject.switchOffAutoHideShow(); }';
 		$this->embedSWF .= 'swfobject.embedSWF("'. $swfUrl .'", "'. $this->id .'", "'. $width .'", "'. $height .'", "'. $version .'", "'. $expressInstallSwfurl .'", this.flashvars, this.params , this.attr );';
-		$this->embedSWF .= 'swfobject.createCSS("#'. $id . '","outline:none");';
+		$this->embedSWF .= 'swfobject.createCSS("#' . $id . '","outline:none; height:100%; width:100%;");';
 	}
 	
 	function output ($alternate = '') {
