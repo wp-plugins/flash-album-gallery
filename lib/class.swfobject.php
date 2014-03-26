@@ -27,11 +27,12 @@ class flag_swfobject {
 	 * @param array|bool  $flashvars            (optional) specifies your flashvars with name:value pairs
 	 * @param array|bool  $params               (optional) specifies your nested object element params with name:value pair
 	 * @param array|bool  $attributes           (optional) specifies your object's attributes with name:value pairs
+	 * @param bool $gallery
 	 *
 	 * @return string the content
 	 */
-	function flag_swfobject( $swfUrl, $id, $width, $height, $version, $expressInstallSwfurl = false, $flashvars = false, $params = false, $attributes = false ) {
-	
+	function flag_swfobject($swfUrl, $id, $width, $height, $version, $expressInstallSwfurl = false, $flashvars = false, $params = false, $attributes = false, $gallery = false){
+
 		global $swfCounter;
 		
 		// look for a other swfobject instance
@@ -48,7 +49,13 @@ class flag_swfobject {
 
 		$this->embedSWF = 'if(jQuery.isFunction(swfobject.switchOffAutoHideShow)){ swfobject.switchOffAutoHideShow(); }';
 		$this->embedSWF .= 'swfobject.embedSWF("'. $swfUrl .'", "'. $this->id .'", "'. $width .'", "'. $height .'", "'. $version .'", "'. $expressInstallSwfurl .'", this.flashvars, this.params , this.attr );';
-		$this->embedSWF .= 'swfobject.createCSS("#' . $id . '","outline:none; height:100%; width:100%;");';
+		if($gallery){
+			$this->embedSWF .= 'swfobject.createCSS("#' . $id . '","outline:none;width:100%;height:100%;");';
+		} else{
+			$width_css = strpos($width, '%')? '' : 'width:' . $width . 'px;';
+			$height_css = strpos($height, '%')? '' : 'height:' . $height . 'px;';
+			$this->embedSWF .= 'swfobject.createCSS("#' . $id . '","outline:none;' . $height_css . $width_css . '");';
+		}
 	}
 	
 	function output ($alternate = '') {

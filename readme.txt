@@ -50,7 +50,8 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
-= v4.11 - 26.03.2014 =
+= v4.12 - 26.03.2014 =
+* fix for video galleries and banners
 * optimization for some themes
 * added new action: Reset Views & Likes Counters
 
