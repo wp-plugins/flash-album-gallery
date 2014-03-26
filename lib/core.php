@@ -369,10 +369,12 @@ class flagGallery {
 			$postmeta = get_post_meta($item_id, 'thumbnail', true);
 			$postlink = get_post_meta($item_id, 'link', true);
 			$postpreview = get_post_meta($item_id, 'preview', true);
-			if ( isset($item['post_content']) )
-				$post['post_content'] = $wpdb->escape($item['post_content']);
-			if ( isset($item['post_title']) )
-				$post['post_title'] = $wpdb->escape($item['post_title']);
+			if(isset($item['post_content'])){
+				$post['post_content'] = esc_sql($item['post_content']);
+			}
+			if(isset($item['post_title'])){
+				$post['post_title'] = esc_sql($item['post_title']);
+			}
 
 			$post = apply_filters('attachment_fields_to_save', $post, $item);
 

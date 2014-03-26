@@ -283,6 +283,15 @@ class flagManageGallery {
 				case 'webview_images':
 					flagAdmin::do_ajax_operation( 'webview_image' , $_POST['doaction'], __('Creating images optimized for web','flag') );
 					break;
+				case 'reset_counters':
+					if(is_array($_POST['doaction'])){
+						$images = $flagdb->find_images_in_list($_POST['doaction']);
+						foreach($images as $image){
+							$img_id = $image->pid;
+							$wpdb->query("UPDATE $wpdb->flagpictures SET hitcounter = '0', total_votes = '0' WHERE pid = $img_id");
+						}
+					}
+					break;
 			}
 		}
 
@@ -384,14 +393,14 @@ class flagManageGallery {
 
 		if ( is_array($description) ) {
 			foreach( $description as $key => $value ) {
-				$desc = $wpdb->escape($value);
+				$desc = esc_sql($value);
 				$key =intval($key);
 				$wpdb->query( "UPDATE $wpdb->flagpictures SET description = '$desc' WHERE pid = $key");
 			}
 		}
 		if ( is_array($alttext) ){
 			foreach( $alttext as $key => $value ) {
-				$alttext = $wpdb->escape($value);
+				$alttext = esc_sql($value);
 				$key =intval($key);
 				$wpdb->query( "UPDATE $wpdb->flagpictures SET alttext = '$alttext' WHERE pid = $key");
 			}
@@ -401,7 +410,7 @@ class flagManageGallery {
 				if (!empty($value) && parse_url($value, PHP_URL_SCHEME) === null) {
 					$value = 'http://'.$value;
 				}
-				$link = $wpdb->escape($value);
+				$link = esc_sql($value);
 				$key =intval($key);
 				$wpdb->query( "UPDATE $wpdb->flagpictures SET link = '$link' WHERE pid = $key");
 			}

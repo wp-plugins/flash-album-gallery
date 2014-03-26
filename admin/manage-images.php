@@ -286,6 +286,7 @@ jQuery(document).ready( function() {
 		<option value="copy_meta" ><?php _e("Metadata to description",'flag')?></option>
 		<option value="copy_to" ><?php _e("Copy to...",'flag')?></option>
 		<option value="move_to"><?php _e("Move to...",'flag')?></option>
+		<option value="reset_counters"><?php _e("Reset Views & Likes counters", 'flag') ?></option>
 		<?php do_action('flag_manage_images_bulkaction'); ?>
 	</select>
 	<input class="button-secondary alignleft" style="margin-right:10px;" type="submit" name="showThickbox" value="<?php _e("OK",'flag')?>" onclick="if ( !checkSelected() ) return false;" />

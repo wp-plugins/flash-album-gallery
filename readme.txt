@@ -50,6 +50,10 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v4.11 - 26.03.2014 =
+* optimization for some themes
+* added new action: Reset Views & Likes Counters
+
 = v4.10 - 11.02.2014 =
 * optimization for new iOS app
 * fixed hitcounter.php on some servers
