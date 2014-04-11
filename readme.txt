@@ -1,4 +1,4 @@
-﻿=== Grand Flagallery - Photo Gallery Plugin ===
+=== Grand Flagallery - Photo Gallery Plugin ===
 Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
 Tags: admin, flash, fullscreen gallery, gallery, image, images, image gallery, mp3, music, page, photo, slider, plugin, slideshow, video, widget, iphone gallery, best gallery, portfolio, banner rotator
@@ -10,7 +10,7 @@ Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull
 
 == Description ==
 
-Grand Flagallery - powerfull media gallery content plugin. Easy interface for handling photos, image galleries, audio and video galleries.
+Grand Flagallery - powerfull media and image gallery plugin. Easy interface for handling photos, image galleries, audio and video galleries.
 
 > Now You can upload and manage your images and photo galleries, anywhere
 > Download new **[application for iPhone](http://mypgc.co/ios-app/)**
