@@ -146,8 +146,12 @@ class flagAdminPanel{
 					wp_enqueue_script( 'postbox' );
 				case "flag-manage-gallery" :
 					print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
-					wp_enqueue_style('jquery-ui-smoothness', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.min.css', array(), '1.10.2', 'screen');
-					wp_enqueue_script('jquery-ui-full', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array(), '1.10.2');
+
+					wp_enqueue_style('jquery-ui-smoothness', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.min.css', array(), '1.10.4', 'screen');
+					wp_enqueue_script('jquery-ui-full', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js', array('jquery'), '1.10.4');
+
+					wp_enqueue_script( 'jquery-ui-droppable' );
+
 					wp_enqueue_script( 'multifile', FLAG_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.4.6' );
 
 					wp_enqueue_script('flag-plupload', FLAG_URLPATH . 'admin/js/plupload/plupload.full.min.js', array('jquery', 'jquery-ui-full'), '2.1.1');

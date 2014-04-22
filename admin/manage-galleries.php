@@ -216,12 +216,7 @@ if($gallerylist) {
 <script type="text/javascript">
 /*<![CDATA[*/
 jQuery(document).ready(function(){
-	jQuery(".albums_table .album_categoties").sortable({ opacity: 0.6, cursor: 'move', connectWith: ".album_categoties", update: function() {
-		//jQuery.post("updateDB.php", order, function(theResponse){
-		//	jQuery("#contentRight").html(theResponse);
-		//}); 															 
-	}								  
-	}).disableSelection();
+	jQuery(".album_categoties").sortable({ opacity: 0.6, cursor: 'move', connectWith: ".album_categoties", update: function() {}}).disableSelection();
 	jQuery( "#draggable .acat" ).draggable({
 		connectToSortable: ".album_categoties",
 		helper: "clone",
@@ -231,14 +226,16 @@ jQuery(document).ready(function(){
 		accept: ".acat",
 		hoverClass: "active",
 		drop: function( event, ui ) {
-			jQuery( this ).find(jQuery(ui.draggable))
-				.addClass( "highlight_new" ).attr("id", "g_"+jQuery(ui.draggable).attr('rel'))
-				.find( "p" )
-					.remove();
+			jQuery( this ).find(jQuery(ui.draggable)).addClass( "highlight_new" ).attr("id", "g_"+jQuery(ui.draggable).attr('rel'));
+			jQuery( this ).find( "p" ).hide();
 		}
 	});
 	jQuery( ".album_categoties .drop" ).live('click',function(){
+		var acat_parent = jQuery(this).parent().parent();
 		jQuery(this).parent().remove();
+		if(!acat_parent.find('.acat').length){
+			acat_parent.find('p').show();
+		}
 	});
 	jQuery('.flag-ajax-post').click(function(e){
 		var form = jQuery(this).attr('data-form');

@@ -50,6 +50,9 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v4.14 - 22.04.2014 =
+* fix albums drag&drop
+
 = v4.13 - 22.04.2014 =
 * fix plupload uploader for wordpress 3.9
 * update plupload uploader to loatest version
