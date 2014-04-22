@@ -6,7 +6,7 @@ Requires at least: 3.0
 Tested up to: 3.9.*
 Stable tag: trunk
 
-Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
+Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your image galleries and media content
 
 == Description ==
 
