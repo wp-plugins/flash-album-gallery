@@ -173,110 +173,87 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 <?php if($flag->options['swfUpload']) { ?>
 	<script type="text/javascript">
 		// Convert divs to queue widgets when the DOM is ready
-		jQuery(function () {
+		jQuery(function ($) {
 			var files_remaining = 0;
-			jQuery("#pluploadUploader").pluploadQueue({
-				// General settings
-				runtimes        		: 'flash,html5,html4',
+			$("#pluploadUploader").plupload({
+				runtimes        		: 'html5,flash,html4',
 				url             		: '<?php echo str_replace( '&#038;', '&', wp_nonce_url( plugins_url( FLAGFOLDER. '/admin/upload.php' ), 'flag_upload' ) ); ?>',
 				multipart       		: true,
 				multipart_params		: { postData: ''},
-				max_file_size					: '<?php echo min((floor( wp_max_upload_size() * 0.99 / 1024 / 1024 ) - 1), 8); ?>Mb',
+				max_file_size					: '<?php echo (floor( wp_max_upload_size() * 0.99 / 1024 / 1024 ) - 1); ?>Mb',
 				unique_names    		: false,
 				rename          		: true,
-				urlstream_upload	: true,
-
-				// Resize images on clientside if we can
-				//resize 						: {width : 150, height : 150, quality : 90},
-
-				// Specify what files to browse for
-				filters         		: [{title: "Images", extensions: "jpg,gif,png"}],
-
-				// Flash settings
-				flash_swf_url   		: '<?php echo plugins_url( FLAGFOLDER. '/admin/js/plupload/plupload.flash.swf'); ?>',
-
-				// PreInit events, bound before any internal events
-				preinit : {
-					Init: function(up, info) {
-						console.log('[Init]', 'Info:', info, 'Features:', up.features);
-					},
-
-					UploadFile: function(up, file) {
-						console.log('[UploadFile]', file);
-						up.settings.multipart_params = { galleryselect: jQuery('#galleryselect').val(), thumbw:  jQuery('#thumbWidth').val(), thumbh:  jQuery('#thumbHeight').val(), thumbf: jQuery('#thumbFix').prop("checked"), last: files_remaining };
-						files_remaining--;
-						// You can override settings before the file is uploaded
-						// up.settings.url = 'upload.php?id=' + file.id;
-						// up.settings.multipart_params = {param1 : 'value1', param2 : 'value2'};
-					}
+				chunk_size: '<?php echo min((floor( wp_max_upload_size() * 0.99 / 1024 / 1024 ) - 1), 6); ?>Mb',
+				max_retries: 2,
+				sortable: true,
+				dragdrop: true,
+				views: {
+					list: true,
+					thumbs: true,
+					active: 'thumbs'
 				},
+				filters         		: [{title: "Images", extensions: "jpg,gif,png"}],
+				flash_swf_url   		: '<?php echo plugins_url( FLAGFOLDER. '/admin/js/plupload/plupload.flash.swf'); ?>'
 
-				// Post init events, bound after the internal events
-				init : {
-					Refresh: function(up) {
-						// Called when upload shim is moved
-						console.log('[Refresh]');
-						files_remaining = up.files.length;
-						if(jQuery("#galleryselect").val() == 0) {
-							jQuery(".plupload_start").addClass("plupload_disabled");
-						}
-					},
+			});
 
-					StateChanged: function(up) {
-						// Called when the state of the queue is changed
-						console.log('[StateChanged]', up.state == plupload.STARTED ? "STARTED" : "STOPPED");
-					},
-
-					QueueChanged: function(up) {
-						// Called when the files in queue are changed by adding/removing files
-						console.log('[QueueChanged]');
-					},
-
-					UploadProgress: function(up, file) {
-						// Called while a file is being uploaded
-						console.log('[UploadProgress]', 'File:', file, "Total:", up.total);
-					},
-
-					FileUploaded: function(up, file, info) {
-						// Called when a file has finished uploading
-						console.log('[FileUploaded] File:', file, "Info:", info);
-						if (info.response){
-							file.status = plupload.FAILED;
-							jQuery('<div/>').addClass('error').html('<span><u><em>'+file.name+':</em></u> '+info.response+'</span>').appendTo('#pl-message');
-						}
-					},
-
-					Error: function(up, args) {
-						// Called when a error has occured
-						jQuery('<div/>').addClass('error').html('<span><u><em>'+args.file.name+':</em></u> '+args.message+' '+args.status+'</span>').appendTo('#pl-message');
-						console.log('[error] ', args);
-					},
-
-					UploadComplete: function(up, file) {
-						console.log('[UploadComplete]');
-						jQuery(".plupload_buttons").css("display", "inline");
-						jQuery(".plupload_upload_status").css("display", "inline");
-						jQuery(".plupload_start").addClass("plupload_disabled");
-						jQuery("#gmUpload").one("mousedown", ".plupload_add", function () {
-							up.splice();
-							up.trigger('Refresh');
-							//up.refresh();
-						});
-						jQuery('<div/>').addClass('success').html('<?php _e('Done!', 'flag'); ?> <a href="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&mode=edit", 'flag_editgallery'); ?>&gid=' + jQuery("#galleryselect").val() + '">Open Gallery</a>').appendTo('#pl-message');
-					}
+			var uploader = $("#pluploadUploader").plupload('getUploader');
+			uploader.bind('QueueChanged StateChanged', function(up){
+				if(up.state == plupload.QUEUED){
+					files_remaining = up.files.length;
+				}
+				if(up.state == plupload.STARTED){
+					up.settings.multipart_params = { galleryselect: jQuery('#galleryselect').val(), thumbw:  jQuery('#thumbWidth').val(), thumbh:  jQuery('#thumbHeight').val(), thumbf: jQuery('#thumbFix').prop("checked"), last: files_remaining };
+				}
+				if(jQuery("#galleryselect").val() == 0) {
+					jQuery("#pluploadUploader_start").addClass('ui-button-disabled ui-state-disabled');
+				}
+				console.log('[StateChanged]', up.state, up.settings.multipart_params);
+			});
+			uploader.bind('ChunkUploaded', function(up, file, info){
+				console.log('[ChunkUploaded] File:', file, "Info:", info);
+				var response = jQuery.parseJSON(info.response);
+				if(response && response.error){
+					up.stop();
+					file.status = plupload.FAILED;
+					console.log(response.error);
+					up.trigger('QueueChanged StateChanged');
+					up.trigger('UploadProgress', file);
+					up.start();
 				}
 			});
-			jQuery("#gmUpload").on('click','.plupload_disabled',function(){
+			uploader.bind('FileUploaded', function(up, file, info){
+				console.log('[FileUploaded] File:', file, "Info:", info);
+				files_remaining--;
+				if (info.response){
+					file.status = plupload.FAILED;
+					jQuery('<div/>').addClass('error').html('<span><u><em>'+file.name+':</em></u> '+info.response+'</span>').appendTo('#pl-message');
+				}
+			});
+			uploader.bind('UploadProgress', function(up, file){
+				var percent = uploader.total.percent;
+				$('#total-progress-info .progress-bar').css('width', percent + "%").attr('aria-valuenow', percent);
+			});
+			uploader.bind('Error', function(up, args){
+				jQuery('<div/>').addClass('error').html('<span><u><em>'+args.file.name+':</em></u> '+args.message+' '+args.status+'</span>').appendTo('#pl-message');
+				console.log('[error] ', args);
+			});
+			uploader.bind('UploadComplete', function(up, files){
+				console.log('[UploadComplete]', files);
+				jQuery('<div/>').addClass('success').html('<?php _e('Done!', 'flag'); ?> <a href="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&mode=edit", 'flag_editgallery'); ?>&gid=' + jQuery("#galleryselect").val() + '">Open Gallery</a>').appendTo('#pl-message');
+			});
+
+			jQuery("#gmUpload").on('click','.ui-button-disabled',function(){
 				if(files_remaining){
 					alert("Choose gallery, please.")
 				}
 			});
 			jQuery("#galleryselect").change(function () {
 				if(jQuery(this).val() == 0) {
-					jQuery(".plupload_start").addClass('plupload_disabled');
+					jQuery("#pluploadUploader_start").addClass('ui-button-disabled ui-state-disabled');
 				} else {
 					if(files_remaining){
-						jQuery(".plupload_start").removeClass('plupload_disabled');
+						jQuery("#pluploadUploader_start").removeClass('ui-button-disabled ui-state-disabled');
 					}
 				}
 			});

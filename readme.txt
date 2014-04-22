@@ -3,7 +3,7 @@ Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
 Tags: admin, flash, fullscreen gallery, gallery, image, images, image gallery, mp3, music, page, photo, photo gallery, slider, plugin, slideshow, video, widget, iphone gallery, best gallery, portfolio, banner rotator
 Requires at least: 3.0
-Tested up to: 3.8.1
+Tested up to: 3.9.*
 Stable tag: trunk
 
 Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your media content
@@ -49,6 +49,11 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 
 == Changelog ==
+
+= v4.13 - 22.04.2014 =
+* fix plupload uploader for wordpress 3.9
+* update plupload uploader to loatest version
+* small css changes
 
 = v4.12 - 26.03.2014 =
 * fix for video galleries and banners

@@ -266,3 +266,5 @@ div.message .flag_progress .flag_complete { position: absolute; left: 0; top: 0;
 div#license div p { font-size: 13px; }
 .highlight_new { background-color: #E4F2FD; color: #000000; font-weight: bold; }
 .success { background-color: #CCFFCC; border: 1px solid darkgreen; border-radius: 3px; margin: 5px 15px; padding: 3px 7px; }
+
+#gmUpload table td { font-size: 11px !important; }

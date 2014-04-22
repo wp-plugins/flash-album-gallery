@@ -146,16 +146,15 @@ class flagAdminPanel{
 					wp_enqueue_script( 'postbox' );
 				case "flag-manage-gallery" :
 					print "<script type='text/javascript' src='".FLAG_URLPATH."admin/js/tabs.js'></script>\n";
-					wp_enqueue_script( 'jquery-ui-core' );
-					wp_enqueue_script( 'jquery-ui-draggable' );
-					wp_enqueue_script( 'jquery-ui-droppable' );
+					wp_enqueue_style('jquery-ui-smoothness', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.min.css', array(), '1.10.2', 'screen');
+					wp_enqueue_script('jquery-ui-full', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array(), '1.10.2');
 					wp_enqueue_script( 'multifile', FLAG_URLPATH .'admin/js/jquery.MultiFile.js', array('jquery'), '1.4.6' );
 
-					wp_enqueue_script( 'plupload', FLAG_URLPATH . '/admin/js/plupload/plupload.js', array( 'jquery' ), '1.5.7' );
-					wp_enqueue_script( 'plupload-flash', FLAG_URLPATH . '/admin/js/plupload/plupload.flash.js', array( 'jquery' ), '1.5.7' );
-					wp_enqueue_script( 'plupload-html4', FLAG_URLPATH . '/admin/js/plupload/plupload.html4.js', array( 'jquery' ), '1.5.7' );
-					wp_enqueue_script( 'plupload-html5', FLAG_URLPATH . '/admin/js/plupload/plupload.html5.js', array( 'jquery' ), '1.5.7' );
-					wp_enqueue_script( 'jquery.plupload.queue', FLAG_URLPATH . '/admin/js/plupload/jquery.plupload.queue/jquery.plupload.queue.js', array( 'jquery' ), '1.5.7' );
+					wp_enqueue_script('flag-plupload', FLAG_URLPATH . 'admin/js/plupload/plupload.full.min.js', array('jquery', 'jquery-ui-full'), '2.1.1');
+
+					wp_enqueue_style( 'jquery.ui.plupload', FLAG_URLPATH . 'admin/js/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css', array( 'jquery-ui-smoothness' ), '2.1.1', 'screen' );
+					wp_enqueue_script( 'jquery.ui.plupload', FLAG_URLPATH . 'admin/js/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js', array( 'flag-plupload', 'jquery-ui-full' ), '2.1.1' );
+
 
 					wp_enqueue_script('dataset', FLAG_URLPATH .'admin/js/jquery.dataset.js', array('jquery'), '0.1.0');
 					wp_enqueue_script( 'postbox' );
@@ -199,7 +198,6 @@ class flagAdminPanel{
 				case "flag-options" :
 					wp_enqueue_style( 'farbtastic' );
 				case "flag-manage-gallery" :
-					wp_enqueue_style( 'jquery.plupload.queue', FLAG_URLPATH . '/admin/js/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css', array(), '1.5.7', 'screen' );
 					wp_enqueue_style( 'flagtabs', FLAG_URLPATH .'admin/css/tabs.css', false, '1.0.0', 'screen' );
 				case "flag-music-box" :
 				case "flag-video-box" :	
