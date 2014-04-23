@@ -80,9 +80,20 @@ if(isset($_REQUEST['account'])){
 		}
 		// new app
 		if(isset($_POST['account']) && isset($_FILES['userfile']['name'])){
+
 			$path = $wpdb->get_var("SELECT path FROM $wpdb->flaggallery WHERE gid = $gid");
-			$file = ABSPATH . trailingslashit($path) . basename( $_FILES['userfile']['name']);
-			$filename = basename( $_FILES['userfile']['name']);
+			$filepart = flagGallery::fileinfo( $_FILES['userfile']['name'] );
+			$filename = $filepart['basename'];
+			$file = ABSPATH . trailingslashit($path) . $filename;
+
+			// check if this filename already exist
+			$i = 0;
+			while (file_exists($file)) {
+				$filename = sanitize_title($filepart['filename']) . '_' . $i++ . '.' . $filepart['extension'];
+			}
+
+			$file = ABSPATH . trailingslashit($path) . $filename;
+
 			// Open temp file
 			if ( @move_uploaded_file($_FILES['userfile']['tmp_name'], $file ) ) {
 
