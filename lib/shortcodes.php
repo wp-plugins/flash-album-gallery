@@ -75,6 +75,7 @@ class FlAG_shortcodes {
 			$gallerylist = $flagdb->find_all_galleries($orderby, $order);
 			if(is_array($gallerylist)) {
 				$excludelist = explode(',',$exclude);
+				$gids = '';
 				foreach($gallerylist as $gallery) {
 					if (in_array($gallery->gid, $excludelist))
 						continue;

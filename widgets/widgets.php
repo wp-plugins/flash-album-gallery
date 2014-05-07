@@ -381,7 +381,7 @@ class flagWidget extends WP_Widget {
 
 		$album = $instance['album'];
 
-		$qty = (intval($instance['qty']) < 1)? 1 : intval($instance['qty']);
+		$qty = (!isset($instance['qty']) || intval($instance['qty']) < 1)? 1 : intval($instance['qty']);
 
 		$gallerylist = $flagdb->get_album($album);
 		$ids = explode( ',', $gallerylist );
