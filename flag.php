@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flash-album-gallery/flag/
 Description: The Grand Flagallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 4.14
+Version: 4.15
 Author: Rattus
 Author URI: http://codeasily.com/
 
@@ -23,7 +23,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 
-	var $version = '4.14';
+	var $version = '4.15';
 	var $dbversion   = '2.75';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '3.0';
@@ -75,6 +75,8 @@ class flagLoad {
 		add_action('admin_print_scripts-widgets.php', array(&$this, 'flag_widgets_scripts') );
 		add_filter( 'posts_orderby', 'sort_query_by_post_in', 10, 2 );
 
+		add_action( 'wp_enqueue_scripts', array( &$this, 'register_scripts_frontend' ), 3 );
+
 		add_action('activated_plugin', array(&$this, 'save_error') );
 	}
 
@@ -102,6 +104,7 @@ class flagLoad {
 
 			// Add the script and style files
 			add_action('wp_print_scripts', array(&$this, 'load_scripts') );
+			add_action( 'flag_footer_scripts', array( &$this, 'load_scripts' ) );
 
 			// Add a version number to the header
 			add_action('wp_head', create_function('', 'echo "\n<!-- <meta name=\'Grand Flagallery\' content=\'' . $this->version . '\' /> -->\n";') );
@@ -243,16 +246,32 @@ class flagLoad {
 
 	}
 
+	function register_scripts_frontend() {
+		wp_register_style('fancybox', plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css') );
+		wp_register_script('fancybox', plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js'), array('jquery'), '1.3.4', true );
+
+		wp_register_style('photoswipe', plugins_url('/flash-album-gallery/admin/js/photoswipe/photoswipe.css') );
+		wp_register_script('klass.photoswipe', plugins_url('/flash-album-gallery/admin/js/photoswipe/klass.min.js'), array('jquery'), '1.0', true );
+		wp_register_script('photoswipe', plugins_url('/flash-album-gallery/admin/js/photoswipe/code.photoswipe.jquery-3.0.5.min.js'), array('jquery', 'klass.photoswipe'), '3.0.5', true );
+
+		wp_deregister_script('swfobject');
+		wp_register_script('swfobject', plugins_url('/flash-album-gallery/admin/js/swfobject.js'), array('jquery'), '2.2');
+
+		wp_register_script('swfaddress', plugins_url('/flash-album-gallery/admin/js/swfaddress.js'), array(), '2.4');
+
+		wp_register_script('flagscroll', plugins_url('/flash-album-gallery/admin/js/flagscroll.js'), array('jquery'), '1.0', true );
+		wp_register_script('swfmousewheel', plugins_url('/flash-album-gallery/admin/js/swfmousewheel.js'), false, '2.0', true );
+
+		wp_register_script('flagscript', plugins_url('/flash-album-gallery/admin/js/script.js'), array('jquery'), '2.0', true );
+		wp_register_style('flagallery', plugins_url('/flash-album-gallery/admin/css/flagallery.css') );
+
+	}
+
 	function load_scripts() {
 
 		wp_enqueue_script('jquery');
-		// Let's override WP's bundled swfobject, cause as of WP 2.9, it's still using 2.1
-		wp_deregister_script('swfobject');
-		// and register our own.
-		wp_register_script('swfobject', plugins_url('/flash-album-gallery/admin/js/swfobject.js'), array('jquery'), '2.2');
 		wp_enqueue_script('swfobject');
 		if($this->options['deepLinks']){
-			wp_register_script('swfaddress', plugins_url('/flash-album-gallery/admin/js/swfaddress.js'), array(), '2.4');
 			wp_enqueue_script('swfaddress');
 		}
 

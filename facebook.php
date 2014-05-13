@@ -11,8 +11,10 @@
 </head>
 <body style="margin: 0; padding: 0;">
 <div id="page">
-<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.js'); ?>" type="text/javascript"></script>
-<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/swfobject.js'); ?>" type="text/javascript"></script>
+<?php
+	wp_enqueue_scripts();
+	wp_print_scripts(array('jquery', 'swfobject'));
+?>
 <?php $flag_options = get_option('flag_options');
 if(isset($_GET['l'])) {
 	$linkto = intval($_GET['l']);
@@ -52,10 +54,10 @@ if(isset($_GET['i'])) {
 
 		echo flagShowFlashAlbum($gids, $name='Gallery', $width='100%', $height=$h, $skin, $playlist='', $wmode='opaque', $linkto); ?>
 
-<link href="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css'); ?>" rel="stylesheet" type="text/css" />
-<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js'); ?>" type="text/javascript"></script>
-<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/flagscroll.js'); ?>" type="text/javascript"></script>
-<script language="JavaScript" src="<?php echo plugins_url('/flash-album-gallery/admin/js/script.js'); ?>" type="text/javascript"></script>
+	<?php
+		do_action('flag_footer_scripts');
+		wp_print_scripts(array('flagscroll', 'flagscript'));
+	?>
 
 <?php }
 } ?>

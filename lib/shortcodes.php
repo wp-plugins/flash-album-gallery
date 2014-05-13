@@ -26,6 +26,7 @@ class FlAG_shortcodes {
 		add_shortcode( 'grandbanner', array(&$this, 'grandbanner' ) );
 		add_shortcode( 'grandbannerwidget', array(&$this, 'grandbannerwidget' ) );
 		add_action('wp_footer', array(&$this, 'add_script'));
+		add_action( 'flag_footer_scripts', array( &$this, 'add_script' ) );
 
 	}
 
@@ -125,28 +126,26 @@ class FlAG_shortcodes {
 		}
 		if($swfmousewheel == 'true') $this->flag_add_mousewheel = true;
 
-    return $out;
+		if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+			do_action('flag_footer_scripts');
+		}
+
+		return $out;
 	}
 
 	function add_script() {
 		if ( $this->flag_shortcode ) {
-			wp_register_script('flagscroll', plugins_url('/admin/js/flagscroll.js', dirname(__FILE__)), array('jquery'), '1.0', true );
 			wp_print_scripts('flagscroll');
 		}
 		if ( $this->flag_fancybox ) {
-			wp_register_style('fancybox', plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css') );
-			wp_register_script('fancybox', plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js'), array(), '1.3.4', true );
 			wp_print_styles('fancybox');
 			wp_print_scripts('fancybox');
 		}
 		if ( $this->flag_add_script ) {
-			wp_register_script('flagscript', plugins_url('/admin/js/script.js', dirname(__FILE__)), array('jquery'), '1.1', true );
 			wp_print_scripts('flagscript');
-			wp_register_style('flagallery', plugins_url('/admin/css/flagallery.css', dirname(__FILE__)) );
 			wp_print_styles('flagallery');
 		}
 		if ( $this->flag_add_mousewheel ) {
-			wp_register_script('swfmousewheel', plugins_url('/admin/js/swfmousewheel.js', dirname(__FILE__)), false, '2.0', true );
 			wp_print_scripts('swfmousewheel');
 		}
 	}

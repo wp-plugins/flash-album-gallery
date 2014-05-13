@@ -154,13 +154,16 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 		$out = '<div class="flashalbum '.$skin.'" style="width:'.$width.';height:'.$height.';">' . $swfobject->output($alternate) . '</div>';
 	}
 	// add now the script code
-	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT']) && !preg_match("/Android/i", $_SERVER['HTTP_USER_AGENT'])){
 		$out .= '<script type="text/javascript" defer="defer">/* <![CDATA[ */';
+	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT']) && !preg_match("/Android/i", $_SERVER['HTTP_USER_AGENT'])){
 		$out .= 'function json_xml_'.$skinID.'(e){ return '.$xml['json'].'; }';
-		$out .= 'flag_alt[\''.$skinID.'\'] = jQuery("div#'.$skinID.'_jq").clone().wrap(document.createElement(\'div\')).parent().html();';
+		$out .= 'var '.$skinID.' = jQuery("div#'.$skinID.'_jq").clone().wrap(document.createElement(\'div\')).parent().html();';
 		$out .= $swfobject->javascript();
-		$out .= '/* ]]> */</script>';
 	}
+		$out .= 'jQuery(function() { var fv = swfobject.getFlashPlayerVersion();';
+		$out .= 'if(fv.major<10 || (navigator.userAgent.toLowerCase().indexOf("android") > -1)) {	new FlAGClass(ExtendVar, "'.$skinID.'", false, false); }';
+		$out .= '});';
+		$out .= '/* ]]> */</script>';
 
 	$out = apply_filters('flag_show_flash_content', $out);
 

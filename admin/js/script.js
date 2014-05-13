@@ -1,11 +1,10 @@
-var fv = swfobject.getFlashPlayerVersion();
 var metaViewport;
-jQuery(document).ready(function() {
+jQuery(function() {
 	metaViewport = jQuery('meta[name=viewport]','head').attr('content');
 });
 
 function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
-	jQuery(document).ready(function() {
+	jQuery(function() {
 		if(pic_id !== false){
 			var skin_function = flagFind(skin_id);
 			if(pic_id !== 0 ) {
@@ -19,14 +18,14 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 					'transitionOut'	: 'elastic',
 					'titlePosition'	: 'over',
 					'titleFormat'	: function(title, currentArray, currentIndex, currentOpts) {
-						var descr = jQuery('<div />').html(jQuery("#flag_pic_"+pic_id, flag_alt[skin_id]).find('.flag_pic_desc > span').html()).text();
-						title = jQuery('<div />').html(jQuery("#flag_pic_"+pic_id, flag_alt[skin_id]).find('.flag_pic_desc > strong').html()).text();
+						var descr = jQuery('<div />').html(jQuery("#flag_pic_"+pic_id, window[skin_id]).find('.flag_pic_desc > span').html()).text();
+						title = jQuery('<div />').html(jQuery("#flag_pic_"+pic_id, window[skin_id]).find('.flag_pic_desc > strong').html()).text();
 						if(title.length || descr.length)
 							return '<div class="grand_controls" rel="'+skin_id+'"><span rel="prev" class="g_prev">prev</span><span rel="show" class="g_slideshow '+slideshow+'">play/pause</span><span rel="next" class="g_next">next</span></div><div id="fancybox-title-over">'+(title.length? '<strong class="title">'+title+'</strong>' : '')+(descr.length? '<div class="descr">'+descr+'</div>' : '')+'</div>';
 						else
 							return '<div class="grand_controls" rel="'+skin_id+'"><span rel="prev" class="g_prev">prev</span><span rel="show" class="g_slideshow '+slideshow+'">play/pause</span><span rel="next" class="g_next">next</span></div>';
 					},
-					'href'			: jQuery("#flag_pic_"+pic_id, flag_alt[skin_id]).attr('href'),
+					'href'			: jQuery("#flag_pic_"+pic_id, window[skin_id]).attr('href'),
 					'onStart' 		: function(){
 						//if(skin_function && jQuery.isFunction(skin_function[skin_id+'_fb'])) {
 							skin_function[skin_id+'_fb']('active');
@@ -56,7 +55,7 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 			}
 			jQuery('.flashalbum').css('height','auto');
 			jQuery('body#fullwindow').css('overflow','auto');
-			jQuery('.flag_alternate').each(function(i){
+			jQuery('#'+skin_id+'_jq').each(function(i){
 				jQuery(this).css({display: 'block'});
 				var catMeta = jQuery('.flagCatMeta',this).hide().get();
 				for(j=0; j<catMeta.length; j++) {
@@ -73,22 +72,22 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 					jQuery('a.flag_pic_alt', this).attr('rel',flagcatid);
 				});
 			});
-			jQuery('.flag_alternate .flagcat').click(function(){
+			jQuery('#'+skin_id+'_jq .flagcat').click(function(){
 				if(!jQuery(this).hasClass('active')) {
 					var catId = jQuery(this).attr('href');
 					jQuery(this).addClass('active').siblings().removeClass('active');
-					jQuery('.flag_alternate '+catId).css({display: 'block'}).siblings('.flagcategory').hide();
-					alternate_flag_e(catId, ExtendVar);
+					jQuery('#'+skin_id+'_jq '+catId).css({display: 'block'}).siblings('.flagcategory').hide();
+					alternate_flag_e(skin_id, catId, ExtendVar);
 				}
 				return false;
 			});
-			alternate_flag_e('.flagcategory:first', ExtendVar);
+			alternate_flag_e(skin_id, '.flagcategory:first', ExtendVar);
 		}
 	});
 }
 
-function alternate_flag_e(t, ExtendVar){
-	jQuery('.flag_alternate').find(t).not('.loaded').each(function(){
+function alternate_flag_e(skin_id, t, ExtendVar){
+	jQuery('#'+skin_id+'_jq').find(t).not('.loaded').each(function(){
 		var d = jQuery(this).html();
 		if(d) {
 			d = d.replace(/>\[/g, '><');
@@ -214,9 +213,7 @@ function alternate_flag_e(t, ExtendVar){
 
 	});
 }
-if(fv.major<10 || (navigator.userAgent.toLowerCase().indexOf("android") > -1)) {
-	new FlAGClass(ExtendVar, false, false, false);
-}
+
 function thumb_cl(skin_id, pic_id, slideshow){
   	pic_id = parseInt(pic_id);
 	new FlAGClass(ExtendVar, skin_id, pic_id, slideshow);

@@ -37,13 +37,18 @@ if($altColors['FullWindow'] && !$isCrawler){
 $xml['alt'] .= '</style>';
 if(!$isCrawler){
 	if(!intval($flag_options['jAlterGalScript'])) {
-		$xml['alt'] .= '<style type="text/css" scoped="scoped">@import url("'.plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css').'");</style>';
-		$xml['alt'] .= "<script type='text/javascript' src='".plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js')."'></script>";
+		wp_print_styles('fancybox');
+		wp_print_scripts('fancybox');
+		//$xml['alt'] .= '<style type="text/css" scoped="scoped">@import url("'.plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css').'");</style>';
+		//$xml['alt'] .= "<script type='text/javascript' src='".plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js')."'></script>";
 		$xml['alt'] .= "<script type='text/javascript'>var ExtendVar='fancybox', hitajax = '".plugins_url('/lib/hitcounter.php', dirname(__FILE__))."';</script>";
 	} else if(intval($flag_options['jAlterGalScript']) == 1) {
-		$xml['alt'] .= "<style type='text/css'>@import url('".plugins_url('/admin/js/photoswipe/photoswipe.css', dirname(__FILE__))."');</style>";
-		$xml['alt'] .= "<script type='text/javascript' src='".plugins_url('/admin/js/photoswipe/klass.min.js', dirname(__FILE__))."'></script>";
-		$xml['alt'] .= "<script type='text/javascript' src='".plugins_url('/admin/js/photoswipe/code.photoswipe.jquery-3.0.5.min.js', dirname(__FILE__))."'></script>";
+		wp_print_styles('photoswipe');
+		wp_print_scripts('klass.photoswipe');
+		wp_print_scripts('photoswipe');
+		//$xml['alt'] .= "<style type='text/css'>@import url('".plugins_url('/admin/js/photoswipe/photoswipe.css', dirname(__FILE__))."');</style>";
+		//$xml['alt'] .= "<script type='text/javascript' src='".plugins_url('/admin/js/photoswipe/klass.min.js', dirname(__FILE__))."'></script>";
+		//$xml['alt'] .= "<script type='text/javascript' src='".plugins_url('/admin/js/photoswipe/code.photoswipe.jquery-3.0.5.min.js', dirname(__FILE__))."'></script>";
 		$xml['alt'] .= "<script type='text/javascript'>var ExtendVar='photoswipe', hitajax = '".plugins_url('/lib/hitcounter.php', dirname(__FILE__))."';</script>";
 	}
  }
