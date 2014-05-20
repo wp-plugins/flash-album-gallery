@@ -5,11 +5,11 @@ if ( !is_user_logged_in() )
 	die('-1');
 
 // check for correct FlAG capability
-if ( !current_user_can('FlAG Facebook page') ) 
+if ( !current_user_can('FlAG iFrame page') )
 	die('-1');	
 
 if(isset($_POST['copy_file'])) {
-	if(copy(FLAG_ABSPATH.'facebook.php',ABSPATH.'facebook.php')) {
+	if(copy(FLAG_ABSPATH.'flagframe.php',ABSPATH.'flagframe.php')) {
 		flagGallery::show_message(__('Success','flag'));
 	} else {
 		flagGallery::show_error(__('Failure','flag'));
@@ -24,9 +24,9 @@ $i_skins = get_skins();
 $all_m_playlists = get_playlists();
 $all_v_playlists = get_v_playlists();
 $all_b_playlists = get_b_playlists();
-$fb_url = FLAG_URLPATH.'facebook.php';
-if(file_exists(ABSPATH.'facebook.php')) {
-	$fb_url = home_url().'/facebook.php';
+$fb_url = FLAG_URLPATH.'flagframe.php';
+if(file_exists(ABSPATH.'flagframe.php')) {
+	$fb_url = home_url().'/flagframe.php';
 }
 ?>
 <script type="text/javascript">/*<![CDATA[*/
@@ -141,21 +141,13 @@ function fb_url(galleries,skin,h,l) {
 }
 /*]]>*/</script>
 <div class="wrap">
-<h2><?php _e('Facebook Integration', 'flag'); ?></h2>
-<p>1. Log in to your <a target="_blank" href="http://www.facebook.com">Facebook</a> account.</p>
-<p>2. Search for the <a href="http://apps.facebook.com/117531781690494/?ref=ts">Page Tabs: Static HTML + iFrame</a> tabs application and select it.</p>
-<p>3. Click on <strong>Add Static HTML to a page</strong> button and you'll be prompted for the page where you want the app to be added.</p>
-<p>4. Once added you'll see on the left side menu of your page a new tab with a star icon called Welcome. Click on it to edit it.</p>
-<p>5. Add the <strong>Facebook Page Url</strong> in the text field.</p>
-<p>6. Click <strong>preview</strong> to see how it looks or <strong>save changes</strong>. The product is now added to the Welcome tab of your page.</p>
-<p>7. <strong>Optional:</strong> To change the tab's name, called by default <strong>Welcome</strong>, edit your page, go to the <strong>Apps</strong> tab and click <strong>Edit Settings</strong> option next to the <strong>Page Tabs: Static HTML + iFrame</strong> application to enter the name you want.</p>
-<p>8. <strong>Optional:</strong> To make the tab your default landing tab (first thing your visitors see on your page) edit your page and go to the <strong>Manage Permissions</strong> tab and change the <strong>Default Landing Tab</strong>.</p>
+<h2><?php _e('Flagallery iFrame', 'flag'); ?></h2>
 <br /><br />
-<form id="facebook_copy" name="facebook_copy" method="POST" class="alignright">
-	<p>Optional: &nbsp; <input type="submit" name="copy_file" class="button-primary" value="<?php _e('Copy facebook.php file to root directory', 'flag'); ?>" /><br />
-	(makes Facebook page url shorter)</p>
+<form id="flagframe_copy" name="flagframe_copy" method="POST" class="alignright">
+	<p>Optional: &nbsp; <input type="submit" name="copy_file" class="button-primary" value="<?php _e('Copy flagframe.php file to root directory', 'flag'); ?>" /><br />
+	(makes iframe url shorter)</p>
 </form>
-<form id="generator1"><fieldset style="clear:both; margin:0 0 20px 0; padding: 20px; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("Photo Gallery Facebook Page Generator", 'flag'); ?></legend>
+<form id="generator1"><fieldset style="clear:both; margin:0 0 20px 0; padding: 20px; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("Photo Gallery iFrame Generator", 'flag'); ?></legend>
 	<table border="0" cellpadding="4" cellspacing="0">
         <tr>
            <td nowrap="nowrap" valign="top"><div><?php _e("Select galleries", 'flag'); ?>:<span style="color:red;"> *</span><br /><small><?php _e("(album categories)", 'flag'); ?></small></div></td>
@@ -196,12 +188,12 @@ function fb_url(galleries,skin,h,l) {
             <td valign="top"><p><input id="postid" type="text" /></p></td>
         </tr>
 		<tr>
-			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
+			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("iFrame Url", 'flag'); ?>: &nbsp; </strong></div></td>
             <td valign="top"><input id="fb1_url0" type="text" style="width: 780px; font-size: 10px;" value="<?php echo $fb_url.'?i=all'; ?>" /></td>
 		</tr>
     </table>
 </fieldset></form>
-<form id="generator2"><fieldset style="padding: 20px; margin:0 0 20px 0; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("mp3 Gallery Facebook Page Generator", 'flag'); ?></legend>
+<form id="generator2"><fieldset style="padding: 20px; margin:0 0 20px 0; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("mp3 Gallery iFrame Generator", 'flag'); ?></legend>
 	<table border="0" cellpadding="4" cellspacing="0">
         <tr>
             <td nowrap="nowrap" valign="top"><p style="padding-top:3px;"><label><?php _e("Choose playlist", 'flag'); ?>:</label></p></td>
@@ -218,12 +210,12 @@ function fb_url(galleries,skin,h,l) {
             </select></p></td>
         </tr>
 		<tr>
-			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
+			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("iFrame Url", 'flag'); ?>: &nbsp; </strong></div></td>
             <td valign="top"><input id="fb2_url0" type="text" style="width: 600px; font-size: 10px;" value="<?php echo $fb_url.'?m='; ?>" /></td>
 		</tr>
     </table>
 </fieldset></form>
-<form id="generator3"><fieldset style="padding: 20px; margin:0 0 20px 0; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("Video Blog Gallery Facebook Page Generator", 'flag'); ?></legend>
+<form id="generator3"><fieldset style="padding: 20px; margin:0 0 20px 0; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("Video Blog Gallery iFrame Generator", 'flag'); ?></legend>
 	<table border="0" cellpadding="4" cellspacing="0">
         <tr>
             <td nowrap="nowrap" valign="top"><p style="padding-top:3px;"><label><?php _e("Choose playlist", 'flag'); ?>:</label></p></td>
@@ -240,12 +232,12 @@ function fb_url(galleries,skin,h,l) {
             </select></p></td>
         </tr>
 		<tr>
-			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
+			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("iFrame Url", 'flag'); ?>: &nbsp; </strong></div></td>
             <td valign="top"><input id="fb3_url0" type="text" style="width: 600px; font-size: 10px;" value="<?php echo $fb_url.'?v='; ?>" /></td>
 		</tr>
     </table>
 </fieldset></form>
-<form id="generator4"><fieldset style="padding: 20px; margin:0 0 20px 0; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("Banner Box Facebook Page Generator", 'flag'); ?></legend>
+<form id="generator4"><fieldset style="padding: 20px; margin:0 0 20px 0; border: 1px solid #888888;"><legend style="font-size: 18px; padding: 0 5px;"><?php _e("Banner Box iFrame Generator", 'flag'); ?></legend>
 	<table border="0" cellpadding="4" cellspacing="0">
         <tr>
             <td nowrap="nowrap" valign="top"><p style="padding-top:3px;"><label><?php _e("Choose xml", 'flag'); ?>:</label></p></td>
@@ -262,7 +254,7 @@ function fb_url(galleries,skin,h,l) {
             </select></p></td>
         </tr>
 		<tr>
-			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("Facebook Page Url", 'flag'); ?>: &nbsp; </strong></div></td>
+			<td valign="top"><div style="padding-top:3px;"><strong><?php _e("iFrame Url", 'flag'); ?>: &nbsp; </strong></div></td>
             <td valign="top"><input id="fb4_url0" type="text" style="width: 600px; font-size: 10px;" value="<?php echo $fb_url.'?b='; ?>" /></td>
 		</tr>
     </table>

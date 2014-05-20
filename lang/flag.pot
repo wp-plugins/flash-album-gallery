@@ -175,11 +175,11 @@ msgid "Options"
 msgstr ""
 
 #: admin/admin.php:61
-msgid "FlAG Facebook Integration"
+msgid "FlAG iFrame Integration"
 msgstr ""
 
 #: admin/admin.php:61
-msgid "Facebook"
+msgid "iFrame"
 msgstr ""
 
 #: admin/admin.php:63
@@ -238,7 +238,7 @@ msgstr ""
 msgid "Skins for Grand Flagallery"
 msgstr ""
 
-#: admin/ajax.php:139 admin/ajax.php:165 admin/facebook-tool.php:13
+#: admin/ajax.php:139 admin/ajax.php:165 admin/flagframe-tool.php:13
 msgid "Success"
 msgstr ""
 
@@ -454,7 +454,7 @@ msgstr ""
 msgid "Playlist Title"
 msgstr ""
 
-#: admin/banner-box.php:509 admin/facebook-tool.php:180 admin/meta_box.php:126
+#: admin/banner-box.php:509 admin/flagframe-tool.php:180 admin/meta_box.php:126
 #: admin/music-box.php:488 admin/tinymce/window.php:118
 #: admin/video-box.php:412
 msgid "Choose skin"
@@ -591,97 +591,97 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: admin/facebook-tool.php:15
+#: admin/flagframe-tool.php:15
 msgid "Failure"
 msgstr ""
 
-#: admin/facebook-tool.php:144
-msgid "Facebook Integration"
+#: admin/flagframe-tool.php:144
+msgid "iFrame Integration"
 msgstr ""
 
-#: admin/facebook-tool.php:155
-msgid "Copy facebook.php file to root directory"
+#: admin/flagframe-tool.php:155
+msgid "Copy flagframe.php file to root directory"
 msgstr ""
 
-#: admin/facebook-tool.php:158
-msgid "Photo Gallery Facebook Page Generator"
+#: admin/flagframe-tool.php:158
+msgid "Photo Gallery iFrame Page Generator"
 msgstr ""
 
-#: admin/facebook-tool.php:161 admin/meta_box.php:107
+#: admin/flagframe-tool.php:161 admin/meta_box.php:107
 #: admin/tinymce/window.php:76
 msgid "Select galleries"
 msgstr ""
 
-#: admin/facebook-tool.php:161 admin/meta_box.php:107
+#: admin/flagframe-tool.php:161 admin/meta_box.php:107
 #: admin/tinymce/window.php:76
 msgid "(album categories)"
 msgstr ""
 
-#: admin/facebook-tool.php:163 admin/meta_box.php:109
+#: admin/flagframe-tool.php:163 admin/meta_box.php:109
 #: admin/tinymce/window.php:78
 msgid "all galleries"
 msgstr ""
 
-#: admin/facebook-tool.php:176 admin/meta_box.php:122
+#: admin/flagframe-tool.php:176 admin/meta_box.php:122
 msgid "Galleries order"
 msgstr ""
 
-#: admin/facebook-tool.php:182 admin/meta_box.php:128
+#: admin/flagframe-tool.php:182 admin/meta_box.php:128
 msgid "skin active by default"
 msgstr ""
 
-#: admin/facebook-tool.php:191 admin/tinymce/window.php:129
+#: admin/flagframe-tool.php:191 admin/tinymce/window.php:129
 msgid "Skin size"
 msgstr ""
 
-#: admin/facebook-tool.php:191 admin/tinymce/window.php:129
+#: admin/flagframe-tool.php:191 admin/tinymce/window.php:129
 msgid "blank for default"
 msgstr ""
 
-#: admin/facebook-tool.php:192 admin/tinymce/window.php:130
+#: admin/flagframe-tool.php:192 admin/tinymce/window.php:130
 msgid "width"
 msgstr ""
 
-#: admin/facebook-tool.php:192 admin/tinymce/window.php:130
+#: admin/flagframe-tool.php:192 admin/tinymce/window.php:130
 msgid "height"
 msgstr ""
 
-#: admin/facebook-tool.php:195
+#: admin/flagframe-tool.php:195
 msgid "Post ID"
 msgstr ""
 
-#: admin/facebook-tool.php:195
+#: admin/flagframe-tool.php:195
 msgid "optional"
 msgstr ""
 
-#: admin/facebook-tool.php:199 admin/facebook-tool.php:221
-#: admin/facebook-tool.php:243 admin/facebook-tool.php:265
-msgid "Facebook Page Url"
+#: admin/flagframe-tool.php:199 admin/flagframe-tool.php:221
+#: admin/flagframe-tool.php:243 admin/flagframe-tool.php:265
+msgid "iFrame Page Url"
 msgstr ""
 
-#: admin/facebook-tool.php:204
-msgid "mp3 Gallery Facebook Page Generator"
+#: admin/flagframe-tool.php:204
+msgid "mp3 Gallery iFrame Page Generator"
 msgstr ""
 
-#: admin/facebook-tool.php:207 admin/facebook-tool.php:209
-#: admin/facebook-tool.php:229 admin/facebook-tool.php:231
+#: admin/flagframe-tool.php:207 admin/flagframe-tool.php:209
+#: admin/flagframe-tool.php:229 admin/flagframe-tool.php:231
 #: widgets/widgets.php:499
 msgid "Choose playlist"
 msgstr ""
 
-#: admin/facebook-tool.php:226
-msgid "Video Blog Gallery Facebook Page Generator"
+#: admin/flagframe-tool.php:226
+msgid "Video Blog Gallery iFrame Page Generator"
 msgstr ""
 
-#: admin/facebook-tool.php:248
-msgid "Banner Box Facebook Page Generator"
+#: admin/flagframe-tool.php:248
+msgid "Banner Box iFrame Page Generator"
 msgstr ""
 
-#: admin/facebook-tool.php:251
+#: admin/flagframe-tool.php:251
 msgid "Choose xml"
 msgstr ""
 
-#: admin/facebook-tool.php:253
+#: admin/flagframe-tool.php:253
 msgid "Choose XML"
 msgstr ""
 
@@ -2060,7 +2060,7 @@ msgid "Change options"
 msgstr ""
 
 #: admin/settings.php:465
-msgid "Facebook page"
+msgid "iFrame page"
 msgstr ""
 
 #: admin/settings.php:469
@@ -2496,7 +2496,7 @@ msgstr ""
 msgid "Allow users to change the roles for other blog authors."
 msgstr ""
 
-#: facebook.php:68 facebook.php:80 facebook.php:98
+#: flagframe.php:68 flagframe.php:80 flagframe.php:98
 msgid "Can't find playlist"
 msgstr ""
 

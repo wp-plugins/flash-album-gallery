@@ -50,6 +50,10 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v4.16 - 13.05.2014 =
+* Slider skin small fix
+* Remove Facebook page due to changed Facebook API
+
 = v4.15 - 13.05.2014 =
 * Added support for themes with Ajax page loading
 

@@ -163,7 +163,7 @@ function flag_capabilities() {
 	$role->add_cap('FlAG Manage music');
 	$role->add_cap('FlAG Manage video');
 	$role->add_cap('FlAG Manage banners');
-	$role->add_cap('FlAG Facebook page');
+	$role->add_cap('FlAG iFrame page');
 
 }
 
@@ -335,5 +335,5 @@ function flag_uninstall() {
 	flag_remove_capability("FlAG Manage music");
 	flag_remove_capability("FlAG Manage video");
 	flag_remove_capability("FlAG Manage banners");
-	flag_remove_capability("FlAG Facebook page");
+	flag_remove_capability("FlAG iFrame page");
 }

@@ -122,7 +122,7 @@ function flag_admin_options()  {
 		flag_set_capability($_POST['manage_music'],"FlAG Manage music");
 		flag_set_capability($_POST['manage_video'],"FlAG Manage video");
 		flag_set_capability($_POST['manage_banners'],"FlAG Manage banners");
-		flag_set_capability($_POST['facebook_page'],"FlAG Facebook page");
+		flag_set_capability($_POST['flagframe_page'],"FlAG iFrame page");
 		
 		flagGallery::show_message(__('Updated capabilities',"flag"));
 	}
@@ -486,8 +486,8 @@ jQuery(document).ready(function() {
 				<td><label for="change_options"><select style="width: 150px;" name="change_options" id="change_options"><?php wp_dropdown_roles( flag_get_role('FlAG Change options') ); ?></select></label></td>
 			</tr>
 			<tr valign="top"> 
-				<th scope="row" style="white-space: nowrap"><?php _e('Facebook page', 'flag'); ?>:</th> 
-				<td><label for="facebook_page"><select style="width: 150px;" name="facebook_page" id="facebook_page"><?php wp_dropdown_roles( flag_get_role('FlAG Facebook page') ); ?></select></label></td>
+				<th scope="row" style="white-space: nowrap"><?php _e('iFrame page', 'flag'); ?>:</th>
+				<td><label for="flagframe_page"><select style="width: 150px;" name="flagframe_page" id="flagframe_page"><?php wp_dropdown_roles( flag_get_role('FlAG iFrame page') ); ?></select></label></td>
 			</tr>
 			</table>
 			<div class="submit"><input type="submit" class="button-primary" name= "update_cap" value="<?php _e('Update capabilities', 'flag'); ?>"/></div>

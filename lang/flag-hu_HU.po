@@ -182,12 +182,12 @@ msgid "Options"
 msgstr "Beállítások"
 
 #: admin/admin.php:61
-msgid "FlAG Facebook Integration"
-msgstr "FlAG Facebook Integráció"
+msgid "FlAG iFrame Integration"
+msgstr "FlAG iFrame Integráció"
 
 #: admin/admin.php:61
-msgid "Facebook"
-msgstr "Facebook"
+msgid "iFrame"
+msgstr "iFrame"
 
 #: admin/admin.php:63
 msgid "GRAND Flash Album Gallery"
@@ -245,7 +245,7 @@ msgstr "Nyelvi csomag beszerzése"
 msgid "Skins for Grand Flagallery"
 msgstr "Felületek a Grand Flagallery-hez"
 
-#: admin/ajax.php:139 admin/ajax.php:165 admin/facebook-tool.php:13
+#: admin/ajax.php:139 admin/ajax.php:165 admin/flagframe-tool.php:13
 msgid "Success"
 msgstr "Sikerült"
 
@@ -462,7 +462,7 @@ msgstr "Nincs kép a WordPress Média Tárban"
 msgid "Playlist Title"
 msgstr "Lejátszási lista címe"
 
-#: admin/banner-box.php:509 admin/facebook-tool.php:180 admin/meta_box.php:126
+#: admin/banner-box.php:509 admin/flagframe-tool.php:180 admin/meta_box.php:126
 #: admin/music-box.php:488 admin/tinymce/window.php:118
 #: admin/video-box.php:412
 msgid "Choose skin"
@@ -599,97 +599,97 @@ msgstr "Elem Leírása"
 msgid "Save Changes"
 msgstr "Változások mentése"
 
-#: admin/facebook-tool.php:15
+#: admin/flagframe-tool.php:15
 msgid "Failure"
 msgstr "Hiba"
 
-#: admin/facebook-tool.php:144
-msgid "Facebook Integration"
-msgstr "Facebook integráció"
+#: admin/flagframe-tool.php:144
+msgid "iFrame Integration"
+msgstr "iFrame integráció"
 
-#: admin/facebook-tool.php:155
-msgid "Copy facebook.php file to root directory"
-msgstr "facebook.php fájl másolása a gyökér könyvtárba"
+#: admin/flagframe-tool.php:155
+msgid "Copy flagframe.php file to root directory"
+msgstr "flagframe.php fájl másolása a gyökér könyvtárba"
 
-#: admin/facebook-tool.php:158
-msgid "Photo Gallery Facebook Page Generator"
-msgstr "Facebook Képgaléria Készítő"
+#: admin/flagframe-tool.php:158
+msgid "Photo Gallery iFrame Page Generator"
+msgstr "iFrame Képgaléria Készítő"
 
-#: admin/facebook-tool.php:161 admin/meta_box.php:107
+#: admin/flagframe-tool.php:161 admin/meta_box.php:107
 #: admin/tinymce/window.php:76
 msgid "Select galleries"
 msgstr "Galéria választása"
 
-#: admin/facebook-tool.php:161 admin/meta_box.php:107
+#: admin/flagframe-tool.php:161 admin/meta_box.php:107
 #: admin/tinymce/window.php:76
 msgid "(album categories)"
 msgstr "(album kategóriák)"
 
-#: admin/facebook-tool.php:163 admin/meta_box.php:109
+#: admin/flagframe-tool.php:163 admin/meta_box.php:109
 #: admin/tinymce/window.php:78
 msgid "all galleries"
 msgstr "minden galéria"
 
-#: admin/facebook-tool.php:176 admin/meta_box.php:122
+#: admin/flagframe-tool.php:176 admin/meta_box.php:122
 msgid "Galleries order"
 msgstr "Galériák rendezése"
 
-#: admin/facebook-tool.php:182 admin/meta_box.php:128
+#: admin/flagframe-tool.php:182 admin/meta_box.php:128
 msgid "skin active by default"
 msgstr "felület használata alapértelmezettként"
 
-#: admin/facebook-tool.php:191 admin/tinymce/window.php:129
+#: admin/flagframe-tool.php:191 admin/tinymce/window.php:129
 msgid "Skin size"
 msgstr "Felület mérete"
 
-#: admin/facebook-tool.php:191 admin/tinymce/window.php:129
+#: admin/flagframe-tool.php:191 admin/tinymce/window.php:129
 msgid "blank for default"
 msgstr "hagyd üresen az alapértelmezetthez"
 
-#: admin/facebook-tool.php:192 admin/tinymce/window.php:130
+#: admin/flagframe-tool.php:192 admin/tinymce/window.php:130
 msgid "width"
 msgstr "szélesség"
 
-#: admin/facebook-tool.php:192 admin/tinymce/window.php:130
+#: admin/flagframe-tool.php:192 admin/tinymce/window.php:130
 msgid "height"
 msgstr "magasság"
 
-#: admin/facebook-tool.php:195
+#: admin/flagframe-tool.php:195
 msgid "Post ID"
 msgstr "Bejegyzés ID"
 
-#: admin/facebook-tool.php:195
+#: admin/flagframe-tool.php:195
 msgid "optional"
 msgstr "választható"
 
-#: admin/facebook-tool.php:199 admin/facebook-tool.php:221
-#: admin/facebook-tool.php:243 admin/facebook-tool.php:265
-msgid "Facebook Page Url"
-msgstr "Facebook Page Url"
+#: admin/flagframe-tool.php:199 admin/flagframe-tool.php:221
+#: admin/flagframe-tool.php:243 admin/flagframe-tool.php:265
+msgid "iFrame Page Url"
+msgstr "iFrame Page Url"
 
-#: admin/facebook-tool.php:204
-msgid "mp3 Gallery Facebook Page Generator"
-msgstr "mp3 Galéria Facebook Oldal Készítő"
+#: admin/flagframe-tool.php:204
+msgid "mp3 Gallery iFrame Page Generator"
+msgstr "mp3 Galéria iFrame Oldal Készítő"
 
-#: admin/facebook-tool.php:207 admin/facebook-tool.php:209
-#: admin/facebook-tool.php:229 admin/facebook-tool.php:231
+#: admin/flagframe-tool.php:207 admin/flagframe-tool.php:209
+#: admin/flagframe-tool.php:229 admin/flagframe-tool.php:231
 #: widgets/widgets.php:499
 msgid "Choose playlist"
 msgstr "Lejátszási lista választása"
 
-#: admin/facebook-tool.php:226
-msgid "Video Blog Gallery Facebook Page Generator"
-msgstr "Videó Blog Galéria Facebook oldal Készítő"
+#: admin/flagframe-tool.php:226
+msgid "Video Blog Gallery iFrame Page Generator"
+msgstr "Videó Blog Galéria iFrame oldal Készítő"
 
-#: admin/facebook-tool.php:248
-msgid "Banner Box Facebook Page Generator"
-msgstr "Banner Doboz Facebook Oldal Készítő"
+#: admin/flagframe-tool.php:248
+msgid "Banner Box iFrame Page Generator"
+msgstr "Banner Doboz iFrame Oldal Készítő"
 
-#: admin/facebook-tool.php:251
+#: admin/flagframe-tool.php:251
 msgid "Choose xml"
 msgstr "xml választása"
 
-#: admin/facebook-tool.php:253
+#: admin/flagframe-tool.php:253
 msgid "Choose XML"
 msgstr "xml választása"
 
@@ -2123,8 +2123,8 @@ msgid "Change options"
 msgstr "Beállítások változtatása"
 
 #: admin/settings.php:465
-msgid "Facebook page"
-msgstr "Facebook oldal"
+msgid "iFrame page"
+msgstr "iFrame oldal"
 
 #: admin/settings.php:469
 msgid "Update capabilities"
@@ -2566,7 +2566,7 @@ msgstr ""
 "Engedélyezi a felhasználónak a szabályok megváltoztatását más blog "
 "szerzőknél."
 
-#: facebook.php:68 facebook.php:80 facebook.php:98
+#: flagframe.php:68 flagframe.php:80 flagframe.php:98
 msgid "Can't find playlist"
 msgstr "Nem találok lejátszási listát"
 

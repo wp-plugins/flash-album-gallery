@@ -429,7 +429,7 @@ class flagWidget extends WP_Widget {
 					$description  =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->description, 'pic_' . $image->pid . '_description') )) );
 	
 					//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
-					$out = '<a href="'.plugins_url().'/flash-album-gallery/facebook.php?i='.$image->galleryid.'&amp;f='.$instance['skin'].'&amp;h='.$instance['fheight'].'" title="' . $image->title . '" ' . $thumbcode .'>';
+					$out = '<a href="'.plugins_url().'/flash-album-gallery/flagframe.php?i='.$image->galleryid.'&amp;f='.$instance['skin'].'&amp;h='.$instance['fheight'].'" title="' . $image->title . '" ' . $thumbcode .'>';
 					$out .= '<img src="'.$image->thumbURL.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$description.'" />';
 					echo $out . '</a>'."\n";
 				}
@@ -573,7 +573,7 @@ class flagVideoWidget extends WP_Widget {
 						$description  =  strip_tags( htmlspecialchars( stripslashes( $flv->post_content )) );
 
 						//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
-						$out = '<a href="'.plugins_url().'/flash-album-gallery/facebook.php?mv='.$flv->ID.'&amp;w=1&amp;h='.$instance['fheight'].'" title="' . $alttext . '" ' . $thumbcode .'>';
+						$out = '<a href="'.plugins_url().'/flash-album-gallery/flagframe.php?mv='.$flv->ID.'&amp;w=1&amp;h='.$instance['fheight'].'" title="' . $alttext . '" ' . $thumbcode .'>';
 						$out .= '<img src="'.$thumb.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$description.'" />';
 						echo $out . '</a>'."\n";
 					}

@@ -42,12 +42,11 @@ function FlAGClass(ExtendVar, skin_id, pic_id, slideshow) {
 					}
 				});
 			}
-			jQuery('#fancybox-wrap').on('click', '.grand_controls span', function(){
+			jQuery('#fancybox-wrap').off('click', '.grand_controls span').on('click', '.grand_controls span', function(){
 				skin_function[skin_id+'_fb'](jQuery(this).attr('rel'));
 					if(jQuery(this).hasClass('g_slideshow')){
 					jQuery(this).toggleClass('play stop');
 				}
-				jQuery('#fancybox-wrap').off('click', '.grand_controls span');
 			});
 		} else {
 			if((('undefined' == metaViewport) || !metaViewport) && ExtendVar == 'photoswipe'){
