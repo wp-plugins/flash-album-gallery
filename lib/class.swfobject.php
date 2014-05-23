@@ -84,8 +84,11 @@ class flag_swfobject {
 		$this->js .= "start : function() {";
 		$this->js .= $this->embedSWF;
 		$this->js .= "} };";
+
+		$this->js .= 'jQuery(function(){';
 		$this->js .= $this->id  . '.start();';
-	
+		$this->js .= "});";
+
 		return $this->js;
 	}
 	

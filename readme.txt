@@ -50,6 +50,10 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v4.17 - 23.05.2014 =
+* Fix conflict with Gmedia Gallery
+* Fix js error 'swfobject undefined'
+
 = v4.16 - 13.05.2014 =
 * Slider skin small fix
 * Remove Facebook page due to changed Facebook API
