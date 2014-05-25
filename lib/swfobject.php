@@ -161,7 +161,7 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 		$out .= $swfobject->javascript();
 	}
 		$out .= 'jQuery(function() { var fv = swfobject.getFlashPlayerVersion();';
-		$out .= 'if(fv.major<10 || (navigator.userAgent.toLowerCase().indexOf("android") > -1)) {	new FlAGClass(ExtendVar, "'.$skinID.'", false, false); }';
+		$out .= 'if(fv.major < 10 || (navigator.userAgent.toLowerCase().indexOf("android") > -1)) {	new FlAGClass(ExtendVar, "'.$skinID.'", false, false); }';
 		$out .= '});';
 		$out .= '/* ]]> */</script>';
 
