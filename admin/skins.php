@@ -362,7 +362,7 @@ $total_all_skins = count($all_skins);
 	$skins_xml = @simplexml_load_file($skins_remote_xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 	$all_skins_arr = $skins_by_type = array();
 	$skins_xml_error = false;
-	if(empty($skins_xml)){
+	if(empty($skins_xml) && function_exists('curl_init')){
 		$ch = curl_init($skins_remote_xml);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

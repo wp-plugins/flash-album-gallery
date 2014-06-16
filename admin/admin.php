@@ -87,7 +87,7 @@ class flagAdminPanel{
 				include_once ( dirname (__FILE__) . '/functions.php' );	// admin functions
 				include_once ( dirname (__FILE__) . '/manage.php' );		// flag_admin_manage_gallery
 				// Initate the Manage Gallery page
-				$flag->manage_page = new flagManageGallery ();
+				$flag->manage_page = new flagManageGallery();
 				// Render the output now, because you cannot access a object during the constructor is not finished
 				$flag->manage_page->controller();
 				
