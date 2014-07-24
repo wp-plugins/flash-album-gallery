@@ -62,9 +62,8 @@ class flagSlideshowWidget extends WP_Widget {
 				$alttext      =  $imageList[$key]['title'];
 				$description  =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->description, 'pic_' . $image->pid . '_description') )) );
 
-				//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
-				$out = '<a href="'.$imageList[$key]['link'].'" title="' . $image->title . '" ' . $thumbcode .'>';
-				$out .= '<img src="'.$image->thumbURL.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$description.'" />';
+				$out = '<a href="'.$imageList[$key]['link'].'" title="' . $image->title . '" ' . $thumbcode .' style="display:inline-block;text-align:center;width:'.$instance['width'].'px;height:'.$instance['height'].'px">';
+				$out .= '<img src="'.$image->imageURL.'" style="height:100%;width:auto;max-width:none;" title="'.$alttext.'" alt="'.$description.'" />';
 				echo $out . '</a>'."\n";
 
 			}
@@ -428,9 +427,8 @@ class flagWidget extends WP_Widget {
 					$alttext      =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->alttext, 'pic_' . $image->pid . '_alttext') )) );
 					$description  =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->description, 'pic_' . $image->pid . '_description') )) );
 	
-					//TODO:For mixed portrait/landscape it's better to use only the height setting, if widht is 0 or vice versa
-					$out = '<a href="'.plugins_url().'/flash-album-gallery/flagframe.php?i='.$image->galleryid.'&amp;f='.$instance['skin'].'&amp;h='.$instance['fheight'].'" title="' . $image->title . '" ' . $thumbcode .'>';
-					$out .= '<img src="'.$image->thumbURL.'" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$description.'" />';
+					$out = '<a href="'.plugins_url().'/flash-album-gallery/flagframe.php?i='.$image->galleryid.'&amp;f='.$instance['skin'].'&amp;h='.$instance['fheight'].'" title="' . $image->title . '" ' . $thumbcode .' style="display:inline-block;text-align:center;width:'.$instance['width'].'px;height:'.$instance['height'].'px">';
+					$out .= '<img src="'.$image->imageURL.'" style="height:100%;width:auto;max-width:none;" title="'.$alttext.'" alt="'.$description.'" />';
 					echo $out . '</a>'."\n";
 				}
 			}

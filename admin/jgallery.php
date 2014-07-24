@@ -37,8 +37,16 @@ if($altColors['FullWindow'] && !$isCrawler){
 $xml['alt'] .= '</style>';
 if(!$isCrawler){
 	if(!intval($flag_options['jAlterGalScript'])) {
-		wp_print_styles('fancybox');
-		wp_print_scripts('fancybox');
+		if(wp_style_is('fancybox', 'registered')){
+			wp_print_styles('fancybox');
+		} else{
+			wp_print_styles('fancybox-1.3.4');
+		}
+		if(wp_script_is('fancybox', 'registered')){
+			wp_print_scripts('fancybox');
+		} else{
+			wp_print_scripts('fancybox-1.3.4');
+		}
 		//$xml['alt'] .= '<style type="text/css" scoped="scoped">@import url("'.plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.css').'");</style>';
 		//$xml['alt'] .= "<script type='text/javascript' src='".plugins_url('/flash-album-gallery/admin/js/jquery.fancybox-1.3.4.pack.js')."'></script>";
 		$xml['alt'] .= "<script type='text/javascript'>var ExtendVar='fancybox', hitajax = '".plugins_url('/lib/hitcounter.php', dirname(__FILE__))."';</script>";

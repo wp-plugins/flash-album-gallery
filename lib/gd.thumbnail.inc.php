@@ -149,7 +149,7 @@ class flag_Thumbnail {
         }
 
 		// increase memory-limit if possible, GD needs this for large images
-		// @ini_set('memory_limit', '128M');
+		//@ini_set('memory_limit', '256M');
         
 		if($this->error == false) { 
         // Check memory consumption if file exists
@@ -161,20 +161,20 @@ class flag_Thumbnail {
 
             switch($this->format) {            	
                 case 'GIF':
-                    $this->oldImage = ImageCreateFromGif($this->fileName);
+                    $this->oldImage = imagecreatefromgif($this->fileName);
                     break;
                 case 'JPG':
-                       $this->oldImage = ImageCreateFromJpeg($this->fileName);
+                       $this->oldImage = imagecreatefromjpeg($this->fileName);
                     break;
                 case 'PNG':
-                    $this->oldImage = ImageCreateFromPng($this->fileName);
+                    $this->oldImage = imagecreatefrompng($this->fileName);
 					break;
             }
 			if (!$this->oldImage) { 
 				$this->errmsg = 'Create Image failed. Check memory limit';
 		        $this->error = true;
 		    } else {
-	            $size = GetImageSize($this->fileName);
+	            $size = getimagesize($this->fileName);
     	        $this->currentDimensions = array('width'=>$size[0],'height'=>$size[1]);
 	            $this->newImage = $this->oldImage;
 	        }
@@ -247,9 +247,9 @@ class flag_Thumbnail {
      *
      */
     function destruct() {
-        if(is_resource($this->newImage)) @ImageDestroy($this->newImage);
-        if(is_resource($this->oldImage)) @ImageDestroy($this->oldImage);
-        if(is_resource($this->workingImage)) @ImageDestroy($this->workingImage);
+        if(is_resource($this->newImage)) @imagedestroy($this->newImage);
+        if(is_resource($this->oldImage)) @imagedestroy($this->oldImage);
+        if(is_resource($this->workingImage)) @imagedestroy($this->workingImage);
     }
 
     /**
@@ -360,7 +360,7 @@ class flag_Thumbnail {
      */
     function showErrorImage() {
         header('Content-type: image/png');
-        $errImg = ImageCreate(220,25);
+        $errImg = imagecreate(620,25);
         $bgColor = imagecolorallocate($errImg,0,0,0);
         $fgColor1 = imagecolorallocate($errImg,255,255,255);
         $fgColor2 = imagecolorallocate($errImg,255,0,0);
@@ -381,11 +381,11 @@ class flag_Thumbnail {
         $this->newWidth = $Width;
         $this->newHeight = $Height;
 
-		if(function_exists("ImageCreateTrueColor")) {
-			$this->workingImage = ImageCreateTrueColor($this->newWidth,$this->newHeight);
+		if(function_exists("imagecreatetruecolor")) {
+			$this->workingImage = imagecreatetruecolor($this->newWidth,$this->newHeight);
 		}
 		else {
-			$this->workingImage = ImageCreate($this->newWidth,$this->newHeight);
+			$this->workingImage = imagecreate($this->newWidth,$this->newHeight);
 		}
 
 //		ImageCopyResampled(
@@ -422,11 +422,11 @@ class flag_Thumbnail {
 
         $this->calcImageSize($this->currentDimensions['width'],$this->currentDimensions['height']);
 
-		if(function_exists("ImageCreateTrueColor")) {
-			$this->workingImage = ImageCreateTrueColor($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
+		if(function_exists("imagecreatetruecolor")) {
+			$this->workingImage = imagecreatetruecolor($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
 		}
 		else {
-			$this->workingImage = ImageCreate($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
+			$this->workingImage = imagecreate($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
 		}
 
 //		ImageCopyResampled(
@@ -459,11 +459,11 @@ class flag_Thumbnail {
 
 	    $this->calcImageSizePercent($this->currentDimensions['width'],$this->currentDimensions['height']);
 
-		if(function_exists("ImageCreateTrueColor")) {
-			$this->workingImage = ImageCreateTrueColor($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
+		if(function_exists("imagecreatetruecolor")) {
+			$this->workingImage = imagecreatetruecolor($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
 		}
 		else {
-			$this->workingImage = ImageCreate($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
+			$this->workingImage = imagecreate($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
 		}
 
 		$this->ImageCopyResampled(
@@ -497,11 +497,11 @@ class flag_Thumbnail {
 	    $cropX = intval(($this->currentDimensions['width'] - $cropSize) / 2);
 	    $cropY = intval(($this->currentDimensions['height'] - $cropSize) / 2);
 
-	    if(function_exists("ImageCreateTrueColor")) {
-			$this->workingImage = ImageCreateTrueColor($cropSize,$cropSize);
+	    if(function_exists("imagecreatetruecolor")) {
+			$this->workingImage = imagecreatetruecolor($cropSize,$cropSize);
 		}
 		else {
-			$this->workingImage = ImageCreate($cropSize,$cropSize);
+			$this->workingImage = imagecreate($cropSize,$cropSize);
 		}
 
 		$this->imagecopyresampled(
@@ -541,11 +541,11 @@ class flag_Thumbnail {
 	    if($startX < 0) $startX = 0;
 	    if($startY < 0) $startY = 0;
 
-	    if(function_exists("ImageCreateTrueColor")) {
-			$this->workingImage = ImageCreateTrueColor($width,$height);
+	    if(function_exists("imagecreatetruecolor")) {
+			$this->workingImage = imagecreatetruecolor($width,$height);
 		}
 		else {
-			$this->workingImage = ImageCreate($width,$height);
+			$this->workingImage = imagecreate($width,$height);
 		}
 
 		$this->imagecopyresampled(
@@ -574,35 +574,35 @@ class flag_Thumbnail {
 	 * @param string $name
 	 */
 	function show($quality=100,$name = '') {
-	    switch($this->format) {
-	        case 'GIF':
-	            if($name != '') {
-	               @ImageGif($this->newImage,$name) or $this->error = true;
-	            }
-	            else {
-	               header('Content-type: image/gif');
-	               ImageGif($this->newImage);
-	            }
-	            break;
-	        case 'JPG':
-	            if($name != '') {
-	               @ImageJpeg($this->newImage,$name,$quality) or $this->error = true;
-	            }
-	            else {
-	               header('Content-type: image/jpeg');
-	               ImageJpeg($this->newImage,'',$quality);
-	            }
-	            break;
-	        case 'PNG':
-	            if($name != '') {
-	            	@ImagePng($this->newImage,$name) or $this->error = true;
-	            }
-	            else {
-	               header('Content-type: image/png');
-	               ImagePng($this->newImage);
-	            }
-	            break;
-	    }
+		switch($this->format) {
+				case 'GIF':
+						if($name != '') {
+							 imagegif($this->newImage,$name) or $this->error = true;
+						}
+						else {
+							 header('Content-type: image/gif');
+							 imagegif($this->newImage);
+						}
+						break;
+				case 'JPG':
+						if($name != '') {
+							 imagejpeg($this->newImage,$name,$quality) or $this->error = true;
+						}
+						else {
+							 header('Content-type: image/jpeg');
+							 imagejpeg($this->newImage, null, $quality);
+						}
+						break;
+				case 'PNG':
+						if($name != '') {
+							imagepng($this->newImage,$name) or $this->error = true;
+						}
+						else {
+							 header('Content-type: image/png');
+							 imagepng($this->newImage);
+						}
+						break;
+		}
 	}
 
 	/**
@@ -642,12 +642,12 @@ class flag_Thumbnail {
         $newHeight = $height + $reflectionHeight;
         $reflectedPart = $height * ($percent / 100);
 
-        $this->workingImage = ImageCreateTrueColor($width,$newHeight);
+        $this->workingImage = imagecreatetruecolor($width,$newHeight);
 
-        ImageAlphaBlending($this->workingImage,true);
+        imagealphablending($this->workingImage,true);
 
-        $colorToPaint = ImageColorAllocateAlpha($this->workingImage,255,255,255,0);
-        ImageFilledRectangle($this->workingImage,0,0,$width,$newHeight,$colorToPaint);
+        $colorToPaint = imagecolorallocatealpha($this->workingImage,255,255,255,0);
+        imagefilledrectangle($this->workingImage,0,0,$width,$newHeight,$colorToPaint);
 
         imagecopyresampled(
                             $this->workingImage,

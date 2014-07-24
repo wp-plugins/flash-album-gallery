@@ -50,6 +50,9 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v4.19 - 24.07.2014 =
+* Fixes and improvements
+
 = v4.18 - 16.06.2014 =
 * Replaced deprecated wordpress function
 * Fix error on Skins page when no cURL installed on server

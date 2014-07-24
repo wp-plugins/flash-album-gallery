@@ -138,8 +138,16 @@ class FlAG_shortcodes {
 			wp_print_scripts('flagscroll');
 		}
 		if ( $this->flag_fancybox ) {
-			wp_print_styles('fancybox');
-			wp_print_scripts('fancybox');
+			if(wp_style_is('fancybox', 'registered')){
+				wp_print_styles('fancybox');
+			} else{
+				wp_print_styles('fancybox-1.3.4');
+			}
+			if(wp_script_is('fancybox', 'registered')){
+				wp_print_scripts('fancybox');
+			} else{
+				wp_print_scripts('fancybox-1.3.4');
+			}
 		}
 		if ( $this->flag_add_script ) {
 			wp_print_scripts('flagscript');
