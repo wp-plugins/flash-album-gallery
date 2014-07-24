@@ -50,6 +50,9 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v4.20 - 24.07.2014 =
+* Added Flagallery Iframe page
+
 = v4.19 - 24.07.2014 =
 * Fixes and improvements
 

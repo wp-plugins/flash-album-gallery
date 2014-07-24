@@ -62,7 +62,7 @@ class flagAdminPanel{
 	    add_submenu_page( 'flag-overview' , __('FlAG Banner Box', 'flag'), __('Banner Box', 'flag'), 'FlAG Manage banners', 'flag-banner-box', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Manage skins', 'flag'), __('Skins', 'flag'), 'FlAG Change skin', 'flag-skins', array (&$this, 'show_menu'));
 	    add_submenu_page( 'flag-overview' , __('FlAG Change options', 'flag'), __('Options', 'flag'), 'FlAG Change options', 'flag-options', array (&$this, 'show_menu'));
-	    //add_submenu_page( 'flag-overview' , __('Flagallery in iframe', 'flag'), __('Iframe', 'flag'), 'Flagallery in iframe', 'flag-iframe', array (&$this, 'show_menu'));
+	    add_submenu_page( 'flag-overview' , __('Flagallery in iframe', 'flag'), __('Iframe', 'flag'), 'FlAG iFrame page', 'flag-iframe', array (&$this, 'show_menu'));
 		if ( flag_wpmu_site_admin() )
 			add_submenu_page( 'wpmu-admin.php' , __('GRAND Flash Album Gallery', 'flag'), __('Grand Flagallery', 'flag'), 'activate_plugins', 'flag-wpmu', array (&$this, 'show_menu'));
 
