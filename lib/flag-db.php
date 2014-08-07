@@ -33,14 +33,6 @@ class flagdb {
 	var $paged;
 
 	/**
-	 * PHP4 compatibility layer for calling the PHP5 constructor.
-	 * 
-	 */
-	function flagdb() {
-		return $this->__construct();
-	}
-
-	/**
 	 * Init the Database Abstraction layer for FlAGallery
 	 * 
 	 */	

@@ -159,6 +159,7 @@ function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
 	</items>
 </category>
 </gallery>';
+		//$content = str_replace(array('\\\'','\"'), array('\'','"'), $content);
 		// Save options
 		$flag_options = get_option('flag_options');
 		if(wp_mkdir_p(ABSPATH.$flag_options['galleryPath'].'playlists/banner/')) {
