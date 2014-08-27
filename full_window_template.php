@@ -33,6 +33,10 @@ if ( post_password_required( $post ) ) {
 <?php
 do_action('flag_footer_scripts');
 wp_print_scripts(array('flagscroll', 'flagscript'));
+
+$flag_options = get_option('flag_options');
+if(isset($flag_options['gp_jscode'])){ echo stripslashes($flag_options['gp_jscode']); }
 ?>
+
 </body>
 </html>

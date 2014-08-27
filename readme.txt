@@ -50,6 +50,9 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v4.22 - 27.08.2014 =
+* Now you can add Google Analytics Tracking Code for GRAND Pages in Flagallery Options
+
 = v4.21 - 07.08.2014 =
 * Fix for Widget
 

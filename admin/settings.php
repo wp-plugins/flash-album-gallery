@@ -137,6 +137,7 @@ function flag_admin_options()  {
 
 	<ul id="tabs" class="tabs">
 		<li class="selected"><a href="#" rel="imageoptions"><?php _e('Gallery Options', 'flag'); ?></a></li>
+		<li><a href="#" rel="grandpages"><?php _e('GRAND Pages', 'flag'); ?></a></li>
 		<?php if(current_user_can('administrator')){ ?>
 		<li><a href="#" rel="rControl"><?php _e('License Key & Remote Control', 'flag'); ?></a></li>
 		<?php } ?>
@@ -305,6 +306,18 @@ jQuery(document).ready(function() {
 			</table>
 			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
 		</form>	
+	</div>
+
+	<div id="grandpages" class="cptab">
+		<form name="grandpages"  method="post">
+			<?php wp_nonce_field('flag_settings'); ?>
+			<input type="hidden" name="page_options" value="gp_jscode" />
+			<h2><?php _e('GRAND Pages settings','flag'); ?></h2>
+			<h3><?php _e('Google Analytics Tracking Code','flag'); ?></h3>
+			<textarea name="gp_jscode" rows="5" cols="50"><?php if(isset($flag_options['gp_jscode'])){ echo stripslashes($flag_options['gp_jscode']); } ?></textarea>
+			<p><?php _e('Enter your Google analytics tracking Code here. It will automatically be added to GRAND Pages so google can track your visitors behavior.', 'flag'); ?></p>
+			<div class="submit"><input class="button-primary" type="submit" name="updateoption" value="<?php _e('Save Changes', 'flag'); ?>"/></div>
+		</form>
 	</div>
 
 <?php if(current_user_can('administrator')){ ?>

@@ -204,6 +204,8 @@ function flag_list_options() {
 	$flag_options['license_key']			= '';
 	$flag_options['useMediaRSS']			= false;							// activate the global Media RSS file
 
+	$flag_options['gp_jscode']		= '';							// GRAND Pages: google analytics code
+
 	// Sort Settings
 	$flag_options['albSort']			= 'title';						// Galleries Sort order
 	$flag_options['albSortDir']		= 'ASC';						  // Galleries Sort dir
