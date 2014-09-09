@@ -1,5 +1,5 @@
 <?php
-define( 'SHORTINIT', true );
+define('WP_INSTALLING', true);
 require_once( dirname(dirname(__FILE__)) . '/flag-config.php');
 
 if(!function_exists('sanitize_flagname')){

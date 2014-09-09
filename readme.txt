@@ -3,7 +3,7 @@ Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
 Tags: admin, flash, fullscreen gallery, gallery, image, images, image gallery, mp3, music, page, photo, photo gallery, slider, plugin, slideshow, video, widget, iphone gallery, best gallery, portfolio, banner rotator
 Requires at least: 3.0
-Tested up to: 3.9.1
+Tested up to: 4.0.0
 Stable tag: trunk
 
 Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your image galleries and media content
@@ -49,6 +49,9 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 
 == Changelog ==
+
+= v4.23 - 9.09.2014 =
+* Wordpress 4.0 compatibility
 
 = v4.22 - 27.08.2014 =
 * Now you can add Google Analytics Tracking Code for GRAND Pages in Flagallery Options

@@ -129,8 +129,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 									if ( !flagAdmin::can_manage_this_gallery($gallery->author) )
 										continue;
 									$name = ( empty($gallery->title) ) ? $gallery->name : esc_html(stripslashes($gallery->title));
-									if($flag->options['albSort'] == 'gid'){ $name = $gallery->gid.' - '.$name; }
-									if($flag->options['albSort'] == 'title'){ $name = $name.' ('.$gallery->gid.')'; }
+									if($flag->options['albSort'] == 'gid'){ $name = '#'.$gallery->gid.' - '.$name; }
+									if($flag->options['albSort'] == 'title'){ $name = $name.' (#'.$gallery->gid.')'; }
 									$sel = ($ingallery == $gallery->gid) ? 'selected="selected" ' : '';
 									echo '<option ' . $sel . 'value="' . $gallery->gid . '" >' . $name . '</option>' . "\n";
 							} ?>

@@ -3,12 +3,14 @@
  * Accepts file uploads from swfupload.
  *
  */
-define('WP_ADMIN', true);
+//define('WP_ADMIN', true);
+define('WP_INSTALLING', true);
 ini_set( 'display_errors', 0 );
 ini_set( 'error_reporting', 0 );
 
 // look up for the path
 require_once( dirname( dirname(__FILE__) ) . '/flag-config.php');
+require_once( dirname( dirname(__FILE__) ) . '/flag.php');
 
 // Flash often fails to send cookies with the POST or upload, so we need to pass it in GET or POST instead
 if ( is_ssl() && empty($_COOKIE[SECURE_AUTH_COOKIE]) && !empty($_REQUEST['auth_cookie']) )
