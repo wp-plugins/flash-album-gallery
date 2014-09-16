@@ -176,6 +176,9 @@ if(isset($_REQUEST['account'])){
 		if ( empty($args['title']) ) {
 			$args['title'] = str_replace(' ', '_', current_time('mysql'));
 		}
+		if ( !isset($args['description']) ) {
+			$args['description'] = '';
+		}
 		@ require_once (dirname(dirname(__FILE__)). '/admin/functions.php');
 		$defaultpath = $flag_options['galleryPath'];
 
