@@ -44,6 +44,7 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 	}
 
 	$data = '';
+	$showAlternate = false;
 	if(file_exists($skinpath . "/settings/settings.xml")) {
 		if ($settings_xml = @simplexml_load_file($skinpath . "/settings/settings.xml", 'SimpleXMLElement', LIBXML_NOCDATA)){
 			$data = $settings_xml->properties;
@@ -51,10 +52,13 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 			$data->siteurl = site_url();
 			$data->key = $flag_options['license_key'];
 			if(empty($wmode))
-				$wmode = (string) $settings_xml->properties->property0;
-			$flashBackcolor = (string) $settings_xml->properties->property1;
+				$wmode = (string) $data->property0;
+			$flashBackcolor = (string) $data->property1;
 			$flashBackcolor = str_replace('0x','',$flashBackcolor);
-			$swfmousewheel = (string) $settings_xml->properties->swfmousewheel;
+			$swfmousewheel = (string) $data->swfmousewheel;
+			if(isset($data->showAlternate) && ('false' != $data->showAlternate)){
+				$showAlternate = $data->showAlternate;
+			}
 		}
 	} else if(file_exists($skinpath . "_settings.php")) {
 		include( $skinpath . "_settings.php");
@@ -158,12 +162,19 @@ function flagShowFlashAlbum($galleryID, $name='Gallery', $width='', $height='', 
 	if(!flagGetUserNow($_SERVER['HTTP_USER_AGENT']) && !preg_match("/Android/i", $_SERVER['HTTP_USER_AGENT'])){
 		$out .= 'function json_xml_'.$skinID.'(e){ return '.$xml['json'].'; }';
 		$out .= 'var '.$skinID.' = jQuery("div#'.$skinID.'_jq").clone().wrap(document.createElement(\'div\')).parent().html();';
-		$out .= $swfobject->javascript();
+		if(!$showAlternate) {
+			$out .= $swfobject->javascript();
+		}
 	}
-		$out .= 'jQuery(function() { var fv = swfobject.getFlashPlayerVersion();';
-		$out .= 'if(fv.major < 10 || (navigator.userAgent.toLowerCase().indexOf("android") > -1)) {	new FlAGClass(ExtendVar, "'.$skinID.'", false, false); }';
-		$out .= '});';
-		$out .= '/* ]]> */</script>';
+	$out .= 'jQuery(function() {';
+	if($showAlternate) {
+		$out .= 'new FlAGClass(ExtendVar, "' . $skinID . '", false, false);';
+	} else{
+		$out .= 'var fv = swfobject.getFlashPlayerVersion();';
+		$out .= 'if(fv.major < 10 || (navigator.userAgent.toLowerCase().indexOf("android") > -1)) {	new FlAGClass(ExtendVar, "' . $skinID . '", false, false); }';
+	}
+	$out .= '});';
+	$out .= '/* ]]> */</script>';
 
 	$out = apply_filters('flag_show_flash_content', $out);
 

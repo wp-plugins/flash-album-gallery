@@ -125,11 +125,17 @@ function alternate_flag_e(skin_id, t, ExtendVar){
 
 					}
 				},
-				instance = jQuery('a.flag_pic_alt',this).photoSwipe(options);
+                flagBodyScrollTop,
+                flagBodyScrollLeft,
+				instance = jQuery('a.flag_pic_alt',this).on('click',function(){
+                    flagBodyScrollTop = jQuery(window).scrollTop();
+                    flagBodyScrollLeft = jQuery(window).scrollLeft();
+                }).photoSwipe(options);
 
 			// onBeforeShow - store a reference to our "say hi" button
 		  	instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onBeforeShow, function(e){
 		  		jQuery(window).scrollLeft(0).scrollTop(0);
+                jQuery('html').addClass('ps-noscroll');
 				jQuery('meta[name=viewport]').attr('content','width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0');
 				//window.location.hash = '#OpenGallery';
 			});
@@ -149,7 +155,10 @@ function alternate_flag_e(skin_id, t, ExtendVar){
 				} else {
 					jQuery('meta[name=viewport]').attr('content',metaViewport);
 				}
-				//window.location.hash = '#CloseGallery';
+                jQuery('html').removeClass('ps-noscroll');
+                setTimeout(function(){ jQuery(window).scrollTop(flagBodyScrollTop).scrollLeft(flagBodyScrollLeft); }, 0);
+                console.log(flagBodyScrollLeft, flagBodyScrollTop);
+                //window.location.hash = '#CloseGallery';
 			});
 			// onDisplayImage
 			instance.addEventHandler(window.Code.PhotoSwipe.EventTypes.onDisplayImage, function(e){

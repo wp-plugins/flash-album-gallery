@@ -50,6 +50,11 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v4.24 - 22.10.2014 =
+* Improved script for Alternate JS gallery
+* Fixed js error with widgets
+* Minima skin updated: New option to preview alternative gallery
+
 = v4.23 - 9.09.2014 =
 * Wordpress 4.0 compatibility
 

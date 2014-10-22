@@ -436,7 +436,7 @@ class flagWidget extends WP_Widget {
 
 		echo '</div>'."\n";
 		echo '<style type="text/css">.flag_fancybox img, .flag_newbox img { border: 1px solid #A9A9A9; margin: 0 2px 2px 0; padding: 1px; }</style>'."\n";
-		echo '<script type="text/javascript">var fbVar = "'.plugins_url('/', dirname(__FILE__)).'"; var fbW = '.$instance['fwidth'].', fbH = '.$instance['fheight'].'; waitJQ(fbVar,fbW,fbH);</script>'."\n";
+		echo '<script type="text/javascript" defer="defer">jQuery(function(){ var fbVar = "'.plugins_url('/', dirname(__FILE__)).'"; var fbW = '.$instance['fwidth'].', fbH = '.$instance['fheight'].'; waitJQ(fbVar,fbW,fbH); });</script>'."\n";
 		echo $after_widget;
 
 	}
@@ -584,7 +584,7 @@ class flagVideoWidget extends WP_Widget {
 
 		echo '</div>'."\n";
 		echo '<style type="text/css">.flag_fancyvid img { border: 1px solid #A9A9A9; margin: 0 2px 2px 0; padding: 1px; }</style>'."\n";
-		echo '<script type="text/javascript">var fvVar = "'.plugins_url('/', dirname(__FILE__)).'"; var fvW = '.$instance['fwidth'].', fvH = '.$instance['fheight'].'; waitJQv(fvVar,fvW,fvH);</script>'."\n";
+		echo '<script type="text/javascript" defer="defer">jQuery(function(){ var fvVar = "'.plugins_url('/', dirname(__FILE__)).'"; var fvW = '.$instance['fwidth'].', fvH = '.$instance['fheight'].'; waitJQv(fvVar,fvW,fvH); });</script>'."\n";
 		echo $after_widget;
 	}
 
