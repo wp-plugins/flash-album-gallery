@@ -158,7 +158,7 @@ if ( isset($_POST['updateskinoption']) ) {
 
 if ( isset($_POST['license_key']) ) {
 	check_admin_referer('skin-api');
-	$license_key = mysql_real_escape_string($_POST['license_key']);
+	$license_key = esc_sql($_POST['license_key']);
 	$flag_options['license_key'] = trim($license_key);
 	update_option('flag_options', $flag_options);
  	flagGallery::show_message(__('License Key Updated','flag'));
