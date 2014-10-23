@@ -13,6 +13,12 @@ function flag_tune($show_error=true, $skins_reset=false) {
 	$flag_options['skinsDirABS'] = $skins_dir;
 	$flag_options['skinsDirURL'] = WP_PLUGIN_URL . '/flagallery-skins/';
 	update_option('flag_options', $flag_options);
+
+	if(version_compare(get_option('flagVersion'), '4.25', '<')){
+		$skins_reset = true;
+		@unlink($skins_dir.'banner_default');
+		@unlink($skins_dir.'banner_widget_default');
+	}
 	
 	$errors = '';
 	// check for main folder

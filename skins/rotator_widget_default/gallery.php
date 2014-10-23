@@ -1,9 +1,11 @@
 <?php // Create XML output
-header("content-type:text/xml;charset=utf-8");
 preg_match('|^(.*?/)(wp-content)/|i', str_replace('\\', '/', __FILE__), $_m);
 require_once( $_m[1] . 'wp-load.php');
 $flag_options = get_option ('flag_options');
-$file = $_GET['playlist'];
+if(!isset($_GET['playlist'])){
+	die;
+}
+$file = basename($_GET['playlist']);
 $playlistPath = $_m[1].$flag_options['galleryPath'].'playlists/banner/'.$file.'.xml';
 if(file_exists($playlistPath)) {
 	require_once( FLAG_ABSPATH.'admin/banner.functions.php');
@@ -37,8 +39,8 @@ if(file_exists($playlistPath)) {
 	}
 	$newXML = preg_replace("|<items>.*?</items>|si", $content, $xml);
 	$newXML = preg_replace("|<properties>.*?<category|si", $properties, $newXML);
+	header("content-type:text/xml;charset=utf-8");
 	echo $newXML;
 } else {
-	echo 'no such file or directory:'.$playlistPath;
+	die;
 }
-?>

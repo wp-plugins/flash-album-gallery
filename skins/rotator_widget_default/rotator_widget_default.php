@@ -5,7 +5,7 @@ Skin URI:
 Description:
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 1.3
+Version: 1.4
 */
 
 function flagShowSkin_banner_widget_default($args) {
@@ -53,7 +53,7 @@ function flagShowSkin_banner_widget_default($args) {
 	$swfobject->add_flashvars( 'skinID', $skinID );
 	$swfobject->add_flashvars('playlist', $xml);
 	// create the output
-	$out = '<div class="grandbanner '.$wmode.'">' . $swfobject->output($alternate) . '</div>';
+	$out = '<div class="grandrotator noLightbox '.$wmode.'">' . $swfobject->output($alternate) . '</div>';
 	// add now the script code
 	$out .= "\n".'<script type="text/javascript" src="'.$js.'"></script>';
 	$out .= "\n".'<script type="text/javascript" defer="defer">';
@@ -66,4 +66,3 @@ function flagShowSkin_banner_widget_default($args) {
 }
 remove_all_filters( 'flagShowWidgetBannerSkin' );
 add_filter( 'flagShowWidgetBannerSkin', 'flagShowSkin_banner_widget_default' );
-?>

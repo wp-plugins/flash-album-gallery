@@ -5,7 +5,7 @@ Skin URI:
 Description: New version! Responsive layout. Themes available.
 Author: PGC
 Author URI: http://PhotoGalleryCreator.com
-Version: 2.2
+Version: 2.3
 */
 
 function flagShowSkin_banner_default($args) {

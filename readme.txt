@@ -50,10 +50,14 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v4.25 - 23.10.2014 =
+* Fixed vulnerability in banner skins
+* Rename banner to rotator
+
 = v4.24 - 22.10.2014 =
 * Improved script for Alternate JS gallery
 * Fixed js error with widgets
-* Minima skin updated: New option to preview alternative gallery
+* Minima skin updated: New option to preview alternative gallery (To update skins click Reset Settings button on Overview page)
 
 = v4.23 - 9.09.2014 =
 * Wordpress 4.0 compatibility

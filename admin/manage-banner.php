@@ -137,7 +137,7 @@ jQuery(document).ready(function(){
                             		echo '<option'.$cur.' value="'.dirname($skin_file).'">'.$skin_data['Name'].'</option>'."\n";
                             	}
                             } else {
-                                echo '<option value="banner_default">'.__("No Skins", "flag").'</option>';
+                                echo '<option value="rotator_default">'.__("No Skins", "flag").'</option>';
                             }
                           ?>
                         </select>&nbsp;&nbsp;<a id="skinOptions" class="thickbox" href="<?php echo FLAG_URLPATH.'admin/skin_options.php?show_options=1&amp;skin='.sanitize_flagname($playlist["skin"]).'&amp;TB_iframe=1&amp;width=600&amp;height=560'; ?>"><?php _e('Change Skin Options', 'flag' ); ?></a>

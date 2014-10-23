@@ -74,7 +74,7 @@ function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
 		$data = explode(',', $data);
 
 	$flag_options = get_option('flag_options');
-    $skin = isset($_POST['skinname'])? sanitize_flagname($_POST['skinname']) : 'banner_default';
+    $skin = isset($_POST['skinname'])? sanitize_flagname($_POST['skinname']) : 'rotator_default';
 	if(!$skinaction) {
     	$skinaction = isset($_POST['skinaction'])? sanitize_key($_POST['skinaction']) : 'update';
 	}
@@ -112,7 +112,7 @@ function flagSave_bPlaylist($title,$descr,$data,$file='',$skinaction='') {
 			$ban = get_post($id);
 			if($ban->ID) {
 				$url = wp_get_attachment_url($ban->ID);
-				if($skin == 'banner_default') {
+				if($skin == 'rotator_default') {
 					$path = get_attached_file($ban->ID);
 					$info = pathinfo($path);
 					$dir = $info['dirname'];

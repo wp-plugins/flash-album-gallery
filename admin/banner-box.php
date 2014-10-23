@@ -527,7 +527,7 @@ if($bannerlist) {
                             		echo '<option value="'.dirname($skin_file).'">'.$skin_data['Name'].'</option>'."\n";
                             	}
                             } else {
-                                echo '<option value="banner_default">'.__("No Skins", "flag").'</option>';
+                                echo '<option value="rotator_default">'.__("No Skins", "flag").'</option>';
                             }
                           ?>
                         </select>

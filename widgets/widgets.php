@@ -193,7 +193,7 @@ class flagBannerWidget extends WP_Widget {
 		require_once (dirname( dirname(__FILE__) ) . '/admin/banner.functions.php');
 
 		//Defaults
-		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Banner', 'xml' => '', 'width' => '100%', 'height' => '200', 'skin' => 'banner_widget_default') );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => 'Banner', 'xml' => '', 'width' => '100%', 'height' => '200', 'skin' => 'rotator_widget_default') );
 		$title  = esc_html( $instance['title'] );
 		$width  = esc_attr( $instance['width'] );
 		$height = esc_attr( $instance['height'] );
@@ -239,7 +239,7 @@ class flagBannerWidget extends WP_Widget {
 // register it
 add_action('widgets_init', create_function('', 'return register_widget("flagBannerWidget");'));
 
-function flagBannerWidget($xml, $w = '100%', $h = '200', $skin = 'banner_widget_default') {
+function flagBannerWidget($xml, $w = '100%', $h = '200', $skin = 'rotator_widget_default') {
 
 	echo flagBannerWidget::render_slideshow($xml, $w, $h, $skin);
 
