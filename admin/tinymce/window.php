@@ -13,8 +13,8 @@ global $flag, $flagdb, $wp_query;
 
 $all_skins = get_skins();
 $all_playlists = get_playlists();
-
-if($_REQUEST['riched'] == "false") {
+$riched = isset($_REQUEST['riched']);
+if($riched) {
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -38,11 +38,11 @@ if($_REQUEST['riched'] == "false") {
 
 	<base target="_self" />
 </head>
-<body id="link" onload="tinyMCEPopup.executeOnLoad('init();');document.body.style.display='';document.getElementById('galleries').focus();" style="display: none">
+<body id="link" onload="tinyMCEPopup.executeOnLoad('init();');document.body.style.display='';document.getElementById('galleries').focus();" style="display: none; font-size: 13px;">
 <?php } ?>
 <form name="FlAG" action="#">
 <?php 
-if($_REQUEST['riched'] == "false") {
+if($riched) {
 ?>
 	<div class="cptabs_wrapper">
 		<ul id="tabs" class="tabs">
@@ -196,7 +196,7 @@ if($_REQUEST['riched'] == "false") {
 			<input type="button" id="insert" name="insert" value="<?php _e("Insert", 'flag'); ?>" />
 		</div>
 	</div>
-<?php if($_REQUEST['riched'] == "false") { ?>
+<?php if($riched) { ?>
 	<script type="text/javascript">
 		/* <![CDATA[ */
 		var cptabs=new ddtabcontent("tabs");

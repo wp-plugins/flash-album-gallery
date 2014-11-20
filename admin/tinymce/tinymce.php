@@ -113,8 +113,8 @@ class add_flag_button {
 			});
 			function wpflagins() {
 				tb_show("<?php _e('Insert Flash Album with one or more galleries', 'flag'); ?>","<?php echo FLAG_URLPATH; ?>admin/tinymce/window.php?riched=false&TB_iframe=true&width=360&height=210",false);
-				jQuery("#TB_window").css({width:"360px", height:"210px", marginTop:"-120px", marginLeft:"-180px", top:"50%"});
-				jQuery("#TB_iframeContent").css({width:"360px", height:"210px"});
+				jQuery("#TB_window").css({width:"460px", height:"310px", marginTop:"-160px", marginLeft:"-230px", top:"50%"});
+				jQuery("#TB_iframeContent").css({width:"460px", height:"310px"});
 				jQuery(window).unbind("resize");
 			}
 			function bind_resize() {

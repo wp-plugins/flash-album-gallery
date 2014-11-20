@@ -47,8 +47,14 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 * Demo [Gallery Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
 * Demo [Facebook Gallery Integration](http://www.facebook.com/#!/PhotoGalleryCreator?sk=app_206659789371708)
 
+> Try also another gallery plugin created by me, which called **[Gmedia Gallery](https://wordpress.org/plugins/grand-media/)**
+
+
 
 == Changelog ==
+
+= v4.26 - 20.11.2014 =
+* Fixed few PHP Notices
 
 = v4.25 - 23.10.2014 =
 * Fixed vulnerability in banner skins

@@ -383,11 +383,11 @@ class flagManageGallery {
 		//TODO:Error message when update failed
 		//TODO:Combine update in one query per image
 		
-		$description = 	$_POST['description'];
-		$alttext = 		$_POST['alttext'];
-		$link = 		$_POST['link'];
+		$description = 	isset($_POST['description'])? $_POST['description'] : 0;
+		$alttext = 		isset($_POST['alttext'])? $_POST['alttext'] : 0;
+		$link = 		isset($_POST['link'])? $_POST['link'] : 0;
 		$exclude = 		isset($_POST['exclude'])? $_POST['exclude'] : 0;
-		$pictures = 	$_POST['pid'];
+		$pictures = 	isset($_POST['pid'])? $_POST['pid'] : 0;
 		$hitcounter = 	isset($_POST['hitcounter'])? $_POST['hitcounter'] : 0;
 		$total_votes = 	isset($_POST['total_votes'])? $_POST['total_votes'] : 0;
 

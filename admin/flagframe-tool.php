@@ -24,7 +24,7 @@ $i_skins = get_skins();
 $all_m_playlists = get_playlists();
 $all_v_playlists = get_v_playlists();
 $all_b_playlists = get_b_playlists();
-$fb_url = FLAG_URLPATH.'flagframe.php';
+$fb_url = plugins_url().'/flash-album-gallery/flagframe.php';
 if(file_exists(ABSPATH.'flagframe.php')) {
 	$fb_url = home_url().'/flagframe.php';
 }
