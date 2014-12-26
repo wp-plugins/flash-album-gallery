@@ -27,4 +27,6 @@ if ( !defined('WP_LOAD_PATH') ) {
 }
 
 // let's load WordPress
-require_once( WP_LOAD_PATH . 'wp-load.php');
+if ( ! function_exists('wp_unregister_GLOBALS') ) {
+	require_once( WP_LOAD_PATH . 'wp-load.php');
+}

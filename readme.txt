@@ -53,6 +53,10 @@ Now you can see "Views" of each photo in the gallery and visitors can "Like" ima
 
 == Changelog ==
 
+= v4.27 - 26.12.2014 =
+* Fixed few PHP Notices
+* Compatibility with EWW Image Optimizer plugin
+
 = v4.26 - 20.11.2014 =
 * Fixed few PHP Notices
 

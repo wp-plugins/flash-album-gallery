@@ -277,7 +277,7 @@ if($riched) {
 				tagtext = '[flagallery' + galleryid + album + gallerysize + galorderby + galorder + galexclude + skinname + skinalign + playlist + ']';
 				win.send_to_editor(tagtext);
 				win.bind_resize();
-<?php if($_REQUEST['riched'] != "false") { ?>
+<?php if(!$riched) { ?>
 				tinyMCEPopup.close();
 <?php } ?>
 			} else alert('Choose at least one gallery!');

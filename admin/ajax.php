@@ -269,3 +269,26 @@ function flag_ajax_file_browser() {
 
     die();
 }
+
+add_action('wp_ajax_flag_plupload_uploader', 'flag_ajax_plupload_uploader');
+function flag_ajax_plupload_uploader() {
+    global $flag;
+
+	//check for correct capability
+	if ( ! is_user_logged_in() ) {
+		die( 'Login failure. -1' );
+	}
+	//check for correct capability
+	if ( ! current_user_can( 'FlAG Upload images' ) ) {
+		die( 'You do not have permission to upload files. -2' );
+	}
+	//check for correct nonce
+	check_ajax_referer( 'flag_upload' );
+
+	include_once (FLAG_ABSPATH. 'admin/functions.php');
+	// get the gallery
+	$galleryID = (int) $_POST['galleryselect'];
+
+	echo flagAdmin::swfupload_image( $galleryID );
+	die();
+}

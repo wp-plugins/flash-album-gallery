@@ -50,8 +50,8 @@ class flagAdminPanel{
 		}
 		return $result;
 	}
-	
-	// integrate the menu	
+
+	// integrate the menu
 	function add_menu()  {
 		
 		add_menu_page( __('GRAND Flash Album Gallery overview','flag'), __('FlAGallery'), 'FlAG overview', 'flag-overview', array (&$this, 'show_menu'), FLAG_URLPATH .'admin/images/flag.png' );
