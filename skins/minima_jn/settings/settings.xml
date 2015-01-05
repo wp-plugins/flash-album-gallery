@@ -180,7 +180,7 @@
   <linkColor>0xffffff</linkColor>
   <descriptionFontSize>12</descriptionFontSize>
   <counterStatus>true</counterStatus>
-  <showAlternate>true</showAlternate>
+  <showAlternate>false</showAlternate>
 </properties>
 
 </panel>
