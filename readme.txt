@@ -26,26 +26,25 @@ With this gallery plugin you can easy upload images, create music and video play
 
 For more information read **[Review, Tutorials, FAQ](http://codeasily.com/wordpress-plugins/flag/ "Grand Flagallery Home Page")** and see demos created with "Grand Flagallery" WordPress Plugin.
 
-Image Link support now available in gallery skins. [See Slider Skin demo](http://photogallerycreator.com/grand-flagallery/slider-gallery-skin-for-wordpress/).
+Image Link support now available in gallery skins. [See Slider Skin demo](http://codeasily.com/portfolio-item/flagallery-slider-skin/).
 
-Responsive Banner Rotator! Full support of iPhone/iPad. Ideal for mobile themes. [See demo](http://skins.mypgc.co) in the site's header.
+Responsive Banner Rotator! Full support of iPhone/iPad. Ideal for mobile themes. [See demo](http://codeasily.com/portfolio-item/flagallery-nivoslider-banner-rotator/) in the site's header.
 
 Music/Video Player: Each instance (player copy) can play different file. All instances are connected between, so as soon as one start playing the previous is stopped automatically. Playlists also available.
 
-GRAND Pages - Full Window Gallery Template. You can display your image gallery in full window separate page (gallery template). [View Demo 1](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/), [View Demo 2](http://photogallerycreator.com/flagallery/3d-sphere-v2-0-full-window-mode/)
+GRAND Pages - Full Window Gallery Template. You can display your image gallery in full window separate page (gallery template). [View Demo 1](http://codeasily.com/flagallery/minima-skin/), [View Demo 2](http://codeasily.com/flagallery/sphere-3d-skin/)
 
 You have the opportunity to create image gallery, as separate pages. It looks very cool when you open image gallery, and gallery images occupies the entire page... such a large and beautiful. Wow! And there is a button with which you can go back to the previous page. You can also specify the name of the button and link.
 
-Added music playlist support in image gallery skins. Now your visitors can listen music while watching gallery. [View Demo](http://photogallerycreator.com/flagallery/optima-grandpage/)
+Added music playlist support in image gallery skins. Now your visitors can listen music while watching gallery. [View Demo](http://codeasily.com/flagallery/optima-skin/)
 
 Now you can see "Views" of each photo in the gallery and visitors can "Like" image and see image "Rating".
 
-* Demo [Photo Galleries](http://photogallerycreator.com/grand-flagallery/)
-* Demo [Full Window Gallery Template](http://photogallerycreator.com/flagallery/grand-pages-full-window-gallery-template/)
-* Demo [Video Galleries](http://photogallerycreator.com/flv-video-players/)
-* Demo [mp3 Music Players](http://photogallerycreator.com/mp3-music-players/)
-* Demo [Gallery Widgets](http://photogallerycreator.com/widgets-for-wordpress/)
-* Demo [Facebook Gallery Integration](http://www.facebook.com/#!/PhotoGalleryCreator?sk=app_206659789371708)
+* Demo [Photo Galleries](http://codeasily.com/portfolio/grand-flagallery-skins/)
+* Demo [Full Window Gallery Template](http://codeasily.com/flagallery/optima-skin/)
+* Demo [Video Galleries](http://codeasily.com/portfolio-item/flagallery-videoblog-pro-skin/)
+
+Also available mp3 players and widgets.
 
 > Try also another gallery plugin created by me, which called **[Gmedia Gallery](https://wordpress.org/plugins/grand-media/)**
 
