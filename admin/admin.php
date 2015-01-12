@@ -233,7 +233,7 @@ class flagAdminPanel{
 			case "flag-manage-images":
 			case "{$i18n}_page_flag-skins" :
 			case "{$i18n}_page_flag-options" :
-				$link = '<a href="http://codeasily.com/wordpress-plugins/flag" target="_blank">CodEasily.com</a>'; 
+				$link = '<a href="http://codeasily.com/wordpress-plugins/flag/" target="_blank">CodEasily.com</a>';
 			break;
 		}
 		
@@ -244,11 +244,10 @@ class flagAdminPanel{
 			$help .= "</div>\n";
 			$help .= '<h5>' . __('More Help & Info', 'flag') . '</h5>';
 			$help .= '<div class="metabox-prefs">';
-			$help .= '<a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/grand-flash-album-gallery-wordpress-plugin-video-tutorial" target="_blank">' . __('Grand Flagallery Video Tutorial', 'flag') . '</a>';
-			$help .= ' | <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/faq" target="_blank">' . __('FAQ', 'flag') . '</a>';
-			$help .= ' | <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/flag-review" target="_blank">' . __('Grand Flagallery Review', 'flag') . '</a>';
-			$help .= ' | <a href="http://codeasily.com/wordpress-plugins/flash-album-gallery/languages" target="_blank">' . __('Get your language pack', 'flag') . '</a>';
-			$help .= ' | <a href="http://photogallerycreator.com/2009/07/skins-for-flash-album-gallery" target="_blank">' . __('Skins for Grand Flagallery', 'flag') . '</a>';
+			$help .= '<a href="http://codeasily.com/community/topic/video-tutorials/" target="_blank">' . __('Grand Flagallery Video Tutorial', 'flag') . '</a>';
+			$help .= ' | <a href="http://codeasily.com/community/forum/flagallery-wordpress-plugin/" target="_blank">' . __('Forum', 'flag') . '</a>';
+			$help .= ' | <a href="http://codeasily.com/community/topic/language-files/" target="_blank">' . __('Get your language pack', 'flag') . '</a>';
+			$help .= ' | <a href="http://codeasily.com/portfolio/grand-flagallery-skins/" target="_blank">' . __('Skins for Grand Flagallery', 'flag') . '</a>';
 			$help .= "</div>\n";
 		} 
 		

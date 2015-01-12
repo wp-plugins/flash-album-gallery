@@ -22,7 +22,7 @@ if( isset($_POST['installskin']) ) {
 }
 if( isset($_POST['skinzipurl']) ) {
 	check_admin_referer('skin_install');
-	$url = 'http://photogallerycreator.com/depository/'.sanitize_flagname(basename($_POST['skinzipurl']));
+	$url = 'http://mypgc.co/depository/'.sanitize_flagname(basename($_POST['skinzipurl']));
 	$skins_dir = $flag_options['skinsDirABS'];
 	$mzip = download_url($url);
 	if(is_wp_error($mzip)){
@@ -382,7 +382,7 @@ $total_all_skins = count($all_skins);
 		}
 	} else {
 		//$skins_xml_error = __('URL file-access is disabled in the server configuration.', 'flag');
-		$skins_xml_error = __('cURL library is not installed on your server.','flag').'<br>'.__('Download skins from http://photogallerycreator.com', 'flag');
+		$skins_xml_error = __('cURL library is not installed on your server.','flag').'<br>'.__('Download skins from http://codeasily.com/portfolio/grand-flagallery-skins/', 'flag');
 	}
 
 

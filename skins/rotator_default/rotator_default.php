@@ -4,7 +4,7 @@ bSkin Name: Default Banner Player
 Skin URI:
 Description: New version! Responsive layout. Themes available.
 Author: PGC
-Author URI: http://PhotoGalleryCreator.com
+Author URI: http://mypgc.co
 Version: 2.3
 */
 

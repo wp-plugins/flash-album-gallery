@@ -4,7 +4,7 @@ mSkin Name: Compact MP3 Player
 Skin URI:
 Description:
 Author: PGC
-Author URI: http://PhotoGalleryCreator.com
+Author URI: http://mypgc.co
 Version: 1.4
 */
 

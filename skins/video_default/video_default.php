@@ -4,7 +4,7 @@ vSkin Name: Default Mini VideoBlog
 Skin URI:
 Description:
 Author: PGC
-Author URI: http://PhotoGalleryCreator.com
+Author URI: http://mypgc.co
 Version: 1.4
 */
 

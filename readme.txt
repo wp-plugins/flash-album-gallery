@@ -52,6 +52,9 @@ Also available mp3 players and widgets.
 
 == Changelog ==
 
+= v4.28 - 12.01.2015 =
+* Fixed urls to install skins and other plugin's website links
+
 = v4.27 - 26.12.2014 =
 * Fixed few PHP Notices
 * Compatibility with EWW Image Optimizer plugin
