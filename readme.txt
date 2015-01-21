@@ -52,6 +52,9 @@ Also available mp3 players and widgets.
 
 == Changelog ==
 
+= v4.29 - 21.01.2015 =
+* Fixed warning on Skins page when open_basedir = 'Off'
+
 = v4.28 - 12.01.2015 =
 * Fixed urls to install skins and other plugin's website links
 
