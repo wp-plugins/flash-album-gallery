@@ -124,6 +124,8 @@ function flag_save_album() {
 		die('-1');	
 		
 	$g = array();
+	$album_id = 0;
+	$album_name = '';
 	if(isset($_POST['form']))
 		parse_str($_POST['form']);
 	$result = false;
@@ -134,7 +136,7 @@ function flag_save_album() {
 			$galstring = implode(',', $g);
 		else
 			$galstring = '';
-		$result = $wpdb->query( $wpdb->prepare("UPDATE `{$wpdb->flagalbum}` SET `name` = %s, `categories` = %s WHERE `id` = %s", $album_name, $galstring, $album_id) );
+		$result = $wpdb->query( $wpdb->prepare("UPDATE {$wpdb->flagalbum} SET name = %s, categories = %s WHERE id = %s", $album_name, $galstring, $album_id) );
 	}
 
 	if($result) {
@@ -160,7 +162,7 @@ function flag_delete_album() {
 
 	$result = false;
 	if(isset($_POST['post'])) {
-		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM `{$wpdb->flagalbum}` WHERE `id` = %d", $_POST['post']) );
+		$result = $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->flagalbum} WHERE id = %d", $_POST['post']) );
 	}
 
 	if($result) {

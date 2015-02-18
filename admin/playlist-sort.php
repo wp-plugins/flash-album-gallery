@@ -14,7 +14,7 @@ function flag_playlist_order($playlist = 'deprecated'){
 ?>
 <script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jquery.tablednd_0_5.js"></script>
 <script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jquery.tablesorter.js"></script>
-<div class="wrap">
+<div class="flag-wrap">
 			<h2><?php _e('Sort Gallery', 'flag'); ?></h2>
 
 	<div class="alignright tablenav" style="margin-bottom: -36px;">
@@ -59,7 +59,7 @@ jQuery(document).ready(function($) {
 });
 /*]]>*/
 </script>
-<table id="flag-listitems" class="widefat fixed" cellspacing="0" >
+<table id="flag-listitems" class="widefat fixed flag-table" cellspacing="0" >
 
 	<thead>
 	<tr>

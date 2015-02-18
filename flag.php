@@ -3,7 +3,7 @@
 Plugin Name: GRAND Flash Album Gallery
 Plugin URI: http://codeasily.com/wordpress-plugins/flag/
 Description: The Grand Flagallery plugin - provides a comprehensive interface for managing photos and images through a set of admin pages, and it displays photos in a way that makes your web site look very professional.
-Version: 4.29
+Version: 4.30
 Author: Rattus
 Author URI: http://codeasily.com/
 
@@ -23,7 +23,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if (!class_exists('flagLoad')) {
 class flagLoad {
 
-	var $version = '4.29';
+	var $version = '4.30';
 	var $dbversion   = '2.75';
 	var $minium_WP   = '3.0';
 	var $minium_WPMU = '3.0';
@@ -289,12 +289,6 @@ class flagLoad {
 	}
 
 	function activate() {
-		//Since version 0.40 it's tested only with PHP5.2, currently we keep PHP4 support a while
-        //if (version_compare(PHP_VERSION, '5.2.0', '<')) {
-        //        deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
-        //        wp_die("Sorry, but you can't run this plugin, it requires PHP 5.2 or higher.");
-		//		return;
-        //}
 		include_once (dirname (__FILE__) . '/admin/flag_install.php');
 		// check for tables
 		flag_install();

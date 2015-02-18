@@ -106,7 +106,7 @@ function flag_manage_gallery_main() {
 	
 	//-->
 	</script>
-	<div class="wrap">
+	<div class="flag-wrap" style="margin-top:40px;">
 		<h2><?php _e('Gallery Overview', 'flag'); ?></h2>
 		<form class="search-form" action="" method="get">
 		<p class="search-box">
@@ -148,18 +148,18 @@ function flag_manage_gallery_main() {
 		<?php endif; ?>
 		
 		</div>
-		<table class="widefat" cellspacing="0">
+		<table class="widefat flag-table" cellspacing="0">
 			<thead>
 			<tr>
 				<th scope="col" class="cb column-cb" >
 					<input type="checkbox" onclick="checkAll(document.getElementById('editgalleries'));" name="checkall"/>
 				</th>
-				<th scope="col" ><a href="<?php echo $flag->manage_page->base_page . "&galsort=gid&sortdir={$ascdesc}&paged=" . $_GET['paged']; ?>"><?php _e('ID'); ?></a></th>
-				<th scope="col" width="25%"><a href="<?php echo $flag->manage_page->base_page . "&galsort=title&sortdir={$ascdesc}&paged=" . $_GET['paged']; ?>"><?php _e('Title', 'flag'); ?></a></th>
-				<th scope="col" width="55%"><?php _e('Description', 'flag'); ?></th>
-				<th scope="col" ><?php _e('Author', 'flag'); ?></th>
-				<th scope="col" ><?php _e('Quantity', 'flag'); ?></th>
-				<th scope="col" ><?php _e('Action', 'flag'); ?></th>
+				<th scope="col"><a href="<?php echo $flag->manage_page->base_page . "&galsort=gid&sortdir={$ascdesc}&paged=" . $_GET['paged']; ?>"><?php _e('ID'); ?></a></th>
+				<th scope="col"><a href="<?php echo $flag->manage_page->base_page . "&galsort=title&sortdir={$ascdesc}&paged=" . $_GET['paged']; ?>"><?php _e('Title', 'flag'); ?></a></th>
+				<th scope="col"><?php _e('Description', 'flag'); ?></th>
+				<th scope="col"><?php _e('Author', 'flag'); ?></th>
+				<th scope="col"><?php _e('Quantity', 'flag'); ?></th>
+				<th scope="col"><?php _e('Action', 'flag'); ?></th>
 			</tr>
 			</thead>
 			<tbody>
@@ -178,7 +178,7 @@ if($gallerylist) {
 				<?php } ?>
 			</th>
 			<td scope="row"><?php echo $gid; ?></td>
-			<td>
+			<td style="width:30%">
 				<?php if (flagAdmin::can_manage_this_gallery($gallery->author)) { ?>
 					<a href="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=edit&amp;gid=" . $gid, 'flag_editgallery')?>" class='edit' title="<?php _e('Edit'); ?>" >
 						<?php echo esc_html(flagGallery::i18n($name)); ?>
@@ -188,10 +188,10 @@ if($gallerylist) {
 				<?php }
 				if($gallery->status){ echo ' <b>- '.__('Draft', 'flag').'</b>'; }?>
 			</td>
-			<td><?php echo esc_html(flagGallery::i18n($gallery->galdesc)); ?>&nbsp;</td>
+			<td style="width:30%"><?php echo esc_html(flagGallery::i18n($gallery->galdesc)); ?>&nbsp;</td>
 			<td><?php echo $author_user->display_name; ?></td>
 			<td><?php echo $gallery->counter; ?></td>
-			<td>
+			<td style="white-space:nowrap;">
 				<?php if (flagAdmin::can_manage_this_gallery($gallery->author)) : ?>
 					<a href="<?php echo wp_nonce_url( $flag->manage_page->base_page . "&amp;mode=delete&amp;gid=" . $gid, 'flag_editgallery')?>" class="delete" onclick="javascript:check=confirm( '<?php _e("Delete this gallery ?",'flag')?>');if(check==false) return false;"><?php _e('Delete','flag'); ?></a>
 					<?php if($gallery->status) { ?>
@@ -226,7 +226,7 @@ jQuery(document).ready(function(){
 		accept: ".acat",
 		hoverClass: "active",
 		drop: function( event, ui ) {
-			jQuery( this ).find(jQuery(ui.draggable)).addClass( "highlight_new" ).attr("id", "g_"+jQuery(ui.draggable).attr('rel'));
+			jQuery( this ).find(jQuery(ui.draggable)).addClass( "highlight_new" ).attr("id", "g_"+jQuery(ui.draggable).attr('rel')).removeAttr('style');
 			jQuery( this ).find( "p" ).hide();
 		}
 	});
@@ -258,7 +258,7 @@ jQuery(document).ready(function(){
 });
 /*]]>*/
 </script>
-	<div class="wrap">
+	<div class="flag-wrap">
 		<h2><?php _e('Albums', 'flag'); ?></h2>
 		<form method="post" style="width: 658px; float: left;" action="<?php echo admin_url('admin.php?page=flag-manage-gallery'); ?>"><?php wp_nonce_field('flag_album'); ?>
 		<p><input type="text" id="album_name" name="album_name" value="" /> &nbsp; <input type="submit" value="<?php _e('Create New Album','flag'); ?>" class="button-primary" /></p></form>
@@ -272,7 +272,7 @@ if($albumlist) {
 	foreach($albumlist as $album) {
 ?>
 				<div class="album">
-					<div class="album_name"><span class="albID"><?php echo $album->id; ?>.</span> <form method="post" id="albName_<?php echo $album->id; ?>" name="albName_<?php echo $album->id; ?>"><input type="text" name="album_name" value="<?php echo esc_html($album->name); ?>" /><input type="hidden" name="album_id" value="<?php echo $album->id; ?>" /></form> <span class="album_actions"><span class="alb_msg"></span>&nbsp;&nbsp;&nbsp;<span class="del flag-ajax-post" data-action="flag_delete_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-post="<?php echo $album->id; ?>"><?php _e('Delete', 'flag'); ?></span>&nbsp;<span class="album_save flag-ajax-post button" data-action="flag_save_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-form="albName_<?php echo $album->id; ?>"><strong><?php _e('Save', 'flag'); ?></strong></span></span></div>
+					<div class="album_name"><span class="albID"><?php echo $album->id; ?>.</span> <form method="post" id="albName_<?php echo $album->id; ?>" name="albName_<?php echo $album->id; ?>"><input type="text" name="album_name" value="<?php echo esc_html($album->name); ?>" /><input type="hidden" name="album_id" value="<?php echo $album->id; ?>" /></form> <span class="album_actions"><span class="alb_msg"></span>&nbsp;&nbsp;&nbsp;<span class="button del flag-ajax-post" data-action="flag_delete_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-post="<?php echo $album->id; ?>"><?php _e('Delete', 'flag'); ?></span>&nbsp;&nbsp;<span class="album_save flag-ajax-post button-primary" data-action="flag_save_album" data-_ajax_nonce="<?php echo $nonce; ?>" data-form="albName_<?php echo $album->id; ?>"><strong><?php _e('Save', 'flag'); ?></strong></span></span></div>
 					<div class="album_categoties">
 					<?php $galids = explode(',',$album->categories);
 						if($album->categories) {

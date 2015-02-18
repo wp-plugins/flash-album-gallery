@@ -14,7 +14,7 @@ function flag_b_playlist_order($playlist = 'deprecated'){
 ?>
 <script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jquery.tablednd_0_5.js"></script>
 <script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jquery.tablesorter.js"></script>
-<div class="wrap">
+<div class="flag-wrap">
 			<h2><?php _e('Sort Gallery', 'flag'); ?></h2>
 
 	<div class="alignright tablenav" style="margin-bottom: -36px;">
@@ -59,22 +59,22 @@ jQuery(document).ready(function($) {
 });
 /*]]>*/
 </script>
-<table id="flag-listitems" class="widefat fixed" cellspacing="0" >
+<table id="flag-listitems" class="widefat fixed flag-table" cellspacing="0" >
 
 	<thead>
 	<tr>
 			<th class="header" width="54"><p style="margin-right:-10px;"><?php _e('ID', 'flag'); ?></p></th>
-			<th width="50"><div><?php _e('Thumb', 'flag'); ?></div></th>
+			<th width="50"><p><?php _e('Thumb', 'flag'); ?></p></th>
 			<th class="header"><p><?php _e('Filename', 'flag'); ?></p></th>
 			<th class="header"><p><?php _e('Title', 'flag'); ?></p></th>
 	</tr>
 	</thead>
 	<tfoot>
 	<tr>
-			<th><?php _e('ID', 'flag'); ?></th>
-			<th><?php _e('Thumb', 'flag'); ?></th>
-			<th><?php _e('Filename', 'flag'); ?></th>
-			<th><?php _e('Title', 'flag'); ?></th>
+			<th><p><?php _e('ID', 'flag'); ?></p></th>
+			<th><p><?php _e('Thumb', 'flag'); ?></p></th>
+			<th><p><?php _e('Filename', 'flag'); ?></p></th>
+			<th><p><?php _e('Title', 'flag'); ?></p></th>
 	</tr>
 	</tfoot>
 	<tbody id="listitems">
@@ -94,7 +94,7 @@ if(count($items_a)) {
 		?>
 		<tr id="$ban-<?php echo $ban->ID; ?>" class="<?php echo $alternate; ?> iedit"  valign="top">
 				<td scope="row"><input type="hidden" name="item_a[<?php echo $ban->ID; ?>][ID]" value="<?php echo $ban->ID; ?>" /><strong><?php echo $ban->ID; ?></strong></td>
-				<td width="50"><a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo $url; ?>"><img id="thumb-<?php echo $ban->ID; ?>" src="<?php echo $thumb; ?>" width="40" height="40" alt="" /></a></td>
+				<td width="100"><a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo $url; ?>"><img id="thumb-<?php echo $ban->ID; ?>" src="<?php echo $thumb; ?>" width="80" style="height:auto" alt="" /></a></td>
 				<td><?php echo basename($url); ?></td>
 				<td><?php echo esc_html(stripslashes($ban->post_title)); ?></td>
 		</tr>

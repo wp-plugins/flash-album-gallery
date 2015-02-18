@@ -1,29 +1,25 @@
 body {
-font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px;
+font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;
 background:#f1f1f1;
 padding:0;
 margin:8px 8px 0 8px;
 }
 
 html {background:#f1f1f1;}
-td {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px;}
+td {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
 textarea {resize:none;outline:none;}
 a:link, a:visited {color:black;}
 a:hover {color:#2B6FB6;}
 .nowrap {white-space: nowrap}
-
+table {width:100%; border-collapse:collapse;}
+table td { padding:4px 0;}
 /* Forms */
-fieldset {margin:0; padding:4px; border:1px solid #dfdfdf; font-family:Verdana, Arial; font-size:10px;}
+fieldset {margin:0; padding:10px; border:1px solid #dfdfdf; font-family:Verdana, Arial; font-size:12px;}
 legend {color:#2B6FB6; font-weight:bold;}
-label.msg {display:none;}
-label.invalid {color:#EE0000; display:inline;}
-input.invalid {border:1px solid #EE0000;}
-input {background:#FFF; border:1px solid #dfdfdf;}
-input, select, textarea {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px;}
-input, select, textarea {border:1px solid #dfdfdf;}
-input.radio {border:1px none #000000; background:transparent; vertical-align:middle;}
-input.checkbox {border:1px none #000000; background:transparent; vertical-align:middle;}
-.input_noborder {border:0;}
+input {background:#FFF; border:1px solid #dfdfdf; padding:3px 6px;}
+select {padding:3px 6px;}
+input, select, textarea {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+input, select, textarea {border:1px solid #dfdfdf; width:100%;}
 
 /* Buttons */
 #insert, #cancel, #apply, .mceActionPanel .button, input.mceButton, .updateButton {
@@ -34,31 +30,19 @@ input.checkbox {border:1px none #000000; background:transparent; vertical-align:
 	font-size: 11px;
 	width:94px; 
 	height:24px;
-	background:url(img/fade-butt.png) 0 0;
+	background-image:url(img/fade-butt.png);
 	color:#000;
 	cursor:pointer;
 	-moz-border-radius: 3px;
 	-khtml-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
+	text-shadow: none !important;
 }
 #insert:hover, #cancel:hover, input.mceButton:hover, .updateButton:hover,
 #insert:focus, #cancel:focus, input.mceButton:focus, .updateButton:focus {
 	border: 1px solid #555;
 }
-
-
-/* Charmap */
-table.charmap {border:1px solid #AAA; text-align:center}
-td.charmap, #charmap a {width:18px; height:18px; color:#000; border:1px solid #AAA; text-align:center; font-size:12px; vertical-align:middle; line-height: 18px;}
-#charmap a {display:block; color:#000; text-decoration:none; border:0}
-#charmap a:hover {background:#CCC;color:#2B6FB6}
-#charmap #codeN {font-size:10px; font-family:Arial,Helvetica,sans-serif; text-align:center}
-#charmap #codeV {font-size:40px; height:80px; border:1px solid #AAA; text-align:center}
-#charmap #charmapView {background-color:#fff;}
-
-/* Source */
-.wordWrapCode {vertical-align:middle; border:1px none #000000; background:transparent;}
 .mceActionPanel {margin-top:5px;}
 
 /* Tabs classes */
@@ -76,43 +60,13 @@ div.tabs a:link, div.tabs a:visited, div.tabs a:hover {color:black;}
 .panel_wrapper div.current {display:block; width:100%; height:300px; overflow:visible;}
 .panel_wrapper {border:1px solid #919B9C; border-top:0px; padding:10px; padding-top:5px; clear:both; background:white;}
 
-/* Columns */
-.column {float:left;}
-.properties {width:100%;}
-.properties .column1 {}
-.properties .column2 {text-align:left;}
-
-/* Titles */
-h1, h2, h3, h4 {color:#2B6FB6; margin:0; padding:0; padding-top:5px;}
-h3 {font-size:14px;}
-.title {font-size:12px; font-weight:bold; color:#2B6FB6;}
-
-/* Dialog specific */
-#link .panel_wrapper, #link div.current {height:125px;}
-#image .panel_wrapper, #image div.current {height:200px;}
-#plugintable thead {font-weight:bold; background:#DDD;}
-#plugintable, #about #plugintable td {border:1px solid #919B9C;}
-#plugintable {width:96%; margin-top:10px;}
-#pluginscontainer {height:290px; overflow:auto;}
-#colorpicker #preview {float:right; width:50px; height:14px;line-height:1px; border:1px solid black; margin-left:5px;}
-#colorpicker #colors {float:left; border:1px solid gray; cursor:crosshair;}
-#colorpicker #light {border:1px solid gray; margin-left:5px; float:left;width:15px; height:150px; cursor:crosshair;}
-#colorpicker #light div {overflow:hidden;}
-#colorpicker #previewblock {float:right; padding-left:10px; height:20px;}
-#colorpicker .panel_wrapper div.current {height:175px;}
-#colorpicker #namedcolors {width:150px;}
-#colorpicker #namedcolors a {display:block; float:left; width:10px; height:10px; margin:1px 1px 0 0; overflow:hidden;}
-#colorpicker #colornamecontainer {margin-top:5px;}
-#colorpicker #picker_panel fieldset {margin:auto;width:325px;}
-
-
-
 ul#tabs{
 	display: block;
 	background:#F1F1F1 none repeat scroll 0%;
-	font-size:12px;
+	font-size:14px;
 	overflow:hidden;
 	width: auto;
+	height:auto;
     padding: 0 0 0 5px;
 	/* border-bottom: 1px solid #000000; */
 	margin-bottom: 0;
@@ -137,7 +91,7 @@ ul.tabs:after { /* clearing without presentational markup, IE gets extra treatme
 }
 ul.tabs li {
     float: left;
-    padding: 2px 3px;
+    padding: 3px 6px 5px;
     margin: 2px 2px -1px 1px !important;
 	text-decoration: none;
 	list-style: none;
@@ -155,6 +109,7 @@ ul.tabs a {
     text-decoration: none;
     white-space: nowrap; /* required in IE 6 */    
     outline: 0; /* prevent dotted border in Firefox */
+	font-size: 12px;
 }
 ul.tabs .selected{
 	background: #6D6D6D url(../images/menu-bits.gif) repeat-x scroll left top;
@@ -207,4 +162,9 @@ ul.tabs a:hover, ul.tabs a:focus, ul.tabs a:active { /* @ Opera, we need to be e
     display: inline-block;
 }
 
-.cptabs_wrapper .cptab { border:1px solid #919B9C; height:125px; padding: 5px; background: #fefefe; }
+.cptabs_wrapper .cptab { border:1px solid #919B9C; padding: 15px; background: #fefefe; }
+
+li.albumchoosed { display:none !important; }
+.selectize-control.multi input {width:100% !important;}
+.selectize-control.multi input {width:100% !important;}
+.selectize-control.multi .has-items input {width:4px !important;}

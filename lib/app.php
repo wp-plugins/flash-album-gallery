@@ -12,11 +12,10 @@ if(isset($_REQUEST['account'])){
 	$flag_options = get_option ('flag_options');
 	if(empty($flag_options['access_key']) || $account->access_key != $flag_options['access_key']){ die('{"status":"key_error"}'); }
 
+	$r['flag_version'] = get_option('flagVersion');
 	$current_plugins = get_option('active_plugins', array());
 	if (!in_array('flash-album-gallery/flag.php', (array) $current_plugins)) {
-		if(isset($account->add_category)) {
-			die('{"status":"gallery_error"}');
-		}
+		$r['status'] = 'plugin_error';
 		echo json_encode($r);
 		die();
 	}
@@ -219,7 +218,6 @@ if(isset($_REQUEST['account'])){
 		}
 	}
 	$r['data'] = stripslashes_deep($r['data']);
-	$r['flag_version'] = get_option('flagVersion');
 
 	echo json_encode($r);
 	die();

@@ -181,7 +181,7 @@ jQuery(document).ready( function() {
 //]]>
 </script>
 
-<div class="wrap">
+<div class="flag-wrap">
 
 <?php if ($is_search) :?>
 <h2><?php printf( __('Search results for &#8220;%s&#8221;', 'flag'), esc_html( stripslashes(get_search_query()) ) ); ?></h2>
@@ -227,22 +227,26 @@ jQuery(document).ready( function() {
 		<div class="handlediv" title="Click to toggle"><br/></div>
 		<h3 class="hndle"><span><?php _e('Gallery settings', 'flag'); ?></span></h3>
 		<div class="inside">
-			<table class="form-table" >
+			<table class="flag-form-table" >
 				<tr>
-					<th align="left" scope="row"><?php _e('Title', 'flag'); ?>:</th>
+					<th align="right" scope="row"><?php _e('Title', 'flag'); ?>:</th>
+					<td> </td>
 					<td align="left"><input type="text" size="50" name="title" value="<?php echo esc_html($gallery->title); ?>"  /></td>
 				</tr>
 				<tr>
-					<th align="left" scope="row"><?php _e('Description', 'flag'); ?>:</th> 
+					<th align="right" valign="top" scope="row"><?php _e('Description', 'flag'); ?>:</th>
+					<td> </td>
 					<td align="left"><textarea name="gallerydesc" cols="30" rows="3" style="width: 95%" ><?php echo esc_html($gallery->galdesc); ?></textarea></td>
 				</tr>
 				<tr>
-					<th align="left" scope="row"><?php _e('Path', 'flag'); ?>:</th> 
+					<th align="right" scope="row"><?php _e('Path', 'flag'); ?>:</th>
+					<td> </td>
 					<td align="left"><input <?php if (IS_WPMU) echo 'readonly = "readonly"'; ?> type="text" size="50" name="path" value="<?php echo esc_attr($gallery->path); ?>"  /></td>
 				</tr>
 				<tr>
 					<th align="right" scope="row"><?php _e('Author', 'flag'); ?>:</th>
-					<td align="left"> 
+					<td> </td>
+					<td align="left">
 					<?php
 						$editable_ids = $flag->manage_page->get_editable_user_ids( $user_ID );
 						if ( $editable_ids && count( $editable_ids ) > 1 )
@@ -301,7 +305,7 @@ jQuery(document).ready( function() {
 	</div>
 </div>
 
-<table id="flag-listimages" class="widefat fixed" cellspacing="0" >
+<table id="flag-listimages" class="widefat fixed flag-table" cellspacing="0" >
 
 	<thead>
 	<tr>

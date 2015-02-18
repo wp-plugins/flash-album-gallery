@@ -235,24 +235,24 @@ class flagAdminPanel {
 		if(isset($_GET['page'])){
 			switch($_GET['page']){
 				case 'flag-overview' :
-					wp_enqueue_style('flagadmin', FLAG_URLPATH . 'admin/css/flagadmin.css', false, '2.8.1', 'screen');
+					wp_enqueue_style('flagadmin', FLAG_URLPATH . 'admin/css/flagadmin.css', false, '4.3.0', 'screen');
 					wp_admin_css('css/dashboard');
 					break;
 				case "flag-options" :
 					wp_enqueue_style('farbtastic');
 				case "flag-manage-gallery" :
-					wp_enqueue_style('flagtabs', FLAG_URLPATH . 'admin/css/tabs.css', false, '1.0.0', 'screen');
+					wp_enqueue_style('flagtabs', FLAG_URLPATH . 'admin/css/tabs.css', false, '4.3.0', 'screen');
 				case "flag-music-box" :
 				case "flag-video-box" :
 				case "flag-banner-box" :
 					wp_enqueue_style('thickbox');
-					wp_enqueue_style('flagadmin', FLAG_URLPATH . 'admin/css/flagadmin.css', false, '2.8.1', 'screen');
+					wp_enqueue_style('flagadmin', FLAG_URLPATH . 'admin/css/flagadmin.css', false, '4.3.0', 'screen');
 					break;
 				case "flag-skins" :
 					wp_enqueue_style('thickbox');
 					wp_enqueue_style('farbtastic');
-					wp_enqueue_style('flagtabs', FLAG_URLPATH . 'admin/css/tabs.css', false, '1.0.0', 'screen');
-					wp_enqueue_style('flagadmin', FLAG_URLPATH . 'admin/css/flagadmin.css', false, '2.8.1', 'screen');
+					wp_enqueue_style('flagtabs', FLAG_URLPATH . 'admin/css/tabs.css', false, '4.3.0', 'screen');
+					wp_enqueue_style('flagadmin', FLAG_URLPATH . 'admin/css/flagadmin.css', false, '4.3.0', 'screen');
 					wp_admin_css('css/dashboard');
 					break;
 			}

@@ -19,7 +19,7 @@ function flag_v_playlist_order($playlist = 'deprecated'){
 ?>
 <script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jquery.tablednd_0_5.js"></script>
 <script type="text/javascript" src="<?php echo FLAG_URLPATH; ?>admin/js/jquery.tablesorter.js"></script>
-<div class="wrap">
+<div class="flag-wrap">
 			<h2><?php _e('Sort Gallery', 'flag'); ?></h2>
 
 	<div class="alignright tablenav" style="margin-bottom: -36px;">
@@ -64,22 +64,22 @@ jQuery(document).ready(function($) {
 });
 /*]]>*/
 </script>
-<table id="flag-listitems" class="widefat fixed" cellspacing="0" >
+<table id="flag-listitems" class="widefat fixed flag-table" cellspacing="0" >
 
 	<thead>
 	<tr>
 			<th class="header" width="54"><p style="margin-right:-10px;"><?php _e('ID', 'flag'); ?></p></th>
-			<th width="260"><div><?php _e('Play', 'flag'); ?></div></th>
+			<th width="260"><p><?php _e('Play', 'flag'); ?></p></th>
 			<th class="header"><p><?php _e('Filename', 'flag'); ?></p></th>
 			<th class="header"><p><?php _e('Title', 'flag'); ?></p></th>
 	</tr>
 	</thead>
 	<tfoot>
 	<tr>
-			<th><?php _e('ID', 'flag'); ?></th>
-			<th><?php _e('Play', 'flag'); ?></th>
-			<th><?php _e('Filename', 'flag'); ?></th>
-			<th><?php _e('Title', 'flag'); ?></th>
+			<th><p><?php _e('ID', 'flag'); ?></p></th>
+			<th><p><?php _e('Play', 'flag'); ?></p></th>
+			<th><p><?php _e('Filename', 'flag'); ?></p></th>
+			<th><p><?php _e('Title', 'flag'); ?></p></th>
 	</tr>
 	</tfoot>
 	<tbody id="listitems">

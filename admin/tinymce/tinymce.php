@@ -11,7 +11,7 @@ class add_flag_button {
 	
 	var $pluginname = 'FlAG';
 	var $path = '';
-	var $internalVersion = 100;
+	var $internalVersion = 430;
 	
 	/**
 	 * add_flag_button::add_flag_button()
@@ -112,9 +112,9 @@ class add_flag_button {
 				jQuery("#ed_toolbar").before('<div class="quicktags-toolbar" style="float:right;"><input type="button" class="ed_button" id="qt_FlAGallery_button" onClick="wpflagins();" value="FlAGallery" /></div>');
 			});
 			function wpflagins() {
-				tb_show("<?php _e('Insert Flash Album with one or more galleries', 'flag'); ?>","<?php echo FLAG_URLPATH; ?>admin/tinymce/window.php?riched=false&TB_iframe=true&width=360&height=210",false);
-				jQuery("#TB_window").css({width:"460px", height:"310px", marginTop:"-160px", marginLeft:"-230px", top:"50%"});
-				jQuery("#TB_iframeContent").css({width:"460px", height:"310px"});
+				tb_show("<?php _e('Insert Flash Album with one or more galleries', 'flag'); ?>","<?php echo FLAG_URLPATH; ?>admin/tinymce/window.php?riched=false&TB_iframe=true&width=640&height=310",false);
+				jQuery("#TB_window").css({width:"640px", height:"310px", marginTop:"-160px", marginLeft:"-320px", top:"50%"});
+				jQuery("#TB_iframeContent").css({width:"640px", height:"310px"});
 				jQuery(window).unbind("resize");
 			}
 			function bind_resize() {

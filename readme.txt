@@ -52,6 +52,11 @@ Also available mp3 players and widgets.
 
 == Changelog ==
 
+= v4.30 - 18.02.2015 =
+* Added Combobox for search and insert galleries when insert shortcode
+  (Select gallerires in order you need for shortcode, drag'n'drop galleries inside combobox)
+* Fixed and improved CSS on all admin pages
+
 = v4.29 - 21.01.2015 =
 * Fixed warning on Skins page when open_basedir = 'Off'
 

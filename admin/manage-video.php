@@ -97,7 +97,7 @@ jQuery(document).ready(function(){
 //]]>
 </script>
 
-<div class="wrap">
+<div class="flag-wrap">
 <h2><?php _e( 'Playlist', 'flag' ); ?>: <?php echo esc_html($playlist['title']); ?></h2>
 <div style="float: right; margin: -20px 3px 0 0;">
 <span><a href="<?php echo $filepath; ?>"><?php _e('Back to Video Box', 'flag'); ?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -127,7 +127,7 @@ jQuery(document).ready(function(){
 				<tr>
 					<th align="left" valign="middle" scope="row"><?php _e('Shortcode', 'flag'); ?>:</th>
 					<td align="left" valign="middle"><input type="text" readonly="readonly" size="50" onfocus="this.select()" value="[grandvideo playlist=<?php echo sanitize_flagname($_GET['playlist']); ?>]" /></td>
-					<td rowspan="3" align="left" valign="top"><div style="font-size:11px;"><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
+					<td rowspan="3" align="left" valign="top"><div><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
 						<input id="skinaction" type="hidden" name="skinaction" value="<?php echo sanitize_flagname($playlist['skin']); ?>" />
                         <select id="skinname" name="skinname" style="width: 200px; height: 24px; font-size: 11px;">
                           <?php require_once (dirname(__FILE__) . '/get_skin.php');
@@ -175,7 +175,7 @@ jQuery(document).ready(function(){
 	<input type="submit" name="updatePlaylist" class="button-primary action alignright"  value="<?php _e("Update Playlist",'flag')?>" />
 </div>
 
-<table id="flag-listvideo" class="widefat fixed" cellspacing="0" >
+<table id="flag-listvideo" class="widefat fixed flag-table" cellspacing="0" >
 
 	<thead>
 	<tr>
@@ -224,7 +224,7 @@ if(count($items_a)) {
 				echo round($size/1024/1024,2).' Mb';
 			?></td>
 			<td class="thumb">
-				<a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo FLAG_URLPATH; ?>admin/flv_preview.php?vid=<?php echo $flv->ID; ?>&amp;TB_iframe=1&amp;width=490&amp;height=293"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo esc_url($thumb); ?>" width="100" height="100" alt="" /></a>
+				<a class="thickbox" title="<?php echo basename($url); ?>" href="<?php echo FLAG_URLPATH; ?>admin/flv_preview.php?vid=<?php echo $flv->ID; ?>&amp;TB_iframe=1&amp;width=490&amp;height=293"><img id="thumb-<?php echo $flv->ID; ?>" src="<?php echo esc_url($thumb); ?>" style="width:auto; height:auto; max-width:100px; max-height:100px;" alt="" /></a>
 			</td>
 			<td class="title_filename">
 				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />

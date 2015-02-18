@@ -96,7 +96,7 @@ jQuery(document).ready(function(){
 //]]>
 </script>
 
-<div class="wrap">
+<div class="flag-wrap">
 <h2><?php _e( 'Playlist', 'flag' ); ?>: <?php echo esc_html($playlist['title']); ?></h2>
 <div style="float: right; margin: -20px 3px 0 0;">
 <span><a href="<?php echo $filepath; ?>"><?php _e('Back to Banner Box', 'flag'); ?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -126,7 +126,7 @@ jQuery(document).ready(function(){
 				<tr>
 					<th align="left" valign="middle" scope="row"><?php _e('Shortcode', 'flag'); ?>:</th>
 					<td align="left" valign="middle"><input type="text" readonly="readonly" size="50" onfocus="this.select()" value="[grandbanner xml=<?php echo sanitize_flagname($_GET['playlist']); ?>]" /></td>
-					<td rowspan="3" align="left" valign="top"><div style="font-size:11px;"><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
+					<td rowspan="3" align="left" valign="top"><div><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
 						<input id="skinaction" type="hidden" name="skinaction" value="<?php echo sanitize_flagname($playlist['skin']); ?>" />
                         <select id="skinname" name="skinname" style="width: 200px; height: 24px; font-size: 11px;">
                           <?php require_once (dirname(__FILE__) . '/get_skin.php');
@@ -174,7 +174,7 @@ jQuery(document).ready(function(){
 	<input type="submit" name="updatePlaylist" class="button-primary action alignright"  value="<?php _e("Update Playlist",'flag')?>" />
 </div>
 
-<table id="flag-listvideo" class="widefat fixed" cellspacing="0" >
+<table id="flag-listvideo" class="widefat fixed flag-table" cellspacing="0" >
 
 	<thead>
 	<tr>

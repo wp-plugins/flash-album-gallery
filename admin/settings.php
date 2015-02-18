@@ -133,7 +133,7 @@ function flag_admin_options()  {
 	$flag_options = get_option('flag_options');
 	?>
 	
-<div id="slider" class="wrap">
+<div id="slider" class="flag-wrap">
 
 	<ul id="tabs" class="tabs">
 		<li class="selected"><a href="#" rel="imageoptions"><?php _e('Gallery Options', 'flag'); ?></a></li>
@@ -147,7 +147,6 @@ function flag_admin_options()  {
 		<li><a href="#" rel="roles"><?php _e('Roles', 'flag'); ?></a></li>
 <?php endif; ?>
 	</ul>
-
 	<!-- Image Gallery Options -->
 <script type="text/javascript">
 jQuery(document).ready(function() {
@@ -444,6 +443,7 @@ jQuery(document).ready(function() {
 		<form method="POST" name="addroles" id="addroles" accept-charset="utf-8">
 			<?php wp_nonce_field('flag_addroles'); ?>
 			<h2><?php _e('Roles / capabilities','flag'); ?></h2>
+			<div>&nbsp;</div>
 			<p><?php _e('Select the lowest role which should be able to access the follow capabilities. Flash Album Gallery supports the standard roles from WordPress.', 'flag'); ?></p>
 			<table class="form-table"> 
 			<tr valign="top"> 

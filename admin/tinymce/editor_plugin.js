@@ -19,8 +19,8 @@
 			ed.addCommand('mceFlAG', function() {
 				ed.windowManager.open({
 					file : url + '/window.php',
-					width : 460 + ed.getLang('FlAG.delta_width', 0),
-					height : 250 + ed.getLang('FlAG.delta_height', 0),
+					width : 640 + ed.getLang('FlAG.delta_width', 0),
+					height : 480 + ed.getLang('FlAG.delta_height', 0),
 					inline : 1
 				}, {
 					plugin_url : url // Plugin absolute URL

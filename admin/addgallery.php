@@ -86,7 +86,7 @@ function flag_admin_add_gallery(){
 			/* ]]> */
 		</script>
 	<?php } ?>
-	<div id="slider" class="wrap">
+	<div id="slider" class="flag-wrap">
 
 		<ul id="tabs" class="tabs">
 			<li class="selected"><a href="#" rel="addgallery"><?php _e('Add new gallery', 'flag'); ?></a></li>
@@ -132,7 +132,7 @@ function flag_admin_add_gallery(){
 
 			<form name="uploadimage" id="gmUpload" method="POST" enctype="multipart/form-data" action="<?php echo $filepath; ?>" accept-charset="utf-8">
 				<?php wp_nonce_field('flag_upload'); ?>
-				<table class="form-table">
+				<table class="flag-form-table">
 					<tr valign="top">
 						<td style="width: 216px;">
 							<label for="galleryselect"><?php _e('Upload images in', 'flag'); ?> *</label>
@@ -173,9 +173,9 @@ function flag_admin_add_gallery(){
 							<div class="submit">
 					<span class="useflashupload">
 					<?php if($flag->options['swfUpload']){ ?>
-						<input type="submit" name="disable_flash" id="disable_flash" title="<?php _e('The batch upload via Plupload, disable it if you have problems', 'flag'); ?>" value="<?php _e('Switch to Browser Upload', 'flag'); ?>"/>
+						<input type="submit" class="button-secondary" name="disable_flash" id="disable_flash" title="<?php _e('The batch upload via Plupload, disable it if you have problems', 'flag'); ?>" value="<?php _e('Switch to Browser Upload', 'flag'); ?>"/>
 					<?php } else{ ?>
-						<input type="submit" name="enable_flash" id="enable_flash" title="<?php _e('Upload multiple files at once by ctrl/shift-selecting in dialog', 'flag'); ?>" value="<?php _e('Switch to Plupload based Upload', 'flag'); ?>"/>
+						<input type="submit" class="button-secondary" name="enable_flash" id="enable_flash" title="<?php _e('Upload multiple files at once by ctrl/shift-selecting in dialog', 'flag'); ?>" value="<?php _e('Switch to Plupload based Upload', 'flag'); ?>"/>
 					<?php } ?>
 					</span>
 

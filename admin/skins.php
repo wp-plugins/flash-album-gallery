@@ -291,7 +291,7 @@ if( isset($_GET['skins_refresh']) ) {
 		flagGallery::show_message( __('Skins refreshed successfully','flag') );
 }
 ?>
-<div id="slider" class="wrap">
+<div id="slider" class="flag-wrap">
 	<ul id="tabs" class="tabs">
 <?php if( current_user_can('FlAG Add skins') ) { ?>
 		<li class="selected"><a href="#" rel="addskin"><?php _e('Add new skin', 'flag'); ?></a></li>
@@ -302,7 +302,8 @@ if( isset($_GET['skins_refresh']) ) {
 <?php if( current_user_can('FlAG Add skins') ) { ?>
 	<div id="addskin" class="cptab">
 		<h2><?php _e('Add new skin', 'flag'); ?></h2>
-		<h4><?php _e('Install a skin in .zip format', 'flag'); ?></h4>
+		<div>&nbsp;</div>
+		<h4 style="margin-top:0;"><?php _e('Install a skin in .zip format', 'flag'); ?></h4>
 		<p><?php _e('If you have a skin in a .zip format, You may install it by uploading it here.', 'flag'); ?></p>
 		<form method="post" enctype="multipart/form-data" action="<?php echo admin_url('admin.php?page=flag-skins'); ?>">
 			<?php wp_nonce_field( 'skin-upload'); ?>
@@ -343,7 +344,7 @@ if( isset($_GET['skins_refresh']) ) {
 </div>
 <?php } ?>
 
-<div class="wrap" style="min-width: 878px;">
+<div class="flag-wrap" style="min-width: 878px;">
 <h2><?php _e('Skins', 'flag'); ?>:</h2>
 <p style="float: right; display:none;"><a class="button" href="<?php echo wp_nonce_url('admin.php?page=flag-skins&amp;skins_refresh=1', 'skins_refresh'); ?>"><?php _e('Refresh / Update Skins', 'flag'); ?></a></p>
 <p><a class="button<?php if(!$type) echo '-primary'; ?>" href="<?php echo admin_url('admin.php?page=flag-skins'); ?>"><span style="font-size: 14px;"><?php _e('Photo skins', 'flag'); ?></span></a>&nbsp;&nbsp;&nbsp;
@@ -464,7 +465,7 @@ function flag_curl_exec_follow($ch, &$maxredirect = null) {
 ?>
 
 <div style="width:70%; overflow: hidden; float: left;">
-<table class="widefat" cellspacing="0" id="skins-table">
+<table class="widefat flag-table" cellspacing="0" id="skins-table">
 	<thead>
 	<tr>
 		<th scope="col" class="manage-column"><?php _e('Skin', 'flag'); ?></th>

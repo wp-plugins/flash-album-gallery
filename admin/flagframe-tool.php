@@ -140,9 +140,8 @@ function fb_url(galleries,skin,h,l) {
 	jQuery('#fb1_url0').val(url+galleries+skin+h+l);
 }
 /*]]>*/</script>
-<div class="wrap">
+<div class="flag-wrap">
 <h2><?php _e('Flagallery iFrame', 'flag'); ?></h2>
-<br /><br />
 <form id="flagframe_copy" name="flagframe_copy" method="POST" class="alignright">
 	<p>Optional: &nbsp; <input type="submit" name="copy_file" class="button-primary" value="<?php _e('Copy flagframe.php file to root directory', 'flag'); ?>" /><br />
 	(makes iframe url shorter)</p>

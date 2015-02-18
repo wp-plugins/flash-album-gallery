@@ -69,15 +69,12 @@ function showDialog( windowId, height ) {
 	}
 	jQuery("#" + windowId + "_bulkaction").val(jQuery("#bulkaction").val());
 	jQuery("#" + windowId + "_playlist").val(elementlist);
-	// console.log (jQuery("#TB_playlist").val());
 	tb_show("", "#TB_inline?width=640&height=" + height + "&inlineId=" + windowId + "&modal=true", false);
 }
 var current_image = '';
 function send_to_editor(html) {
 	var source = html.match(/src=\".*\" alt/);
 	source = source[0].replace(/^src=\"/, "").replace(/" alt$/, "");
-	//var id = html.match(/wp-image-(\d+(\.\d)*)/ig);
-	//id = id[0].match(/\d+/);
 	jQuery('#mp3thumb-'+actInp).attr('value', source);
 	jQuery('#thumb-'+actInp).attr('src', source);
 	tb_remove();
@@ -97,7 +94,7 @@ jQuery(document).ready(function(){
 //]]>
 </script>
 
-<div class="wrap">
+<div class="flag-wrap">
 <h2><?php _e( 'Playlist', 'flag' ); ?>: <?php echo esc_html($playlist['title']); ?></h2>
 <div style="float: right; margin: -20px 3px 0 0;">
 <span><a href="<?php echo $filepath; ?>"><?php _e('Back to Music Box', 'flag'); ?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -127,7 +124,7 @@ jQuery(document).ready(function(){
 				<tr>
 					<th align="left" valign="middle" scope="row"><?php _e('Shortcode', 'flag'); ?>:</th>
 					<td align="left" valign="middle"><input type="text" readonly="readonly" size="50" onfocus="this.select()" value="[grandmusic playlist=<?php echo sanitize_flagname($_GET['playlist']); ?>]" /></td>
-					<td rowspan="3" align="left" valign="top"><div style="font-size:11px;"><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
+					<td rowspan="3" align="left" valign="top"><div><strong style="display: inline-block; width: 100px;"><?php _e("Playlist Skin", 'flag'); ?>:</strong>
 						<input id="skinaction" type="hidden" name="skinaction" value="<?php echo sanitize_flagname($playlist['skin']); ?>" />
                         <select id="skinname" name="skinname" style="width: 200px; height: 24px; font-size: 11px;">
                           <?php require_once (dirname(__FILE__) . '/get_skin.php');
@@ -175,7 +172,7 @@ jQuery(document).ready(function(){
 	<input type="submit" name="updatePlaylist" class="button-primary action alignright"  value="<?php _e("Update Playlist",'flag')?>" />
 </div>
 
-<table id="flag-listmusic" class="widefat fixed" cellspacing="0" >
+<table id="flag-listmusic" class="widefat fixed flag-table" cellspacing="0" >
 
 	<thead>
 	<tr>
@@ -225,7 +222,7 @@ if(count($items_a)) {
 				echo round($size/1024/1024,2).' Mb';
 			?></td>
 			<td class="thumb" rowspan="2">
-				<div style="width: 100px; height: 100px;"><img id="thumb-<?php echo $mp3->ID; ?>" src="<?php echo esc_url($thumb); ?>" width="100" height="100" alt="" /></div>
+				<div style="width: 100px; height: 100px;"><img id="thumb-<?php echo $mp3->ID; ?>" src="<?php echo esc_url($thumb); ?>" style="height:auto; width:auto; max-height:100px; max-width:100px;" alt="" /></div>
 			</td>
 			<td class="title_filename" rowspan="2">
 				<strong><a href="<?php echo $url; ?>"><?php echo basename($url); ?></a></strong><br />

@@ -24,6 +24,8 @@
 
 
 /* SETTINGS FOR Overview Gallery */
+.flag-wrap {margin:20px 20px 0 2px}
+.flag-wrap h2.overview-title {margin:0}
 .has-sidebar {
 	clear:left;
 	float:left;
@@ -60,6 +62,12 @@
 #photogallerycreator .theme .txt > *:first-child { display: block; margin: 0 0 -20px; padding: 0; text-align: center; position: relative; top: -204px; }
 
 /* SETTING FOR UPLOAD PAGE */
+.flag-form-table {
+	border-collapse: collapse;
+	clear: both;
+	margin-top: 0.5em;
+	width: 100%;
+}
 .useflashupload {float:left;}
 .swfupload {
 	position:absolute;
@@ -74,9 +82,9 @@
 .flag-options th {
 	width:30%;
 }
+.cptab h3 {margin-top:0; padding-top:20px;}
 
 /* SETTINGS FOR MANAGE TABLE */
-
 .flag_draft, .alt.flag_draft {background-color: #FFEBE8;}
 
 p#flag-inlinebutton {
@@ -138,11 +146,10 @@ p#flag-inlinebutton {
 	width: 4em; text-align: center;
 }
 
-.flagform .widefat thead th { padding: 7px 0 8px; }
-.flagform .widefat tfoot th { padding: 7px 0 8px; }
-.flagform .widefat thead th > div, .flagform .widefat thead th > p { margin-left: 7px; padding: 0; }
-.flagform .widefat thead th.cb { width: 54px; text-align: center; }
-.flagform .widefat tfoot th.cb { text-align: center; }
+.flag-table td,
+.flag-table th {padding:4px 7px; text-align:left;}
+.flag-table th {font-weight:bold; padding:8px 7px;}
+.flag-table th p {margin:0;}
 
 #flag-listmusic tbody td { height: 50px; }
 
@@ -162,8 +169,8 @@ p#flag-inlinebutton {
 .flag-ajax-post { cursor: pointer; text-decoration: underline; }
 .flag-ajax-post:hover { color: #ff0000; }
 
-.all_galleries { float: left; white-space: nowrap; margin: 7px 0 0px 50px; max-height: 550px; overflow: auto; padding-right: 20px; }
-.all_galleries .acat { border: 1px solid #cccccc; padding: 3px 6px; margin: 3px 0; background: #fefefe; cursor: move; }
+.all_galleries { float: left; white-space: nowrap; margin: 7px 0 0px 50px; max-height: 550px; overflow: auto; padding-right: 20px; min-width:30%; }
+.all_galleries .acat { border: 1px solid #cccccc; padding: 3px 6px; margin: 3px 0; background: #fefefe; cursor: move; min-width:15%; }
 .all_galleries .acat .drop { display: none; }
 .all_galleries .acat:hover { background-color: #FFFFEE; }
 
@@ -267,4 +274,7 @@ div#license div p { font-size: 13px; }
 .highlight_new { background-color: #E4F2FD; color: #000000; font-weight: bold; }
 .success { background-color: #CCFFCC; border: 1px solid darkgreen; border-radius: 3px; margin: 5px 15px; padding: 3px 7px; }
 
+#gmUpload { padding-top:10px }
 #gmUpload table td { font-size: 11px !important; }
+
+.already-added {background-color:#DDFFBB;}

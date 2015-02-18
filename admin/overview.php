@@ -10,8 +10,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 function flag_admin_overview()  {
 	echo get_option('flag_plugin_error');
 ?>
-<div class="wrap flag-wrap">
-	<h2><?php _e('Grand Flagallery Overview', 'flag'); echo ' v'.FLAGVERSION; ?></h2>
+<div class="flag-wrap">
+	<h2 class="overview-title"><?php _e('Grand Flagallery Overview', 'flag'); echo ' v'.FLAGVERSION; ?></h2>
 	<div id="flag-overview" class="metabox-holder">
 		<div id="post-body" class="has-sidebar">
 			<div class="has-sidebar-content">
@@ -178,37 +178,37 @@ function flag_overview_right_now() {
 ?>
 
 <div class="table table_content">
-<p class="sub"><?php _e('At a Glance', 'flag'); ?></p>
+	<strong><?php _e('At a Glance', 'flag'); ?>:</strong>
 	<table>
-		<tbody>
 			<tr class="first">
-				<td class="first b"><a href="admin.php?page=flag-manage-gallery&tabs=1"><?php echo $images; ?></a></td>
 				<td class="t"><?php echo _n( 'Image', 'Images', $images, 'flag' ); ?></td>
-				<td class="b"></td>
-				<td class="last"></td>
+				<td>:</td>
+				<td class="b"><a href="admin.php?page=flag-manage-gallery&tabs=1"><?php echo $images; ?></a></td>
 			</tr>
 			<tr>
-				<td class="first b"><a href="admin.php?page=flag-manage-gallery&tabs=0"><?php echo $galleries; ?></a></td>
 				<td class="t"><?php echo _n( 'Gallery', 'Galleries', $galleries, 'flag' ); ?></td>
-				<td class="b"></td>
-				<td class="last"></td>
+				<td>:</td>
+				<td class="b"><a href="admin.php?page=flag-manage-gallery&tabs=0"><?php echo $galleries; ?></a></td>
 			</tr>
-		</tbody>
 	</table>
 </div>
 <div class="versions">
-    <p>
-			<?php if(current_user_can('FlAG Upload images')): ?><a class="button rbutton" href="admin.php?page=flag-manage-gallery&tabs=1"><strong><?php _e('Upload pictures', 'flag'); ?></strong></a><?php endif; ?>
-			<?php _e('Here you can control your images and galleries.', 'flag'); ?></p>
-		<span><?php
-			$userlevel = '<span class="b">' . (current_user_can('manage_options') ? __('Gallery Administrator', 'flag') : __('Gallery Editor', 'flag')) . '</span>';
+	<?php if(current_user_can('FlAG Upload images')): ?>
+	<p>
+		<?php _e('Here you can control your images and galleries', 'flag'); ?>
+		&nbsp;
+		<a class="button rbutton" href="admin.php?page=flag-manage-gallery&tabs=1"><strong><?php _e('Upload pictures', 'flag'); ?></strong></a>
+	</p>
+	<?php endif; ?>
+	<span><?php
+		$userlevel = '<span class="b">' . (current_user_can('manage_options') ? __('Gallery Administrator', 'flag') : __('Gallery Editor', 'flag')) . '</span>';
         printf(__('You currently have %s rights.', 'flag'), $userlevel);
     ?></span>
 </div>
 <?php
 }
 
-add_meta_box('dashboard_right_now', __('Welcome to FlAGallery !', 'flag'), 'flag_overview_right_now', 'flag-overview', 'normal', 'default');
+add_meta_box('flag_dashboard_right_now', __('Welcome to FlAGallery !', 'flag'), 'flag_overview_right_now', 'flag-overview', 'normal', 'default');
 add_meta_box('flag_server', __('Server Settings', 'flag'), 'flag_overview_server', 'flag-overview', 'normal', 'default');
 add_meta_box('flag_gd_lib', __('Graphic Library', 'flag'), 'flag_overview_graphic_lib', 'flag-overview', 'normal', 'default');
 add_meta_box('dashboard_primary', __('Setup Box', 'flag'), 'flag_overview_setup', 'flag-overview', 'side', 'core');
