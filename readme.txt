@@ -52,6 +52,9 @@ Also available mp3 players and widgets.
 
 == Changelog ==
 
+= v4.31 - 13.03.2015 =
+* Fixed Alternative gallery for some themes
+
 = v4.30 - 18.02.2015 =
 * Added Combobox for search and insert galleries when insert shortcode
   (Select gallerires in order you need for shortcode, drag'n'drop galleries inside combobox)

@@ -89,8 +89,8 @@ function alternate_flag_e(skin_id, t, ExtendVar){
 	jQuery('#'+skin_id+'_jq').find(t).not('.loaded').each(function(){
 		var d = jQuery(this).html();
 		if(d) {
-			d = d.replace(/>\[/g, '><');
-			d = d.replace(/src=/g, 'src="');
+			d = d.replace(/>\[img src=/g, '><img src="');
+			//d = d.replace(/src=/g, 'src="');
 			d = d.replace(/\]</g, '" /><');
 			jQuery(this).addClass('loaded').html(d);
 		}
