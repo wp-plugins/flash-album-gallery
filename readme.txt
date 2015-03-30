@@ -52,6 +52,9 @@ Also available mp3 players and widgets.
 
 == Changelog ==
 
+= v4.32 - 30.03.2015 =
+* Fixed Widget slow loading images
+
 = v4.31 - 13.03.2015 =
 * Fixed Alternative gallery for some themes
 

@@ -60,6 +60,7 @@ class flagImage{
 
 		// set urls and paths
 		$this->imageURL		= get_option ('siteurl') . '/' . $this->path . '/' . $this->filename;
+		$this->webimageURL	= get_option ('siteurl') . '/' . $this->path . '/webview/' . $this->filename;
 		$this->thumbURL 	= get_option ('siteurl') . '/' . $this->path . '/thumbs/thumbs_' . $this->filename;
 		$this->imagePath	= WINABSPATH.$this->path . '/' . $this->filename;
 		$this->webimagePath	= WINABSPATH.$this->path . '/webview/' . $this->filename;

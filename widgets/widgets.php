@@ -26,11 +26,19 @@ class flagSlideshowWidget extends WP_Widget {
         $pages = array_filter( array_map ( 'intval', explode( ',', $instance['pages'] ) ) );
 		$args = array( 'post_type' => 'flagallery', 'post__in' => $pages, 'orderby' => 'post__in' );
 		$loop = new WP_Query( $args );
+		$imageList = array();
 		while ( $loop->have_posts() ) : $loop->the_post();
 			$gp_ID = get_the_ID();
 			$flag_custom = get_post_custom($gp_ID);
-			$gal_array = array_filter( array_map ( 'intval', explode( ',', $flag_custom["mb_items_array"][0] ) ) );
-			$gid = $gal_array[0];
+			if('all' == $flag_custom["mb_items_array"][0]){
+				$gid = 0;
+			}else {
+				$gal_array = array_filter( array_map( 'intval', explode( ',', $flag_custom["mb_items_array"][0] ) ) );
+				if ( empty( $gal_array ) ) {
+					continue;
+				}
+				$gid = $gal_array[0];
+			}
 			if($gid){
 				$galID = (int) $gid;
 				$status = $wpdb->get_var("SELECT status FROM $wpdb->flaggallery WHERE gid={$galID}");
@@ -50,7 +58,8 @@ class flagSlideshowWidget extends WP_Widget {
 		echo $before_widget . $before_title . $title . $after_title;
 		echo "\n" . '<div class="flag-widget">'. "\n";
 
-		if (is_array($imageList)){
+		if (!empty($imageList)){
+			$wrapper_r = $instance['width']/$instance['height'];
 			foreach($imageList as $key => $image) {
 				// get the URL constructor
 				$image = new flagImage($image[0]);
@@ -62,15 +71,35 @@ class flagSlideshowWidget extends WP_Widget {
 				$alttext      =  $imageList[$key]['title'];
 				$description  =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->description, 'pic_' . $image->pid . '_description') )) );
 
-				$out = '<a href="'.$imageList[$key]['link'].'" title="' . $image->title . '" ' . $thumbcode .' style="overflow:hidden;display:inline-block;text-align:center;width:'.$instance['width'].'px;height:'.$instance['height'].'px;background:url('.$image->imageURL.') 50% 50%;background-size:cover;">';
-				$out .= '<img src="'.$image->thumbURL.'" style="opacity:0" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$description.'" />';
+				$thumburl = $image->thumbURL;
+				$thumbinfo = @getimagesize($image->thumbPath);
+				if(($thumbinfo[0] - $instance['width']) < -20){
+					$thumburl = $image->webimageURL;
+					$thumbpath = $image->webimagePath;
+					if(!file_exists($image->webimagePath)){
+						$thumburl = $image->imageURL;
+						$thumbpath = $image->imagePath;
+					}
+					$thumbinfo = @getimagesize($thumbpath);
+				}
+				$thumb_r = $thumbinfo[0]/$thumbinfo[1];
+				if($wrapper_r < $thumb_r){
+					$orientation = 'flag_thumb_landscape';
+					$style = 'width:auto;height:100%;margin:0 0 0 -'.floor(($instance['height']*$thumb_r - $instance['width'])/$instance['width']*50).'%;';
+				} else{
+					$orientation = 'flag_thumb_portrait';
+					$style = 'width:100%;height:auto;margin:-'.floor(($instance['width']/$thumb_r - $instance['height'])/$instance['height']*25).'% 0 0 0;';
+				}
+
+				$out = '<a href="'.$imageList[$key]['link'].'" title="' . $image->title . '" ' . $thumbcode .' style="overflow:hidden;display:inline-block;text-align:center;width:'.$instance['width'].'px;height:'.$instance['height'].'px;">';
+				$out .= '<img src="'.$thumburl.'" style="'.$style.'" class="'.$orientation.'" title="'.$alttext.'" alt="'.$description.'" />';
 				echo $out . '</a>'."\n";
 
 			}
 		}
 
 		echo '</div>'."\n";
-		echo '<style type="text/css">.flag_grandpages img { border: 1px solid #A9A9A9; margin: 0 2px 2px 0; padding: 1px; }</style>'."\n";
+		echo '<style type="text/css">.flag_grandpages { box-sizing:border-box; border: 1px solid #A9A9A9; margin: 0 2px 2px 0; padding: 0; } .flag_grandpages img {max-width:none;max-height:none;}</style>'."\n";
 		echo $after_widget;
 
 	}
@@ -384,6 +413,7 @@ class flagWidget extends WP_Widget {
 
 		$gallerylist = $flagdb->get_album($album);
 		$ids = explode( ',', $gallerylist );
+		$imageList = array();
 		foreach ($ids as $id) {
 			$galID = (int) $id;
 			$status = $wpdb->get_var("SELECT status FROM $wpdb->flaggallery WHERE gid={$galID}");
@@ -408,7 +438,7 @@ class flagWidget extends WP_Widget {
 		echo $before_widget . $before_title . $title . $after_title;
 		echo "\n" . '<div class="flag-widget">'. "\n";
 
-		if (is_array($imageList)){
+		if (!empty($imageList)){
 
 			$isMobile = (bool)preg_match('#\b(ip(hone|od|ad)|android|opera m(ob|in)i|windows (phone|ce)|blackberry|tablet'.
                     '|s(ymbian|eries60|amsung)|p(laybook|alm|rofile/midp|laystation portable)|nokia|fennec|htc[\-_]'.
@@ -418,6 +448,7 @@ class flagWidget extends WP_Widget {
 			else 
 				$thumbcode = 'class="flag_newbox"';
 
+			$wrapper_r = $instance['width']/$instance['height'];
 			foreach($imageList as $gallery_) {
 				foreach($gallery_ as $_image) {
 					// get the URL constructor
@@ -426,16 +457,36 @@ class flagWidget extends WP_Widget {
 					// enable i18n support for alttext and description
 					$alttext      =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->alttext, 'pic_' . $image->pid . '_alttext') )) );
 					$description  =  strip_tags( htmlspecialchars( stripslashes( flagGallery::i18n($image->description, 'pic_' . $image->pid . '_description') )) );
-	
-					$out = '<a href="'.plugins_url().'/flash-album-gallery/flagframe.php?i='.$image->galleryid.'&amp;f='.$instance['skin'].'&amp;h='.$instance['fheight'].'" title="' . $image->title . '" ' . $thumbcode .' style="overflow:hidden;display:inline-block;text-align:center;width:'.$instance['width'].'px;height:'.$instance['height'].'px;background:url('.$image->imageURL.') 50% 50%;background-size:cover;">';
-					$out .= '<img src="'.$image->thumbURL.'" style="opacity:0" width="'.$instance['width'].'" height="'.$instance['height'].'" title="'.$alttext.'" alt="'.$description.'" />';
+
+					$thumburl = $image->thumbURL;
+					$thumbinfo = @getimagesize($image->thumbPath);
+					if(($thumbinfo[0] - $instance['width']) < -20){
+						$thumburl = $image->webimageURL;
+						$thumbpath = $image->webimagePath;
+						if(!file_exists($image->webimagePath)){
+							$thumburl = $image->imageURL;
+							$thumbpath = $image->imagePath;
+						}
+						$thumbinfo = @getimagesize($thumbpath);
+					}
+					$thumb_r = $thumbinfo[0]/$thumbinfo[1];
+					if($wrapper_r < $thumb_r){
+						$orientation = 'flag_thumb_landscape';
+						$style = 'width:auto;height:100%;margin:0 0 0 -'.floor(($instance['height']*$thumb_r - $instance['width'])/$instance['width']*50).'%;';
+					} else{
+						$orientation = 'flag_thumb_portrait';
+						$style = 'width:100%;height:auto;margin:-'.floor(($instance['width']/$thumb_r - $instance['height'])/$instance['height']*25).'% 0 0 0;';
+					}
+
+					$out = '<a href="'.plugins_url().'/flash-album-gallery/flagframe.php?i='.$image->galleryid.'&amp;f='.$instance['skin'].'&amp;h='.$instance['fheight'].'" title="' . $image->title . '" ' . $thumbcode .' style="overflow:hidden;display:inline-block;text-align:center;width:'.$instance['width'].'px;height:'.$instance['height'].'px;">';
+					$out .= '<img src="'.$thumburl.'" style="'.$style.'" class="'.$orientation.'" title="'.$alttext.'" alt="'.$description.'" />';
 					echo $out . '</a>'."\n";
 				}
 			}
 		}
 
 		echo '</div>'."\n";
-		echo '<style type="text/css">.flag_fancybox img, .flag_newbox img { border: 1px solid #A9A9A9; margin: 0 2px 2px 0; padding: 1px; }</style>'."\n";
+		echo '<style type="text/css">.flag_fancybox, .flag_newbox {box-sizing:border-box; border: 1px solid #A9A9A9; margin: 0 2px 2px 0; padding: 0; } .flag_fancybox img, .flag_newbox img {max-width:none;max-height:none;} </style>'."\n";
 		echo '<script type="text/javascript" defer="defer">jQuery(function(){ var fbVar = "'.plugins_url('/', dirname(__FILE__)).'"; var fbW = '.$instance['fwidth'].', fbH = '.$instance['fheight'].'; waitJQ(fbVar,fbW,fbH); });</script>'."\n";
 		echo $after_widget;
 
