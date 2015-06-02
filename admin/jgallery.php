@@ -146,7 +146,7 @@ foreach ( $gID as $galID ) {
 				} else {
 					$views_panel = '';
 				}
-				$xml['alt'] .= '<a class="i' . $j++ . ' flag_pic_alt" href="' . $siteurl . '/' . $thegalleries['path'] . $webview . '/' . $picture['filename'] . '" id="flag_pic_' . $pid . '" title="' . esc_attr(strip_tags(htmlspecialchars_decode($picture['alttext']))) . '">[img src=' . $siteurl . '/' . $thegalleries['path'] . '/thumbs/thumbs_' . $picture['filename'] . ']' . $views_panel . '<span class="flag_pic_desc" id="flag_desc_' . $pid . '"><strong>' . $picture['alttext'] . '</strong><br /><span>' . nl2br($picture['description']) . '</span></span></a>';
+				$xml['alt'] .= '<a class="i' . $j++ . ' flag_pic_alt" href="' . $siteurl . '/' . $thegalleries['path'] . $webview . '/' . $picture['filename'] . '" id="flag_pic_' . $pid . '" title="' . esc_attr(strip_tags(htmlspecialchars_decode($picture['alttext']))) . '">[img src=' . $siteurl . '/' . $thegalleries['path'] . '/thumbs/thumbs_' . $picture['filename'] . ']' . $views_panel . '<span class="flag_pic_desc" id="flag_desc_' . $pid . '"><strong>' . strip_tags($picture['alttext']) . '</strong><br /><span>' . htmlspecialchars(nl2br($picture['description'])) . '</span></span></a>';
 			}
 		}
 		$xml['alt'] .= '</div>';
@@ -154,5 +154,6 @@ foreach ( $gID as $galID ) {
 	}
 }
 $xml['alt'] .= '</div>';
-$d = array('properties'=>$data) + $c + $musicData;
+$content_data = $c + $musicData;
+$d = array('properties'=>$data) + $content_data;
 $xml['json'] = json_encode($d);
