@@ -52,6 +52,9 @@ Also available mp3 players and widgets.
 
 == Changelog ==
 
+= v4.34 - 02.05.2015 =
+* Fixed alternative gallery (when links in image descriptions)
+
 = v4.33 - 24.04.2015 =
 * Compatibility with WP 4.2
 
