@@ -52,6 +52,9 @@ Also available mp3 players and widgets.
 
 == Changelog ==
 
+= v4.35 - 01.07.2015 =
+* Fixed alternative gallery thumbnails not showed on some themes
+
 = v4.34 - 02.05.2015 =
 * Fixed alternative gallery (when links in image descriptions)
 
