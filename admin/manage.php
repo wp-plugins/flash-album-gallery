@@ -11,7 +11,7 @@ class flagManageGallery {
 	var $search_result = false;
 	
 	// initiate the manage page
-	function flagManageGallery() {
+	function __construct() {
 
 		// GET variables
 		if(isset($_GET['gid']))

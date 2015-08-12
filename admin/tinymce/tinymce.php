@@ -12,14 +12,12 @@ class add_flag_button {
 	var $pluginname = 'FlAG';
 	var $path = '';
 	var $internalVersion = 430;
-	
+
 	/**
-	 * add_flag_button::add_flag_button()
 	 * the constructor
-	 * 
-	 * @return void
+	 *
 	 */
-	function add_flag_button()  {
+	function __construct()  {
 		
 		// Set path to editor_plugin.js
 		$this->path = FLAG_URLPATH . 'admin/tinymce/';		

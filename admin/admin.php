@@ -7,7 +7,7 @@
 class flagAdminPanel {
 
 	// constructor
-	function flagAdminPanel() {
+	function __construct() {
 
 		// Add the admin menu
 		add_action( 'admin_menu', array( &$this, 'add_menu' ) );

@@ -15,7 +15,7 @@ class FlAG_shortcodes {
 	var $flag_add_mousewheel;
 
 	// register the new shortcodes
-	function FlAG_shortcodes() {
+	function __construct() {
 
 		// do_shortcode on the_excerpt could causes several unwanted output. Uncomment it on your own risk
 		// add_filter('the_excerpt', array(&$this, 'convert_shortcode'));

@@ -11,9 +11,9 @@
  */
 class flagSlideshowWidget extends WP_Widget {
 
-	function flagSlideshowWidget() {
+	function __construct() {
 		$widget_ops = array('classname' => 'widget_grandpages', 'description' => __( 'Show links to GRAND Pages as random images from the galleries', 'flag') );
-		$this->WP_Widget('flag-grandpages', __('FLAGallery GRANDPages', 'flag'), $widget_ops);
+		parent::__construct('flag-grandpages', __('FLAGallery GRANDPages', 'flag'), $widget_ops);
 	}
 
 	function widget( $args, $instance ) {
@@ -171,9 +171,9 @@ add_action('widgets_init', create_function('', 'return register_widget("flagSlid
 
 class flagBannerWidget extends WP_Widget {
 
-	function flagBannerWidget() {
+	function __construct() {
 		$widget_ops = array('classname' => 'widget_banner', 'description' => __( 'Show a Grand Flagallery Banner', 'flag') );
-		$this->WP_Widget('flag-banner', __('FLAGallery Banner', 'flag'), $widget_ops);
+		parent::__construct('flag-banner', __('FLAGallery Banner', 'flag'), $widget_ops);
 	}
 
 	function widget( $args, $instance ) {
@@ -284,9 +284,9 @@ function flagBannerWidget($xml, $w = '100%', $h = '200', $skin = 'rotator_widget
  */
 class flagWidget extends WP_Widget {
 
-   	function flagWidget() {
+   	function __construct() {
 		$widget_ops = array('classname' => 'flag_images', 'description' => __( 'Add recent or random images from the galleries', 'flag') );
-		$this->WP_Widget('flag-images', __('FLAGallery Widget', 'flag'), $widget_ops);
+	    parent::__construct('flag-images', __('FLAGallery Widget', 'flag'), $widget_ops);
 	}
 
 	function update( $new_instance, $old_instance ) {
@@ -505,9 +505,9 @@ add_action('widgets_init', create_function('', 'return register_widget("flagWidg
  */
 class flagVideoWidget extends WP_Widget {
 
-   	function flagVideoWidget() {
+   	function __construct() {
 		$widget_ops = array('classname' => 'flag_video', 'description' => __( 'Add recent or random video from the galleries', 'flag') );
-		$this->WP_Widget('flag-video', __('FLAGallery Video Widget', 'flag'), $widget_ops);
+	    parent::__construct('flag-video', __('FLAGallery Video Widget', 'flag'), $widget_ops);
 	}
 
 	function update( $new_instance, $old_instance ) {
@@ -653,9 +653,9 @@ add_action('widgets_init', create_function('', 'return register_widget("flagVide
  */
 class flagMusicWidget extends WP_Widget {
 
-	function flagMusicWidget() {
+	function __construct() {
 		$widget_ops = array('classname' => 'widget_music', 'description' => __( 'Show a Grand Flagallery Music Player', 'flag') );
-		$this->WP_Widget('flag-music', __('FLAGallery Music', 'flag'), $widget_ops);
+		parent::__construct('flag-music', __('FLAGallery Music', 'flag'), $widget_ops);
 	}
 
 	function widget( $args, $instance ) {

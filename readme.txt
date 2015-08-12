@@ -3,7 +3,7 @@ Contributors: Rattus
 Donate link: http://photogallerycreator.com/grand-flagallery/
 Tags: admin, flash gallery, fullscreen gallery, gallery, image, images, image gallery, mp3, music, page, photo, photo gallery, slider, plugin, slideshow, video, widget, iphone gallery, best gallery, portfolio, image rotator
 Requires at least: 3.0
-Tested up to: 4.2.2
+Tested up to: 4.3.0
 Stable tag: trunk
 
 Photo Gallery, Video Gallery, Music Album & Banner Rotator plugin with powerfull admin to manage your image galleries and media content
@@ -51,6 +51,9 @@ Also available mp3 players and widgets.
 
 
 == Changelog ==
+
+= v4.36 - 12.08.2015 =
+* Support of Wordpress v4.3
 
 = v4.35 - 01.07.2015 =
 * Fixed alternative gallery thumbnails not showed on some themes

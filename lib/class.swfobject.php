@@ -16,22 +16,20 @@ class flag_swfobject {
 	var $attributes;							// array of object's attributest 
 
 	/**
-	 * flag_swfobject::flag_swfobject()
 	 *
-	 * @param string      $swfUrl               (required) specifies the URL of your SWF
-	 * @param string      $id                   (required) specifies the id of the HTML element (containing your alternative content) you would like to have replaced by your Flash content
-	 * @param string      $width                (required) specifies the width of your SWF
-	 * @param string      $height               (required) specifies the height of your SWF
-	 * @param string      $version              (required) specifies the Flash player version your SWF is published for (format is: "major.minor.release")
+	 * @param string $swfUrl (required) specifies the URL of your SWF
+	 * @param string $id (required) specifies the id of the HTML element (containing your alternative content) you would like to have replaced by your Flash content
+	 * @param string $width (required) specifies the width of your SWF
+	 * @param string $height (required) specifies the height of your SWF
+	 * @param string $version (required) specifies the Flash player version your SWF is published for (format is: "major.minor.release")
 	 * @param bool|string $expressInstallSwfurl (optional) specifies the URL of your express install SWF and activates Adobe express install
-	 * @param array|bool  $flashvars            (optional) specifies your flashvars with name:value pairs
-	 * @param array|bool  $params               (optional) specifies your nested object element params with name:value pair
-	 * @param array|bool  $attributes           (optional) specifies your object's attributes with name:value pairs
+	 * @param array|bool $flashvars (optional) specifies your flashvars with name:value pairs
+	 * @param array|bool $params (optional) specifies your nested object element params with name:value pair
+	 * @param array|bool $attributes (optional) specifies your object's attributes with name:value pairs
 	 * @param bool $gallery
 	 *
-	 * @return string the content
 	 */
-	function flag_swfobject($swfUrl, $id, $width, $height, $version, $expressInstallSwfurl = false, $flashvars = false, $params = false, $attributes = false, $gallery = false){
+	function __construct($swfUrl, $id, $width, $height, $version, $expressInstallSwfurl = false, $flashvars = false, $params = false, $attributes = false, $gallery = false){
 
 		global $swfCounter;
 		

@@ -38,9 +38,8 @@ class flagImage{
 	 * Constructor
 	 * 
 	 * @param object $gallery The flagGallery object representing the gallery containing this image
-	 * @return void
 	 */
-	function flagImage($gallery) {			
+	function __construct($gallery) {
 			
 		//This must be an object
 		$gallery = (object) $gallery;

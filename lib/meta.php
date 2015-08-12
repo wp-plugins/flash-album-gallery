@@ -17,13 +17,11 @@ class flagMeta {
 	var $xmp_array  	= 	false;	// XMP data array
 
 	/**
-	 * flagMeta::flagMeta()
 	 *
 	 * @param $pic_id
 	 * @param bool $onlyEXIF parse only exif if needed
-	 * @return bool
 	 */
-	function flagMeta($pic_id, $onlyEXIF = false) {
+	function __construct($pic_id, $onlyEXIF = false) {
 
 		//get the path and other data about the image
 		$this->image = flagdb::find_image( $pic_id );
